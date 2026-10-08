@@ -1,0 +1,363 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>AI Lens Academy</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@75..125,400..800&family=Source+Sans+3:wght@400;600&family=JetBrains+Mono:wght@400;600&display=swap">
+<style>
+/* Layout: editing-suite feel — top bar with tabs, level rail, module "frames" in a single readable column; tools as a filterable price sheet. */
+:root{
+  --bg:#eef0f2; --surface:#ffffff; --surface-2:#e3e7ea; --fg:#1b2126; --muted:#5b6670; --line:#cfd5da;
+  --accent:#a8325f; --accent-ink:#ffffff; --accent-soft:#f6e3ea;
+  --lvl1:#2f7d5b; --lvl2:#2c6aa0; --lvl3:#a8325f; --lvl4:#7a4fb0;
+  --free:#2f7d5b; --paid:#8a5a12;
+  --display:"Archivo",system-ui,sans-serif; --body:"Source Sans 3",system-ui,sans-serif; --mono:"JetBrains Mono",ui-monospace,monospace;
+}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
+  --bg:#16191c; --surface:#1f2428; --surface-2:#2a3036; --fg:#e7ebee; --muted:#9aa6b0; --line:#353c43;
+  --accent:#e86f9d; --accent-ink:#1a0d13; --accent-soft:#3a2230;
+  --lvl1:#5cc493; --lvl2:#6fa8dc; --lvl3:#e86f9d; --lvl4:#b394e6; --free:#5cc493; --paid:#e0b05c; color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#16191c; --surface:#1f2428; --surface-2:#2a3036; --fg:#e7ebee; --muted:#9aa6b0; --line:#353c43;
+  --accent:#e86f9d; --accent-ink:#1a0d13; --accent-soft:#3a2230;
+  --lvl1:#5cc493; --lvl2:#6fa8dc; --lvl3:#e86f9d; --lvl4:#b394e6; --free:#5cc493; --paid:#e0b05c; color-scheme:dark}
+*{box-sizing:border-box}
+body{background:var(--bg);color:var(--fg);font-family:var(--body);font-size:16px;line-height:1.55;margin:0}
+a{color:var(--accent)}
+:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+.wrap{max-width:1040px;margin:0 auto;padding-inline:16px}
+header.top{border-bottom:1px solid var(--line);background:var(--surface)}
+.hero{padding-block:32px 20px;display:grid;gap:12px}
+.eyebrow{font-family:var(--mono);font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
+h1{font-family:var(--display);font-stretch:112%;font-weight:800;font-size:clamp(30px,5vw,48px);line-height:1.05;margin:0;text-wrap:balance}
+h1 span{color:var(--accent)}
+.lede{max-width:65ch;color:var(--muted);margin:0;font-size:17px}
+.stats{display:flex;flex-wrap:wrap;gap:8px 24px;font-family:var(--mono);font-size:13px;color:var(--muted)}
+.stats b{color:var(--fg);font-weight:600}
+nav.tabs{display:flex;gap:4px;position:sticky;top:env(safe-area-inset-top,0px);z-index:5;background:var(--surface);border-bottom:1px solid var(--line)}
+nav.tabs .wrap{display:flex;gap:4px;width:100%}
+.tab{font:600 15px var(--display);background:none;border:0;border-bottom:3px solid transparent;color:var(--muted);padding:14px 12px;cursor:pointer}
+.tab[aria-selected="true"]{color:var(--fg);border-bottom-color:var(--accent)}
+main{padding-block:24px 64px}
+.bar{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin-bottom:20px}
+.chip{font:600 13px var(--body);border:1px solid var(--line);background:var(--surface);color:var(--fg);border-radius:999px;padding:6px 12px;cursor:pointer}
+.chip[aria-pressed="true"]{background:var(--fg);color:var(--bg);border-color:var(--fg)}
+.progress{margin-left:auto;font-family:var(--mono);font-size:13px;color:var(--muted);display:flex;align-items:center;gap:8px}
+.meter{width:120px;height:6px;background:var(--surface-2);border-radius:3px;overflow:hidden}
+.meter i{display:block;height:100%;background:var(--accent);width:0}
+.levelhead{display:flex;align-items:baseline;gap:12px;margin:32px 0 12px;flex-wrap:wrap}
+.levelhead h2{font-family:var(--display);font-stretch:105%;font-size:24px;margin:0}
+.levelhead p{margin:0;color:var(--muted);flex-basis:100%;max-width:65ch}
+.lvl-tag{font-family:var(--mono);font-size:12px;letter-spacing:.06em;text-transform:uppercase;padding:2px 8px;border-radius:4px;color:var(--surface);background:var(--c)}
+.modules{display:grid;gap:12px}
+details.mod{background:var(--surface);border:1px solid var(--line);border-radius:8px;border-left:4px solid var(--c)}
+details.mod summary{list-style:none;cursor:pointer;padding:16px 18px;display:grid;grid-template-columns:auto 1fr auto;gap:4px 14px;align-items:center}
+details.mod summary::-webkit-details-marker{display:none}
+.frame{font-family:var(--mono);font-size:12px;color:var(--muted);grid-row:span 2;align-self:start;padding-top:3px;min-width:44px}
+.mtitle{font-family:var(--display);font-weight:700;font-size:18px;margin:0;min-width:0}
+.msub{color:var(--muted);font-size:14px;grid-column:2;min-width:0}
+.done-pill{grid-row:span 2;font-family:var(--mono);font-size:12px;padding:3px 8px;border-radius:999px;border:1px solid var(--line);color:var(--muted);white-space:nowrap}
+.done-pill.ok{background:var(--accent-soft);color:var(--accent);border-color:transparent}
+.mbody{padding:0 18px 18px;display:grid;gap:18px;grid-template-columns:minmax(0,1.2fr) minmax(0,1fr)}
+@media (max-width:760px){.mbody{grid-template-columns:minmax(0,1fr)}}
+.mbody h4{font:600 12px var(--mono);letter-spacing:.08em;text-transform:uppercase;color:var(--muted);margin:0 0 8px}
+ul.lessons{list-style:none;padding:0;margin:0;display:grid;gap:6px}
+ul.lessons label{display:flex;gap:10px;align-items:flex-start;cursor:pointer}
+ul.lessons input{margin-top:5px;accent-color:var(--accent)}
+.toolchips{display:flex;flex-wrap:wrap;gap:6px}
+.tchip{font:600 13px var(--body);background:var(--surface-2);border:0;border-radius:4px;padding:4px 8px;color:var(--fg);cursor:pointer}
+.tchip small{font-family:var(--mono);color:var(--muted);font-weight:400;margin-left:4px}
+ul.tuts{list-style:none;padding:0;margin:0;display:grid;gap:8px}
+ul.tuts a{display:flex;gap:10px;align-items:flex-start;text-decoration:none;color:var(--fg);padding:8px 10px;border-radius:6px;background:var(--surface-2)}
+ul.tuts a:hover{background:var(--accent-soft)}
+.play{flex:none;width:22px;height:22px;border-radius:50%;background:var(--accent);display:grid;place-items:center;margin-top:1px}
+.play::after{content:"";border-left:7px solid var(--accent-ink);border-top:4px solid transparent;border-bottom:4px solid transparent;margin-left:2px}
+ul.tuts span small{display:block;color:var(--muted);font-size:13px}
+.task{background:var(--accent-soft);border-radius:6px;padding:10px 12px;font-size:15px}
+.task b{font-family:var(--mono);font-size:12px;letter-spacing:.06em;text-transform:uppercase;color:var(--accent);display:block}
+/* tools */
+.search{flex:1 1 220px;min-width:0;font:15px var(--body);padding:9px 12px;border:1px solid var(--line);border-radius:6px;background:var(--surface);color:var(--fg)}
+select{font:14px var(--body);padding:8px 10px;border:1px solid var(--line);border-radius:6px;background:var(--surface);color:var(--fg)}
+.tablewrap{overflow-x:auto;background:var(--surface);border:1px solid var(--line);border-radius:8px}
+table{border-collapse:collapse;width:100%;min-width:720px;font-size:15px}
+th,td{text-align:left;padding:10px 14px;border-bottom:1px solid var(--line);vertical-align:top}
+th{font:600 12px var(--mono);letter-spacing:.06em;text-transform:uppercase;color:var(--muted);background:var(--surface-2);position:sticky;top:0}
+tr:last-child td{border-bottom:0}
+tr.flash td{background:var(--accent-soft)}
+td.name a{font-weight:600}
+td.price{font-family:var(--mono);font-size:13px;font-variant-numeric:tabular-nums;white-space:nowrap}
+.ptype{display:inline-block;font:600 11px var(--mono);text-transform:uppercase;letter-spacing:.05em;padding:2px 6px;border-radius:3px;border:1px solid currentColor;margin-bottom:4px}
+.ptype.free,.ptype.freemium{color:var(--free)} .ptype.subscription,.ptype.one-time,.ptype.credits{color:var(--paid)}
+.note{color:var(--muted);font-size:14px;max-width:70ch;margin-top:16px}
+.budget{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,240px),1fr));gap:12px;margin-bottom:24px}
+.kit{background:var(--surface);border:1px solid var(--line);border-radius:8px;padding:14px 16px}
+.kit h3{font-family:var(--display);margin:0 0 4px;font-size:17px}
+.kit .cost{font-family:var(--mono);color:var(--accent);font-size:14px;margin-bottom:6px}
+.kit p{margin:0;font-size:14px;color:var(--muted)}
+@media (prefers-reduced-motion:no-preference){details.mod[open] .mbody{animation:in .2s ease-out}@keyframes in{from{opacity:.4;transform:translateY(-4px)}}}
+</style>
+</head>
+<body>
+
+<header class="top">
+  <div class="wrap hero">
+    <div class="eyebrow">For working photographers &amp; videographers</div>
+    <h1>AI Lens Academy: <span>AI for your photo &amp; video studio</span></h1>
+    <p class="lede">A step-by-step curriculum for an established studio that wants to add AI to its work. It starts with AI assistants and Lightroom's AI masks, and goes on to AI culling, generative fill, AI video, and training a model on your own style. Each module lists the tools, approximate prices and YouTube tutorials.</p>
+    <div class="stats" id="stats"></div>
+  </div>
+</header>
+<nav class="tabs" role="tablist">
+  <div class="wrap">
+    <button class="tab" role="tab" id="tab-curriculum" aria-selected="true" data-view="curriculum">Curriculum</button>
+    <button class="tab" role="tab" id="tab-tools" aria-selected="false" data-view="tools">Tools &amp; pricing</button>
+  </div>
+</nav>
+
+<main class="wrap">
+  <section id="view-curriculum">
+    <div class="bar" id="levelbar"></div>
+    <div id="curriculum"></div>
+  </section>
+  <section id="view-tools" hidden>
+    <h2 style="font-family:var(--display);margin:0 0 12px">Starter stacks by budget</h2>
+    <div class="budget" id="budget"></div>
+    <div class="bar">
+      <input class="search" id="toolsearch" type="search" placeholder="Search tools, e.g. culling, upscale, voice">
+      <select id="catfilter" aria-label="Category"></select>
+      <select id="pricefilter" aria-label="Pricing type">
+        <option value="">All pricing</option><option value="free">Free</option><option value="freemium">Free tier + paid</option>
+        <option value="subscription">Subscription</option><option value="one-time">One-time purchase</option><option value="credits">Pay per photo / credits</option>
+      </select>
+    </div>
+    <div class="tablewrap"><table>
+      <thead><tr><th>Tool</th><th>Category</th><th>What it does for your studio</th><th>Approx. price (USD)</th><th>Used in</th></tr></thead>
+      <tbody id="toolrows"></tbody>
+    </table></div>
+    <p class="note">Prices are approximate list prices as of 2026 and change often. Indian pricing (₹, plus 18% GST) can differ, and many tools offer regional or yearly discounts. Check the official site before you subscribe. Tutorial links open a YouTube search for that topic and channel, so you always get the latest videos.</p>
+  </section>
+</main>
+
+<script>
+const YT = q => "https://www.youtube.com/results?search_query=" + encodeURIComponent(q);
+
+const TOOLS = [
+ {id:"chatgpt",name:"ChatGPT",cat:"AI assistant",url:"https://chatgpt.com",type:"freemium",price:"Free · Plus ~$20/mo",use:"Client emails, quotes, shot lists, captions, wedding timelines, brainstorming concepts."},
+ {id:"claude",name:"Claude",cat:"AI assistant",url:"https://claude.ai",type:"freemium",price:"Free · Pro ~$20/mo",use:"Contracts drafts, long client briefs, website copy, planning shoots, building small tools."},
+ {id:"gemini",name:"Google Gemini",cat:"AI assistant",url:"https://gemini.google.com",type:"freemium",price:"Free · AI Pro ~$20/mo",use:"Assistant plus Nano Banana image editing and Veo video in paid plans; works with Google Drive."},
+ {id:"lightroom",name:"Adobe Lightroom / Classic",cat:"Photo editing",url:"https://www.adobe.com/products/photoshop-lightroom.html",type:"subscription",price:"Photography plan ~$20/mo",use:"AI masks (subject, sky, people), Denoise, Generative Remove, Lens Blur, Adaptive presets."},
+ {id:"photoshop",name:"Adobe Photoshop",cat:"Photo editing",url:"https://www.adobe.com/products/photoshop.html",type:"subscription",price:"In Photography plan",use:"Generative Fill and Expand, Remove tool, Neural Filters, Harmonize, Sky Replacement."},
+ {id:"luminar",name:"Luminar Neo",cat:"Photo editing",url:"https://skylum.com/luminar",type:"subscription",price:"From ~$10/mo or one-time",use:"One-click AI sky, skin, relighting, GenErase; a simpler option than Adobe."},
+ {id:"evoto",name:"Evoto AI",cat:"Retouching",url:"https://www.evoto.ai",type:"credits",price:"Pay per export (~$0.10–0.20/photo)",use:"Batch portrait and wedding retouching: skin, blemishes, glare on glasses, background cleanup."},
+ {id:"retouch4me",name:"Retouch4me",cat:"Retouching",url:"https://retouch4me.com",type:"one-time",price:"~$120+ per plugin",use:"Photoshop plugins for AI skin heal, dodge & burn, fabric and portrait volumes."},
+ {id:"aftershoot",name:"Aftershoot",cat:"Culling & batch edit",url:"https://aftershoot.com",type:"subscription",price:"From ~$15/mo",use:"AI culls thousands of event photos and learns your editing style from your past Lightroom edits."},
+ {id:"imagen",name:"Imagen AI",cat:"Culling & batch edit",url:"https://imagen-ai.com",type:"credits",price:"~$0.05/photo + plan",use:"Trains a personal AI profile on your edits and applies it in Lightroom; culling and retouch add-ons."},
+ {id:"narrative",name:"Narrative Select",cat:"Culling & batch edit",url:"https://narrative.so",type:"freemium",price:"Free tier · paid ~$15/mo",use:"Fast culling with face and eye-focus checks; good for weddings and events."},
+ {id:"topazphoto",name:"Topaz Photo AI / Gigapixel",cat:"Upscale & restore",url:"https://www.topazlabs.com",type:"subscription",price:"~$199/yr",use:"Denoise, sharpen, fix motion blur, and upscale for large prints."},
+ {id:"remini",name:"Remini",cat:"Upscale & restore",url:"https://remini.ai",type:"freemium",price:"Free tier · subscription",use:"Quick restoration of old family photos and low-quality mobile pictures."},
+ {id:"resolve",name:"DaVinci Resolve (Studio)",cat:"Video editing",url:"https://www.blackmagicdesign.com/products/davinciresolve",type:"one-time",price:"Free · Studio $295 one-time",use:"Neural Engine: Magic Mask, Voice Isolation, Smart Reframe, IntelliScript, auto subtitles, AI color."},
+ {id:"premiere",name:"Adobe Premiere Pro",cat:"Video editing",url:"https://www.adobe.com/products/premiere.html",type:"subscription",price:"~$23/mo",use:"Text-based editing, Enhance Speech, Generative Extend, auto captions, Media Intelligence search."},
+ {id:"capcut",name:"CapCut",cat:"Video editing",url:"https://www.capcut.com",type:"freemium",price:"Free · Pro ~$8–10/mo",use:"Fast Reels and Shorts: auto captions, AI cutout, templates, beat sync."},
+ {id:"descript",name:"Descript",cat:"Video editing",url:"https://www.descript.com",type:"freemium",price:"Free · from ~$16/mo",use:"Edit interviews and testimonials by editing the transcript; Studio Sound; filler-word removal."},
+ {id:"topazvideo",name:"Topaz Video AI",cat:"Upscale & restore",url:"https://www.topazlabs.com/topaz-video",type:"subscription",price:"~$299/yr",use:"Upscale to 4K, slow motion frame interpolation, stabilize and denoise old footage."},
+ {id:"opusclip",name:"Opus Clip",cat:"Marketing",url:"https://www.opus.pro",type:"freemium",price:"Free · from ~$15/mo",use:"Turns long wedding films or behind-the-scenes videos into short viral clips automatically."},
+ {id:"adobepodcast",name:"Adobe Podcast Enhance",cat:"Audio",url:"https://podcast.adobe.com/enhance",type:"freemium",price:"Free · Premium in Adobe plans",use:"Makes noisy vows, speeches and interviews sound studio-clean."},
+ {id:"elevenlabs",name:"ElevenLabs",cat:"Audio",url:"https://elevenlabs.io",type:"freemium",price:"Free · from ~$5/mo",use:"AI voiceovers in English and Indian languages for promos and reels; dubbing."},
+ {id:"suno",name:"Suno",cat:"Audio",url:"https://suno.com",type:"freemium",price:"Free · from ~$10/mo",use:"Custom background music. Use a paid plan for commercial rights."},
+ {id:"firefly",name:"Adobe Firefly",cat:"Generative image & video",url:"https://firefly.adobe.com",type:"freemium",price:"Free credits · from ~$10/mo",use:"Commercially safe image generation, backgrounds for composites, short video clips."},
+ {id:"midjourney",name:"Midjourney",cat:"Generative image & video",url:"https://www.midjourney.com",type:"subscription",price:"From ~$10/mo",use:"Moodboards, concept art for themed shoots, set and backdrop ideas for clients."},
+ {id:"krea",name:"Krea",cat:"Generative image & video",url:"https://www.krea.ai",type:"freemium",price:"Free · from ~$10/mo",use:"Real-time generation, enhancer and upscaler; access to many image and video models in one place."},
+ {id:"runway",name:"Runway",cat:"Generative image & video",url:"https://runwayml.com",type:"freemium",price:"Free · from ~$15/mo",use:"Image-to-video, remove objects from video, green-screen without green screen, video restyle."},
+ {id:"veo",name:"Google Veo (Flow)",cat:"Generative image & video",url:"https://labs.google/flow",type:"subscription",price:"With Google AI Pro / Ultra",use:"High-quality text and image-to-video with sound, for teasers and invitation videos."},
+ {id:"kling",name:"Kling AI",cat:"Generative image & video",url:"https://klingai.com",type:"freemium",price:"Free credits · from ~$10/mo",use:"Animate still photos into realistic motion clips; popular for save-the-date reels."},
+ {id:"comfyui",name:"ComfyUI",cat:"Advanced / local AI",url:"https://www.comfy.org",type:"free",price:"Free (needs NVIDIA GPU, 12GB+ VRAM ideal)",use:"Node-based local workflows for Flux and Stable Diffusion: relighting, product shots, style LoRAs."},
+ {id:"flux",name:"FLUX / Stable Diffusion models",cat:"Advanced / local AI",url:"https://huggingface.co/black-forest-labs",type:"free",price:"Free open weights (check licence)",use:"Run image models on your own PC; train a LoRA on your own photography style."},
+ {id:"kwikpic",name:"Kwikpic / Samaro",cat:"Client delivery",url:"https://www.kwikpic.in",type:"freemium",price:"Free tier · paid plans in ₹",use:"Face-recognition event galleries: guests take a selfie and get only their photos. Popular for Indian weddings."},
+ {id:"pixieset",name:"Pixieset / Pic-Time",cat:"Client delivery",url:"https://pixieset.com",type:"freemium",price:"Free tier · from ~$8/mo",use:"Client galleries, print store, smart face sorting, contracts and invoicing."},
+ {id:"canva",name:"Canva (Magic Studio)",cat:"Marketing",url:"https://www.canva.com",type:"freemium",price:"Free · Pro ~$15/mo",use:"AI design for album covers, posters, Instagram posts, Magic Resize for every platform."},
+ {id:"zapier",name:"Zapier / Make",cat:"Automation",url:"https://zapier.com",type:"freemium",price:"Free · from ~$9–20/mo",use:"Connect forms, WhatsApp/email, calendar and AI: auto-reply to enquiries, send booking reminders."}
+];
+const T = Object.fromEntries(TOOLS.map(t=>[t.id,t]));
+
+const LEVELS = [
+ {id:1,name:"Basic",c:"var(--lvl1)",blurb:"Get comfortable with AI in the tools you already use. No new software needed for most of it."},
+ {id:2,name:"Intermediate",c:"var(--lvl2)",blurb:"Let AI take over repetitive work: culling, batch editing, retouching and video cleanup."},
+ {id:3,name:"Advanced",c:"var(--lvl3)",blurb:"Create things that were not in the camera: generative fill, AI video, voice and music."},
+ {id:4,name:"Expert",c:"var(--lvl4)",blurb:"Build your own AI workflows, train models on your style, and automate the studio."}
+];
+
+const MODULES = [
+ {id:"m1",lvl:1,title:"How AI works for creatives",sub:"What AI can and can't do, and good prompting",
+  lessons:["Kinds of AI: assistants, editing AI, generative AI","Writing good prompts: role, context, goal, format","Using an assistant to plan a shoot: shot list, timeline, gear checklist","Privacy: what client photos you should never upload"],
+  tools:["chatgpt","claude","gemini"],
+  tuts:[["Prompting for beginners","Google / OpenAI guides","prompt engineering for beginners tutorial"],["AI tools every photographer should know","Matt Wolfe / tech channels","AI tools for photographers 2026"],["ChatGPT for photography business","Photography business channels","ChatGPT for photographers business"]],
+  task:"Ask an AI assistant for a full wedding-day timeline and shot list for a 300-guest Indian wedding, then correct it from your experience."},
+ {id:"m2",lvl:1,title:"AI for the photography business",sub:"Captions, quotes, client replies, SEO",
+  lessons:["Reply templates for WhatsApp and email enquiries","Package and quotation writing","Instagram captions and hashtags in English and regional languages","Writing your website 'About' and blog posts for Google search"],
+  tools:["chatgpt","claude","canva"],
+  tuts:[["Canva Magic Studio full tutorial","Canva","Canva Magic Studio tutorial"],["Using ChatGPT to grow a photography business","Photography business","ChatGPT photography business marketing"],["SEO for photographers with AI","SEO for photographers","SEO for photographers AI blog"]],
+  task:"Create 3 package descriptions (Silver, Gold, Platinum) and 10 Instagram captions for your latest shoot."},
+ {id:"m3",lvl:1,title:"Lightroom AI masking & Denoise",sub:"Select subject, sky, people and fix high-ISO noise",
+  lessons:["Select Subject, Sky, Background and People masks","Face parts: skin, eyes, lips, hair masks for portraits","AI Denoise for low-light receptions","Generative Remove and Lens Blur","Adaptive presets and syncing masks across a whole event"],
+  tools:["lightroom"],
+  tuts:[["Lightroom AI masking complete guide","Anthony Morganti","Anthony Morganti Lightroom masking AI"],["Lightroom Denoise explained","Matt Kloskowski","Matt Kloskowski Lightroom denoise"],["Lightroom Generative Remove & Lens Blur","Adobe Photoshop Lightroom","Lightroom generative remove lens blur tutorial"]],
+  task:"Edit one high-ISO reception photo: Denoise, People mask for skin, sky mask, Lens Blur. Compare with your old method."},
+ {id:"m4",lvl:1,title:"Photoshop AI essentials",sub:"Generative Fill, Expand, Remove tool, Neural Filters",
+  lessons:["Remove tool and Generative Fill to clean distractions","Generative Expand to change crop and aspect ratio (e.g. 4:5 to 9:16)","Neural Filters: smart portrait, skin smoothing, colorize","Sky Replacement and Harmonize for composites"],
+  tools:["photoshop","firefly"],
+  tuts:[["Generative Fill masterclass","PiXimperfect","PiXimperfect generative fill"],["Photoshop AI tools for photographers","Phlearn","Phlearn photoshop AI generative"],["Photoshop AI for beginners (Hindi)","Hindi Photoshop channels","Photoshop generative fill tutorial Hindi"]],
+  task:"Take a landscape portrait and expand it into a vertical 9:16 story without reshooting."},
+ {id:"m5",lvl:2,title:"AI culling & personal editing profiles",sub:"Cut a 5,000-photo wedding down in minutes",
+  lessons:["How AI culling scores focus, closed eyes and duplicates","Training a personal profile from your past Lightroom catalogs","Applying your style to a full event, then fine-tuning","Comparing Aftershoot, Imagen and Narrative for your workflow"],
+  tools:["aftershoot","imagen","narrative","lightroom"],
+  tuts:[["Aftershoot full workflow","Aftershoot","Aftershoot tutorial culling editing"],["Imagen AI personal profile setup","Imagen AI","Imagen AI personal profile tutorial"],["Narrative Select culling review","Narrative","Narrative Select tutorial"]],
+  task:"Run one full event through an AI cull and edit. Time it against your normal workflow."},
+ {id:"m6",lvl:2,title:"AI portrait & wedding retouching",sub:"Batch skin, blemish and background cleanup",
+  lessons:["Natural skin retouching without the 'plastic' look","Batch retouching hundreds of portraits with Evoto","Retouch4me plugins inside Photoshop","Luminar Neo AI skin, relight and sky as a quick alternative"],
+  tools:["evoto","retouch4me","luminar"],
+  tuts:[["Evoto AI retouching tutorial","Evoto","Evoto AI tutorial wedding retouch"],["Retouch4me plugins review","Retouching channels","Retouch4me tutorial"],["Luminar Neo full tutorial","Skylum","Luminar Neo tutorial beginners"]],
+  task:"Batch retouch a 50-photo bridal portrait set and keep skin texture visible at 100% zoom."},
+ {id:"m7",lvl:2,title:"Upscaling, sharpening & restoration",sub:"Rescue blurry shots, print big, restore old photos",
+  lessons:["Denoise vs sharpen vs upscale: when to use which","Fixing slight motion blur and missed focus","Upscaling for large album and canvas prints","Restoring and colorizing old family photographs (a new service to sell)"],
+  tools:["topazphoto","remini","photoshop"],
+  tuts:[["Topaz Photo AI complete guide","Topaz Labs","Topaz Photo AI tutorial"],["Restore old photos with AI","PiXimperfect","restore old photos AI photoshop neural filter"],["Gigapixel upscale for print","Topaz Labs","Topaz Gigapixel upscale print tutorial"]],
+  task:"Restore a damaged old family photo and offer it as a paid add-on service."},
+ {id:"m8",lvl:2,title:"AI in video editing",sub:"Magic Mask, text-based editing, auto captions",
+  lessons:["DaVinci Resolve Neural Engine: Magic Mask, Smart Reframe, Voice Isolation","AI color matching across multiple cameras","Premiere Pro text-based editing and Generative Extend","Auto captions and subtitles in multiple languages","Descript for interviews and couple testimonials"],
+  tools:["resolve","premiere","descript","capcut"],
+  tuts:[["DaVinci Resolve AI features","Casey Faris","Casey Faris DaVinci Resolve AI features"],["Premiere Pro AI tools","Justin Odisho","Justin Odisho Premiere Pro AI"],["Descript full tutorial","Descript","Descript tutorial"]],
+  task:"Edit a 3-minute wedding highlight using Smart Reframe to also deliver a vertical Reel version."},
+ {id:"m9",lvl:2,title:"AI audio cleanup",sub:"Clear vows, speeches and interviews",
+  lessons:["Removing wind, crowd and DJ noise from speech","Voice Isolation in Resolve vs Adobe Podcast Enhance","Leveling and loudness for social media"],
+  tools:["adobepodcast","resolve","descript"],
+  tuts:[["Adobe Podcast Enhance speech","Adobe","Adobe Podcast Enhance speech tutorial"],["DaVinci voice isolation","Casey Faris","DaVinci Resolve voice isolation tutorial"]],
+  task:"Clean up the noisiest speech recording from your last wedding."},
+ {id:"m10",lvl:3,title:"Generative images for photographers",sub:"Moodboards, backdrops, composites",
+  lessons:["Making moodboards and concepts to pitch themed shoots","Generating backgrounds for product and studio composites","Editing photos with words: Gemini Nano Banana and Firefly","Where to draw the line: disclosure and keeping your work authentic"],
+  tools:["midjourney","firefly","gemini","krea"],
+  tuts:[["Midjourney for beginners","Midjourney tutorial channels","Midjourney beginner tutorial 2026"],["Adobe Firefly tutorial","Adobe Firefly","Adobe Firefly tutorial photographers"],["Gemini Nano Banana photo editing","AI tutorials","Gemini Nano Banana photo editing tutorial"]],
+  task:"Create a 6-image moodboard for a pre-wedding concept and present it to a client."},
+ {id:"m11",lvl:3,title:"AI video generation",sub:"Bring stills to life, teasers and invitations",
+  lessons:["Image-to-video: animating your own photos","Text-to-video for B-roll and openers","Making save-the-date and invitation videos","Combining real footage with AI shots in one edit","Consistency: same couple, same look across clips"],
+  tools:["runway","veo","kling","firefly"],
+  tuts:[["AI filmmaking course","Curious Refuge","Curious Refuge AI filmmaking"],["Kling and Veo image to video","Theoretically Media","Theoretically Media AI video Kling Veo"],["Runway full tutorial","Runway","Runway tutorial image to video"]],
+  task:"Turn 5 pre-wedding photos into a 20-second animated save-the-date with music."},
+ {id:"m12",lvl:3,title:"AI voice, music & short-form content",sub:"Voiceovers, custom music, auto clips",
+  lessons:["AI voiceovers for studio promos (with consent rules for real voices)","Generating royalty-safe background music","Turning long films into Reels and Shorts automatically","Thumbnails and posters with Canva AI"],
+  tools:["elevenlabs","suno","opusclip","capcut","canva"],
+  tuts:[["ElevenLabs tutorial","ElevenLabs","ElevenLabs tutorial voiceover"],["Opus Clip tutorial","Opus Clip","Opus Clip tutorial shorts"],["CapCut AI features","CapCut","CapCut AI features tutorial"]],
+  task:"Produce a 30-second studio promo with AI voiceover, AI music and auto captions."},
+ {id:"m13",lvl:4,title:"Local AI with ComfyUI & FLUX",sub:"Run models on your own computer",
+  lessons:["Hardware: GPU, VRAM and what you need","Installing ComfyUI and loading FLUX / SDXL models","ControlNet: keep the pose and composition of your photo","AI relighting and product photography workflows","Inpainting and outpainting at high resolution"],
+  tools:["comfyui","flux"],
+  tuts:[["ComfyUI beginner course","Olivio Sarikas","Olivio Sarikas ComfyUI beginner"],["ComfyUI workflows explained","Sebastian Kamph","Sebastian Kamph ComfyUI"],["FLUX in ComfyUI","Pixaroma","Pixaroma ComfyUI FLUX tutorial"]],
+  task:"Build a ComfyUI workflow that relights a product photo into 3 different moods."},
+ {id:"m14",lvl:4,title:"Train AI on your own style",sub:"LoRAs, style consistency, brand look",
+  lessons:["What a LoRA is and when it helps","Preparing a training set from your own portfolio","Training and testing a style LoRA","Licensing: commercial rights of models you use"],
+  tools:["flux","comfyui","krea"],
+  tuts:[["Train a FLUX LoRA","AI tutorial channels","train FLUX LoRA tutorial"],["LoRA training explained","Sebastian Kamph","Sebastian Kamph LoRA training"]],
+  task:"Train a style LoRA on 20–30 of your best edits and compare its output with your real work."},
+ {id:"m15",lvl:4,title:"Automate the studio",sub:"Enquiries, galleries, face-search delivery",
+  lessons:["Face-recognition galleries for weddings and corporate events","Auto-replies and booking reminders with Zapier/Make + AI","Contracts, invoices and galleries in one client portal","A complete AI workflow: shoot → cull → edit → deliver → market"],
+  tools:["kwikpic","pixieset","zapier","chatgpt"],
+  tuts:[["Zapier for beginners","Zapier","Zapier tutorial beginners AI"],["Pixieset client gallery setup","Pixieset","Pixieset tutorial"],["Face recognition photo sharing for events","Event photo apps","face recognition photo sharing wedding app"]],
+  task:"Set up a flow: new enquiry form → AI drafts a reply → saved to your sheet → reminder 2 days later."},
+ {id:"m16",lvl:4,title:"Ethics, copyright & capstone project",sub:"Consent, disclosure and your AI-enabled offer",
+  lessons:["Client consent and contract clauses for AI editing","Disclosing AI-generated content; competition and journalism rules","Copyright of AI outputs and training data","Capstone: launch one new AI-powered service and price it"],
+  tools:["claude","chatgpt"],
+  tuts:[["AI and copyright for photographers","Photography law channels","AI copyright photographers explained"],["AI ethics in photography","Photography channels","AI ethics photography discussion"]],
+  task:"Write an AI clause for your contract and launch one new package, e.g. 'Same-day AI highlight reel'."}
+];
+
+const BUDGET = [
+ {name:"Free start",cost:"₹0 / $0",desc:"ChatGPT or Gemini free, DaVinci Resolve free, CapCut, Canva free, Adobe Podcast Enhance, Krea free credits."},
+ {name:"Working studio",cost:"~$55–75 / month",desc:"Adobe Photography plan, Aftershoot or Imagen, ChatGPT/Claude Pro, Canva Pro. Covers modules 1–9."},
+ {name:"Full AI studio",cost:"~$150+ / month",desc:"Add Resolve Studio (one-time), Topaz, Runway or Kling, Midjourney, ElevenLabs. Covers every module."}
+];
+
+// ---------- state ----------
+let done = {};
+try{ done = JSON.parse(localStorage.getItem("ala-done")||"{}") }catch(e){}
+const save = ()=>{ try{ localStorage.setItem("ala-done",JSON.stringify(done)) }catch(e){} };
+let levelFilter = 0;
+const esc = s => String(s).replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+const totalLessons = MODULES.reduce((n,m)=>n+m.lessons.length,0);
+
+function renderStats(){
+  const d = Object.values(done).filter(Boolean).length;
+  document.getElementById("stats").innerHTML =
+   `<span><b>${LEVELS.length}</b> levels</span><span><b>${MODULES.length}</b> modules</span><span><b>${totalLessons}</b> lessons</span><span><b>${TOOLS.length}</b> tools</span><span><b>${d}</b> lessons done</span>`;
+}
+
+function renderLevelbar(){
+  const d = Object.values(done).filter(Boolean).length, pct = Math.round(d/totalLessons*100);
+  document.getElementById("levelbar").innerHTML =
+   [{id:0,name:"All levels"},...LEVELS].map(l=>`<button class="chip" data-lvl="${l.id}" aria-pressed="${levelFilter===l.id}">${l.name}</button>`).join("")+
+   `<span class="progress">${pct}% complete <span class="meter"><i style="width:${pct}%"></i></span></span>`;
+}
+
+function renderCurriculum(){
+  const open = new Set([...document.querySelectorAll("details.mod[open]")].map(d=>d.id));
+  let n = 0, html = "";
+  for(const L of LEVELS){
+    const mods = MODULES.filter(m=>m.lvl===L.id);
+    if(levelFilter && levelFilter!==L.id){ n += mods.length; continue; }
+    html += `<div class="levelhead" style="--c:${L.c}"><span class="lvl-tag">Level ${L.id}</span><h2>${L.name}</h2><p>${L.blurb}</p></div><div class="modules">`;
+    for(const m of mods){
+      n++;
+      const cnt = m.lessons.filter((_,i)=>done[m.id+"-"+i]).length;
+      html += `<details class="mod" id="${m.id}" style="--c:${L.c}" ${open.has(m.id)?"open":""}>
+       <summary><span class="frame">MOD ${String(n).padStart(2,"0")}</span><h3 class="mtitle">${esc(m.title)}</h3>
+        <span class="done-pill ${cnt===m.lessons.length?"ok":""}">${cnt}/${m.lessons.length}</span><span class="msub">${esc(m.sub)}</span></summary>
+       <div class="mbody">
+        <div style="display:grid;gap:16px;min-width:0">
+         <div><h4>Lessons</h4><ul class="lessons">${m.lessons.map((l,i)=>{const k=m.id+"-"+i;return `<li><label><input type="checkbox" id="cb-${k}" data-k="${k}" ${done[k]?"checked":""}><span>${esc(l)}</span></label></li>`}).join("")}</ul></div>
+         <div><h4>Tools</h4><div class="toolchips">${m.tools.map(id=>`<button class="tchip" data-tool="${id}">${esc(T[id].name)}<small>${esc(T[id].price.split("·")[0].trim())}</small></button>`).join("")}</div></div>
+         <div class="task"><b>Practice task</b>${esc(m.task)}</div>
+        </div>
+        <div style="min-width:0"><h4>YouTube tutorials</h4><ul class="tuts">${m.tuts.map(([t,ch,q])=>`<li><a href="${YT(q)}" target="_blank" rel="noopener"><span class="play"></span><span>${esc(t)}<small>${esc(ch)} · YouTube</small></span></a></li>`).join("")}</ul></div>
+       </div></details>`;
+    }
+    html += `</div>`;
+  }
+  document.getElementById("curriculum").innerHTML = html;
+}
+
+function usedIn(id){ return MODULES.filter(m=>m.tools.includes(id)).map(m=>MODULES.indexOf(m)+1) }
+function renderTools(){
+  const q = document.getElementById("toolsearch").value.toLowerCase().trim();
+  const c = document.getElementById("catfilter").value, p = document.getElementById("pricefilter").value;
+  const rows = TOOLS.filter(t=>(!c||t.cat===c)&&(!p||t.type===p)&&(!q||(t.name+" "+t.cat+" "+t.use).toLowerCase().includes(q)));
+  document.getElementById("toolrows").innerHTML = rows.length ? rows.map(t=>`<tr id="tool-${t.id}">
+    <td class="name"><a href="${t.url}" target="_blank" rel="noopener">${esc(t.name)}</a></td><td>${esc(t.cat)}</td><td>${esc(t.use)}</td>
+    <td class="price"><span class="ptype ${t.type}">${t.type==="credits"?"per photo":t.type}</span><br>${esc(t.price)}</td>
+    <td class="price">${usedIn(t.id).map(n=>"Mod "+String(n).padStart(2,"0")).join(", ")}</td></tr>`).join("")
+    : `<tr><td colspan="5">No tools match. Try another word, or clear the filters.</td></tr>`;
+}
+
+function show(view){
+  document.querySelectorAll(".tab").forEach(b=>b.setAttribute("aria-selected",b.dataset.view===view));
+  document.getElementById("view-curriculum").hidden = view!=="curriculum";
+  document.getElementById("view-tools").hidden = view!=="tools";
+}
+
+// ---------- init ----------
+document.getElementById("catfilter").innerHTML = `<option value="">All categories</option>`+[...new Set(TOOLS.map(t=>t.cat))].map(c=>`<option>${esc(c)}</option>`).join("");
+document.getElementById("budget").innerHTML = BUDGET.map(b=>`<div class="kit"><h3>${b.name}</h3><div class="cost">${b.cost}</div><p>${b.desc}</p></div>`).join("");
+renderStats(); renderLevelbar(); renderCurriculum(); renderTools();
+const firstMod = document.getElementById("m1"); if(firstMod) firstMod.open = true;
+
+document.querySelectorAll(".tab").forEach(b=>b.addEventListener("click",()=>show(b.dataset.view)));
+document.getElementById("levelbar").addEventListener("click",e=>{const b=e.target.closest("[data-lvl]");if(!b)return;levelFilter=+b.dataset.lvl;renderLevelbar();renderCurriculum()});
+document.getElementById("curriculum").addEventListener("change",e=>{const k=e.target.dataset.k;if(!k)return;done[k]=e.target.checked;save();renderStats();renderLevelbar();renderCurriculum()});
+document.getElementById("curriculum").addEventListener("click",e=>{const b=e.target.closest("[data-tool]");if(!b)return;
+  document.getElementById("toolsearch").value="";document.getElementById("catfilter").value="";document.getElementById("pricefilter").value="";renderTools();show("tools");
+  const r=document.getElementById("tool-"+b.dataset.tool);if(r){r.scrollIntoView({block:"center"});r.classList.add("flash");setTimeout(()=>r.classList.remove("flash"),1600)}});
+["toolsearch","catfilter","pricefilter"].forEach(id=>document.getElementById(id).addEventListener("input",renderTools));
+if(location.hash==="#tools") show("tools");
+</script>
+</body>
+</html>
