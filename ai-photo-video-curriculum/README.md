@@ -4,7 +4,7 @@ A video course web app (English + हिंदी) that teaches an established p
 
 - Home, Syllabus, Editing types, and Tools & prices views
 - 4 levels, 16 modules, lesson checklists (progress is saved in the browser)
-- 73 hand-picked YouTube tutorials (English and Hindi) with thumbnails
+- 73 hand-picked YouTube tutorials with thumbnails (English first, a few optional Hindi videos)
 - 16 editing types, each linked to its tools, module and a video
 - 34 AI tools with approximate pricing
 

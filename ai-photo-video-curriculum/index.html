@@ -420,7 +420,7 @@ const MODVIDS = {"m1": {"en": ["p09yRj47kNM", "YLANbuC8qUg", "RKZWC99TnUk"], "hi
 const X = {
  en:{home:"Home",syllabus:"Syllabus",edits:"Editing types",tools:"Tools & prices",
   heroEy:"For working photographers & videographers",heroH:"Add <em>AI</em> to your photo &amp; video studio, from beginner to expert.",
-  heroP:"16 modules in 4 levels. Every module has lessons, a practice task, the tools to use with prices, and hand-picked YouTube videos in English and Hindi.",
+  heroP:"16 modules in 4 levels. Every module has lessons, a practice task, the tools to use with prices, and hand-picked YouTube videos, mostly in English.",
   start:"Start with Level 1",browseEdits:"See editing types",
   sVideos:"videos",sModules:"modules",sTools:"AI tools",sLevels:"levels",
   roadH:"Your learning path",roadP:"Work through the levels in order, or jump to what your studio needs right now.",
@@ -428,17 +428,17 @@ const X = {
   featH:"Popular videos to start with",featP:"Click any video to watch it on YouTube.",seeAll:"See full syllabus →",
   sylH:"Syllabus",sylP:"Pick a module to see its lessons, tools and videos. Tick lessons as you finish them; your progress stays in this browser.",
   allLv:"All levels",lv:"Level",mod:"Module",vids:"videos",done:"done",
-  back:"← Back to syllabus",lessons:"Lessons",task:"Practice task",tools2:"Tools for this module",videosH:"Watch: video tutorials",videosP:"Opens on YouTube.",
+  back:"← Back to syllabus",lessons:"Lessons",task:"Practice task",tools2:"Tools for this module",videosH:"Watch: video tutorials",videosP:"Main videos are in English; a few optional Hindi videos are listed at the end. Opens on YouTube.",
   prev:"← Previous module",next:"Next module →",
   editsH:"Editing types",editsP:"Every kind of AI editing a photo and video studio does, the tools for each, and a video showing how.",
   toolsLbl:"Tools",learnLbl:"Learn in",watch:"Watch",
   toolsH:"Tools & prices",budgetH:"Starter kits by budget",
   noteTools:"Prices are approximate list prices as of 2026 and change often. Indian pricing (₹, plus 18% GST) can differ, and many tools have yearly or regional discounts. Check the official site before you subscribe.",
   foot:"AI Lens Academy · Videos belong to their creators on YouTube · Prices are approximate",
-  hiBadge:"हिंदी",enBadge:"English",views:"views"},
+  hiBadge:"Hindi",enBadge:"English",views:"views"},
  hi:{home:"होम",syllabus:"सिलेबस",edits:"एडिटिंग के प्रकार",tools:"टूल्स और कीमत",
   heroEy:"प्रोफेशनल फोटोग्राफर और वीडियोग्राफर के लिए",heroH:"अपने फोटो और वीडियो स्टूडियो में <em>AI</em> जोड़ें, बिगिनर से एक्सपर्ट तक।",
-  heroP:"4 लेवल में 16 मॉड्यूल। हर मॉड्यूल में पाठ, प्रैक्टिस टास्क, कीमत के साथ टूल्स, और हिंदी व अंग्रेज़ी में चुने हुए YouTube वीडियो।",
+  heroP:"4 लेवल में 16 मॉड्यूल। हर मॉड्यूल में पाठ, प्रैक्टिस टास्क, कीमत के साथ टूल्स, और चुने हुए YouTube वीडियो (ज़्यादातर अंग्रेज़ी में)।",
   start:"लेवल 1 से शुरू करें",browseEdits:"एडिटिंग के प्रकार देखें",
   sVideos:"वीडियो",sModules:"मॉड्यूल",sTools:"AI टूल्स",sLevels:"लेवल",
   roadH:"आपका लर्निंग पाथ",roadP:"लेवल क्रम से पूरे करें, या सीधे वहाँ जाएँ जिसकी आपके स्टूडियो को अभी ज़रूरत है।",
@@ -446,7 +446,7 @@ const X = {
   featH:"शुरुआत के लिए लोकप्रिय वीडियो",featP:"किसी भी वीडियो पर क्लिक करके YouTube पर देखें।",seeAll:"पूरा सिलेबस देखें →",
   sylH:"सिलेबस",sylP:"मॉड्यूल चुनें और उसके पाठ, टूल्स और वीडियो देखें। पाठ पूरा होने पर टिक करें; आपकी प्रगति इसी ब्राउज़र में सेव रहती है।",
   allLv:"सभी लेवल",lv:"लेवल",mod:"मॉड्यूल",vids:"वीडियो",done:"पूरे",
-  back:"← सिलेबस पर वापस",lessons:"पाठ",task:"प्रैक्टिस टास्क",tools2:"इस मॉड्यूल के टूल्स",videosH:"देखें: वीडियो ट्यूटोरियल",videosP:"हिंदी वीडियो पहले दिखाए गए हैं। YouTube पर खुलते हैं।",
+  back:"← सिलेबस पर वापस",lessons:"पाठ",task:"प्रैक्टिस टास्क",tools2:"इस मॉड्यूल के टूल्स",videosH:"देखें: वीडियो ट्यूटोरियल",videosP:"मुख्य वीडियो अंग्रेज़ी में हैं; कुछ हिंदी वीडियो अंत में अतिरिक्त दिए गए हैं। YouTube पर खुलते हैं।",
   prev:"← पिछला मॉड्यूल",next:"अगला मॉड्यूल →",
   editsH:"एडिटिंग के प्रकार",editsP:"फोटो और वीडियो स्टूडियो में होने वाली हर तरह की AI एडिटिंग, उसके टूल्स, और सीखने के लिए एक वीडियो।",
   toolsLbl:"टूल्स",learnLbl:"सीखें",watch:"देखें",
@@ -511,7 +511,7 @@ const LV = id => LEVELS.find(l=>l.id===id);
 const modNo = m => MODULES.indexOf(m)+1;
 const pad = n => String(n).padStart(2,"0");
 const lessonsDone = m => m.en.lessons.filter((_,i)=>done[m.id+"-"+i]).length;
-const vidsFor = id => { const v = MODVIDS[id]; return lang==="hi" ? [...v.hi.map(i=>[i,"hi"]),...v.en.map(i=>[i,"en"])] : [...v.en.map(i=>[i,"en"]),...v.hi.map(i=>[i,"hi"])]; };
+const vidsFor = id => { const v = MODVIDS[id]; return [...v.en.map(i=>[i,"en"]),...v.hi.map(i=>[i,"hi"])]; };
 const totalVids = Object.values(MODVIDS).reduce((n,v)=>n+v.en.length+v.hi.length,0);
 
 function vcard(id, l){
@@ -522,7 +522,7 @@ function vcard(id, l){
 }
 
 function renderHome(){
-  const feat = ["NvUZIm083P8","SER_4Rqn7P4","pbuyqWMyb9A","zRtToCIciMg","9k7-OtG2lAE","OLWd5O1O66s","K1xrOPKjPrA","4nvDth40MH0"];
+  const feat = ["NvUZIm083P8","SER_4Rqn7P4","pbuyqWMyb9A","zRtToCIciMg","9k7-OtG2lAE","OLWd5O1O66s","K1xrOPKjPrA","Vs6vJwmJL0Y"];
   const collage = ["SER_4Rqn7P4","NvUZIm083P8","zRtToCIciMg","OLWd5O1O66s","pbuyqWMyb9A","2zk-1zgxj_Q"];
   return `<section class="hero">
     <div>
@@ -586,7 +586,7 @@ function renderModule(){
 
 function renderEdits(){
   return `<h1 class="h-section" style="font-size:34px">${x("editsH")}</h1><p class="sub" style="margin-bottom:22px">${x("editsP")}</p>
-   <div class="egrid">${EDITS.map(e=>{const l = lang==="hi"&&e.v.hi?"hi":"en"; const id=e.v[l]; return `<article class="ecard">${vcard(id,l)}
+   <div class="egrid">${EDITS.map(e=>{const l = "en"; const id=e.v.en; return `<article class="ecard">${vcard(id,l)}
      <div class="body"><h3>${e[lang][0]}</h3><p>${e[lang][1]}</p>
       <div class="row"><span class="lbl">${x("toolsLbl")}</span>${e.tools.map(t=>`<button class="mini" data-tool="${t}">${esc(T[t].name)}</button>`).join("")}</div>
       <div class="row"><span class="lbl">${x("learnLbl")}</span>${e.mods.map(mid=>{const m=MODULES.find(q=>q.id===mid);return `<button class="mini mod" data-open="${mid}">${x("mod")} ${pad(modNo(m))}: ${esc(m[lang].title)}</button>`}).join("")}</div>
