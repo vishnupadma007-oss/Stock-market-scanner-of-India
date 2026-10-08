@@ -79,8 +79,9 @@ agent treats it as a target to chase, never a quota to force:
 - **A bad day is never "made up"** with bigger trades. Positions never grow to catch up.
 - No leverage: total exposure is capped at 100% of capital.
 
-Without leverage, 1% of capital needs about a 4% average move on a full 25% position, after charges. Most
-days that won't happen, and the report shows it plainly: actual growth versus the 1%-a-day curve.
+Without leverage, 1% of capital means four full-size positions (25% each) all winning about 1.1% after
+charges, or one winning about 4.5%. Most days that won't happen, and the report shows it plainly: actual
+growth versus the 1%-a-day curve.
 
 ## Can an agent really have feelings?
 
