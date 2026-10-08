@@ -1,12 +1,11 @@
 # AI Lens Academy
 
-A one-page web app (English + हिंदी) with a curriculum for an established photographer and videographer who wants to add AI to their work.
+A video course web app (English + हिंदी) that teaches an established photographer and videographer how to use AI, from beginner to expert.
 
-- English / Hindi switch at the top (add `#hi` to the link to open in Hindi)
-- 4 levels (Basic → Expert), 16 modules, lesson checklists (progress is saved in the browser)
-- 34 AI tools with category, use case and approximate pricing, plus a search and filters
-- YouTube tutorial links for every module (they open a YouTube search, so results stay current)
+- Home, Syllabus, Editing types, and Tools & prices views
+- 4 levels, 16 modules, lesson checklists (progress is saved in the browser)
+- 73 hand-picked YouTube tutorials (English and Hindi) with thumbnails
+- 16 editing types, each linked to its tools, module and a video
+- 34 AI tools with approximate pricing
 
-Open `index.html` in a browser. No build step is needed. You can host it free on GitHub Pages, Netlify or Vercel.
-
-Prices are approximate and change often. Check each tool's official site before buying.
+Open `index.html` in a browser. It is a single self-contained file, so it can be hosted anywhere (Netlify Drop, GitHub Pages, Vercel).
