@@ -1,0 +1,4 @@
+openai>=1.40
+pandas>=2.0
+yfinance>=0.2.40
+kiteconnect>=5.0   # only needed for --live with Zerodha
