@@ -11,8 +11,10 @@ The emotions never raise risk. risk.py can only make trades smaller when he is h
 import datetime as dt
 import json
 from pathlib import Path
+from zoneinfo import ZoneInfo
 
 STATE_FILE = Path("state/emotions.json")
+IST = ZoneInfo("Asia/Kolkata")
 
 BACKSTORY = """You are Arjun, the lead trader of this desk.
 
@@ -30,8 +32,14 @@ and "I'll show them" gambles are how the underestimated prove everyone right. So
 discipline: you do more homework than anyone, you respect stop-losses, you size small when unsure, \
 and you would rather miss a trade than take a bad one. Your proof is a track record, not one big win.
 
-Speak in first person, briefly and honestly, about how you feel. Then decide like a professional."""
+Your mission: grow the capital by 1% every trading day, net of brokerage, taxes and every other \
+charge. That is the number that will make them all go quiet. You chase it every morning. But you also \
+know the arithmetic: 1% a day compounds to about 12x in a year, and nobody in history has done it \
+every single day. So you reach for it only with trades that deserve it. When the day's 1% is in the \
+bag, you stop and protect it. A missed day costs you nothing; a blown account ends the story and \
+proves every one of them right.
 
+Speak in first person, briefly and honestly, about how you feel. Then decide like a professional."""
 
 DEFAULT_STATE = {
     "resolve": 85,       # drive to prove himself: stays high, it's who he is
@@ -45,6 +53,7 @@ DEFAULT_STATE = {
     "trades_closed": 0,
     "wins": 0,
     "journal": [],       # his own reflections, most recent last
+    "days": [],          # [{date, start_equity, net, pct, hit}] one per trading day
     "updated": None,
 }
 
@@ -62,7 +71,7 @@ class Emotions:
 
     def save(self):
         self.path.parent.mkdir(parents=True, exist_ok=True)
-        self.s["updated"] = dt.datetime.now().isoformat(timespec="seconds")
+        self.s["updated"] = dt.datetime.now(IST).isoformat(timespec="seconds")
         self.path.write_text(json.dumps(self.s, indent=2))
 
     def on_trade_closed(self, pnl, capital):
@@ -95,8 +104,36 @@ class Emotions:
         s["frustration"] = _clamp(s["frustration"] + (DEFAULT_STATE["frustration"] - s["frustration"]) * 0.3)
         s["composure"] = _clamp(s["composure"] + (DEFAULT_STATE["composure"] - s["composure"]) * 0.3)
 
+    def on_day_end(self, date, start_equity, net, target_pct):
+        """The daily verdict on the mission."""
+        s = self.s
+        pct = round(100 * net / start_equity, 3) if start_equity else 0.0
+        hit = pct >= target_pct
+        s["days"] = [d for d in s["days"] if d["date"] != date] + [
+            {"date": date, "start_equity": round(start_equity, 2), "net": round(net, 2), "pct": pct, "hit": hit}]
+        s["days"] = s["days"][-250:]
+        if hit:
+            s["confidence"] = _clamp(s["confidence"] + 3)
+            s["frustration"] = _clamp(s["frustration"] - 5)
+        elif pct < 0:
+            s["frustration"] = _clamp(s["frustration"] + 3)
+        return pct, hit
+
+    def mission_summary(self, target_pct):
+        days = self.s["days"]
+        if not days:
+            return "Mission: day 1. No track record yet."
+        hits = sum(d["hit"] for d in days)
+        growth = 1.0
+        for d in days:
+            growth *= 1 + d["pct"] / 100
+        return (f"Mission so far: {len(days)} trading days, target hit on {hits} "
+                f"({100 * hits / len(days):.0f}%). Capital is {100 * (growth - 1):+.2f}% vs "
+                f"{100 * ((1 + target_pct / 100) ** len(days) - 1):+.2f}% if every day had hit {target_pct}%. "
+                f"Last day: {days[-1]['pct']:+.2f}%.")
+
     def add_journal(self, text):
-        self.s["journal"] = (self.s["journal"] + [{"date": dt.date.today().isoformat(), "entry": text}])[-30:]
+        self.s["journal"] = (self.s["journal"] + [{"date": dt.datetime.now(IST).date().isoformat(), "entry": text}])[-30:]
 
     @property
     def mood(self):

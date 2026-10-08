@@ -46,12 +46,56 @@ def indicators(df):
     }
 
 
-def snapshot(symbols):
-    """{symbol: indicators}; symbols that fail are reported and skipped."""
+def fetch_intraday(symbol):
+    import yfinance as yf
+
+    df = yf.Ticker(f"{symbol}.NS").history(period="5d", interval="5m")
+    if df.empty:
+        raise ValueError(f"No intraday data for {symbol}")
+    return df[["Open", "High", "Low", "Close", "Volume"]]
+
+
+def intraday_indicators(df):
+    """Today's session from 5-minute bars: gap, opening range, VWAP, high/low."""
+    days = sorted(set(df.index.date))
+    today = df[df.index.date == days[-1]]
+    prev = df[df.index.date == days[-2]] if len(days) > 1 else None
+    typical = (today["High"] + today["Low"] + today["Close"]) / 3
+    vwap = float((typical * today["Volume"]).sum() / max(today["Volume"].sum(), 1))
+    opening = today.head(3)  # first 15 minutes
+    last = float(today["Close"].iloc[-1])
+    out = {
+        "session_date": str(days[-1]),
+        "as_of": today.index[-1].strftime("%H:%M"),
+        "last_price": round(last, 2),
+        "day_open": round(float(today["Open"].iloc[0]), 2),
+        "day_high": round(float(today["High"].max()), 2),
+        "day_low": round(float(today["Low"].min()), 2),
+        "vwap": round(vwap, 2),
+        "pct_from_vwap": round(100 * (last / vwap - 1), 2),
+        "opening_range_high": round(float(opening["High"].max()), 2),
+        "opening_range_low": round(float(opening["Low"].min()), 2),
+        "last_5_bars_close": [round(float(x), 2) for x in today["Close"].tail(5)],
+    }
+    if prev is not None and len(prev):
+        prev_close = float(prev["Close"].iloc[-1])
+        out["prev_close"] = round(prev_close, 2)
+        out["gap_pct"] = round(100 * (out["day_open"] / prev_close - 1), 2)
+        out["change_today_pct"] = round(100 * (last / prev_close - 1), 2)
+    return out
+
+
+def snapshot(symbols, intraday=False):
+    """{symbol: indicators}; symbols that fail are reported and skipped. With intraday=True the
+    daily picture is joined by today's 5-minute session, and last_price is the latest 5-minute close
+    (Yahoo's NSE feed can lag; live trading uses the broker's price instead)."""
     out = {}
     for sym in symbols:
         try:
             out[sym] = indicators(fetch_history(sym))
+            if intraday:
+                out[sym]["today"] = intraday_indicators(fetch_intraday(sym))
+                out[sym]["last_price"] = out[sym]["today"]["last_price"]
         except Exception as e:
             print(f"   ⚠️  {sym}: {e}")
     return out
