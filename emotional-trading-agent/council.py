@@ -130,8 +130,13 @@ Reply with ONLY a JSON object:
                                 f"Final specialist views:\n{json.dumps(views, indent=1)}", effort="high")
 
 
-def run_council(llm, symbols, snapshot, today, mode, rounds=2):
+def run_council(llm, symbols, snapshot, today, mode, rounds=2, news=None):
     base = f"Stocks under review: {', '.join(symbols)}\n\nPrice snapshot:\n{json.dumps(snapshot, indent=1)}"
+    if news:
+        base += ("\n\nNews log since the last session (from the overnight news watcher, newest last):\n"
+                 + "\n".join(f"- [{n['seen_at'][5:16]}] (materiality {n.get('materiality')}, {n.get('direction')}, "
+                             f"affects {', '.join(map(str, n.get('affects') or []))}) {n['headline']}: {n.get('detail', '')}"
+                             for n in news[-60:]))
     names = list(SPECIALISTS)
 
     print("\n🪑 Moderator is setting the agenda")
@@ -228,6 +233,7 @@ Reply with ONLY a JSON object:
  "trades": [{{"symbol": "...", "direction": "LONG" | "SHORT", "strategy": "...",
              "entry": price, "stop_loss": price, "target": price, "conviction": 1-5,
              "trigger": "what must happen before entering",
+             "trigger_above": price or null, "trigger_below": price or null, "valid_until": "HH:MM",
              "why": "which council evidence supports it"}}],
  "avoid": ["stocks or situations to stay away from today, and why"],
  "rules_for_today": ["e.g. stop after two losses; no new entries after 14:30"]}}"""
@@ -245,26 +251,34 @@ DECISION_FORMAT = """Reply with ONLY a JSON object:
  "decisions": [{"symbol": "...",
                 "action": "BUY" | "SHORT" | "EXIT" | "HOLD" | "SKIP",
                 "entry": price, "stop_loss": price, "target": price,
+                "trigger_above": price or null, "trigger_below": price or null, "valid_until": "HH:MM" or null,
                 "conviction": 1-5,
                 "rationale": "why, naming the specialists or plan points you agree or disagree with"}],
  "journal": "1-3 sentences for your private trading journal"}
-BUY opens a long; SHORT opens an intraday short (intraday mode only); EXIT closes an open position; \
+BUY opens a long; SHORT opens an intraday short (intraday mode only); EXIT closes an open position now; \
 HOLD keeps one; SKIP means no trade. BUY and SHORT need entry, stop_loss and target (for a SHORT: \
-target < entry < stop_loss). The risk manager sizes every position, subtracts charges, and can cut or \
-veto anything: you do not choose quantity."""
+target < entry < stop_loss).
+Timing: a BUY or SHORT with no trigger is placed now. With trigger_above / trigger_below it is ARMED: a \
+code engine watches every tick and enters the moment the price crosses the trigger (until valid_until), \
+far faster than you can. Use triggers for breakouts, breakdowns and pullbacks to a level. Your list of \
+triggered setups REPLACES the setups currently armed, so repeat any you still want.
+The risk manager sizes every position, subtracts charges, and can cut or veto anything: you do not \
+choose quantity. Stops are tightened automatically as a trade moves in your favour."""
 
 
 def arjun_decides(llm, emotions, symbols, snapshot, council, plan, portfolio, money, limits_text, today, mode,
-                  target_pct, desk_check=False):
-    system = (f"{BACKSTORY}\n\nToday is {today}. Trading mode: {mode}.\n\n{emotions.describe()}\n"
-              f"{emotions.mission_summary(target_pct)}\n\n{DECISION_FORMAT}")
-    situation = ("This is an intraday desk check: the morning meeting is done; re-decide with fresh prices. "
-                 "Manage open positions first.\n\n" if desk_check else "")
-    prompt = (f"{situation}Stocks: {', '.join(symbols)}\n\nPrice snapshot:\n{json.dumps(snapshot, indent=1)}\n\n"
-              f"Council minutes:\n{json.dumps(council.get('minutes'), indent=1)}\n\n"
-              f"Strategist's plan:\n{json.dumps(plan, indent=1)}\n\n"
-              f"Portfolio:\n{json.dumps(portfolio, indent=1)}\n\nMoney:\n{money}\n\n"
+                  target_pct, reason="morning", armed=None, news=None, role="morning"):
+    system = (f"{BACKSTORY}\n\nToday is {today}. Trading mode: {mode}.\n\n{DECISION_FORMAT}\n\n"
               f"Hard risk limits (enforced in code, you cannot override them):\n{limits_text}")
-    if not desk_check:
-        prompt += f"\n\nFull specialist views:\n{json.dumps(council.get('views'), indent=1)}"
-    return llm.ask_json(system, prompt, effort="high")
+    # Stable context first (cached between calls), fresh numbers last.
+    stable = (f"Council minutes:\n{json.dumps(council.get('minutes'), indent=1)}\n\n"
+              f"Strategist's plan:\n{json.dumps(plan, indent=1)}\n\n")
+    if reason == "morning":
+        stable += f"Full specialist views:\n{json.dumps(council.get('views'), indent=1)}\n\n"
+    prompt = (f"Why you are being asked now: {reason}\n\n{emotions.describe()}\n"
+              f"{emotions.mission_summary(target_pct)}\n\n"
+              + (f"News since the morning meeting:\n{json.dumps(news, indent=1)}\n\n" if news else "")
+              + f"Setups currently armed:\n{json.dumps(armed or [], indent=1)}\n\n"
+              f"Portfolio:\n{json.dumps(portfolio, indent=1)}\n\nMoney:\n{money}\n\n"
+              f"Stocks: {', '.join(symbols)}\nPrice snapshot:\n{json.dumps(snapshot, indent=1)}")
+    return llm.ask_json(system, prompt, effort="high", role=role, cache_prefix=stable)

@@ -67,9 +67,15 @@ class PaperBroker:
         self.a["cash"] -= o["qty"] * price
         self.a["positions"][o["symbol"]] = {
             "side": o["side"], "qty": o["qty"], "avg_price": price, "stop_loss": o["stop_loss"],
-            "target": o["target"], "product": o["product"], "opened": dt.datetime.now(IST).isoformat(timespec="seconds")}
+            "initial_stop": o["stop_loss"], "target": o["target"], "product": o["product"],
+            "opened": dt.datetime.now(IST).isoformat(timespec="seconds")}
         self._save()
         return f"paper {o['action']} {o['qty']} {o['symbol']} @ ₹{price} ({o['product']})"
+
+    def move_stop(self, symbol, new_stop):
+        self.a["positions"][symbol]["stop_loss"] = new_stop
+        self._save()
+        return True
 
     def close(self, symbol, price, reason):
         p = self.a["positions"].pop(symbol)
@@ -177,7 +183,7 @@ class ZerodhaBroker:
                                  transaction_type=entry_side, quantity=o["qty"], product=product,
                                  order_type=k.ORDER_TYPE_LIMIT, price=_tick(price), tag="arjun")
         meta = {"side": o["side"], "qty": o["qty"], "avg_price": price, "stop_loss": o["stop_loss"],
-                "target": o["target"], "product": o["product"], "entry_order_id": order_id,
+                "initial_stop": o["stop_loss"], "target": o["target"], "product": o["product"], "entry_order_id": order_id,
                 "opened": dt.datetime.now(IST).isoformat(timespec="seconds")}
         self.meta[o["symbol"]] = meta
         self._save()
@@ -215,6 +221,18 @@ class ZerodhaBroker:
         m["protected"] = True
         self._save()
         return note
+
+    def move_stop(self, symbol, new_stop):
+        """Tighten an intraday stop-loss order at the exchange. Delivery GTTs are left as placed."""
+        m = self.meta.get(symbol)
+        if not m or not m.get("sl_order_id"):
+            return False
+        k = self.kite
+        k.modify_order(variety=k.VARIETY_REGULAR, order_id=m["sl_order_id"], trigger_price=_tick(new_stop),
+                       price=_tick(new_stop * (0.99 if m["side"] == "LONG" else 1.01)))
+        m["stop_loss"] = new_stop
+        self._save()
+        return True
 
     def _cancel_protection(self, m):
         k = self.kite

@@ -58,8 +58,7 @@ Risk manager (code): sizing, charges, limits, vetoes
 Broker: paper or Zerodha
 ```
 
-The meeting happens once a day and is saved, so a restart doesn't pay for it again. With `--loop`,
-Arjun then runs a quick desk check every 15 minutes with fresh prices until the 15:10 square-off.
+The meeting happens once a day and is saved, so a restart doesn't pay for it again.
 
 **Strategy playbook** the Strategist chooses from: opening range breakout, VWAP trend pullback, VWAP mean
 reversion, gap-and-go / gap fill, pivot support bounce (this repo's scanner), event momentum, swing
@@ -102,48 +101,127 @@ Not the way a person does. A model doesn't feel pain or pride. Arjun has the clo
 | rattled | composure < 45 | half size |
 | wounded | 3 losses today, or frustration ≥ 75 | none until tomorrow |
 
+## A day on autopilot
+
+```
+15:30 → 08:00   News watcher (cheap, fast model) checks the news every 10 minutes and keeps a log.
+                (Saturday: hourly. Sunday: every 10 minutes, so Monday's meeting is current.)
+08:00           Morning meeting: Moderator, 12 specialists, Strategist and Arjun read the overnight
+                news log and the markets, and set the day's plan. Entries are ARMED with trigger
+                prices ("buy TCS if it crosses 2,140 before 11:30").
+09:15 → 15:10   The reflex engine (plain code, no AI, no cost) checks prices every 3 seconds live
+                (30 seconds on paper):
+                  - fires an armed entry the instant its price is crossed
+                  - takes targets and stop-losses
+                  - trails stops: break-even at 1R profit, locks 1R at 2R
+                The AI is woken only when something happens:
+                  - a sharp move (1% in 5 minutes)
+                  - important news (the watcher keeps checking every 10 minutes)
+                  - a scheduled review every 30 minutes
+                Each time, Arjun can exit, enter now, or re-arm setups.
+15:10           Square-off of every intraday position.
+                Then the day's verdict, report, journal, and back to watching the news.
+```
+
+**Why the AI doesn't watch every tick:** one AI decision takes 10-60 seconds and costs money. Code
+reacts in milliseconds for free. So the AI does the thinking (what to trade and at which levels), and
+the code does the watching and the reflexes. An AI outage or an empty budget never stops the code
+from managing open positions.
+
+## What the AI costs
+
+Estimates for Claude at list prices (Opus 5.5: $4 / $20 per million input/output tokens; Haiku 5.5:
+$0.10 / $0.50; web search $10 per 1,000 searches). Real costs depend on how much each search returns.
+
+| Work | Model | How often | Approx. per day |
+|---|---|---|---|
+| Morning meeting (29 calls, most with web search) | Opus 5.5 | once | $5-6 |
+| Arjun's intraday decisions (repeated context cached) | Opus 5.5 | ~15-25 calls | $2-3 |
+| News watcher | Haiku 5.5 | ~140 checks, day and night | $2-3 |
+| **Trading day total** | | | **~$10** |
+
+That's roughly **$230-250 a month** (about ₹20,000), including weekend news watching. With
+`--team-model claude-sonnet-5-5` for the specialists, about $200 a month.
+
+For comparison, an AI looking at every 3-second tick would be ~7,000 calls a day: about $850 a day.
+It also couldn't keep up, because each call takes longer than a tick.
+
+**The daily budget** (`--daily-budget`, default $20) is enforced in code, with separate shares so one
+kind of work can't starve another: morning meeting 50%, intraday decisions 35%, news watching 15%.
+When a share runs out, that work pauses until tomorrow, and the code engine keeps trading the armed plan
+and managing positions. Every call's cost is recorded in `state/ai_spend.json` and in the day's report.
+
+Grok: set your real rates with `GROK_PRICE_IN` / `GROK_PRICE_OUT` (USD per million tokens, from xAI's
+pricing page) so the budget is accurate. The default is a deliberately high placeholder.
+
+**There is no unlimited plan for the API.** It's pay-as-you-go, billed separately from a Claude.ai
+chat subscription. To keep the brains from ever stopping mid-day:
+
+1. Buy prepaid credits in the Claude Console (and/or the xAI console) and turn on **auto-reload**, so
+   the balance tops itself up.
+2. Set a **monthly spend limit** there too, as a hard ceiling above the code's daily budget.
+3. Higher usage tiers raise rate limits as your account's spend grows; the desk's ~30 calls in a burst
+   at 08:00 is the peak.
+4. If credits ever run out, nothing breaks: the code engine keeps trading the plan and protecting
+   positions, and the AI resumes when credits return.
+
 ## Setup
 
 ```bash
 cd emotional-trading-agent
 pip install -r requirements.txt
-export XAI_API_KEY=xai-...              # Grok, from https://console.x.ai
 export ANTHROPIC_API_KEY=sk-ant-...     # Claude, from https://platform.claude.com
+export XAI_API_KEY=xai-...              # Grok, from https://console.x.ai (optional)
 ```
 
-You need at least one of the two keys. With only one, the whole desk uses it.
+You need at least one of the two keys. With only one, the whole desk uses it. With both, the default is Claude.
+
+**It needs a computer that stays on**: your PC (no sleep, stable internet) or a small cloud server,
+ideally in the Mumbai region for low latency to NSE. Start it with `python agent.py --autopilot` and
+leave it running.
+
+**NSE holidays:** put the year's holiday dates (from NSE's website) in `holidays.txt`, one `YYYY-MM-DD`
+per line. Without it, the session still notices a holiday when no prices arrive, but the 08:00 meeting
+would already have run.
 
 ## Use
 
 ```bash
-python agent.py                                   # one intraday cycle on paper
-python agent.py --loop                            # the whole trading day, desk check every 15 min
-python agent.py --boss claude --team grok --loop  # Claude as the boss, Grok for the desk
+python agent.py --autopilot                       # around the clock on paper: news, 08:00 meeting, sessions
+python agent.py --session                         # just today's session, tick by tick, until 15:10
+python agent.py                                   # one look: meeting + decisions now, no monitoring
+python agent.py --autopilot --boss claude --team grok
+python agent.py --autopilot --team-model claude-sonnet-5-5   # cheaper specialists
+python agent.py --autopilot --daily-budget 10     # spend at most $10 a day on AI
 python agent.py --mode swing RELIANCE TCS LT      # delivery trades (longs only)
-python agent.py --rounds 3                        # more debate
-python agent.py --capital 500000 --target 0.5     # ₹5 lakh paper capital, 0.5% daily target
 ```
 
-Each run writes `output/session_<time>.md` (the readable report: agenda, minutes, plan, every decision,
-veto, fill and charge, and the day's verdict) and a `.json` with everything. To start over, delete `state/`.
+Tuning: `--tick` (seconds between price checks), `--review-every` (minutes between scheduled AI
+reviews, default 30), `--news-every` / `--night-every` (news checks, default 10), `--shock` (% move in 5
+minutes that wakes the AI, default 1), `--ai-cooldown` (minimum minutes between AI calls, default 3).
 
-**Cost of the AI:** the morning meeting is about 29 model calls, most with web search. Each desk check
-is one call. Run on paper for weeks before trusting it with money.
+Each session writes `output/session_<time>.md`: the news log, agenda, minutes, plan, a timeline of every
+trigger, fill, stop move, exit and veto, each of Arjun's decisions, the day's verdict and the AI spend.
+To start over, delete `state/`.
 
 ## Live trading with Zerodha
 
 ```bash
 export KITE_API_KEY=...
 export KITE_ACCESS_TOKEN=...   # expires daily; generate a fresh one each morning
-python agent.py --live --loop
+python agent.py --live --autopilot
 ```
 
-- At start it asks you once to type `YES` to allow real orders for that day.
+- At start it asks you once to type `YES` to allow real orders (with `--autopilot`, on every trading day
+  until you stop it).
+- Prices come from Zerodha every 3 seconds (one request covers the whole watchlist).
 - Entries are LIMIT orders. Once an entry fills, it gets protection at Zerodha: a stop-loss order for
   intraday (MIS) or a GTT order with stop and target for delivery (CNC).
-- The loop takes intraday targets and squares off at 15:10. Zerodha also auto-squares MIS near 15:20.
-- Live prices come from Zerodha, not Yahoo.
-- No orders are sent while the market is closed. NSE holidays are not built in.
+- Trailing stops modify the stop-loss order at the exchange.
+- The session takes intraday targets and squares off at 15:10. Zerodha also auto-squares MIS near 15:20.
+- No orders are sent while the market is closed.
+- The Kite access token expires every day, so you must log in each morning before 09:15. Live market
+  data through Kite Connect may need a paid API plan; check Zerodha's current pricing.
 - SEBI has rules for retail algorithmic trading through broker APIs. Check with Zerodha what applies to
   your account before running this live.
 
@@ -155,13 +233,16 @@ as `ZerodhaBroker` (`portfolio`, `equity`, `realized_today`, `ltp`, `open`, `clo
 
 | File | What it does |
 |---|---|
-| `agent.py` | Runs the day: morning meeting, desk checks, square-off, verdict, report |
+| `agent.py` | Autopilot schedule, morning meeting, trading session, AI wake-ups, verdict, report |
+| `reflex.py` | The code engine: armed triggers, trailing stops, sharp-move detector |
+| `feed.py` | Fast prices: Zerodha live, or Yahoo 1-minute bars on paper |
+| `news.py` | The news watcher and its log |
 | `council.py` | The Moderator, 12 specialists, debate, Strategist and Arjun's decision |
 | `persona.py` | Arjun's story, mission, emotions, mood, journal and track record |
 | `risk.py` | Limits, sizing, charges checks, daily target and loss locks |
 | `charges.py` | Indian equity charges (edit `RATES` for your broker) |
 | `broker.py` | `PaperBroker` and `ZerodhaBroker` |
 | `market_data.py` | NSE daily and 5-minute data from Yahoo Finance, with indicators |
-| `llm.py` | Grok and Claude clients |
+| `llm.py` | Grok and Claude clients, cost metering and the daily AI budget |
 
 *This is an experiment, not investment advice. The agent can be wrong, and with `--live` the money is real.*
