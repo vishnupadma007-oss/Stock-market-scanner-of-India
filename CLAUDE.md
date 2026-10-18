@@ -12,4 +12,6 @@ Intraday mover-reversal options strategy on NSE F&O stocks, run by a team of age
 User decisions to respect: intraday only; buy options (PE on fading gainers, CE on
 bouncing losers); target >= 1% net of all charges per trade; **no stop-loss**.
 
-To run the desk, use the `trading-desk` skill.
+To run the desk, use the `trading-desk` skill. To judge whether results are real or luck, use the
+`quantforge-ai` skill's validation gates and `scripts/metrics.py` (its stop-loss/kill-switch advice
+does not apply here: the user chose no stop-loss).

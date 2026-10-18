@@ -24,3 +24,16 @@ Findings
 - Buying PE on top gainers lost money (-1.01%/trade); buying CE on top losers made money
   (+0.51%/trade). The "losers only" row is the losers' trades from the base run, not a
   separate run with the daily trade limit given only to losers.
+
+## QuantForge validation (metrics.py on the backtest trades, P&L as a fraction of ₹1 lakh)
+
+| | Trades | Win rate | Profit factor | Chance the edge is zero or negative | Edge if charges double |
+|---|---|---|---|---|---|
+| Both sides | 79 | 89% | 0.50 | 90% | negative |
+| Losers only | 34 | 91% | 1.29 | 56% | negative |
+
+Verdict under QuantForge's gates: **not ready for real money**. Both fail the
+"backtest -> out-of-sample" gate (needs about 100+ trades and a clearly positive result after
+costs). Losers-only is promising but not yet distinguishable from luck, and its small edge
+disappears if real charges/slippage are about twice the model. Next stage: paper trading,
+mainly to measure real bid-ask fills.
