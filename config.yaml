@@ -7,9 +7,7 @@ max_capital_per_trade: 0.25   # max share of capital in one trade's premium
 max_trades_per_day: 2      # hard cap on TRADE signals per day
 net_target_pct: 1.0        # target profit per trade, % of premium paid, AFTER all charges
 
-# Exits. You said you don't want a normal stop-loss; this is only a
-# disaster exit for when an option collapses. Set to null to switch it off.
-emergency_exit_pct: 30     # exit if premium falls this % below entry
+# Exits. No stop-loss: a trade exits at the target or at square-off time.
 square_off_time: "15:15"   # always exit intraday positions by this time (IST)
 entry_start: "09:45"       # let the opening range form before trading
 entry_end: "14:30"         # no fresh entries after this
@@ -25,6 +23,8 @@ trend_day_nifty_pct: 1.2   # Nifty move that marks a strong trend day
 
 # Decision
 min_chart_score: 60        # chart-reader score needed for a TRADE signal
+min_hit_probability: 60    # forecast chance (%) the stock moves enough for the target before square-off
+assumed_spread_pct: 0.8    # bid-ask gap of the option, % of premium (real value used when live quotes exist)
 
 # Options
 strike_choice: "ITM1"      # "ATM" or "ITM1" (one strike in-the-money, higher delta)

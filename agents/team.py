@@ -6,7 +6,7 @@ from . import ai_analyst, data, journal, regime, scanner
 from .chart_image import candle_png
 from .chart_reader import read_chart
 from .decision import decide
-from .indicators import hist_vol
+from .indicators import hist_vol, intraday_sigma_per_min
 from .options import suggest_contract
 from .risk import plan
 
@@ -62,7 +62,8 @@ def run(cfg: dict, use_ai: bool = True, progress=lambda msg, frac: None, now: da
     progress("Risk Manager and Decision agents", 0.97)
     trades_today = journal.trades_on(today.isoformat())
     for c in sorted(candidates, key=lambda c: c["chart"]["score"], reverse=True):
-        c["risk"] = plan(c["option"], trades_today, now, cfg)
+        c["risk"] = plan(c["option"], trades_today, now, cfg,
+                         sigma_per_min=intraday_sigma_per_min(c["intraday"]))
         c["decision"] = decide(c["side"], mkt, c["chart"], c["risk"], c["ai"], cfg)
         if c["decision"]["verdict"] == "TRADE":
             trades_today += 1

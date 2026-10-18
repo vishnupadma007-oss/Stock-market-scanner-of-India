@@ -10,7 +10,7 @@ from agents.costs import exit_for_net_target, round_trip_charges
 from agents.decision import decide
 from agents.options import monthly_expiry, suggest_contract
 from agents.regime import assess
-from agents.risk import plan
+from agents.risk import hit_probability, plan
 
 CFG = load_config()
 
@@ -78,7 +78,22 @@ def test_risk_entry_window(hour, allowed):
     option = {"est_premium": 20.0, "lot_size": 750, "delta": -0.55}
     r = plan(option, 0, datetime(2026, 10, 16, hour, 40), CFG)
     assert r["allowed"] is allowed
-    assert r["target_premium"] > 20.0 and r["emergency_exit"] == 14.0
+    assert r["target_premium"] > 20.0 and "emergency_exit" not in r
+
+
+def test_hit_probability_forecast():
+    # A move of one typical hour's swing, with an hour left, is hit about 32% of the time.
+    assert hit_probability(1.0, 1 / 60 ** 0.5, 60) == pytest.approx(0.317, abs=0.01)
+    assert hit_probability(0.5, 0.2, 120) > hit_probability(2.0, 0.2, 120)
+    assert hit_probability(1.0, 0.2, 0) == 0.0
+
+
+def test_low_forecast_blocks_trade():
+    option = {"est_premium": 20.0, "lot_size": 750, "delta": -0.55}
+    calm = plan(option, 0, datetime(2026, 10, 16, 14, 20), CFG, sigma_per_min=0.01)
+    assert not calm["allowed"] and calm["hit_probability"] < 60
+    lively = plan(option, 0, datetime(2026, 10, 16, 11, 0), CFG, sigma_per_min=0.5)
+    assert lively["allowed"] and lively["hit_probability"] >= 60
 
 
 def test_decision_respects_regime_and_ai_veto():

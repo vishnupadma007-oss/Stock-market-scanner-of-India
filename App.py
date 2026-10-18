@@ -32,8 +32,8 @@ with st.sidebar:
     cfg["capital"] = st.number_input("Capital (₹)", value=int(cfg["capital"]), step=10000)
     cfg["max_trades_per_day"] = st.slider("Max trades per day", 1, 5, cfg["max_trades_per_day"])
     cfg["net_target_pct"] = st.slider("Net target per trade (%)", 0.5, 5.0, float(cfg["net_target_pct"]), 0.25)
-    ee = st.number_input("Emergency exit (% premium loss, 0 = off)", 0, 90, int(cfg["emergency_exit_pct"] or 0))
-    cfg["emergency_exit_pct"] = ee or None
+    cfg["min_hit_probability"] = st.slider("Min forecast chance of hitting target (%)", 30, 90,
+                                           int(cfg["min_hit_probability"]), 5)
     use_ai = st.toggle("Use AI analyst (Claude)", value=cfg["ai"]["enabled"])
 
 st.title("📈 Mover Reversal Agents")
@@ -89,7 +89,7 @@ if report:
 <b>{icon} {d['verdict']} · {c['symbol']}</b> ₹{p['ltp']:,.2f} ({p['chg_1d']:+.2f}% today, {p['chg_1w']:+.1f}% 1w)<br>
 <b>{o['contract']}</b> · est. premium ₹{r['entry_premium']} · {o['days_to_expiry']} days to expiry<br>
 🎯 Exit at ₹{r['target_premium']} (+{r['gross_move_pct']:.2f}% gross → ₹{r['net_profit']:,.0f} net after ₹{r['charges']['total']:,.0f} charges)<br>
-⏱ Square off by {r['square_off']}{f" · 🚨 emergency exit ₹{r['emergency_exit']}" if r['emergency_exit'] else ""}
+🔮 Forecast chance of hitting target: <b>{r['hit_probability']:.0f}%</b> · ⏱ no stop-loss, square off by {r['square_off']}
 </div>""", unsafe_allow_html=True)
         with st.expander("Why? (agent reports & chart)"):
             if not c["intraday"].empty:
@@ -106,7 +106,8 @@ if report:
             lots = f"{r['lots']} lot(s) × {o['lot_size']}" if r["lots"] else "lot size unknown — qty approximate"
             st.write(f"Qty {r['qty']} ({lots}) · capital ₹{r['capital_used']:,.0f} · delta {o['delta']:+.2f}")
             if r["underlying_move"]:
-                st.write(f"Needs the stock to move about ₹{r['underlying_move']:.2f} your way.")
+                st.write(f"Needs the stock to move about ₹{r['underlying_move']:.2f} your way "
+                         f"(includes a {r['spread_pct']:.1f}% bid-ask gap) with {r['minutes_left']:.0f} min left.")
             for b in r["blocks"]:
                 st.write("⛔ " + b)
             st.markdown("**Decision:** " + " ".join(d["reasons"]))
