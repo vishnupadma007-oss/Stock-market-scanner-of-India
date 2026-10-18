@@ -17,6 +17,10 @@ top_n: 5                   # how many gainers and losers to send to the chart re
 min_move_pct: 2.0          # minimum day move to count as a top gainer/loser
 min_turnover_cr: 50        # minimum 20-day average daily turnover (₹ crore)
 
+# Which movers to trade: "loser" = buy CE on a bouncing top loser, "gainer" = buy PE on a
+# fading top gainer. Backtest (Aug-Oct 2026): losers +0.51%/trade, gainers -1.01%/trade.
+sides: [loser, gainer]
+
 # Market regime agent
 max_vix: 22                # above this India VIX -> no trades
 trend_day_nifty_pct: 1.2   # Nifty move that marks a strong trend day
@@ -74,7 +78,6 @@ universe:
   - WIPRO
   - HCLTECH
   - TECHM
-  - LTIM
   - PERSISTENT
   - COFORGE
   - MPHASIS

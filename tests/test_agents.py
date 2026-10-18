@@ -104,3 +104,9 @@ def test_decision_respects_regime_and_ai_veto():
     assert decide("loser", mkt, chart, risk, None, CFG)["verdict"] == "SKIP"
     veto = {"verdict": "SKIP", "confidence": 90, "reason": "results-driven move"}
     assert decide("gainer", mkt, chart, risk, veto, CFG)["verdict"] == "SKIP"
+
+
+def test_sides_setting_switches_off_gainers():
+    close = pd.Series(np.full(60, 25000.0))
+    mkt = assess(pd.DataFrame({"Close": close}), None, {**CFG, "sides": ["loser"]})
+    assert not mkt["gainers_ok"] and mkt["losers_ok"]

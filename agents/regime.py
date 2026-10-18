@@ -43,6 +43,14 @@ def assess(nifty: pd.DataFrame, vix: pd.DataFrame | None, cfg: dict) -> dict:
         threshold_adj += 10
         notes.append(f"Strong trend day ({r1:+.2f}%): counter-moves are weaker, so a higher chart score is required.")
 
+    sides = cfg.get("sides", ["gainer", "loser"])
+    if "gainer" not in sides:
+        gainers_ok = False
+        notes.append("Top gainers switched off in config (sides).")
+    if "loser" not in sides:
+        losers_ok = False
+        notes.append("Top losers switched off in config (sides).")
+
     no_trade = False
     if vix_level is not None:
         notes.append(f"India VIX {vix_level:.1f}.")
