@@ -15,6 +15,7 @@ from datetime import datetime, time
 from zoneinfo import ZoneInfo
 
 import pandas as pd
+import yaml
 import yfinance as yf
 
 from agents.chart_reader import read_chart
@@ -156,8 +157,13 @@ def main():
     ap.add_argument("--intraday")
     ap.add_argument("--daily")
     ap.add_argument("--out", default="journal/backtest_trades.csv")
+    ap.add_argument("--set", action="append", default=[], metavar="KEY=VALUE",
+                    help="try a config change without editing config.yaml, e.g. --set sides=[loser]")
     args = ap.parse_args()
     cfg = load_config()
+    for item in args.set:
+        key, value = item.split("=", 1)
+        cfg[key] = yaml.safe_load(value)
     trades = simulate(load(args.intraday, args.daily, cfg["universe"]), cfg)
     trades.to_csv(args.out, index=False)
     print(report(trades))

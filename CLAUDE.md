@@ -6,7 +6,9 @@ Intraday mover-reversal options strategy on NSE F&O stocks, run by a team of age
 - `watcher.py`: all-day watcher on live INDmoney data (via `agents/indmoney.py`, the official
   INDmoney MCP server). Prints SIGNAL/EXIT/ERROR lines only.
 - `App.py`: Streamlit phone app (Yahoo data, estimated premiums).
-- `journal/paper_trades.csv`: paper-trade log. Commit it at the end of each trading day.
+- `journal/paper_trades.csv`: paper-trade log. `review.py` writes the evening review to
+  `journal/reviews/`; approved strategy changes are logged in `journal/strategy_changes.md`.
+  Commit `journal/` at the end of each trading day.
 - Run tests with `python -m pytest -q`.
 
 User decisions to respect: intraday only; buy options (PE on fading gainers, CE on

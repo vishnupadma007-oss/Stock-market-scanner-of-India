@@ -44,11 +44,34 @@ using as few tool calls as possible (this is where Claude credits are spent):
 
 Tell the user the result in one line (contract, entry, exit, net P&L).
 
-## End of day
+## Evening review
 
-When the watcher prints `STATUS ... market closed`: summarise the day from
-`journal/paper_trades.csv` (trades, win rate, net P&L, rules-only vs Claude-confirmed), then
-commit and push the journal so it survives the session.
+Run it when the watcher prints `STATUS ... market closed`, or whenever the user asks.
+
+1. `python review.py` writes `journal/reviews/<date>.md`: today's trades, running totals,
+   rules-only vs Claude-confirmed, and breakdowns by side, entry hour, bid-ask gap and
+   forecast chance. Send the user a short summary: today's P&L, the running totals, and one
+   notable observation.
+2. Check the last section of the review.
+   - **NOT YET** (under 30 trades since the last strategy change): change nothing. Say how many
+     more trades are needed. Do not suggest changes based on one or two days.
+   - **READY**: look for a pattern in the breakdowns (e.g. one side, one time window, wide
+     bid-ask gaps, or Claude's SKIPs avoiding the big losses). For each candidate change:
+     a. Test it on history: `python backtest_reversal.py --set key=value --out /tmp/x.csv`
+        (e.g. `--set sides=[loser]`, `--set entry_end='"13:00"'`), compared with a run
+        without `--set`.
+     b. Check both the paper trades and the backtest with the `quantforge-ai` validation gates
+        and `python .claude/skills/quantforge-ai/scripts/metrics.py --trades
+        journal/reviews/pnl_for_metrics.csv`. Keep only changes that help in **both** paper
+        trading and the backtest.
+     c. Propose at most two changes to the user, each with before/after numbers.
+3. **Never apply a change without the user's explicit OK.** When they approve: edit
+   `config.yaml` (or the agent code), add a row to `journal/strategy_changes.md`, run the tests,
+   and commit that change on its own so it is easy to undo.
+4. Changes must keep the user's rules: intraday only, buying options, target at least 1% net,
+   **no stop-loss**. If the evidence points at a stop-loss, report the numbers and leave the
+   decision to the user.
+5. Commit and push `journal/` (trades and the review) so it survives the session.
 
 ## Backtesting
 
