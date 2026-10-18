@@ -1,0 +1,131 @@
+# ------------------------------------------------------------------
+# Trading agent team settings. Edit these from your phone on GitHub.
+# ------------------------------------------------------------------
+
+capital: 100000            # total trading capital (₹)
+max_capital_per_trade: 0.25   # max share of capital in one trade's premium
+max_trades_per_day: 2      # hard cap on TRADE signals per day
+net_target_pct: 1.0        # target profit per trade, % of premium paid, AFTER all charges
+
+# Exits. You said you don't want a normal stop-loss; this is only a
+# disaster exit for when an option collapses. Set to null to switch it off.
+emergency_exit_pct: 30     # exit if premium falls this % below entry
+square_off_time: "15:15"   # always exit intraday positions by this time (IST)
+entry_start: "09:45"       # let the opening range form before trading
+entry_end: "14:30"         # no fresh entries after this
+
+# Scanner
+top_n: 5                   # how many gainers and losers to send to the chart reader
+min_move_pct: 2.0          # minimum day move to count as a top gainer/loser
+min_turnover_cr: 50        # minimum 20-day average daily turnover (₹ crore)
+
+# Market regime agent
+max_vix: 22                # above this India VIX -> no trades
+trend_day_nifty_pct: 1.2   # Nifty move that marks a strong trend day
+
+# Decision
+min_chart_score: 60        # chart-reader score needed for a TRADE signal
+
+# Options
+strike_choice: "ITM1"      # "ATM" or "ITM1" (one strike in-the-money, higher delta)
+min_days_to_expiry: 3      # roll to next month's expiry when closer than this
+risk_free_rate: 0.065
+
+# Charges (verify with your broker's calculator)
+charges:
+  brokerage_per_order: 20      # flat ₹ per executed order
+  stt_sell_pct: 0.1            # STT on option sell premium
+  exchange_txn_pct: 0.03503    # NSE option transaction charge on premium
+  sebi_per_crore: 10
+  stamp_buy_pct: 0.003
+  gst_pct: 18
+
+# AI analyst (Claude). Needs ANTHROPIC_API_KEY in Streamlit secrets.
+ai:
+  enabled: true
+  model: "claude-opus-5-5"
+  effort: "medium"
+  max_candidates: 3          # AI reviews only the best few -> keeps token cost low
+  web_search: true           # let the AI check news for the move's real cause
+
+# Liquid F&O stocks to scan (NSE symbols). Lot sizes are read from NSE when
+# reachable; add overrides under lot_sizes if a lot looks wrong.
+lot_sizes: {}
+universe:
+  - RELIANCE
+  - HDFCBANK
+  - ICICIBANK
+  - INFY
+  - TCS
+  - SBIN
+  - AXISBANK
+  - KOTAKBANK
+  - BHARTIARTL
+  - LT
+  - ITC
+  - HINDUNILVR
+  - BAJFINANCE
+  - BAJAJFINSV
+  - MARUTI
+  - M&M
+  - SUNPHARMA
+  - TITAN
+  - ULTRACEMCO
+  - WIPRO
+  - HCLTECH
+  - TECHM
+  - LTIM
+  - PERSISTENT
+  - COFORGE
+  - MPHASIS
+  - ADANIENT
+  - ADANIPORTS
+  - TATASTEEL
+  - JSWSTEEL
+  - HINDALCO
+  - VEDL
+  - SAIL
+  - NMDC
+  - NATIONALUM
+  - ONGC
+  - NTPC
+  - POWERGRID
+  - COALINDIA
+  - BPCL
+  - IOC
+  - GAIL
+  - TATAPOWER
+  - DLF
+  - INDUSINDBK
+  - BANKBARODA
+  - PNB
+  - CANBK
+  - IDFCFIRSTB
+  - FEDERALBNK
+  - AUBANK
+  - SHRIRAMFIN
+  - CHOLAFIN
+  - MUTHOOTFIN
+  - RECLTD
+  - PFC
+  - BEL
+  - HAL
+  - BHEL
+  - TRENT
+  - ETERNAL
+  - PAYTM
+  - POLICYBZR
+  - DIXON
+  - CIPLA
+  - DRREDDY
+  - DIVISLAB
+  - LUPIN
+  - APOLLOHOSP
+  - EICHERMOT
+  - HEROMOTOCO
+  - BAJAJ-AUTO
+  - TVSMOTOR
+  - ASIANPAINT
+  - NESTLEIND
+  - BRITANNIA
+  - GRASIM
