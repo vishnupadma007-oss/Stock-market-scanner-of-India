@@ -8,7 +8,8 @@ credits. It needs a one-time login from you:
     python -m agents.indmoney test             # checks the connection
 
 After that the access token renews itself. The token file lives outside the repo and is
-never committed. Access is read-only (market:read).
+never committed. Access is read-only (market:read and portfolio:read; INDmoney requires both,
+but this module only calls market-data tools).
 """
 import asyncio
 import base64
@@ -29,7 +30,9 @@ from mcp.client.streamable_http import streamable_http_client
 BASE = "https://mcp.indmoney.com"
 MCP_URL = f"{BASE}/mcp"
 REDIRECT_URI = "http://localhost:8765/callback"
-SCOPE = "market:read"
+# INDmoney's server refuses connections without portfolio:read, even for market tools.
+# The watcher only calls market-data tools.
+SCOPE = "market:read portfolio:read"
 TOKEN_FILE = Path(os.environ.get("INDMONEY_TOKEN_FILE", Path.home() / ".config" / "indmoney" / "token.json"))
 
 
@@ -88,7 +91,7 @@ def access_token() -> str:
 
 def start_login() -> str:
     data = _load()
-    if not data.get("client_id"):
+    if not data.get("client_id") or data.get("client_scope") != SCOPE:
         resp = httpx2.post(f"{BASE}/register", json={
             "client_name": "Stock Market Scanner of India (watcher)",
             "redirect_uris": [REDIRECT_URI],
@@ -100,6 +103,9 @@ def start_login() -> str:
         resp.raise_for_status()
         reg = resp.json()
         data["client_id"], data["client_secret"] = reg["client_id"], reg.get("client_secret", "")
+        data["client_scope"] = SCOPE
+        data.pop("refresh_token", None)
+        data.pop("access_token", None)
     verifier = secrets.token_urlsafe(48)
     data["pkce_verifier"], data["state"] = verifier, secrets.token_urlsafe(16)
     _save(data)
