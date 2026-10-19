@@ -60,6 +60,9 @@ class FakeIndMoney:
     async def news(self, key):
         return self.headlines
 
+    async def futures_oi_change(self, symbol, expiry):
+        return 6.0  # TECHM on 16 Oct: price +8.5%, OI +6% = long build-up
+
     async def candles(self, key, interval, lookback):
         if interval == "1day":
             idx = pd.bdate_range(end="2026-10-16", periods=120, tz=IST)
@@ -128,6 +131,8 @@ def test_watcher_signals_then_exits(tmp_path, monkeypatch, capsys):
     payload = json.loads(out.split(" ", 1)[1])
     assert "No fresh news: likely an overreaction" in payload["news_and_macro"]
     assert payload["forecast"]["basis"] and payload["day_mode"] == "normal"
+    assert payload["crowd"] == {"oi_type": "long build-up", "would_score": -15, "would_block": False}
+    assert trades[0]["oi_type"] == "long build-up"  # observe mode: logged, not scored
     assert trades[0]["entry_ask"] == 50.1 and trades[0]["status"] == "OPEN"
 
     # Same contract is not signalled twice in a day.

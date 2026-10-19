@@ -10,7 +10,8 @@ Intraday mover-reversal options strategy on NSE F&O stocks, run by a team of age
   `journal/reviews/`; approved strategy changes are logged in `journal/strategy_changes.md`.
   Commit `journal/` at the end of each trading day.
 - Agents: regime, scanner, chart reader, options, risk, decision, journal, plus News & Events
-  (`agents/news.py`), Macro (`agents/macro.py`), Forecast (`agents/forecast.py`) and the morning
+  (`agents/news.py`), Macro (`agents/macro.py`), Forecast (`agents/forecast.py`), Crowd Psychology
+  (`agents/psychology.py`, observe mode until paper trades prove it) and the morning
   brief's day mode (`agents/daymode.py`, `journal/day_mode.json`).
 - Run tests with `python -m pytest -q`.
 

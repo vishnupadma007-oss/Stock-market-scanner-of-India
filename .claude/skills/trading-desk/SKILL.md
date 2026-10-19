@@ -50,8 +50,9 @@ One short research pass that sets the day's mode. Keep it to a handful of search
 The rule-based agents already opened a paper trade at the live ask. The signal already
 carries what the agents found: `chart_signals`, `news_and_macro` (INDmoney headlines with
 sentiment, results calendar, sudden-pressure volume check, sector/crude/rupee moves),
-`forecast` (likely reversal level: VWAP or 38% retracement, and the option price there) and
-`day_mode`. Give your own verdict, using as few tool calls as possible (this is where Claude
+`forecast` (likely reversal level: VWAP or 38% retracement, and the option price there),
+`crowd` (Crowd Psychology agent: futures OI build-up type, 52-week extremes, circuit frenzy;
+in observe mode it does not change the score yet, but weigh it in your verdict) and `day_mode`. Give your own verdict, using as few tool calls as possible (this is where Claude
 credits are spent):
 
 1. Why is it moving? Read `news_and_macro`. Only if it is unclear (no headline but a
@@ -86,6 +87,9 @@ Run it when the watcher prints `STATUS ... market closed`, or whenever the user 
      more trades are needed. Do not suggest changes based on one or two days.
    - **READY**: look for a pattern in the breakdowns (e.g. one side, one time window, wide
      bid-ask gaps, or Claude's SKIPs avoiding the big losses). For each candidate change:
+     Also compare results by crowd positioning (long build-up / short covering / long unwinding /
+     short build-up). If the agent's `would_score` readings clearly separate winners from losers,
+     propose switching `psychology.mode` to `score`.
      a. Test it on history: `python backtest_reversal.py --set key=value --out /tmp/x.csv`
         (e.g. `--set sides=[loser]`, `--set entry_end='"13:00"'`), compared with a run
         without `--set`.

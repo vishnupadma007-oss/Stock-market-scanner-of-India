@@ -191,6 +191,16 @@ class IndMoney:
     async def news(self, ind_key: str) -> list[dict]:
         return (await self.quotes([ind_key], ["news"])).get(ind_key, {}).get("news", [])
 
+    async def futures_oi_change(self, symbol: str, expiry) -> float | None:
+        """Today's % change in open interest of the stock's futures for this expiry."""
+        name = f"{symbol} {expiry:%d %b} Fut"
+        rows = await self.call("lookup_ind_keys", names=[name], filter_type="IN_STOCKS_FNO")
+        key = next((r["ind_key"] for r in rows if r.get("name", "").upper() == name.upper()), None)
+        if not key:
+            return None
+        stats = (await self.quotes([key])).get(key, {}).get("entity_stats", {})
+        return stats.get("open_interest_change")
+
     async def crude_key(self) -> str | None:
         rows = await self.call("lookup_ind_keys", names=["crude oil"], filter_type="IN_COMMODITY")
         return next((r["ind_key"] for r in rows if r.get("ind_key")), None)

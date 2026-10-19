@@ -20,7 +20,7 @@ from datetime import datetime, time
 from pathlib import Path
 from zoneinfo import ZoneInfo
 
-from agents import daymode, macro, news
+from agents import daymode, macro, news, psychology
 from agents.chart_reader import read_chart
 from agents.config import load_config
 from agents.costs import round_trip_charges
@@ -37,7 +37,7 @@ IST = ZoneInfo("Asia/Kolkata")
 NIFTY_KEY, VIX_KEY = "INDI00012", "INDI00318"
 TRADES = Path(__file__).resolve().parent / "journal" / "paper_trades.csv"
 FIELDS = ["date", "opened", "symbol", "side", "contract", "underlying_key", "derivative_id",
-          "qty", "entry_ask", "target_bid", "spread_pct", "hit_probability", "chart_score",
+          "qty", "entry_ask", "target_bid", "spread_pct", "hit_probability", "chart_score", "oi_type",
           "status", "closed", "exit_bid", "charges", "net_pnl", "claude_verdict", "notes"]
 
 _errors_seen: dict[str, float] = {}
@@ -160,6 +160,11 @@ async def scan(im: IndMoney, trades: list[dict], now: datetime, cfg: dict) -> No
                 extras.append(macro.assess(m["symbol"], side, m["change_pct"],
                                            ctx["sectors"].get(sector_of(m["symbol"])), ctx["crude"],
                                            ctx["usdinr"], cfg))
+            crowd = psychology.assess(side, m["price"], m["change_pct"],
+                                      await im.futures_oi_change(m["symbol"], option["expiry"]),
+                                      m.get("52_week_high"), m.get("52_week_low"),
+                                      m.get("circuit_upper_limit"), m.get("circuit_lower_limit"), cfg)
+            extras.append(crowd)
             decision = decide(side, mkt, chart, risk, None, cfg, extras)
             if decision["verdict"] != "TRADE":
                 continue
@@ -170,6 +175,7 @@ async def scan(im: IndMoney, trades: list[dict], now: datetime, cfg: dict) -> No
                        derivative_id=option["derivative_id"], qty=risk["qty"], entry_ask=option["ask"],
                        target_bid=risk["target_premium"], spread_pct=round(option["spread_pct"], 2),
                        hit_probability=round(risk["hit_probability"]), chart_score=chart["score"],
+                       oi_type=crowd["oi_type"],
                        status="OPEN")
             trades.append(row)
             taken.add(option["contract"])
@@ -186,6 +192,8 @@ async def scan(im: IndMoney, trades: list[dict], now: datetime, cfg: dict) -> No
                              "basis": forecast["basis"],
                              "option_price_there": risk["forecast_premium"] and round(risk["forecast_premium"], 2)},
                 "day_mode": day["mode"],
+                "crowd": {"oi_type": crowd["oi_type"], "would_score": crowd["would_score"],
+                          "would_block": crowd["would_block"]},
             })
 
 

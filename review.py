@@ -85,6 +85,8 @@ def review(df: pd.DataFrame, day: str, since: str) -> str:
     out += _breakdown(df, "By entry hour", df["opened"].str[:2] + ":00")
     out += _breakdown(df, "By bid-ask gap", pd.cut(df["spread_pct"], [0, 0.5, 1, 100],
                                                    labels=["under 0.5%", "0.5-1%", "over 1%"]))
+    if "oi_type" in df and df["oi_type"].ne("").any():
+        out += _breakdown(df, "By crowd positioning (futures OI)", df["oi_type"].replace("", "not recorded"))
     out += _breakdown(df, "By forecast chance", pd.cut(df["hit_probability"], [0, 70, 85, 100],
                                                        labels=["under 70%", "70-85%", "over 85%"]))
 

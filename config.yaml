@@ -41,6 +41,13 @@ news:
   fresh_news_points: -25    # fresh news that explains the move = real catalyst
   volume_spike_ratio: 3.0   # "sudden pressure": last 15 min volume vs normal
 
+# Crowd Psychology agent: futures OI build-up / short covering / long unwinding, 52-week
+# extremes, circuit frenzy. No OI history exists to backtest it, so it starts in "observe"
+# mode (readings logged and compared in the evening review). Switch to "score" once the
+# paper trades show it helps.
+psychology:
+  mode: observe
+
 # Forecast agent: likely reversal level (VWAP or 38% retracement) is shown on every signal.
 # Backtest: blocking on it lowered results (-0.74%/trade), and aiming the target at it cut
 # the hit rate from 90% to 63% (-3.16%/trade), so both are off.

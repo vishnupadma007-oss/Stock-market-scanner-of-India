@@ -77,3 +77,21 @@ def test_day_mode(tmp_path):
     day = daymode.load(DAY, p)
     assert day["avoid"] == ["BPCL"] and daymode.apply(CFG, day)["max_trades_per_day"] == 1
     assert daymode.load(date(2026, 10, 17), p)["mode"] == "normal"  # stale file ignored
+
+
+def test_psychology_oi_types_and_modes():
+    from agents import psychology
+    assert psychology.oi_type(3, 5, 2) == "long build-up"
+    assert psychology.oi_type(3, -5, 2) == "short covering"
+    assert psychology.oi_type(-3, 5, 2) == "short build-up"
+    assert psychology.oi_type(-3, -5, 2) == "long unwinding"
+    assert psychology.oi_type(-3, 1, 2) == "no clear OI change"
+    score = {**CFG, "psychology": {"mode": "score"}}
+    # Loser bouncing after holders gave up: good. Loser with fresh shorts piling in: bad.
+    assert psychology.assess("loser", 100, -3, -5, None, None, None, None, score)["points"] == 10
+    assert psychology.assess("loser", 100, -3, 5, None, None, None, None, score)["points"] == -15
+    at_low = psychology.assess("loser", 100, -3, None, 150, 99.5, None, None, score)
+    assert at_low["points"] == -10 and "52-week low" in at_low["notes"][0]
+    assert psychology.assess("gainer", 100, 9, None, None, None, 101, None, score)["block"]
+    observed = psychology.assess("loser", 100, -3, 5, None, None, None, None, CFG)  # default: observe
+    assert observed["points"] == 0 and observed["would_score"] == -15 and observed["notes"][0].startswith("(observe)")

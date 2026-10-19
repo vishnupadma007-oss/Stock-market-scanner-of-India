@@ -3,13 +3,13 @@ import pandas as pd
 import review
 
 COLS = ["date", "opened", "symbol", "side", "contract", "underlying_key", "derivative_id", "qty",
-        "entry_ask", "target_bid", "spread_pct", "hit_probability", "chart_score", "status", "closed",
-        "exit_bid", "charges", "net_pnl", "claude_verdict", "notes"]
+        "entry_ask", "target_bid", "spread_pct", "hit_probability", "chart_score", "oi_type", "status",
+        "closed", "exit_bid", "charges", "net_pnl", "claude_verdict", "notes"]
 
 
 def trade(day, side, status, net, verdict="", opened="10:30", spread=0.6):
     return dict(zip(COLS, [day, opened, "SBIN", side, f"SBIN-{side}-{net}", "K", "D", 750, 20.0, 20.4,
-                           spread, 80, 70, status, "11:00", 20.4, 90, net, verdict, ""]))
+                           spread, 80, 70, "long unwinding", status, "11:00", 20.4, 90, net, verdict, ""]))
 
 
 def write(tmp_path, rows):
@@ -29,6 +29,7 @@ def test_review_summarises_and_waits_for_enough_trades(tmp_path):
     assert "Claude said SKIP (avoided): 1 trades" in text
     assert "over 1%" in text and "12:00" in text
     assert "NOT YET: 2 of 30" in text
+    assert "By crowd positioning" in text and "long unwinding" in text
 
 
 def test_review_ready_after_thirty_trades(tmp_path):
