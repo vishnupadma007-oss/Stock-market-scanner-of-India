@@ -58,8 +58,9 @@ def test_expiry_is_last_tuesday_and_rolls():
 
 
 def test_contract_side():
-    put = suggest_contract("SBIN", 812, "gainer", 0.25, 750, CFG, date(2026, 10, 16))
-    call = suggest_contract("SBIN", 812, "loser", 0.25, 750, CFG, date(2026, 10, 16))
+    itm = {**CFG, "strike_choice": "ITM1"}
+    put = suggest_contract("SBIN", 812, "gainer", 0.25, 750, itm, date(2026, 10, 16))
+    call = suggest_contract("SBIN", 812, "loser", 0.25, 750, itm, date(2026, 10, 16))
     assert put["type"] == "PE" and put["strike"] == 820  # one strike ITM for puts
     assert call["type"] == "CE" and call["strike"] == 800
     assert put["est_premium"] > 0 and -1 < put["delta"] < 0

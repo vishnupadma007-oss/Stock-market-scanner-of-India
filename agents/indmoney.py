@@ -236,11 +236,12 @@ def pick_option(chain: dict, side: str, strike_choice: str) -> dict | None:
     # ITM for a put is above spot, for a call below spot.
     i = min(atm_i + shift, len(strikes) - 1) if side == "gainer" else max(atm_i - shift, 0)
     row = next(r for r in rows if r["strike_price"] == strikes[i])
-    leg = row["put_data" if side == "gainer" else "call_data"]
+    leg = row.get("put_data" if side == "gainer" else "call_data") or {}
     bid = leg.get("buy_price", leg.get("bp"))
     ask = leg.get("sell_price", leg.get("sp"))
-    if not bid or not ask:
-        return None
+    if not bid or not ask or not leg.get("derivative_id") or not leg.get("slug") \
+            or not chain.get("selected_expiry"):
+        return None  # strike not quoted on this side, or an incomplete reply
     expiry = pd.to_datetime(chain["selected_expiry"]).date()
     return {
         "contract": f"{leg['slug'].upper()}", "derivative_id": leg["derivative_id"],

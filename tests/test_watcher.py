@@ -13,7 +13,7 @@ from agents.indmoney import candles_frame, pick_option
 from tests.test_agents import SPIKE_THEN_FADE, intraday
 
 IST = ZoneInfo("Asia/Kolkata")
-CFG = {**load_config(), "capital": 200000}  # one TECHM lot (~₹30k) must fit the per-trade budget
+CFG = {**load_config(), "capital": 200000, "strike_choice": "ITM1"}  # one TECHM lot (~₹30k) must fit the per-trade budget
 
 
 def leg(did, slug, price, delta, bid, ask):
@@ -155,3 +155,19 @@ def test_account_reinvests_profit_and_reserves_open_trades():
             {"status": "OPEN", "net_pnl": "", "entry_ask": "12", "qty": "500"}]
     value, free = watcher.account(rows, {"capital": 10000})
     assert value == 10100 and free == 10100 - 6000
+
+
+def test_incomplete_chain_rows_are_skipped():
+    broken = chain()
+    del broken["option_chain_data"][1]["put_data"]["slug"]
+    assert pick_option(broken, "gainer", "ITM1") is None
+    assert pick_option({"entity_details": {"live_price": 1790}, "option_chain_data": chain()["option_chain_data"]},
+                       "gainer", "ATM") is None  # no expiry in the reply
+
+
+def test_one_bad_stock_does_not_stop_the_scan(capsys):
+    class Broken(FakeIndMoney):
+        async def option_chain(self, key, strikes_around_atm=4):
+            raise KeyError("selected_expiry")
+    assert signals(Broken()) == []
+    assert "ERROR" in capsys.readouterr().out

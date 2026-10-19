@@ -61,7 +61,7 @@ min_hit_probability: 60    # forecast chance (%) the stock moves enough for the 
 assumed_spread_pct: 0.8    # bid-ask gap of the option, % of premium (real value used when live quotes exist)
 
 # Options
-strike_choice: "ITM1"      # "ATM" or "ITM1" (one strike in-the-money, higher delta)
+strike_choice: "ATM"        # "ATM" or "ITM1". ATM: with ₹10,000 most ITM lots do not fit (lot survey 2026-10-19)
 min_days_to_expiry: 3      # roll to next month's expiry when closer than this
 risk_free_rate: 0.065
 

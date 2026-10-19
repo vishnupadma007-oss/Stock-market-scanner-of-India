@@ -138,63 +138,68 @@ async def scan(im: IndMoney, trades: list[dict], now: datetime, cfg: dict) -> No
         movers = [m for m in await im.movers(category, 50)
                   if m["symbol"] in universe and abs(m["change_pct"]) >= cfg["min_move_pct"]][:cfg["top_n"]]
         for m in movers:
-            daily = await im.candles(m["ind_key"], "1day", "1y")
-            intraday = await im.candles(m["ind_key"], "5minute", "7d")
-            if len(daily) < 25 or intraday.empty:
-                continue
-            profile = {**stock_profile(daily), "ltp": m["price"], "chg_1d": m["change_pct"]}
-            chart = read_chart(intraday, profile, side)
-            if chart["score"] < cfg["min_chart_score"] + mkt["threshold_adj"]:
-                continue  # skip the option-chain call for weak charts
+            try:
+                daily = await im.candles(m["ind_key"], "1day", "1y")
+                intraday = await im.candles(m["ind_key"], "5minute", "7d")
+                if len(daily) < 25 or intraday.empty:
+                    continue
+                profile = {**stock_profile(daily), "ltp": m["price"], "chg_1d": m["change_pct"]}
+                chart = read_chart(intraday, profile, side)
+                if chart["score"] < cfg["min_chart_score"] + mkt["threshold_adj"]:
+                    continue  # skip the option-chain call for weak charts
 
-            option = pick_option(await im.option_chain(m["ind_key"]), side, cfg["strike_choice"])
-            if option is None or option["contract"] in taken:
-                continue
-            prev_close = m.get("previous_close") or m["price"] / (1 + m["change_pct"] / 100)
-            forecast = reversal_target(intraday, float(prev_close), side)
-            risk = plan(option, trades_today, now, cfg, sigma_per_min=intraday_sigma_per_min(intraday),
-                        spread_pct=option["spread_pct"], forecast=forecast)
-            extras = [news.assess(m["symbol"], side, m["change_pct"], now.date(), await im.news(m["ind_key"]),
-                                  ctx["results"], intraday, cfg)]
-            if cfg.get("use_macro", True):
-                extras.append(macro.assess(m["symbol"], side, m["change_pct"],
-                                           ctx["sectors"].get(sector_of(m["symbol"])), ctx["crude"],
-                                           ctx["usdinr"], cfg))
-            crowd = psychology.assess(side, m["price"], m["change_pct"],
-                                      await im.futures_oi_change(m["symbol"], option["expiry"]),
-                                      m.get("52_week_high"), m.get("52_week_low"),
-                                      m.get("circuit_upper_limit"), m.get("circuit_lower_limit"), cfg)
-            extras.append(crowd)
-            decision = decide(side, mkt, chart, risk, None, cfg, extras)
-            if decision["verdict"] != "TRADE":
-                continue
+                option = pick_option(await im.option_chain(m["ind_key"]), side, cfg["strike_choice"])
+                if option is None or option["contract"] in taken:
+                    continue
+                prev_close = m.get("previous_close") or m["price"] / (1 + m["change_pct"] / 100)
+                forecast = reversal_target(intraday, float(prev_close), side)
+                risk = plan(option, trades_today, now, cfg, sigma_per_min=intraday_sigma_per_min(intraday),
+                            spread_pct=option["spread_pct"], forecast=forecast)
+                extras = [news.assess(m["symbol"], side, m["change_pct"], now.date(), await im.news(m["ind_key"]),
+                                      ctx["results"], intraday, cfg)]
+                if cfg.get("use_macro", True):
+                    extras.append(macro.assess(m["symbol"], side, m["change_pct"],
+                                               ctx["sectors"].get(sector_of(m["symbol"])), ctx["crude"],
+                                               ctx["usdinr"], cfg))
+                crowd = psychology.assess(side, m["price"], m["change_pct"],
+                                          await im.futures_oi_change(m["symbol"], option["expiry"]),
+                                          m.get("52_week_high"), m.get("52_week_low"),
+                                          m.get("circuit_upper_limit"), m.get("circuit_lower_limit"), cfg)
+                extras.append(crowd)
+                decision = decide(side, mkt, chart, risk, None, cfg, extras)
+                if decision["verdict"] != "TRADE":
+                    continue
 
-            row = {f: "" for f in FIELDS}
-            row.update(date=today, opened=now.strftime("%H:%M"), symbol=m["symbol"], side=side,
-                       contract=option["contract"], underlying_key=m["ind_key"],
-                       derivative_id=option["derivative_id"], qty=risk["qty"], entry_ask=option["ask"],
-                       target_bid=risk["target_premium"], spread_pct=round(option["spread_pct"], 2),
-                       hit_probability=round(risk["hit_probability"]), chart_score=chart["score"],
-                       oi_type=crowd["oi_type"],
-                       status="OPEN")
-            trades.append(row)
-            taken.add(option["contract"])
-            trades_today += 1
-            emit("SIGNAL", {
-                **{k: row[k] for k in ("symbol", "side", "contract", "qty", "entry_ask", "target_bid",
-                                       "spread_pct", "hit_probability", "chart_score")},
-                "spot": m["price"], "day_change_pct": m["change_pct"], "lot_size": option["lot_size"],
-                "net_profit_at_target": round(risk["net_profit"]), "square_off": cfg["square_off_time"],
-                "chart_signals": [s for s, _ in chart["signals"]], "market": mkt["notes"],
-                "news_and_macro": [n for e in extras for n in e["notes"]],
-                "news_driven": extras[0]["news_driven"], "decision_score": decision["score"],
-                "forecast": {"level": forecast.get("level") and round(forecast["level"], 2),
-                             "basis": forecast["basis"],
-                             "option_price_there": risk["forecast_premium"] and round(risk["forecast_premium"], 2)},
-                "day_mode": day["mode"],
-                "crowd": {"oi_type": crowd["oi_type"], "would_score": crowd["would_score"],
-                          "would_block": crowd["would_block"]},
-            })
+                row = {f: "" for f in FIELDS}
+                row.update(date=today, opened=now.strftime("%H:%M"), symbol=m["symbol"], side=side,
+                           contract=option["contract"], underlying_key=m["ind_key"],
+                           derivative_id=option["derivative_id"], qty=risk["qty"], entry_ask=option["ask"],
+                           target_bid=risk["target_premium"], spread_pct=round(option["spread_pct"], 2),
+                           hit_probability=round(risk["hit_probability"]), chart_score=chart["score"],
+                           oi_type=crowd["oi_type"],
+                           status="OPEN")
+                trades.append(row)
+                taken.add(option["contract"])
+                trades_today += 1
+                emit("SIGNAL", {
+                    **{k: row[k] for k in ("symbol", "side", "contract", "qty", "entry_ask", "target_bid",
+                                           "spread_pct", "hit_probability", "chart_score")},
+                    "spot": m["price"], "day_change_pct": m["change_pct"], "lot_size": option["lot_size"],
+                    "net_profit_at_target": round(risk["net_profit"]), "square_off": cfg["square_off_time"],
+                    "chart_signals": [s for s, _ in chart["signals"]], "market": mkt["notes"],
+                    "news_and_macro": [n for e in extras for n in e["notes"]],
+                    "news_driven": extras[0]["news_driven"], "decision_score": decision["score"],
+                    "forecast": {"level": forecast.get("level") and round(forecast["level"], 2),
+                                 "basis": forecast["basis"],
+                                 "option_price_there": risk["forecast_premium"] and round(risk["forecast_premium"], 2)},
+                    "day_mode": day["mode"],
+                    "crowd": {"oi_type": crowd["oi_type"], "would_score": crowd["would_score"],
+                              "would_block": crowd["would_block"]},
+                })
+            except LoginRequired:
+                raise
+            except Exception as e:  # one bad reply must not stop the other stocks
+                emit("ERROR", {"error": f"{m['symbol']}: {type(e).__name__}: {e}"})
 
 
 def account(trades: list[dict], cfg: dict) -> tuple[float, float]:
