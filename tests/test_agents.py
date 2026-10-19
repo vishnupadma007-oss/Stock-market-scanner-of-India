@@ -116,5 +116,5 @@ def test_sides_setting_switches_off_gainers():
 
 def test_lot_too_big_for_10k_is_blocked():
     option = {"est_premium": 20.0, "lot_size": 750, "delta": -0.55}
-    r = plan(option, 0, datetime(2026, 10, 16, 11, 0), CFG)  # ₹10,000 capital
+    r = plan(option, 0, datetime(2026, 10, 16, 11, 0), {**CFG, "capital": 10000})
     assert not r["allowed"] and "One lot costs ₹15,000" in r["blocks"][0]
