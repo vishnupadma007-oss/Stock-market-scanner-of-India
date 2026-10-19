@@ -1,9 +1,11 @@
 import asyncio
+import json
 from datetime import datetime
 from zoneinfo import ZoneInfo
 
 import numpy as np
 import pandas as pd
+import pytest
 
 import watcher
 from agents.config import load_config
@@ -46,8 +48,17 @@ def test_candles_frame():
 
 
 class FakeIndMoney:
-    def __init__(self, put_bid=49.6):
-        self.put_bid = put_bid
+    def __init__(self, put_bid=49.6, headlines=(), sector_chg=0.3):
+        self.put_bid, self.headlines, self.sector_chg = put_bid, list(headlines), sector_chg
+
+    async def crude_key(self):
+        return "CRUDE"
+
+    async def day_changes(self, keys):
+        return {k: (0.4 if k == "CRUDE" else self.sector_chg) for k in keys}
+
+    async def news(self, key):
+        return self.headlines
 
     async def candles(self, key, interval, lookback):
         if interval == "1day":
@@ -65,12 +76,58 @@ class FakeIndMoney:
         return chain(put_bid=self.put_bid, put_ask=self.put_bid + 0.5)
 
 
+@pytest.fixture(autouse=True)
+def offline(monkeypatch, tmp_path):
+    """No network in tests: empty results calendar, no rupee quote, no day-mode file."""
+    monkeypatch.setattr(watcher.news, "results_calendar", lambda: {"TECHM": RESULTS})
+    monkeypatch.setattr(watcher, "usdinr_change", lambda: None)
+    monkeypatch.setattr(watcher.daymode, "PATH", tmp_path / "day_mode.json")
+    monkeypatch.setattr(watcher.daymode.load, "__defaults__", (tmp_path / "day_mode.json",))
+    watcher._daily.clear()
+
+
+RESULTS = []
+NOW = datetime(2026, 10, 16, 11, 0, tzinfo=IST)
+
+
+def signals(fake, trades=None):
+    trades = [] if trades is None else trades
+    asyncio.run(watcher.scan(fake, trades, NOW, CFG))
+    return trades
+
+
+def test_fresh_news_behind_the_move_blocks_the_fade(capsys):
+    news = [{"title": "TechM wins $1bn deal - 16 Oct, 2026", "sentiment": "positive"}]
+    assert signals(FakeIndMoney(headlines=news)) == []
+
+
+def test_results_day_blocks(capsys, monkeypatch):
+    monkeypatch.setattr(watcher.news, "results_calendar", lambda: {"TECHM": [NOW.date()]})
+    assert signals(FakeIndMoney()) == []
+
+
+def test_sector_wide_move_lowers_score(capsys):
+    signals(FakeIndMoney(sector_chg=0.3))
+    calm = json.loads(capsys.readouterr().out.split(" ", 1)[1])["decision_score"]
+    signals(FakeIndMoney(sector_chg=4.0))
+    sector_wide = json.loads(capsys.readouterr().out.split(" ", 1)[1])["decision_score"]
+    assert calm - sector_wide == 20  # loses the +5 "stock-specific" and takes -15 "with its sector"
+
+
+def test_no_trade_day_mode(capsys, tmp_path):
+    (tmp_path / "day_mode.json").write_text(json.dumps({"date": "2026-10-16", "mode": "no_trade"}))
+    assert signals(FakeIndMoney()) == []
+
+
 def test_watcher_signals_then_exits(tmp_path, monkeypatch, capsys):
     monkeypatch.setattr(watcher, "TRADES", tmp_path / "paper_trades.csv")
     trades = []
     asyncio.run(watcher.scan(FakeIndMoney(), trades, datetime(2026, 10, 16, 11, 0, tzinfo=IST), CFG))
     out = capsys.readouterr().out
     assert out.startswith("SIGNAL ") and "TECHM-27-OCT-1800-PUT" in out
+    payload = json.loads(out.split(" ", 1)[1])
+    assert "No fresh news: likely an overreaction" in payload["news_and_macro"]
+    assert payload["forecast"]["basis"] and payload["day_mode"] == "normal"
     assert trades[0]["entry_ask"] == 50.1 and trades[0]["status"] == "OPEN"
 
     # Same contract is not signalled twice in a day.

@@ -25,6 +25,29 @@ sides: [loser, gainer]
 max_vix: 22                # above this India VIX -> no trades
 trend_day_nifty_pct: 1.2   # Nifty move that marks a strong trend day
 
+# Macro agent (sector, crude oil, rupee). Backtest: turned -0.35%/trade into +0.10%.
+use_macro: true
+macro:
+  sector_trend_pct: 1.5     # sector index move that counts as "the whole sector is moving"
+  sector_points: -15
+  crude_move_pct: 1.5
+  crude_points: -20
+  rupee_move_pct: 0.4
+  rupee_points: -10
+
+# News & Events agent (live only: no news history exists to backtest it)
+news:
+  block_results_day: true   # skip stocks with results today or yesterday evening
+  fresh_news_points: -25    # fresh news that explains the move = real catalyst
+  volume_spike_ratio: 3.0   # "sudden pressure": last 15 min volume vs normal
+
+# Forecast agent: likely reversal level (VWAP or 38% retracement) is shown on every signal.
+# Backtest: blocking on it lowered results (-0.74%/trade), and aiming the target at it cut
+# the hit rate from 90% to 63% (-3.16%/trade), so both are off.
+forecast_filter: false
+target_mode: fixed          # "forecast" aims for forecast_capture of the forecast move
+forecast_capture: 0.7
+
 # Decision
 min_chart_score: 60        # chart-reader score needed for a TRADE signal
 min_hit_probability: 60    # forecast chance (%) the stock moves enough for the target before square-off

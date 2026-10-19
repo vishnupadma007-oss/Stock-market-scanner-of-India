@@ -178,8 +178,22 @@ class IndMoney:
         return await self.call("get_indian_stocks_option_chain", ind_key=ind_key,
                                use_expiry_date=False, strikes_around_atm=strikes_around_atm)
 
-    async def quotes(self, ind_keys: list[str]) -> dict:
-        return await self.call("get_indian_stocks_details", ind_keys=ind_keys)
+    async def quotes(self, ind_keys: list[str], segments: list[str] | None = None) -> dict:
+        args = {"ind_keys": ind_keys} | ({"segments": segments} if segments else {})
+        return await self.call("get_indian_stocks_details", **args)
+
+    async def day_changes(self, ind_keys: list[str]) -> dict[str, float]:
+        """Today's % change for up to 10 instruments."""
+        data = await self.quotes(ind_keys)
+        return {k: v["entity_stats"]["day_change_percentage"] for k, v in data.items()
+                if isinstance(v, dict) and "entity_stats" in v}
+
+    async def news(self, ind_key: str) -> list[dict]:
+        return (await self.quotes([ind_key], ["news"])).get(ind_key, {}).get("news", [])
+
+    async def crude_key(self) -> str | None:
+        rows = await self.call("lookup_ind_keys", names=["crude oil"], filter_type="IN_COMMODITY")
+        return next((r["ind_key"] for r in rows if r.get("ind_key")), None)
 
 
 def candles_frame(rows: list[dict]) -> pd.DataFrame:

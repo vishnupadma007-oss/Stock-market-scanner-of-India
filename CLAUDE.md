@@ -9,6 +9,9 @@ Intraday mover-reversal options strategy on NSE F&O stocks, run by a team of age
 - `journal/paper_trades.csv`: paper-trade log. `review.py` writes the evening review to
   `journal/reviews/`; approved strategy changes are logged in `journal/strategy_changes.md`.
   Commit `journal/` at the end of each trading day.
+- Agents: regime, scanner, chart reader, options, risk, decision, journal, plus News & Events
+  (`agents/news.py`), Macro (`agents/macro.py`), Forecast (`agents/forecast.py`) and the morning
+  brief's day mode (`agents/daymode.py`, `journal/day_mode.json`).
 - Run tests with `python -m pytest -q`.
 
 User decisions to respect: intraday only; buy options (PE on fading gainers, CE on

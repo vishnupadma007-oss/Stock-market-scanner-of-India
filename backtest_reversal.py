@@ -8,7 +8,10 @@ Option prices are simulated with Black-Scholes at a constant volatility, with th
 from config. Real premiums also move with implied volatility, so treat results as an
 estimate of the edge, not exact P&L.
 
-Usage:  python backtest_reversal.py [--intraday intra.pkl --daily daily.pkl]
+The Macro agent (sector, crude, rupee) and the Forecast agent are tested when `use_macro` /
+`use_forecast` are on. The News agent is not: there is no free history of intraday news.
+
+Usage:  python backtest_reversal.py [--intraday intra.pkl --daily daily.pkl] [--set use_macro=true]
 """
 import argparse
 from datetime import datetime, time
@@ -21,14 +24,41 @@ import yfinance as yf
 from agents.chart_reader import read_chart
 from agents.config import load_config
 from agents.costs import round_trip_charges
+from agents import macro as macro_agent
 from agents.decision import decide
+from agents.forecast import reversal_target
 from agents.indicators import hist_vol, intraday_sigma_per_min
 from agents.options import black_scholes, suggest_contract
 from agents.regime import assess
 from agents.risk import plan
 from agents.scanner import stock_profile
+from agents.sectors import SECTORS, sector_of
 
 IST = "Asia/Kolkata"
+MACRO_TICKERS = [yahoo for _, yahoo in SECTORS.values()] + ["CL=F", "INR=X"]
+
+
+def load_macro(intraday_path=None, daily_path=None):
+    """Sector indices, crude oil and USD/INR, as {ticker: (intraday, daily)}."""
+    if intraday_path:
+        intra, daily = pd.read_pickle(intraday_path), pd.read_pickle(daily_path)
+    else:
+        intra = yf.download(MACRO_TICKERS, period="60d", interval="5m", group_by="ticker", progress=False)
+        daily = yf.download(MACRO_TICKERS, period="1y", interval="1d", group_by="ticker", progress=False)
+    intra.index = intra.index.tz_convert(IST)
+    return {tk: (intra[tk].dropna(subset=["Close"]), daily[tk].dropna(subset=["Close"]))
+            for tk in MACRO_TICKERS if tk in intra.columns.get_level_values(0)}
+
+
+def change_at(series: tuple, t, day) -> float | None:
+    """Today's % change of a macro series at time t (vs its last close before `day`)."""
+    if series is None:
+        return None
+    intra, daily = series
+    now, prev = intra[intra.index <= t], daily[daily.index.date < day]
+    if now.empty or prev.empty:
+        return None
+    return (float(now["Close"].iloc[-1]) / float(prev["Close"].iloc[-1]) - 1) * 100
 
 
 def load(intraday_path, daily_path, symbols):
@@ -56,7 +86,8 @@ def option_mid(option, spot, now, cfg):
     return price
 
 
-def simulate(frames, cfg, step_min=15):
+def simulate(frames, cfg, step_min=15, macro=None):
+    macro = macro or {}
     nifty_i, nifty_d = frames.pop("^NSEI")
     days = sorted(set(nifty_i.index.date))
     half_spread = cfg["assumed_spread_pct"] / 200
@@ -98,9 +129,17 @@ def simulate(frames, cfg, step_min=15):
                     option = suggest_contract(sym, prof["ltp"], side, hist_vol(past["Close"]), None, cfg, day)
                     mid = option_mid(option, prof["ltp"], t, cfg)
                     option["est_premium"] = round(mid * (1 + half_spread), 2)  # buy at the ask
+                    forecast = reversal_target(hist.tail(400), float(past["Close"].iloc[-1]), side) \
+                        if cfg.get("use_forecast") else None
                     risk = plan(option, count, t.to_pydatetime(), cfg,
-                                sigma_per_min=intraday_sigma_per_min(hist.tail(400)))
-                    if decide(side, mkt, chart, risk, None, cfg)["verdict"] != "TRADE":
+                                sigma_per_min=intraday_sigma_per_min(hist.tail(400)), forecast=forecast)
+                    extras = []
+                    if cfg.get("use_macro"):
+                        sector_ticker = SECTORS[sector_of(sym)][1]
+                        extras.append(macro_agent.assess(
+                            sym, side, prof["chg_1d"], change_at(macro.get(sector_ticker), t, day),
+                            change_at(macro.get("CL=F"), t, day), change_at(macro.get("INR=X"), t, day), cfg))
+                    if decide(side, mkt, chart, risk, None, cfg, extras)["verdict"] != "TRADE":
                         continue
                     trades.append(run_trade(sym, side, option, risk, frames[sym][0], t, day, cfg, half_spread))
                     taken.add(sym)
@@ -156,6 +195,8 @@ def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--intraday")
     ap.add_argument("--daily")
+    ap.add_argument("--macro-intraday")
+    ap.add_argument("--macro-daily")
     ap.add_argument("--out", default="journal/backtest_trades.csv")
     ap.add_argument("--set", action="append", default=[], metavar="KEY=VALUE",
                     help="try a config change without editing config.yaml, e.g. --set sides=[loser]")
@@ -164,7 +205,8 @@ def main():
     for item in args.set:
         key, value = item.split("=", 1)
         cfg[key] = yaml.safe_load(value)
-    trades = simulate(load(args.intraday, args.daily, cfg["universe"]), cfg)
+    macro = load_macro(args.macro_intraday, args.macro_daily) if cfg.get("use_macro") else None
+    trades = simulate(load(args.intraday, args.daily, cfg["universe"]), cfg, macro=macro)
     trades.to_csv(args.out, index=False)
     print(report(trades))
 

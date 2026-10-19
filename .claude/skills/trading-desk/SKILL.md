@@ -13,6 +13,26 @@ argue for one on every signal; mention risk only when something is unusual.
 
 These are **paper trades**. INDmoney access is read-only; never claim an order was placed.
 
+## Morning brief (about 09:00-09:15 IST, before starting the watcher)
+
+One short research pass that sets the day's mode. Keep it to a handful of searches.
+
+1. Web search: overnight US and Asian markets, GIFT Nifty, Brent crude, USD/INR, and major
+   geopolitical or policy news (wars, sanctions, OPEC, Fed/RBI). Use the
+   `market-news-analyst` skill's references (geopolitical/commodity correlations, event
+   patterns) to judge impact, but apply them to Indian stocks and sectors.
+2. Today's events: RBI policy, Budget, F&O expiry (last Tuesday of the month), big results.
+   `python -c "from agents.news import results_calendar as r; import json; from datetime import date; print(json.dumps({s: [str(d) for d in v] for s, v in r().items() if date.today() in v}))"`
+   lists companies with results today (the News agent already skips those stocks).
+3. Write `journal/day_mode.json`:
+   `{"date": "YYYY-MM-DD", "mode": "normal" | "careful" | "no_trade", "notes": ["..."], "avoid": ["SYMBOL", ...]}`
+   - `careful`: a big overnight shock, crude or the rupee moving sharply, event day. The watcher
+     then needs a stronger chart and allows only 1 trade.
+   - `no_trade`: market-wide panic or a major scheduled event during market hours (e.g. RBI
+     policy at 10:00, Budget speech).
+   - `avoid`: stocks with stock-specific news that makes a reversal unlikely today.
+4. Tell the user the mode in 2-3 lines with the main reasons.
+
 ## Start
 
 1. Check the INDmoney login for the script: `python -m agents.indmoney test`.
@@ -27,17 +47,26 @@ These are **paper trades**. INDmoney access is read-only; never claim an order w
 
 ## On a SIGNAL line
 
-The rule-based agents already opened a paper trade at the live ask. Give your own verdict,
-using as few tool calls as possible (this is where Claude credits are spent):
+The rule-based agents already opened a paper trade at the live ask. The signal already
+carries what the agents found: `chart_signals`, `news_and_macro` (INDmoney headlines with
+sentiment, results calendar, sudden-pressure volume check, sector/crude/rupee moves),
+`forecast` (likely reversal level: VWAP or 38% retracement, and the option price there) and
+`day_mode`. Give your own verdict, using as few tool calls as possible (this is where Claude
+credits are spent):
 
-1. `get_indian_stocks_details` for the underlying with `segments: ["news"]`: is the move
-   driven by a real catalyst (results, order win, merger, regulatory action, rating change)?
-   A real catalyst means the move is less likely to reverse intraday -> lean SKIP.
-2. Read the signal's `chart_signals` and, only if they are borderline, fetch 5-minute
-   candles (`get_indian_stocks_ohlc`, `5minute`, `1d`) and read the structure yourself.
-3. Reply to the user in a few lines: TRADE or SKIP, contract, entry (ask), target bid,
-   quantity/lots, net profit at target, square-off time, forecast chance, and one-line reason.
-4. Record your verdict in `journal/paper_trades.csv` (`claude_verdict` = TRADE/SKIP,
+1. Why is it moving? Read `news_and_macro`. Only if it is unclear (no headline but a
+   suspicious move, or `news_driven` is true), run one web search for today's news on the
+   stock. A real catalyst (results, order win, merger, regulatory action, rating change,
+   promoter/block deal) means the move is less likely to reverse intraday -> lean SKIP.
+2. Read `chart_signals`; only if borderline, fetch 5-minute candles
+   (`get_indian_stocks_ohlc`, `5minute`, `1d`) and read the structure yourself.
+3. Check the forecast: if the forecast level is barely beyond the target, say the trade has
+   little room. (The forecast is information only: in the backtest, filtering on it or
+   aiming the target at it made results worse.)
+4. Reply to the user in a few lines: TRADE or SKIP, contract, entry (ask), target bid,
+   quantity/lots, net profit at target, square-off time, forecast chance and forecast level,
+   why the stock is moving, and a one-line reason.
+5. Record your verdict in `journal/paper_trades.csv` (`claude_verdict` = TRADE/SKIP,
    `notes` = the reason). This lets the user compare rules-only vs rules-plus-Claude results.
 
 ## On an EXIT line

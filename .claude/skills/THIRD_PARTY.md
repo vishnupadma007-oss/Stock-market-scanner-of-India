@@ -10,6 +10,13 @@ or credential handling beyond standard package installs and a gitignored `.env`.
 install: instructions plus one offline metrics script (numpy/pandas only), no network calls.
 Its generic risk advice (stops, kill switch) is overridden by this project's no-stop-loss rule in CLAUDE.md.
 
-Reviewed and not installed: wshobson/agents `backtesting-frameworks` (generic; covered by the above).
+`market-news-analyst` comes from [tradermonty/claude-trading-skills](https://github.com/tradermonty/claude-trading-skills)
+(MIT licence, TraderMonty), copied without its test script. Reviewed before install: instructions
+and reference guides only, uses web search, no keys. US-focused: the trading-desk morning brief
+applies its commodity and geopolitics guides to Indian stocks.
+
+Reviewed and not installed: tradermonty `earnings-trade-analyzer` (needs a paid US data key),
+himself65 `finance-sentiment` (paid key, US social-media sentiment), `timesfm-forecasting`
+(large price-forecasting model; no evidence it helps intraday reversals, heavy to run), wshobson/agents `backtesting-frameworks` (generic; covered by the above).
 
 `trading-desk` is this project's own skill.

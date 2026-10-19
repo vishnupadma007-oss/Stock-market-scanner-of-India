@@ -20,15 +20,18 @@ from datetime import datetime, time
 from pathlib import Path
 from zoneinfo import ZoneInfo
 
+from agents import daymode, macro, news
 from agents.chart_reader import read_chart
 from agents.config import load_config
 from agents.costs import round_trip_charges
 from agents.decision import decide
+from agents.forecast import reversal_target
 from agents.indicators import intraday_sigma_per_min
 from agents.indmoney import IndMoney, LoginRequired, pick_option
 from agents.regime import assess
 from agents.risk import plan
 from agents.scanner import stock_profile
+from agents.sectors import SECTORS, sector_of
 
 IST = ZoneInfo("Asia/Kolkata")
 NIFTY_KEY, VIX_KEY = "INDI00012", "INDI00318"
@@ -38,6 +41,30 @@ FIELDS = ["date", "opened", "symbol", "side", "contract", "underlying_key", "der
           "status", "closed", "exit_bid", "charges", "net_pnl", "claude_verdict", "notes"]
 
 _errors_seen: dict[str, float] = {}
+_daily: dict = {}  # once-a-day lookups: results calendar, crude contract
+
+
+def usdinr_change() -> float | None:
+    """Today's USD/INR % change (INDmoney has no rupee quote; Yahoo is fine for this)."""
+    try:
+        import yfinance as yf
+        d = yf.Ticker("INR=X").history(period="5d", interval="1d")["Close"]
+        return float(d.iloc[-1] / d.iloc[-2] - 1) * 100
+    except Exception:
+        return None
+
+
+async def market_context(im: IndMoney, now: datetime) -> dict:
+    """Sector, crude and rupee moves for the Macro agent; results calendar for the News agent."""
+    today = now.date().isoformat()
+    if _daily.get("date") != today:
+        _daily.clear()
+        _daily.update(date=today, results=news.results_calendar(), crude_key=await im.crude_key())
+    keys = [k for k, _ in SECTORS.values()] + ([_daily["crude_key"]] if _daily["crude_key"] else [])
+    changes = await im.day_changes(keys[:10])
+    return {"results": _daily["results"], "usdinr": usdinr_change(),
+            "crude": changes.get(_daily["crude_key"]),
+            "sectors": {name: changes.get(k) for name, (k, _) in SECTORS.items()}}
 
 
 def emit(kind: str, payload: dict) -> None:
@@ -88,13 +115,18 @@ async def manage_open_trades(im: IndMoney, trades: list[dict], now: datetime, cf
 
 
 async def scan(im: IndMoney, trades: list[dict], now: datetime, cfg: dict) -> None:
+    day = daymode.load(now.date())
+    if day["mode"] == "no_trade":
+        return
+    cfg = daymode.apply(cfg, day)
     nifty = await im.candles(NIFTY_KEY, "1day", "1y")
     vix = await im.candles(VIX_KEY, "1day", "14d")
     mkt = assess(nifty, vix, cfg)
     if mkt["no_trade"]:
         return
 
-    universe = set(cfg["universe"])
+    ctx = await market_context(im, now)
+    universe = set(cfg["universe"]) - set(day["avoid"])
     today = now.date().isoformat()
     taken = {t["contract"] for t in trades if t["date"] == today}
     trades_today = sum(t["date"] == today for t in trades)
@@ -118,9 +150,17 @@ async def scan(im: IndMoney, trades: list[dict], now: datetime, cfg: dict) -> No
             option = pick_option(await im.option_chain(m["ind_key"]), side, cfg["strike_choice"])
             if option is None or option["contract"] in taken:
                 continue
+            prev_close = m.get("previous_close") or m["price"] / (1 + m["change_pct"] / 100)
+            forecast = reversal_target(intraday, float(prev_close), side)
             risk = plan(option, trades_today, now, cfg, sigma_per_min=intraday_sigma_per_min(intraday),
-                        spread_pct=option["spread_pct"])
-            decision = decide(side, mkt, chart, risk, None, cfg)
+                        spread_pct=option["spread_pct"], forecast=forecast)
+            extras = [news.assess(m["symbol"], side, m["change_pct"], now.date(), await im.news(m["ind_key"]),
+                                  ctx["results"], intraday, cfg)]
+            if cfg.get("use_macro", True):
+                extras.append(macro.assess(m["symbol"], side, m["change_pct"],
+                                           ctx["sectors"].get(sector_of(m["symbol"])), ctx["crude"],
+                                           ctx["usdinr"], cfg))
+            decision = decide(side, mkt, chart, risk, None, cfg, extras)
             if decision["verdict"] != "TRADE":
                 continue
 
@@ -140,6 +180,12 @@ async def scan(im: IndMoney, trades: list[dict], now: datetime, cfg: dict) -> No
                 "spot": m["price"], "day_change_pct": m["change_pct"], "lot_size": option["lot_size"],
                 "net_profit_at_target": round(risk["net_profit"]), "square_off": cfg["square_off_time"],
                 "chart_signals": [s for s, _ in chart["signals"]], "market": mkt["notes"],
+                "news_and_macro": [n for e in extras for n in e["notes"]],
+                "news_driven": extras[0]["news_driven"], "decision_score": decision["score"],
+                "forecast": {"level": forecast.get("level") and round(forecast["level"], 2),
+                             "basis": forecast["basis"],
+                             "option_price_there": risk["forecast_premium"] and round(risk["forecast_premium"], 2)},
+                "day_mode": day["mode"],
             })
 
 

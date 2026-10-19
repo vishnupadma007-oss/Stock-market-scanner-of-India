@@ -37,3 +37,24 @@ Verdict under QuantForge's gates: **not ready for real money**. Both fail the
 costs). Losers-only is promising but not yet distinguishable from luck, and its small edge
 disappears if real charges/slippage are about twice the model. Next stage: paper trading,
 mainly to measure real bid-ask fills.
+
+## New agents (2026-10-19): Macro and Forecast
+
+Same 60 days, with Yahoo history for sector indices, crude oil (CL=F) and USD/INR. The News &
+Events agent cannot be backtested (no free intraday news history); it is judged in paper trading.
+
+| Variant | Trades | Hit target | Avg net/trade | Worst | Net P&L |
+|---|---|---|---|---|---|
+| Base | 79 | 90% | -0.35% | -36.9% | -₹6,989 |
+| + Forecast filter (skip if reversal level is closer than needed) | 71 | 87% | -0.74% | -36.9% | -₹13,076 |
+| + Forecast target (aim for 70% of the forecast move) | 70 | 63% | -3.16% | -36.9% | -₹55,362 |
+| **+ Macro (sector, crude, rupee)** | 76 | 91% | **+0.10%** | **-29.1%** | **+₹1,808** |
+| + Macro + forecast filter | 66 | 88% | -0.27% | -29.1% | -₹4,500 |
+| All + forecast target | 62 | 61% | -3.45% | -36.5% | -₹53,521 |
+| Losers only | 37 | 89% | +0.49% | -8.1% | +₹4,568 |
+| Losers + macro | 35 | 89% | +0.48% | -8.1% | +₹4,161 |
+| Losers + macro + forecast filter | 28 | 86% | +0.33% | -8.1% | +₹2,326 |
+
+Decision: Macro agent on (it filters bad gainer trades); forecast shown on every signal but
+not used to block or set the target. Aiming for bigger reversals loses the quick 1% that makes
+this strategy work: winners take a median of 10 minutes, and waiting for more lets them turn.
