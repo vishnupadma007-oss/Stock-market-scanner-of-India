@@ -13,6 +13,10 @@ argue for one on every signal; mention risk only when something is unusual.
 
 These are **paper trades**. INDmoney access is read-only; never claim an order was placed.
 
+**INDmoney allows 500 calls per hour for the whole account**, shared by the watcher (about
+250-300 an hour) and your own INDmoney tool calls. Keep your calls few: no surveys or bulk
+lookups during market hours. On `ERROR ... hourly call limit reached` the watcher pauses by itself.
+
 ## Morning brief (about 09:00-09:15 IST, before starting the watcher)
 
 One short research pass that sets the day's mode. Keep it to a handful of searches.

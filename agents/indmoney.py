@@ -12,6 +12,7 @@ never committed. Access is read-only (market:read and portfolio:read; INDmoney r
 but this module only calls market-data tools).
 """
 import asyncio
+import contextlib
 import base64
 import hashlib
 import json
@@ -38,6 +39,14 @@ TOKEN_FILE = Path(os.environ.get("INDMONEY_TOKEN_FILE", Path.home() / ".config" 
 
 class LoginRequired(RuntimeError):
     pass
+
+
+class RateLimited(RuntimeError):
+    """INDmoney allows a fixed number of calls per hour across the whole account."""
+
+    def __init__(self, message: str, retry_after: int):
+        super().__init__(message)
+        self.retry_after = retry_after
 
 
 # ---------------------------------------------------------------- token handling
@@ -144,6 +153,8 @@ def _parse(result) -> dict:
     # The server wraps its JSON in {"result": "<json string>"}.
     if isinstance(payload, dict) and isinstance(payload.get("result"), str):
         payload = json.loads(payload["result"])
+    if isinstance(payload, dict) and payload.get("error") == "rate_limit_exceeded":
+        raise RateLimited(payload.get("message", "rate limit"), int(payload.get("retry_after_seconds", 600)))
     return payload
 
 
@@ -151,19 +162,22 @@ class IndMoney:
     """One connection to the INDmoney MCP server: `async with IndMoney() as im: await im.movers(...)`."""
 
     async def __aenter__(self):
-        self._http = httpx2.AsyncClient(headers={"Authorization": f"Bearer {access_token()}"},
-                                        timeout=httpx2.Timeout(30.0, read=60.0))
-        self._transport = streamable_http_client(MCP_URL, http_client=self._http)
-        read, write = await self._transport.__aenter__()
-        self._session = ClientSession(read, write)
-        await self._session.__aenter__()
-        await self._session.initialize()
+        # An exit stack unwinds every layer even when one of them fails, so a failed call
+        # surfaces as its real error instead of a "cancel scope" error during cleanup.
+        self._stack = contextlib.AsyncExitStack()
+        try:
+            http = await self._stack.enter_async_context(httpx2.AsyncClient(
+                headers={"Authorization": f"Bearer {access_token()}"}, timeout=httpx2.Timeout(30.0, read=60.0)))
+            read, write = await self._stack.enter_async_context(streamable_http_client(MCP_URL, http_client=http))
+            self._session = await self._stack.enter_async_context(ClientSession(read, write))
+            await self._session.initialize()
+        except BaseException:
+            await self._stack.aclose()
+            raise
         return self
 
     async def __aexit__(self, *exc):
-        await self._session.__aexit__(*exc)
-        await self._transport.__aexit__(*exc)
-        await self._http.aclose()
+        return await self._stack.__aexit__(*exc)
 
     async def call(self, tool: str, **args) -> dict:
         return _parse(await self._session.call_tool(tool, args))

@@ -27,7 +27,7 @@ from agents.costs import round_trip_charges
 from agents.decision import decide
 from agents.forecast import reversal_target
 from agents.indicators import intraday_sigma_per_min
-from agents.indmoney import IndMoney, LoginRequired, pick_option
+from agents.indmoney import IndMoney, LoginRequired, RateLimited, pick_option
 from agents.regime import assess
 from agents.risk import plan
 from agents.scanner import stock_profile
@@ -44,6 +44,16 @@ FIELDS = ["date", "opened", "symbol", "side", "contract", "underlying_key", "der
 _errors_seen: dict[str, float] = {}
 _daily: dict = {}  # once-a-day lookups: results calendar, crude contract
 _daily_candles: dict = {}  # (ind_key, date) -> daily candles; past days do not change intraday
+
+
+_index_cache: dict = {}  # Nifty/VIX daily candles, refreshed every 15 minutes
+
+
+async def index_candles(im: IndMoney):
+    if clock.time() - _index_cache.get("at", 0) > 15 * 60:
+        _index_cache.update(at=clock.time(), nifty=await im.candles(NIFTY_KEY, "1day", "1y"),
+                            vix=await im.candles(VIX_KEY, "1day", "14d"))
+    return _index_cache["nifty"], _index_cache["vix"]
 
 
 async def daily_candles(im: IndMoney, key: str, today) -> "pd.DataFrame":
@@ -147,8 +157,7 @@ async def scan(im: IndMoney, trades: list[dict], now: datetime, cfg: dict, hold:
     if day["mode"] == "no_trade":
         return
     cfg = daymode.apply(cfg, day)
-    nifty = await im.candles(NIFTY_KEY, "1day", "1y")
-    vix = await im.candles(VIX_KEY, "1day", "14d")
+    nifty, vix = await index_candles(im)
     mkt = assess(nifty, vix, cfg)
     if mkt["no_trade"]:
         return
@@ -227,7 +236,7 @@ async def scan(im: IndMoney, trades: list[dict], now: datetime, cfg: dict, hold:
                     "crowd": {"oi_type": crowd["oi_type"], "would_score": crowd["would_score"],
                               "would_block": crowd["would_block"]},
                 })
-            except LoginRequired:
+            except (LoginRequired, RateLimited):
                 raise
             except Exception as e:  # one bad reply must not stop the other stocks
                 emit("ERROR", {"error": f"{m['symbol']}: {type(e).__name__}: {e}"})
@@ -260,6 +269,13 @@ async def cycle(cfg: dict) -> None:
                 if free > 0:  # size new trades from the money that is actually free right now
                     await scan(im, trades, now, {**cfg, "capital": free})
     save_trades(trades)
+
+
+def leaf_errors(exc: BaseException) -> list[BaseException]:
+    """The real errors inside an exception group (the MCP client wraps errors in groups)."""
+    if isinstance(exc, BaseExceptionGroup):
+        return [leaf for e in exc.exceptions for leaf in leaf_errors(e)]
+    return [exc]
 
 
 def market_open(now: datetime) -> bool:
@@ -302,11 +318,20 @@ def main() -> None:
                     asyncio.run(cycle(cfg))
                 elif asyncio.run(exits_only(cfg)):
                     last_scan = 0.0  # target hit: free again, scan on the next tick
-            except LoginRequired as e:
-                emit("ERROR", {"error": str(e), "fix": "python -m agents.indmoney login"})
-                sys.exit(2)
-            except Exception as e:  # keep watching through temporary network/server errors
-                emit("ERROR", {"error": f"{type(e).__name__}: {e}"})
+            except Exception as exc:  # keep watching through temporary network/server errors
+                errors = leaf_errors(exc)
+                login = [e for e in errors if isinstance(e, LoginRequired)]
+                limited = [e for e in errors if isinstance(e, RateLimited)]
+                if login:
+                    emit("ERROR", {"error": str(login[0]), "fix": "python -m agents.indmoney login"})
+                    sys.exit(2)
+                if limited:
+                    wait = min(max(e.retry_after for e in limited), 3600)
+                    emit("ERROR", {"error": "INDmoney hourly call limit reached", "pausing_min": round(wait / 60)})
+                    clock.sleep(wait)
+                else:
+                    for e in errors:
+                        emit("ERROR", {"error": f"{type(e).__name__}: {e}"})
         if args.once:
             return
         if now.time() > time(15, 30) or now.weekday() >= 5:

@@ -187,3 +187,20 @@ def test_busy_desk_holds_new_setups(tmp_path, monkeypatch, capsys):
     assert "TECHM-27-OCT-1800-PUT" in held
     asyncio.run(watcher.scan(FakeIndMoney(), trades, NOW, CFG, hold=True))
     assert (tmp_path / "held.csv").read_text() == held  # recorded once per day
+
+
+def test_leaf_errors_unwraps_groups():
+    from agents.indmoney import RateLimited
+    group = ExceptionGroup("outer", [ExceptionGroup("inner", [RateLimited("limit", 120)]), KeyError("stocks")])
+    leaves = watcher.leaf_errors(group)
+    assert isinstance(leaves[0], RateLimited) and leaves[0].retry_after == 120 and isinstance(leaves[1], KeyError)
+
+
+def test_rate_limit_reply_raises():
+    from types import SimpleNamespace
+    from agents.indmoney import RateLimited, _parse
+    reply = SimpleNamespace(is_error=False, content=[], structured_content={"result": json.dumps(
+        {"error": "rate_limit_exceeded", "message": "500 calls per hour", "retry_after_seconds": 1339})})
+    with pytest.raises(RateLimited) as e:
+        _parse(reply)
+    assert e.value.retry_after == 1339
