@@ -42,6 +42,13 @@ FIELDS = ["date", "opened", "symbol", "side", "contract", "underlying_key", "der
 
 _errors_seen: dict[str, float] = {}
 _daily: dict = {}  # once-a-day lookups: results calendar, crude contract
+_daily_candles: dict = {}  # (ind_key, date) -> daily candles; past days do not change intraday
+
+
+async def daily_candles(im: IndMoney, key: str, today) -> "pd.DataFrame":
+    if (key, today) not in _daily_candles:
+        _daily_candles[(key, today)] = await im.candles(key, "1day", "1y")
+    return _daily_candles[(key, today)]
 
 
 def usdinr_change() -> float | None:
@@ -98,13 +105,15 @@ def _t(hhmm: str) -> time:
 
 async def manage_open_trades(im: IndMoney, trades: list[dict], now: datetime, cfg: dict) -> None:
     square_off = now.time() >= _t(cfg["square_off_time"])
-    for t in (t for t in trades if t["status"] == "OPEN"):
-        chain = await im.option_chain(t["underlying_key"], strikes_around_atm=10)
-        leg = next((r[side] for r in chain.get("option_chain_data", [])
-                    for side in ("call_data", "put_data") if r[side]["derivative_id"] == t["derivative_id"]), None)
-        if leg is None:
+    open_trades = [t for t in trades if t["status"] == "OPEN"]
+    bids = {}
+    for i in range(0, len(open_trades), 10):  # one quick quote call per 10 open options
+        quotes = await im.quotes([t["derivative_id"] for t in open_trades[i:i + 10]])
+        bids.update({k: v.get("entity_stats", {}).get("bid_price") for k, v in quotes.items() if isinstance(v, dict)})
+    for t in open_trades:
+        bid = bids.get(t["derivative_id"])
+        if not bid:
             continue
-        bid = leg.get("buy_price", leg.get("bp")) or 0
         if bid >= float(t["target_bid"]) or square_off:
             qty, entry = int(t["qty"]), float(t["entry_ask"])
             charges = round_trip_charges(entry, bid, qty, cfg["charges"])["total"]
@@ -139,7 +148,7 @@ async def scan(im: IndMoney, trades: list[dict], now: datetime, cfg: dict) -> No
                   if m["symbol"] in universe and abs(m["change_pct"]) >= cfg["min_move_pct"]][:cfg["top_n"]]
         for m in movers:
             try:
-                daily = await im.candles(m["ind_key"], "1day", "1y")
+                daily = await daily_candles(im, m["ind_key"], now.date())
                 intraday = await im.candles(m["ind_key"], "5minute", "7d")
                 if len(daily) < 25 or intraday.empty:
                     continue
@@ -227,19 +236,36 @@ def market_open(now: datetime) -> bool:
     return now.weekday() < 5 and time(9, 15) <= now.time() <= time(15, 30)
 
 
+async def exits_only(cfg: dict) -> None:
+    """Fast path between scans: only re-price open trades (one quote call)."""
+    trades = load_trades()
+    if any(t["status"] == "OPEN" for t in trades):
+        async with IndMoney() as im:
+            await manage_open_trades(im, trades, datetime.now(IST), cfg)
+        save_trades(trades)
+
+
 def main() -> None:
+    cfg = load_config()
     ap = argparse.ArgumentParser()
     ap.add_argument("--once", action="store_true", help="run one cycle and exit")
-    ap.add_argument("--interval", type=int, default=5, help="minutes between scans")
+    ap.add_argument("--interval", type=float, default=cfg.get("scan_interval_min", 1),
+                    help="minutes between entry scans")
     args = ap.parse_args()
-    cfg = load_config()
+    exit_every = cfg.get("exit_check_seconds", 15)
 
-    emit("STATUS", {"watching": True, "interval_min": args.interval, "time": datetime.now(IST)})
+    emit("STATUS", {"watching": True, "scan_every_min": args.interval, "exit_check_every_sec": exit_every,
+                    "time": datetime.now(IST)})
+    last_scan = 0.0
     while True:
         now = datetime.now(IST)
         if args.once or market_open(now):
             try:
-                asyncio.run(cycle(cfg))
+                if args.once or clock.time() - last_scan >= args.interval * 60:
+                    last_scan = clock.time()
+                    asyncio.run(cycle(cfg))
+                else:
+                    asyncio.run(exits_only(cfg))
             except LoginRequired as e:
                 emit("ERROR", {"error": str(e), "fix": "python -m agents.indmoney login"})
                 sys.exit(2)
@@ -250,7 +276,7 @@ def main() -> None:
         if now.time() > time(15, 30) or now.weekday() >= 5:
             emit("STATUS", {"watching": False, "reason": "market closed", "time": now})
             return
-        clock.sleep(args.interval * 60)
+        clock.sleep(exit_every if market_open(now) else 60)
 
 
 if __name__ == "__main__":

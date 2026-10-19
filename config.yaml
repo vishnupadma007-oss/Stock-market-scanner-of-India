@@ -7,6 +7,11 @@ max_capital_per_trade: 1.0   # share of available money one trade may use (1.0 =
 max_trades_per_day: 50     # effectively no cap: trade every setup that passes the agents
 net_target_pct: 1.0        # target profit per trade, % of premium paid, AFTER all charges
 
+# How often the watcher looks. Entry scans use 5-minute candles, so once a minute is plenty;
+# open trades are re-priced every few seconds so a brief touch of the target is not missed.
+scan_interval_min: 1
+exit_check_seconds: 15
+
 # Exits. No stop-loss: a trade exits at the target or at square-off time.
 square_off_time: "15:15"   # always exit intraday positions by this time (IST)
 entry_start: "09:45"       # let the opening range form before trading

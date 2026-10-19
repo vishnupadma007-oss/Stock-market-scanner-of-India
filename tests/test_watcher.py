@@ -78,6 +78,9 @@ class FakeIndMoney:
     async def option_chain(self, key, strikes_around_atm=4):
         return chain(put_bid=self.put_bid, put_ask=self.put_bid + 0.5)
 
+    async def quotes(self, keys, segments=None):
+        return {k: {"entity_stats": {"bid_price": self.put_bid, "ask_price": self.put_bid + 0.5}} for k in keys}
+
 
 @pytest.fixture(autouse=True)
 def offline(monkeypatch, tmp_path):
@@ -87,6 +90,7 @@ def offline(monkeypatch, tmp_path):
     monkeypatch.setattr(watcher.daymode, "PATH", tmp_path / "day_mode.json")
     monkeypatch.setattr(watcher.daymode.load, "__defaults__", (tmp_path / "day_mode.json",))
     watcher._daily.clear()
+    watcher._daily_candles.clear()
 
 
 RESULTS = []
