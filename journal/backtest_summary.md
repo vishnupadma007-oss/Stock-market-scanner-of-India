@@ -58,3 +58,13 @@ Events agent cannot be backtested (no free intraday news history); it is judged 
 Decision: Macro agent on (it filters bad gainer trades); forecast shown on every signal but
 not used to block or set the target. Aiming for bigger reversals loses the quick 1% that makes
 this strategy work: winners take a median of 10 minutes, and waiting for more lets them turn.
+
+## ATM vs one-strike-ITM (2026-10-19, macro on, same 60 days)
+
+| Strike | Trades | Hit target | Avg net/trade | Winners | Misses | Worst | Losers side | Net P&L |
+|---|---|---|---|---|---|---|---|---|
+| ITM1 | 76 | 91% | +0.10% | +1.15% | -10.26% | -29.1% | +0.49% | +₹1,808 |
+| ATM | 76 | 91% | +0.03% | +1.25% | -12.01% | -38.0% | +0.60% | +₹482 |
+
+Same trades and hit rate. ATM options move more in % terms both ways: slightly bigger wins,
+bigger misses. Switched to ATM anyway because with a ₹10,000 account most ITM lots do not fit.
