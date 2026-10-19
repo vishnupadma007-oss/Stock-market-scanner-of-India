@@ -189,10 +189,13 @@ class IndMoney:
         return await self.call("get_indian_stocks_details", **args)
 
     async def day_changes(self, ind_keys: list[str]) -> dict[str, float]:
-        """Today's % change for up to 10 instruments."""
-        data = await self.quotes(ind_keys)
-        return {k: v["entity_stats"]["day_change_percentage"] for k, v in data.items()
-                if isinstance(v, dict) and "entity_stats" in v}
+        """Today's % change for each instrument (the server takes 10 keys per call)."""
+        out = {}
+        for i in range(0, len(ind_keys), 10):
+            data = await self.quotes(ind_keys[i:i + 10])
+            out.update({k: v["entity_stats"]["day_change_percentage"] for k, v in data.items()
+                        if isinstance(v, dict) and "entity_stats" in v})
+        return out
 
     async def news(self, ind_key: str) -> list[dict]:
         return (await self.quotes([ind_key], ["news"])).get(ind_key, {}).get("news", [])

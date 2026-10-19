@@ -61,7 +61,7 @@ async def market_context(im: IndMoney, now: datetime) -> dict:
         _daily.clear()
         _daily.update(date=today, results=news.results_calendar(), crude_key=await im.crude_key())
     keys = [k for k, _ in SECTORS.values()] + ([_daily["crude_key"]] if _daily["crude_key"] else [])
-    changes = await im.day_changes(keys[:10])
+    changes = await im.day_changes(keys)
     return {"results": _daily["results"], "usdinr": usdinr_change(),
             "crude": changes.get(_daily["crude_key"]),
             "sectors": {name: changes.get(k) for name, (k, _) in SECTORS.items()}}
