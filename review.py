@@ -107,6 +107,14 @@ def main() -> None:
     args = ap.parse_args()
     df = load()
     text = review(df, args.date, last_change_date())
+    held_path = ROOT / "journal" / "held_setups.csv"
+    if held_path.exists():
+        held = pd.read_csv(held_path, dtype=str)
+        held = held[held["date"] == args.date]
+        if not held.empty:
+            text += (f"\n## Setups held while a trade was open: {len(held)}\n\n"
+                     + "\n".join(f"- {r.time} {r.symbol} {r.contract} (score {r.score})" for r in held.itertuples())
+                     + "\n")
     REVIEWS.mkdir(parents=True, exist_ok=True)
     (REVIEWS / f"{args.date}.md").write_text(text)
     if not df.empty:  # P&L as a fraction of capital, for QuantForge's metrics.py

@@ -11,6 +11,11 @@ net_target_pct: 1.0        # target profit per trade, % of premium paid, AFTER a
 # open trades are re-priced every few seconds so a brief touch of the target is not missed.
 scan_interval_min: 1
 exit_check_seconds: 15
+# One trade at a time: while a trade is open, no new trades or signals (no Claude credits).
+# Setups that qualify meanwhile are only recorded in journal/held_setups.csv (checked every
+# hold_scan_min). After the exit, a fresh scan runs on the next tick.
+one_trade_at_a_time: true
+hold_scan_min: 5
 
 # Exits. No stop-loss: a trade exits at the target or at square-off time.
 square_off_time: "15:15"   # always exit intraday positions by this time (IST)

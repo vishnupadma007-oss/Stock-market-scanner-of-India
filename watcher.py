@@ -36,6 +36,7 @@ from agents.sectors import SECTORS, sector_of
 IST = ZoneInfo("Asia/Kolkata")
 NIFTY_KEY, VIX_KEY = "INDI00012", "INDI00318"
 TRADES = Path(__file__).resolve().parent / "journal" / "paper_trades.csv"
+HELD = Path(__file__).resolve().parent / "journal" / "held_setups.csv"
 FIELDS = ["date", "opened", "symbol", "side", "contract", "underlying_key", "derivative_id",
           "qty", "entry_ask", "target_bid", "spread_pct", "hit_probability", "chart_score", "oi_type",
           "status", "closed", "exit_bid", "charges", "net_pnl", "claude_verdict", "notes"]
@@ -123,7 +124,25 @@ async def manage_open_trades(im: IndMoney, trades: list[dict], now: datetime, cf
             emit("EXIT", {k: t[k] for k in ("symbol", "contract", "status", "entry_ask", "exit_bid", "qty", "net_pnl")})
 
 
-async def scan(im: IndMoney, trades: list[dict], now: datetime, cfg: dict) -> None:
+def record_held(now: datetime, symbol: str, contract: str, score: int, ask: float) -> None:
+    """A setup that passed every agent while a trade was already open (not traded)."""
+    seen = set()
+    if HELD.exists():
+        with open(HELD, newline="") as f:
+            seen = {(r["date"], r["contract"]) for r in csv.DictReader(f)}
+    if (now.date().isoformat(), contract) in seen:
+        return
+    new = not HELD.exists()
+    HELD.parent.mkdir(exist_ok=True)
+    with open(HELD, "a", newline="") as f:
+        w = csv.writer(f)
+        if new:
+            w.writerow(["date", "time", "symbol", "contract", "score", "ask"])
+        w.writerow([now.date().isoformat(), now.strftime("%H:%M"), symbol, contract, score, ask])
+
+
+async def scan(im: IndMoney, trades: list[dict], now: datetime, cfg: dict, hold: bool = False) -> None:
+    """hold=True: a trade is already open, so only record qualifying setups, do not open them."""
     day = daymode.load(now.date())
     if day["mode"] == "no_trade":
         return
@@ -178,6 +197,9 @@ async def scan(im: IndMoney, trades: list[dict], now: datetime, cfg: dict) -> No
                 decision = decide(side, mkt, chart, risk, None, cfg, extras)
                 if decision["verdict"] != "TRADE":
                     continue
+                if hold:
+                    record_held(now, m["symbol"], option["contract"], decision["score"], option["ask"])
+                    continue
 
                 row = {f: "" for f in FIELDS}
                 row.update(date=today, opened=now.strftime("%H:%M"), symbol=m["symbol"], side=side,
@@ -220,15 +242,23 @@ def account(trades: list[dict], cfg: dict) -> tuple[float, float]:
     return value, max(value - tied_up, 0.0)
 
 
+def has_open(trades: list[dict]) -> bool:
+    return any(t["status"] == "OPEN" for t in trades)
+
+
 async def cycle(cfg: dict) -> None:
     now = datetime.now(IST)
     trades = load_trades()
     async with IndMoney() as im:
         await manage_open_trades(im, trades, now, cfg)
-        _, free = account(trades, cfg)
-        if _t(cfg["entry_start"]) <= now.time() <= _t(cfg["entry_end"]) and free > 0:
-            # Size new trades from the money that is actually free right now.
-            await scan(im, trades, now, {**cfg, "capital": free})
+        if _t(cfg["entry_start"]) <= now.time() <= _t(cfg["entry_end"]):
+            if has_open(trades) and cfg.get("one_trade_at_a_time", True):
+                # Busy: note setups we would have taken, but open nothing and wake no one.
+                await scan(im, trades, now, cfg, hold=True)
+            else:
+                _, free = account(trades, cfg)
+                if free > 0:  # size new trades from the money that is actually free right now
+                    await scan(im, trades, now, {**cfg, "capital": free})
     save_trades(trades)
 
 
@@ -236,13 +266,16 @@ def market_open(now: datetime) -> bool:
     return now.weekday() < 5 and time(9, 15) <= now.time() <= time(15, 30)
 
 
-async def exits_only(cfg: dict) -> None:
-    """Fast path between scans: only re-price open trades (one quote call)."""
+async def exits_only(cfg: dict) -> bool:
+    """Fast path between scans: only re-price open trades (one quote call).
+    Returns True when a trade closed, so the next scan can run straight away."""
     trades = load_trades()
-    if any(t["status"] == "OPEN" for t in trades):
-        async with IndMoney() as im:
-            await manage_open_trades(im, trades, datetime.now(IST), cfg)
-        save_trades(trades)
+    if not has_open(trades):
+        return False
+    async with IndMoney() as im:
+        await manage_open_trades(im, trades, datetime.now(IST), cfg)
+    save_trades(trades)
+    return not has_open(trades)
 
 
 def main() -> None:
@@ -261,11 +294,14 @@ def main() -> None:
         now = datetime.now(IST)
         if args.once or market_open(now):
             try:
-                if args.once or clock.time() - last_scan >= args.interval * 60:
+                busy = has_open(load_trades()) and cfg.get("one_trade_at_a_time", True)
+                # While a trade is open, look for (and only record) setups every few minutes.
+                every = cfg.get("hold_scan_min", 5) if busy else args.interval
+                if args.once or clock.time() - last_scan >= every * 60:
                     last_scan = clock.time()
                     asyncio.run(cycle(cfg))
-                else:
-                    asyncio.run(exits_only(cfg))
+                elif asyncio.run(exits_only(cfg)):
+                    last_scan = 0.0  # target hit: free again, scan on the next tick
             except LoginRequired as e:
                 emit("ERROR", {"error": str(e), "fix": "python -m agents.indmoney login"})
                 sys.exit(2)

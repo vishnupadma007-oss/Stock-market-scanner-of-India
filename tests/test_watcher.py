@@ -175,3 +175,15 @@ def test_one_bad_stock_does_not_stop_the_scan(capsys):
             raise KeyError("selected_expiry")
     assert signals(Broken()) == []
     assert "ERROR" in capsys.readouterr().out
+
+
+def test_busy_desk_holds_new_setups(tmp_path, monkeypatch, capsys):
+    monkeypatch.setattr(watcher, "HELD", tmp_path / "held.csv")
+    trades = [{"date": "2026-10-16", "contract": "OTHER", "status": "OPEN"}]
+    asyncio.run(watcher.scan(FakeIndMoney(), trades, NOW, CFG, hold=True))
+    assert capsys.readouterr().out == ""  # no SIGNAL, so Claude is not woken
+    assert len(trades) == 1  # nothing new opened
+    held = (tmp_path / "held.csv").read_text()
+    assert "TECHM-27-OCT-1800-PUT" in held
+    asyncio.run(watcher.scan(FakeIndMoney(), trades, NOW, CFG, hold=True))
+    assert (tmp_path / "held.csv").read_text() == held  # recorded once per day

@@ -72,7 +72,9 @@ credits are spent):
 
 ## On an EXIT line
 
-Tell the user the result in one line (contract, entry, exit, net P&L).
+Tell the user the result in one line (contract, entry, exit, net P&L). The desk trades one
+position at a time: setups found while a trade is open are only recorded in
+`journal/held_setups.csv` (no SIGNAL), and a fresh scan runs right after the exit.
 
 ## Evening review
 
