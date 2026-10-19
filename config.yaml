@@ -2,7 +2,7 @@
 # Trading agent team settings. Edit these from your phone on GitHub.
 # ------------------------------------------------------------------
 
-capital: 10000             # starting paper-trading capital (₹); realised P&L is added back
+capital: 30000             # starting paper-trading capital (₹); realised P&L is added back
 max_capital_per_trade: 1.0   # share of available money one trade may use (1.0 = all of it)
 max_trades_per_day: 50     # effectively no cap: trade every setup that passes the agents
 net_target_pct: 1.0        # target profit per trade, % of premium paid, AFTER all charges
@@ -61,7 +61,7 @@ min_hit_probability: 60    # forecast chance (%) the stock moves enough for the 
 assumed_spread_pct: 0.8    # bid-ask gap of the option, % of premium (real value used when live quotes exist)
 
 # Options
-strike_choice: "ATM"        # "ATM" or "ITM1". ATM: with ₹10,000 most ITM lots do not fit (lot survey 2026-10-19)
+strike_choice: "ITM1"       # "ATM" or "ITM1". ITM1: smaller worst loss in the backtest; all lots fit ₹30,000 (survey 2026-10-19)
 min_days_to_expiry: 3      # roll to next month's expiry when closer than this
 risk_free_rate: 0.065
 
