@@ -2,9 +2,9 @@
 # Trading agent team settings. Edit these from your phone on GitHub.
 # ------------------------------------------------------------------
 
-capital: 100000            # total trading capital (₹)
-max_capital_per_trade: 0.25   # max share of capital in one trade's premium
-max_trades_per_day: 2      # hard cap on TRADE signals per day
+capital: 10000             # starting paper-trading capital (₹); realised P&L is added back
+max_capital_per_trade: 1.0   # share of available money one trade may use (1.0 = all of it)
+max_trades_per_day: 50     # effectively no cap: trade every setup that passes the agents
 net_target_pct: 1.0        # target profit per trade, % of premium paid, AFTER all charges
 
 # Exits. No stop-loss: a trade exits at the target or at square-off time.

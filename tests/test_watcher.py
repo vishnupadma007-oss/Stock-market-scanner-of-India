@@ -147,3 +147,11 @@ def test_watcher_signals_then_exits(tmp_path, monkeypatch, capsys):
     assert trades[0]["status"] == "TARGET" and trades[0]["net_pnl"] > 0
     watcher.save_trades(trades)
     assert watcher.load_trades()[0]["status"] == "TARGET"
+
+
+def test_account_reinvests_profit_and_reserves_open_trades():
+    rows = [{"status": "TARGET", "net_pnl": "120", "entry_ask": "10", "qty": "500"},
+            {"status": "SQUARED_OFF", "net_pnl": "-20", "entry_ask": "8", "qty": "500"},
+            {"status": "OPEN", "net_pnl": "", "entry_ask": "12", "qty": "500"}]
+    value, free = watcher.account(rows, {"capital": 10000})
+    assert value == 10100 and free == 10100 - 6000

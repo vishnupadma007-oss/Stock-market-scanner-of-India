@@ -76,7 +76,7 @@ def test_regime_uptrend_blocks_shorting_gainers():
 @pytest.mark.parametrize("hour,allowed", [(9, False), (11, True), (14, False)])
 def test_risk_entry_window(hour, allowed):
     option = {"est_premium": 20.0, "lot_size": 750, "delta": -0.55}
-    r = plan(option, 0, datetime(2026, 10, 16, hour, 40), CFG)
+    r = plan(option, 0, datetime(2026, 10, 16, hour, 40), {**CFG, "capital": 100000})
     assert r["allowed"] is allowed
     assert r["target_premium"] > 20.0 and "emergency_exit" not in r
 
@@ -90,9 +90,10 @@ def test_hit_probability_forecast():
 
 def test_low_forecast_blocks_trade():
     option = {"est_premium": 20.0, "lot_size": 750, "delta": -0.55}
-    calm = plan(option, 0, datetime(2026, 10, 16, 14, 20), CFG, sigma_per_min=0.01)
+    big = {**CFG, "capital": 100000}  # one 750-lot at ₹20 = ₹15,000
+    calm = plan(option, 0, datetime(2026, 10, 16, 14, 20), big, sigma_per_min=0.01)
     assert not calm["allowed"] and calm["hit_probability"] < 60
-    lively = plan(option, 0, datetime(2026, 10, 16, 11, 0), CFG, sigma_per_min=0.5)
+    lively = plan(option, 0, datetime(2026, 10, 16, 11, 0), big, sigma_per_min=0.5)
     assert lively["allowed"] and lively["hit_probability"] >= 60
 
 
@@ -110,3 +111,9 @@ def test_sides_setting_switches_off_gainers():
     close = pd.Series(np.full(60, 25000.0))
     mkt = assess(pd.DataFrame({"Close": close}), None, {**CFG, "sides": ["loser"]})
     assert not mkt["gainers_ok"] and mkt["losers_ok"]
+
+
+def test_lot_too_big_for_10k_is_blocked():
+    option = {"est_premium": 20.0, "lot_size": 750, "delta": -0.55}
+    r = plan(option, 0, datetime(2026, 10, 16, 11, 0), CFG)  # ₹10,000 capital
+    assert not r["allowed"] and "One lot costs ₹15,000" in r["blocks"][0]

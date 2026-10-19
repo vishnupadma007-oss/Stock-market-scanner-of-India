@@ -197,13 +197,24 @@ async def scan(im: IndMoney, trades: list[dict], now: datetime, cfg: dict) -> No
             })
 
 
+def account(trades: list[dict], cfg: dict) -> tuple[float, float]:
+    """(account value, money free for a new trade): starting capital plus realised P&L,
+    minus the premium tied up in open trades."""
+    realised = sum(float(t["net_pnl"] or 0) for t in trades if t["status"] in ("TARGET", "SQUARED_OFF"))
+    tied_up = sum(float(t["entry_ask"]) * int(t["qty"]) for t in trades if t["status"] == "OPEN")
+    value = cfg["capital"] + realised
+    return value, max(value - tied_up, 0.0)
+
+
 async def cycle(cfg: dict) -> None:
     now = datetime.now(IST)
     trades = load_trades()
     async with IndMoney() as im:
         await manage_open_trades(im, trades, now, cfg)
-        if _t(cfg["entry_start"]) <= now.time() <= _t(cfg["entry_end"]):
-            await scan(im, trades, now, cfg)
+        _, free = account(trades, cfg)
+        if _t(cfg["entry_start"]) <= now.time() <= _t(cfg["entry_end"]) and free > 0:
+            # Size new trades from the money that is actually free right now.
+            await scan(im, trades, now, {**cfg, "capital": free})
     save_trades(trades)
 
 

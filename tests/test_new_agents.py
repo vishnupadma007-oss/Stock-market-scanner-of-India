@@ -75,7 +75,9 @@ def test_day_mode(tmp_path):
     assert daymode.load(DAY, p)["mode"] == "normal"
     p.write_text('{"date": "2026-10-16", "mode": "careful", "avoid": ["BPCL"]}')
     day = daymode.load(DAY, p)
-    assert day["avoid"] == ["BPCL"] and daymode.apply(CFG, day)["max_trades_per_day"] == 1
+    applied = daymode.apply(CFG, day)
+    assert day["avoid"] == ["BPCL"] and applied["min_chart_score"] == CFG["min_chart_score"] + 10
+    assert applied["max_trades_per_day"] == CFG["max_trades_per_day"]
     assert daymode.load(date(2026, 10, 17), p)["mode"] == "normal"  # stale file ignored
 
 

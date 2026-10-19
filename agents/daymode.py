@@ -23,8 +23,8 @@ def load(today: date, path: Path = PATH) -> dict:
 
 
 def apply(cfg: dict, day: dict) -> dict:
-    """Config for today: careful mode needs a stronger chart and allows only one trade."""
+    """Config for today: careful mode needs a stronger chart (no cap on the number of trades:
+    the user trades every setup that qualifies)."""
     if day["mode"] == "careful":
-        return {**cfg, "min_chart_score": cfg["min_chart_score"] + 10,
-                "max_trades_per_day": min(1, cfg["max_trades_per_day"])}
+        return {**cfg, "min_chart_score": cfg["min_chart_score"] + 10}
     return cfg
