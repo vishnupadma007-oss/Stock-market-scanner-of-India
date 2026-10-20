@@ -60,6 +60,23 @@ def calls_last_hour() -> int:
     return int(sum(cost for _, cost in _usage()))
 
 
+# Even pacing: calls are spread evenly through the hour instead of in bursts. With a budget of
+# 450 calls/hour each call waits until 8 seconds after the previous one (16 for a double-cost call).
+_pace = {"gap": 3600 / 450, "next": 0.0}
+
+
+def set_hourly_budget(calls_per_hour: int) -> None:
+    _pace["gap"] = 3600 / calls_per_hour
+
+
+async def _wait_turn(cost: int) -> None:
+    now = time.monotonic()
+    start = max(now, _pace["next"])
+    _pace["next"] = start + cost * _pace["gap"]
+    if start > now:
+        await asyncio.sleep(start - now)
+
+
 class LoginRequired(RuntimeError):
     pass
 
@@ -203,6 +220,7 @@ class IndMoney:
         return await self._stack.__aexit__(*exc)
 
     async def call(self, tool: str, **args) -> dict:
+        await _wait_turn(CALL_COST.get(tool, 1))
         record_call(tool)
         return _parse(await self._session.call_tool(tool, args))
 

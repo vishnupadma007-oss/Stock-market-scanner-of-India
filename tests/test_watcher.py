@@ -217,3 +217,17 @@ def test_call_budget_counts_rolling_hour(tmp_path, monkeypatch):
     rows[0][0] = t.time() - 3700  # older than an hour drops out
     (tmp_path / "usage.json").write_text(json.dumps(rows))
     assert indmoney.calls_last_hour() == 1
+
+
+def test_calls_are_paced_evenly():
+    import time as t
+    from agents import indmoney
+    indmoney.set_hourly_budget(36000)  # 0.1 s per call
+    indmoney._pace["next"] = 0.0
+    async def three():
+        for cost in (1, 2, 1):
+            await indmoney._wait_turn(cost)
+    start = t.monotonic()
+    asyncio.run(three())
+    assert t.monotonic() - start >= 0.29  # 1 + 2 units after the first call
+    indmoney.set_hourly_budget(450)

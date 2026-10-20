@@ -7,12 +7,13 @@ max_capital_per_trade: 1.0   # share of available money one trade may use (1.0 =
 max_trades_per_day: 50     # effectively no cap: trade every setup that passes the agents
 net_target_pct: 1.0        # target profit per trade, % of premium paid, AFTER all charges
 
-# How often the watcher looks. INDmoney allows 500 calls per hour for the whole account
-# (Claude's own checks included), so: entry scans every 5 minutes (they read 5-minute candles),
-# open trades re-priced every 30 seconds. About 250-300 calls an hour.
-scan_interval_min: 5
-exit_check_seconds: 30
-indmoney_hourly_budget: 400   # watcher's share of the 500/hour; it pauses itself above this
+# How often the watcher looks. INDmoney allows 500 calls per hour for the whole account.
+# The watcher spreads its share evenly (450/hour = one call every 8 s, never in bursts), so:
+# with no trade open, entry scans run back to back (one full scan takes about 2 minutes);
+# with a trade open, its exit price is checked every 15 seconds.
+scan_interval_min: 0
+exit_check_seconds: 15
+indmoney_hourly_budget: 450   # watcher's share of the 500/hour (rest left for Claude's own checks)
 # One trade at a time: while a trade is open, no new trades or signals (no Claude credits).
 # Setups that qualify meanwhile are only recorded in journal/held_setups.csv (checked every
 # hold_scan_min). After the exit, a fresh scan runs on the next tick.

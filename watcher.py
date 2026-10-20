@@ -27,7 +27,8 @@ from agents.costs import round_trip_charges
 from agents.decision import decide
 from agents.forecast import reversal_target
 from agents.indicators import intraday_sigma_per_min
-from agents.indmoney import IndMoney, LoginRequired, RateLimited, calls_last_hour, pick_option
+from agents.indmoney import (IndMoney, LoginRequired, RateLimited, calls_last_hour, pick_option,
+                             set_hourly_budget)
 from agents.regime import assess
 from agents.risk import plan
 from agents.scanner import stock_profile
@@ -302,6 +303,7 @@ def main() -> None:
                     help="minutes between entry scans")
     args = ap.parse_args()
     exit_every = cfg.get("exit_check_seconds", 15)
+    set_hourly_budget(cfg.get("indmoney_hourly_budget", 450))
 
     emit("STATUS", {"watching": True, "scan_every_min": args.interval, "exit_check_every_sec": exit_every,
                     "time": datetime.now(IST)})
@@ -343,6 +345,7 @@ def main() -> None:
         if now.time() > time(15, 30) or now.weekday() >= 5:
             emit("STATUS", {"watching": False, "reason": "market closed", "time": now})
             return
+        # Calls are already paced evenly inside IndMoney.call, so a short tick is enough here.
         clock.sleep(exit_every if market_open(now) else 60)
 
 
