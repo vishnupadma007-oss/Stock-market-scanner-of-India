@@ -5,6 +5,7 @@ the Indian market or global events, given a tone and an importance, and written 
 intelligence log for the Data Analyzer.
 """
 import hashlib
+import time
 import xml.etree.ElementTree as ET
 from datetime import datetime
 from email.utils import parsedate_to_datetime
@@ -48,12 +49,31 @@ def parse(xml_text: str, source: str) -> list[dict]:
     return items
 
 
+# Google News blocks clients that poll it too often, so its searches are read less often.
+MIN_GAP_SECONDS = {name: (120 if name.startswith("Google") else 0) for name in FEEDS}
+_state: dict[str, dict] = {}  # per feed: last fetch time, ETag / Last-Modified for conditional GETs
+
+
 def fetch_all(timeout: int = 15) -> tuple[list[dict], list[str]]:
+    """Read every feed that is due. Unchanged feeds answer '304 Not Modified' and cost nothing."""
     items, failed = [], []
+    now = time.monotonic()
     for source, url in FEEDS.items():
+        st = _state.setdefault(source, {"at": -1e9})
+        if now - st["at"] < MIN_GAP_SECONDS[source]:
+            continue
+        st["at"] = now
+        headers = {"User-Agent": "Mozilla/5.0"}
+        if st.get("etag"):
+            headers["If-None-Match"] = st["etag"]
+        if st.get("modified"):
+            headers["If-Modified-Since"] = st["modified"]
         try:
-            resp = requests.get(url, headers={"User-Agent": "Mozilla/5.0"}, timeout=timeout)
+            resp = requests.get(url, headers=headers, timeout=timeout)
+            if resp.status_code == 304:
+                continue
             resp.raise_for_status()
+            st["etag"], st["modified"] = resp.headers.get("ETag"), resp.headers.get("Last-Modified")
             items += parse(resp.text, source)
         except Exception:
             failed.append(source)

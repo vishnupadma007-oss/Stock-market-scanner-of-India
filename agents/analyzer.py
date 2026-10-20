@@ -22,6 +22,7 @@ DEFAULTS = {"forecast_score": 2.0, "min_sources": 2, "agree_points": 10, "agains
 
 
 def _weight(item: dict, now: datetime) -> float:
+    now = now.replace(tzinfo=None)  # log times are plain IST clock times
     try:
         age_h = (now - datetime.strptime(item["time"], "%Y-%m-%d %H:%M:%S")).total_seconds() / 3600
     except (KeyError, ValueError):

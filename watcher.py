@@ -19,6 +19,7 @@ import asyncio
 import csv
 import json
 import sys
+import threading
 import time as clock
 from datetime import datetime, time
 from pathlib import Path
@@ -167,13 +168,33 @@ def run_analyzer(cfg: dict, now: datetime) -> None:
             emit("FORECAST", {**view, "market": analyzer.market_mood(items, now)["mood"]})
 
 
+_print_lock = threading.Lock()  # the information track and the scanner both print events
+
+
 def emit(kind: str, payload: dict) -> None:
-    if kind == "ERROR":
-        key = payload.get("error", "")[:120]
-        if clock.time() - _errors_seen.get(key, 0) < 3600:
-            return
-        _errors_seen[key] = clock.time()
-    print(f"{kind} {json.dumps(payload, default=str)}", flush=True)
+    with _print_lock:
+        if kind == "ERROR":
+            key = payload.get("error", "")[:120]
+            if clock.time() - _errors_seen.get(key, 0) < 3600:
+                return
+            _errors_seen[key] = clock.time()
+        print(f"{kind} {json.dumps(payload, default=str)}", flush=True)
+
+
+def information_track(cfg: dict) -> None:
+    """Runs beside the scanner: NSE filings + concalls, news and the Data Analyzer every
+    `info_poll_seconds`, so a long market scan never delays them."""
+    every = cfg.get("info_poll_seconds", 30)
+    while True:
+        started = clock.time()
+        now = datetime.now(IST)
+        if holidays.is_trading_day(now.date()):
+            for step in (poll_filings, poll_news, run_analyzer):
+                try:
+                    step(cfg, now)
+                except Exception as e:  # one failing source must not stop the others
+                    emit("ERROR", {"error": f"{step.__name__}: {type(e).__name__}: {e}"})
+        clock.sleep(max(1.0, every - (clock.time() - started)))
 
 
 def load_trades() -> list[dict]:
@@ -401,16 +422,11 @@ def main() -> None:
         return
     emit("STATUS", {"watching": True, "scan_every_min": args.interval, "exit_check_every_sec": exit_every,
                     "time": datetime.now(IST)})
-    last_scan = last_filings = last_news = 0.0
+    if not args.once:  # NSE, news and analyzer: their own track, independent of the scan timing
+        threading.Thread(target=information_track, args=(cfg,), daemon=True).start()
+    last_scan = 0.0
     while True:
         now = datetime.now(IST)
-        if not args.once and clock.time() - last_filings >= cfg.get("filings_poll_seconds", 30):
-            last_filings = clock.time()
-            poll_filings(cfg, now)  # NSE feed, not INDmoney: no effect on the call budget
-            if clock.time() - last_news >= cfg.get("news_poll_seconds", 180):
-                last_news = clock.time()
-                poll_news(cfg, now)
-            run_analyzer(cfg, now)
         if args.once or market_open(now):
             try:
                 used, budget = calls_last_hour(), cfg.get("indmoney_hourly_budget", 400)

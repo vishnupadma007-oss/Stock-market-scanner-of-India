@@ -54,3 +54,10 @@ def test_analyzer_voice_in_trade_decision():
     assert analyzer.as_extra(up, "loser", CFG)["points"] == 10     # CE on a loser, news says up
     assert analyzer.as_extra(up, "gainer", CFG)["points"] == -20   # PE on a gainer, news says up
     assert analyzer.as_extra({**up, "confidence": 10}, "gainer", CFG)["points"] == 0
+
+
+def test_analyzer_accepts_ist_aware_time():
+    from zoneinfo import ZoneInfo
+    v = analyzer.stock_view("INFY", [item("Infosys shares jump on strong results")],
+                            NOW.replace(tzinfo=ZoneInfo("Asia/Kolkata")), CFG)
+    assert v["direction"] in ("up", "neutral")

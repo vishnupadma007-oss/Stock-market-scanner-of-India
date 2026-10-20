@@ -63,12 +63,12 @@ psychology:
 
 # Announcements agent: NSE's live corporate-filings feed (results, ratings, orders, deals,
 # regulatory actions), read every 30 s while the watcher runs. Results filings are parsed for
-# revenue/profit growth and reported as RESULT events; other material filings as NEWS.
-filings_poll_seconds: 30
+# revenue/profit growth and reported as RESULT events; major filings as NEWS.
+info_poll_seconds: 30   # NSE filings, concalls, news and analyzer run on their own track this often
 
 # News agent (RSS: ET, Mint, Business Standard, CNBC-TV18, Google News for global/India macro)
 # and Data Analyzer (combines filings, concalls and news into a forecast per stock).
-news_poll_seconds: 180
+# (Indian news feeds every 30 s; Google News searches every 2 min so Google does not block us)
 analyzer:
   forecast_score: 2.0   # stock's own news score (max 3) for a FORECAST; also needs 2+ sources or one major item
   min_sources: 2
