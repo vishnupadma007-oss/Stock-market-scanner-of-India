@@ -84,13 +84,16 @@ def test_poll_filings_emits_once(monkeypatch, tmp_path, capsys):
     monkeypatch.setattr(watcher.announcements, "fetch_feed", lambda: rows)
     monkeypatch.setattr(watcher.announcements, "results_summary",
                         lambda url: {"figures": announcements.figures_from_text(TECHM), "highlights": []})
+    monkeypatch.setattr(watcher, "check_expectations", lambda s, now, view=None: {"label": "partly priced in", "view": view})
     watcher._daily.clear()
     now = datetime(2026, 10, 21, 10, 31, tzinfo=IST)
     watcher.poll_filings(CFG, now)
     lines = capsys.readouterr().out.strip().splitlines()
     # Major filing (regulatory) and results wake Claude; the routine rating only feeds the analyzer.
     assert [l.split(" ", 1)[0] for l in lines] == ["NEWS", "RESULT"]
-    assert json.loads(lines[1].split(" ", 1)[1])["read"]["view"] == "strong"
+    result = json.loads(lines[1].split(" ", 1)[1])
+    assert result["read"]["view"] == "strong"
+    assert result["expectations"] == {"label": "partly priced in", "view": "strong"}
     logged = [json.loads(l) for l in (tmp_path / "intel").glob("*.jsonl").__next__().read_text().splitlines()]
     assert {i["category"] for i in logged} == {"REGULATORY", "RATING", "RESULTS"}
     watcher.poll_filings(CFG, now)

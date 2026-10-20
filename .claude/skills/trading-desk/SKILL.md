@@ -41,6 +41,9 @@ One short research pass that sets the day's mode. Keep it to a handful of search
    For F&O companies reporting today or tomorrow (results calendar), use the `earnings-preview`
    skill in short form: the 2-3 metrics that will move the stock and a bull/bear case each, so
    the RESULT can be judged in seconds when it lands. Keep it to a few lines per company.
+   Add `python -m agents.expectations SYMBOL` for each (3-4 INDmoney calls): is a good result
+   already priced in (run-up vs Nifty, pre-results hype, price vs analyst target), and so what
+   bar the numbers must clear to move the stock.
    Finally `python -m agents.analyzer`: the Data Analyzer's market mood and strongest stock
    forecasts from the overnight intelligence log (filings, concalls, news). Mention the top ones.
    `python -c "from agents.news import results_calendar as r; import json; from datetime import date; print(json.dumps({s: [str(d) for d in v] for s, v in r().items() if date.today() in v}))"`
@@ -107,12 +110,18 @@ scanned filings: if `figures` is empty or disagrees with `highlights`, trust the
    search for a large company) and versus this morning's preview, guidance, one-offs. Markets
    react to results versus expectations, not to growth alone.
 2. Check the first reaction: one `get_indian_stocks_details` call for the stock's live move.
-3. Forecast: direction (up/down), how strong, and whether the price already moved too far.
-4. If it is between 09:45 and 14:30 and the numbers and the first reaction agree, open a
+3. Priced in? The line carries `expectations`: `label` and `bar` say how much good (or bad)
+   news the price already holds, from the run-up vs Nifty, the hype in the days before and the
+   price vs the average analyst target. If it is "largely priced in", only a clear beat on
+   consensus lifts the stock and an in-line quarter can fall ("sell the news"); if pessimism is
+   priced in, a merely decent quarter can lift it. `reaction`, when present, says the price is
+   already moving against the numbers: believe the price.
+4. Forecast: direction (up/down), how strong, and whether the price already moved too far.
+5. If it is between 09:45 and 14:30 and the numbers, expectations and the first reaction agree, open a
    results trade: `python paper_trade.py open --symbol X --direction up|down --strategy results
    --reason "<one line>"`. It applies the same rules (one trade at a time, lot must fit, 1% net
    target, no stop-loss) and the watcher manages the exit. Otherwise note it for the next morning.
-5. Tell the user in a few lines: the numbers, your read, the forecast, and what you did.
+6. Tell the user in a few lines: the numbers, your read, priced in or not, the forecast, and what you did.
 
 For a concall transcript, apply the `nlp-earnings-sentiment` ideas: management's tone and
 hedging versus last quarter, and evasive answers in the Q&A; tone that diverges from the
@@ -130,7 +139,10 @@ downgrade, regulatory action, CEO exit, merger). Use `paper_trade.py` only with 
 It combines every NSE filing, concall and news headline about the stock, its sector and the
 market (newer and more important items count more). Strong means the stock's own news is loud
 and confirmed by 2+ sources or one major item. The tone reading is a word list, so check it:
-read the `reasons` (and one web search if they are thin). If the story is real and the price
+read the `reasons` (and one web search if they are thin). `priced_in` says whether the price
+already holds the story; when it does, the confidence was cut by 25 and `priced_in_note` says
+what it would take to move further: prefer no trade unless the news is clearly bigger than
+what was expected. If the story is real and the price
 agrees (one `get_indian_stocks_details` call), and it is 09:45-14:30 with no trade open, open a
 trade: `python paper_trade.py open --symbol X --direction up|down --strategy intel --reason "..."`.
 Tell the user in 2-3 lines. If it is noise (wrong company, old story, sarcasm), say so in one line.

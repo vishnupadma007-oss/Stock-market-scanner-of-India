@@ -4,10 +4,10 @@ look when there is a signal:
 
     SIGNAL {...}   new paper trade opened (rule-based agents said TRADE)
     EXIT {...}     paper trade closed (target reached, or square-off time)
-    RESULT {...}   a company in our list filed results on NSE (figures already read)
+    RESULT {...}   a company in our list filed results on NSE (figures read, priced-in check done)
     NEWS {...}     a major NSE filing (regulatory action, etc.); other filings only feed the analyzer
     COMMODITY {...} a commodity moved sharply today (reported once per commodity per day)
-    FORECAST {...} the Data Analyzer's outlook for a stock turned strong (new or changed)
+    FORECAST {...} the Data Analyzer's outlook for a stock turned strong (new or changed), with priced-in check
     ERROR {...}    something needs attention (each distinct error at most once an hour)
     STATUS {...}   start of watching / market closed
 
@@ -25,8 +25,8 @@ from datetime import datetime, time
 from pathlib import Path
 from zoneinfo import ZoneInfo
 
-from agents import (analyzer, announcements, commodities, concalls, daymode, holidays, intel, macro, news,
-                    newsfeed, psychology)
+from agents import (analyzer, announcements, commodities, concalls, daymode, expectations, holidays, intel, macro,
+                    news, newsfeed, psychology)
 from agents.chart_reader import read_chart
 from agents.config import load_config
 from agents.costs import round_trip_charges
@@ -84,7 +84,7 @@ def reset_daily(today: str) -> None:
     if _daily.get("date") != today:
         _daily.clear()
         _daily.update(date=today, filings={}, seen_filings=set(), shocks_sent=set(), forecasts={},
-                      intel_seen={i["id"] for i in intel.load(today)})
+                      expectations={}, intel_seen={i["id"] for i in intel.load(today)})
 
 
 async def market_context(im: IndMoney, now: datetime, cfg: dict | None = None) -> dict:
@@ -115,6 +115,32 @@ def log_filing(item: dict) -> None:
         w.writerow({k: item.get(k, "") for k in w.fieldnames})
 
 
+_stock_keys: dict[str, str] = {}
+
+
+def check_expectations(symbol: str, now: datetime, news_view: str | None = None) -> dict:
+    """Expectations agent for one stock (run-up, hype, analyst targets): is the news priced in?
+    Runs in the information thread with its own INDmoney session; once per stock per day,
+    except a results reaction, which is always re-checked."""
+    cached = _daily.setdefault("expectations", {}).get(symbol)
+    if cached and not news_view:
+        return cached
+
+    async def go():
+        async with IndMoney() as im:
+            if symbol not in _stock_keys:
+                _stock_keys[symbol] = await expectations.stock_key(im, symbol)
+            return await expectations.for_symbol(im, symbol, _stock_keys[symbol], now.replace(tzinfo=None),
+                                                 _index_cache.get("nifty"), news_view)
+    try:
+        result = asyncio.run(go())
+    except Exception as e:
+        errors = leaf_errors(e)
+        return {"error": f"{type(errors[0]).__name__}: {errors[0]}"[:200]}
+    _daily["expectations"][symbol] = result
+    return result
+
+
 def poll_filings(cfg: dict, now: datetime) -> None:
     """Announcements + Concall agents: new material NSE filings for our stocks. Results filings
     are read straight away and reported as RESULT events; major filings (regulatory) as NEWS;
@@ -140,6 +166,9 @@ def poll_filings(cfg: dict, now: datetime) -> None:
                 item = {**item, **summary, "read": announcements.score_results(summary["figures"])}
             except Exception as e:
                 item = {**item, "read": {"view": "unread", "notes": [f"PDF not read: {type(e).__name__}"]}}
+            view = item["read"]["view"]
+            item["expectations"] = check_expectations(item["symbol"], now,
+                                                      view if view in ("strong", "good", "weak") else None)
             emit("RESULT", item)
         intel_item = announcements.to_intel(item)
         intel.append([intel_item], _daily["intel_seen"])
@@ -165,7 +194,11 @@ def run_analyzer(cfg: dict, now: datetime) -> None:
         if view["strong"] and (prev is None or prev["direction"] != view["direction"]
                                or view["confidence"] >= prev["confidence"] + 20):
             _daily["forecasts"][symbol] = view
-            emit("FORECAST", {**view, "market": analyzer.market_mood(items, now)["mood"]})
+            expect = check_expectations(symbol, now)
+            emit("FORECAST", {**expectations.adjust_forecast(view, expect),
+                              "priced_in": {k: expect.get(k) for k in ("priced_in", "label", "bar", "notes", "error")
+                                            if expect.get(k) is not None},
+                              "market": analyzer.market_mood(items, now)["mood"]})
 
 
 _print_lock = threading.Lock()  # the information track and the scanner both print events
