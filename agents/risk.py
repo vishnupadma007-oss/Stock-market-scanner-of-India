@@ -13,13 +13,19 @@ def _t(hhmm: str) -> time:
 def hit_probability(move: float, sigma_per_min: float, minutes_left: float) -> float:
     """Chance the stock touches a level `move` rupees away before time runs out.
 
-    Uses the reflection principle for a driftless random walk: P = 2 * (1 - N(move / (sigma * sqrt(t)))).
-    It assumes no edge in direction, so it is a conservative forecast for a reversal setup.
+    Uses the reflection principle for a driftless random walk:
+    P = 2 * (1 - N(move / (sigma * sqrt(t)))).
+    It assumes no directional bias, providing a conservative benchmark for reversal setups.
     """
-    if minutes_left <= 0 or sigma_per_min <= 0:
+    if move <= 0:
+        return 1.0
+    if minutes_left <= 0 or sigma_per_min <= 0 or not math.isfinite(sigma_per_min):
         return 0.0
+
     z = move / (sigma_per_min * math.sqrt(minutes_left))
-    return min(1.0, 2 * (1 - 0.5 * (1 + math.erf(z / math.sqrt(2)))))
+    n_z = 0.5 * (1.0 + math.erf(z / math.sqrt(2.0)))
+    prob = 2.0 * (1.0 - n_z)
+    return max(0.0, min(1.0, prob))
 
 
 def plan(option: dict, trades_today: int, now: datetime, cfg: dict,
@@ -31,7 +37,7 @@ def plan(option: dict, trades_today: int, now: datetime, cfg: dict,
     if not _t(cfg["entry_start"]) <= now.time() <= _t(cfg["entry_end"]):
         blocks.append(f"Outside entry window {cfg['entry_start']}-{cfg['entry_end']} IST.")
 
-    premium, lot = option["est_premium"], option["lot_size"]
+    premium, lot = float(option["est_premium"]), option["lot_size"]
     budget = cfg["capital"] * cfg["max_capital_per_trade"]
     if lot:
         lots = int(budget // (premium * lot))
@@ -45,27 +51,37 @@ def plan(option: dict, trades_today: int, now: datetime, cfg: dict,
     target = exit_for_net_target(premium, qty, cfg["net_target_pct"], cfg["charges"])
     # You buy at the ask and sell at the bid, so the option's price must also cover the spread.
     spread_pct = cfg["assumed_spread_pct"] if spread_pct is None else spread_pct
-    spread_cost = premium * spread_pct / 100
+    spread_cost = premium * spread_pct / 100.0
 
     # Forecast: option price if the stock reaches the forecast reversal level.
     forecast_premium = None
-    if forecast and forecast.get("level") is not None and option["delta"]:
-        forecast_premium = premium + abs(option["delta"]) * forecast["move"] - spread_cost
+    delta = float(option.get("delta") or 0.0)  # no delta quoted: no move or chance estimate
+    abs_delta = abs(delta)
+
+    if forecast and forecast.get("level") is not None and abs_delta > 0:
+        forecast_premium = premium + abs_delta * forecast["move"] - spread_cost
         if cfg.get("target_mode") == "forecast":
             # Aim for part of the forecast move, never below the minimum net target.
             aim = round(premium + cfg.get("forecast_capture", 0.7) * (forecast_premium - premium), 1)
+            # Ensure aim respects NSE 0.05 tick size
+            aim = math.ceil(round(aim, 4) * 20.0) / 20.0
             if aim > target["exit_premium"]:
                 charges = round_trip_charges(premium, aim, qty, cfg["charges"])
-                target = {"exit_premium": aim, "gross_move_pct": (aim / premium - 1) * 100,
-                          "charges": charges, "net_profit": (aim - premium) * qty - charges["total"]}
+                target = {
+                    "exit_premium": aim,
+                    "gross_move_pct": round((aim / premium - 1.0) * 100.0, 2),
+                    "charges": charges,
+                    "net_profit": round((aim - premium) * qty - charges["total"], 2),
+                }
 
     premium_move = target["exit_premium"] - premium + spread_cost
     # Underlying move needed for the option to reach the target premium (delta approximation).
-    underlying_move = premium_move / abs(option["delta"]) if option["delta"] else None
+    underlying_move = premium_move / abs_delta if abs_delta > 0 else None
 
     square_off = datetime.combine(now.date(), _t(cfg["square_off_time"]), now.tzinfo)
-    minutes_left = (square_off - now).total_seconds() / 60
-    prob = hit_probability(underlying_move or 0, sigma_per_min, minutes_left) * 100
+    minutes_left = max(0.0, (square_off - now).total_seconds() / 60.0)
+    prob = hit_probability(underlying_move or 0.0, sigma_per_min, minutes_left) * 100.0
+
     if sigma_per_min and prob < cfg["min_hit_probability"]:
         blocks.append(f"Forecast chance of reaching the target is {prob:.0f}% "
                       f"(need {cfg['min_hit_probability']}%).")
@@ -77,12 +93,27 @@ def plan(option: dict, trades_today: int, now: datetime, cfg: dict,
             blocks.append(f"Forecast reversal to {forecast['basis']} (₹{forecast['level']:.2f}, "
                           f"₹{forecast['move']:.2f} away) is smaller than the ₹{underlying_move:.2f} move needed.")
 
+    # Estimate theta decay over the remaining holding window (375 min session)
+    theta_day = float(option.get("theta_day") or 0.0)
+    expected_theta_decay = abs(theta_day) * (minutes_left / 375.0)
+
     return {
-        "allowed": not blocks, "forecast": forecast, "forecast_premium": forecast_premium, "blocks": blocks, "lots": lots, "qty": qty,
-        "capital_used": premium * qty, "entry_premium": premium,
-        "target_premium": target["exit_premium"], "gross_move_pct": target["gross_move_pct"],
-        "charges": target["charges"], "net_profit": target["net_profit"],
-        "underlying_move": underlying_move, "spread_pct": spread_pct,
-        "hit_probability": prob, "minutes_left": minutes_left,
+        "allowed": not blocks,
+        "forecast": forecast,
+        "forecast_premium": forecast_premium,
+        "blocks": blocks,
+        "lots": lots,
+        "qty": qty,
+        "capital_used": round(premium * qty, 2),
+        "entry_premium": premium,
+        "target_premium": target["exit_premium"],
+        "gross_move_pct": target["gross_move_pct"],
+        "charges": target["charges"],
+        "net_profit": target["net_profit"],
+        "underlying_move": round(underlying_move, 2) if underlying_move else None,
+        "spread_pct": spread_pct,
+        "hit_probability": prob,
+        "minutes_left": minutes_left,
         "square_off": cfg["square_off_time"],
+        "expected_theta_decay": round(expected_theta_decay, 2),
     }

@@ -21,13 +21,27 @@ SCOPE_WEIGHT = {"stock": 1.0, "sector": 0.5, "market": 0.3, "global": 0.3}
 DEFAULTS = {"forecast_score": 2.0, "min_sources": 2, "agree_points": 10, "against_points": -20}
 
 
+def _parse_time(time_str: str) -> datetime | None:
+    for fmt in ("%Y-%m-%d %H:%M:%S", "%Y-%m-%dT%H:%M:%S", "%Y-%m-%d"):
+        try:
+            return datetime.strptime(time_str[:19], fmt)
+        except (ValueError, TypeError):
+            continue
+    try:
+        return datetime.fromisoformat(time_str)
+    except Exception:
+        return None
+
+
 def _weight(item: dict, now: datetime) -> float:
     now = now.replace(tzinfo=None)  # log times are plain IST clock times
-    try:
-        age_h = (now - datetime.strptime(item["time"], "%Y-%m-%d %H:%M:%S")).total_seconds() / 3600
-    except (KeyError, ValueError):
-        age_h = 0
-    return 0.5 ** (max(age_h, 0) / HALF_LIFE_H.get(item.get("kind"), 6))
+    t = _parse_time(item.get("time", ""))
+    if t is not None:
+        age_h = (now - t.replace(tzinfo=None)).total_seconds() / 3600.0
+    else:
+        age_h = 0.0
+    half_life = HALF_LIFE_H.get(item.get("kind"), 6)
+    return 0.5 ** (max(age_h, 0.0) / half_life)
 
 
 def _mean_tone(items: list[dict], now: datetime) -> float:
@@ -56,13 +70,13 @@ def stock_view(symbol: str, items: list[dict], now: datetime, cfg: dict | None =
     sector = STOCK_SECTOR.get(symbol)
     own = [i for i in items if symbol in i["symbols"]]
     own_raw = sum(i["sentiment"] * i["impact"] * _weight(i, now) for i in own)
-    own_score = 3 * math.tanh(own_raw / 3)
+    own_score = 3.0 * math.tanh(own_raw / 3.0)
     sector_tone = _mean_tone([i for i in items if sector and sector in i["sectors"] and symbol not in i["symbols"]], now)
     market_tone = _mean_tone([i for i in items if i["scope"] in ("market", "global")], now)
-    score = own_score + SCOPE_WEIGHT["sector"] * 2 * sector_tone + SCOPE_WEIGHT["market"] * 2 * market_tone
+    score = own_score + SCOPE_WEIGHT["sector"] * 2.0 * sector_tone + SCOPE_WEIGHT["market"] * 2.0 * market_tone
     sources = {i["source"] for i in own if abs(i["sentiment"]) > 0}
-    direction = "up" if score >= 1 else "down" if score <= -1 else "neutral"
-    confidence = min(100, round(100 * (1 - math.exp(-abs(score) / 2)) + 5 * max(len(sources) - 1, 0)))
+    direction = "up" if score >= 1.0 else "down" if score <= -1.0 else "neutral"
+    confidence = min(100, round(100.0 * (1.0 - math.exp(-abs(score) / 2.0)) + 5.0 * max(len(sources) - 1, 0)))
     major = any(i["impact"] >= 3 and i["sentiment"] for i in own)
     # Strong = the stock's OWN news is loud and confirmed (2+ sources or a major item such as results),
     # and the overall score (with sector and market mood) still points the same way.
@@ -98,8 +112,7 @@ def main() -> None:
     print(json.dumps({"items": len(items), "market": market_mood(items, now)}, indent=1))
     views = [stock_view(s, items, now) for s in load_config()["universe"]]
     for v in sorted(views, key=lambda v: -abs(v["score"]))[:10]:
-        if v["score"]:
-            print(json.dumps(v))
+        print(v["symbol"], v["direction"], v["confidence"], v["score"], v["sources"])
 
 
 if __name__ == "__main__":

@@ -1,3 +1,4 @@
+import json
 from datetime import date
 
 import numpy as np
@@ -110,3 +111,23 @@ def test_holidays_and_expiry():
     assert news.previous_session(date(2026, 10, 21)) == date(2026, 10, 19)
     # Last Tuesday of Nov 2026 (24th) is a holiday, so stock options expire on Mon 23 Nov.
     assert monthly_expiry(date(2026, 11, 2), 3) == date(2026, 11, 23)
+
+
+def test_exit_target_is_on_tick_and_clears_one_percent():
+    from agents.costs import exit_for_net_target
+    from agents.config import load_config
+    rates = load_config()["charges"]
+    for prem, qty in ((50.1, 600), (12.35, 1500), (180.0, 150), (3.4, 4000)):
+        t = exit_for_net_target(prem, qty, 1.0, rates)
+        assert t["net_profit"] >= prem * qty * 0.01 - 0.01
+        assert abs(t["exit_premium"] * 20 - round(t["exit_premium"] * 20)) < 1e-6  # NSE ₹0.05 tick
+        assert t["exit_premium"] - 0.05 < t["break_even_premium"] + prem * 0.02  # not padded far above need
+
+
+def test_intel_new_words_and_damaged_log(monkeypatch, tmp_path):
+    from agents import intel
+    assert intel.tone("SEBI order against the promoter") < 0 and intel.tone("Board approves bonus issue") > 0
+    monkeypatch.setattr(intel, "DIR", tmp_path)
+    good = intel.make_item(id="a", time="2026-10-21 10:00:00", source="ET", kind="news", headline="TCS shares jump")
+    (tmp_path / "2026-10-21.jsonl").write_text(json.dumps(good) + "\n{\"id\": \"cut short\n")
+    assert [i["id"] for i in intel.load("2026-10-21")] == ["a"]  # the damaged line is skipped, not the day

@@ -19,7 +19,27 @@ from datetime import datetime, timedelta
 import requests
 
 FEED = "https://www.nseindia.com/api/corporate-announcements?index=equities"
-HEADERS = {"User-Agent": "Mozilla/5.0", "Referer": "https://www.nseindia.com/"}
+HEADERS = {
+    "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36",
+    "Referer": "https://www.nseindia.com/",
+    "Accept": "application/json, text/plain, */*",
+    "Accept-Language": "en-US,en;q=0.9",
+}
+
+_session = None
+
+
+def get_nse_session() -> requests.Session:
+    global _session
+    if _session is None:
+        _session = requests.Session()
+        _session.headers.update(HEADERS)
+        try:
+            _session.get("https://www.nseindia.com", timeout=10)
+        except Exception:
+            pass
+    return _session
+
 
 # NSE filing category ("desc") or text -> our category. Order matters: first match wins.
 CATEGORIES = [
@@ -53,10 +73,21 @@ def fetch_feed(symbol: str | None = None, start=None, end=None) -> list[dict]:
     """All filings (optionally for one symbol) between two dates; today's by default."""
     start, end = start or datetime.now().date(), end or datetime.now().date()
     url = FEED + f"&from_date={start:%d-%m-%Y}&to_date={end:%d-%m-%Y}" + (f"&symbol={symbol}" if symbol else "")
-    resp = requests.get(url, headers=HEADERS, timeout=20)
-    resp.raise_for_status()
-    rows = resp.json()
-    return rows if isinstance(rows, list) else []
+    session = get_nse_session()
+    try:
+        resp = session.get(url, timeout=20)
+        if resp.status_code in (401, 403):
+            # Refresh session
+            session.get("https://www.nseindia.com", timeout=10)
+            resp = session.get(url, timeout=20)
+        resp.raise_for_status()
+        rows = resp.json()
+        return rows if isinstance(rows, list) else []
+    except Exception:
+        resp = requests.get(url, headers=HEADERS, timeout=20)
+        resp.raise_for_status()
+        rows = resp.json()
+        return rows if isinstance(rows, list) else []
 
 
 def material(rows: list[dict], universe: set[str], since: str = "") -> list[dict]:
@@ -113,9 +144,13 @@ def figures_from_text(text: str) -> dict:
                 nums = _numbers(line)
                 if len(nums) >= 3:
                     cur, prev_q, prev_y = nums[:3]
-                    out[key] = {"quarter": cur, "prev_quarter": prev_q, "year_ago": prev_y,
-                                "qoq_pct": round((cur / prev_q - 1) * 100, 1) if prev_q else None,
-                                "yoy_pct": round((cur / prev_y - 1) * 100, 1) if prev_y else None}
+                    out[key] = {
+                        "quarter": cur,
+                        "prev_quarter": prev_q,
+                        "year_ago": prev_y,
+                        "qoq_pct": round((cur / prev_q - 1.0) * 100.0, 1) if prev_q and prev_q != 0 else None,
+                        "yoy_pct": round((cur / prev_y - 1.0) * 100.0, 1) if prev_y and prev_y != 0 else None,
+                    }
                     break
     return out
 
@@ -135,7 +170,8 @@ def highlights(text: str, limit: int = 12) -> list[str]:
 
 
 def pdf_text(url: str) -> str:
-    resp = requests.get(url, headers=HEADERS, timeout=90)
+    session = get_nse_session()
+    resp = session.get(url, timeout=90)
     resp.raise_for_status()
     with tempfile.NamedTemporaryFile(suffix=".pdf") as f:
         f.write(resp.content)
@@ -177,6 +213,30 @@ def score_results(figures: dict) -> dict:
     return {"score": score, "view": view, "notes": notes}
 
 
+def to_intel(item: dict) -> dict:
+    """A material filing as an intelligence-log item for the Data Analyzer."""
+    from . import intel
+    text = f"{item['subject']} {item['text']}".lower()
+    cat = item["category"]
+    if cat == "RESULTS":
+        view = (item.get("read") or {}).get("view", "mixed")
+        mood, impact = {"strong": 1.0, "good": 0.5, "mixed": 0.0, "weak": -1.0}.get(view, 0.0), 3
+    elif cat == "RATING":
+        mood = 0.7 if re.search(r"upgrad|positive", text) else -0.7 if re.search(r"downgrad|negative|watch", text) else 0.0
+        impact = 2
+    elif cat == "ORDER":
+        mood, impact = 0.6, 2
+    elif cat == "REGULATORY":
+        mood, impact = -0.7, 3
+    elif cat == "MANAGEMENT":
+        mood, impact = (-0.5, 2) if re.search(r"\b(ceo|md|managing director|cfo|chief)\b", text) else (-0.2, 1)
+    else:  # DEAL, GUIDANCE: direction unclear from the filing title alone
+        mood, impact = intel.tone(text), 2
+    return intel.make_item(id=f"filing-{item['seq_id']}", time=item["time"], source="NSE filing", kind="filing",
+                           symbols=[item["symbol"]], category=cat, sentiment=mood, impact=impact,
+                           headline=f"{item['symbol']} {cat.lower()}: {item['text'][:200]}", url=item["pdf"])
+
+
 def main(argv: list[str]) -> None:
     import json
     cmd = argv[1] if len(argv) > 1 else ""
@@ -208,29 +268,3 @@ def main(argv: list[str]) -> None:
 
 if __name__ == "__main__":
     main(sys.argv)
-
-
-# ---------------------------------------------------------------- intelligence log
-
-def to_intel(item: dict) -> dict:
-    """A material filing as an intelligence-log item for the Data Analyzer."""
-    from . import intel
-    text = f"{item['subject']} {item['text']}".lower()
-    cat = item["category"]
-    if cat == "RESULTS":
-        view = (item.get("read") or {}).get("view", "mixed")
-        mood, impact = {"strong": 1.0, "good": 0.5, "mixed": 0.0, "weak": -1.0}.get(view, 0.0), 3
-    elif cat == "RATING":
-        mood = 0.7 if re.search(r"upgrad|positive", text) else -0.7 if re.search(r"downgrad|negative|watch", text) else 0.0
-        impact = 2
-    elif cat == "ORDER":
-        mood, impact = 0.6, 2
-    elif cat == "REGULATORY":
-        mood, impact = -0.7, 3
-    elif cat == "MANAGEMENT":
-        mood, impact = (-0.5, 2) if re.search(r"\b(ceo|md|managing director|cfo|chief)\b", text) else (-0.2, 1)
-    else:  # DEAL, GUIDANCE: direction unclear from the filing title alone
-        mood, impact = intel.tone(text), 2
-    return intel.make_item(id=f"filing-{item['seq_id']}", time=item["time"], source="NSE filing", kind="filing",
-                           symbols=[item["symbol"]], category=cat, sentiment=mood, impact=impact,
-                           headline=f"{item['symbol']} {cat.lower()}: {item['text'][:200]}", url=item["pdf"])

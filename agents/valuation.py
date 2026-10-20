@@ -39,7 +39,7 @@ YAHOO_FIELDS = {"pe": "trailingPE", "forward_pe": "forwardPE", "pb": "priceToBoo
 
 def fetch(symbol: str) -> dict:
     import yfinance as yf
-    info = yf.Ticker(f"{symbol}.NS").info
+    info = yf.Ticker(f"{symbol}.NS").info or {}
     out = {k: info.get(v) for k, v in YAHOO_FIELDS.items()}
     return {k: round(v, 3) if isinstance(v, float) else v for k, v in out.items()}
 
@@ -53,7 +53,10 @@ def snapshot(universe: list[str], day: date | None = None, refresh: bool = False
     day = day or date.today()
     p = path_for(day)
     if p.exists() and not refresh:
-        return json.loads(p.read_text())
+        try:
+            return json.loads(p.read_text(encoding="utf-8"))
+        except ValueError:
+            pass  # damaged file: fetch again
     snap = {}
     for symbol in universe:
         try:
@@ -63,7 +66,9 @@ def snapshot(universe: list[str], day: date | None = None, refresh: bool = False
         time.sleep(0.5)  # be gentle with Yahoo
     if snap:
         DIR.mkdir(parents=True, exist_ok=True)
-        p.write_text(json.dumps(snap, indent=0))
+        tmp = p.with_suffix(".tmp")  # write then rename, so a crash never leaves half a file
+        tmp.write_text(json.dumps(snap, indent=0), encoding="utf-8")
+        tmp.replace(p)
     return snap
 
 

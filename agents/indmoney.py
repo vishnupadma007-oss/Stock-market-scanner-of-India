@@ -27,8 +27,12 @@ from urllib.parse import parse_qs, urlencode, urlparse
 
 import httpx2
 import pandas as pd
-from mcp.client.session import ClientSession
-from mcp.client.streamable_http import streamable_http_client
+try:
+    from mcp.client.session import ClientSession
+    from mcp.client.streamable_http import streamable_http_client
+except ImportError:
+    ClientSession = None
+    streamable_http_client = None
 
 BASE = "https://mcp.indmoney.com"
 MCP_URL = f"{BASE}/mcp"
@@ -204,6 +208,8 @@ class IndMoney:
     """One connection to the INDmoney MCP server: `async with IndMoney() as im: await im.movers(...)`."""
 
     async def __aenter__(self):
+        if ClientSession is None or streamable_http_client is None:
+            raise RuntimeError("The 'mcp' package is required to connect to INDmoney. Install via 'pip install mcp>=2.2'.")
         # An exit stack unwinds every layer even when one of them fails, so a failed call
         # surfaces as its real error instead of a "cancel scope" error during cleanup.
         self._stack = contextlib.AsyncExitStack()

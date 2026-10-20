@@ -282,10 +282,12 @@ def load_trades() -> list[dict]:
 
 def save_trades(rows: list[dict]) -> None:
     TRADES.parent.mkdir(exist_ok=True)
-    with open(TRADES, "w", newline="") as f:
+    temp_path = TRADES.with_suffix(".tmp")
+    with open(temp_path, "w", newline="", encoding="utf-8") as f:
         w = csv.DictWriter(f, fieldnames=FIELDS)
         w.writeheader()
         w.writerows(rows)
+    temp_path.replace(TRADES)
 
 
 def _t(hhmm: str) -> time:
@@ -542,23 +544,25 @@ async def cycle(cfg: dict) -> None:
     now = datetime.now(IST)
     trades = load_trades()
     one_at_a_time = cfg.get("one_trade_at_a_time", True)
-    async with IndMoney() as im:
-        await manage_open_trades(im, trades, now, cfg)
-        if _t(cfg["entry_start"]) <= now.time() <= _t(cfg["entry_end"]):
-            if has_open(trades, "movers") and one_at_a_time:
-                # Busy: note setups we would have taken (every few minutes), but open nothing.
-                if clock.time() - _hold_scan.get("at", 0) >= cfg.get("hold_scan_min", 10) * 60:
-                    _hold_scan["at"] = clock.time()
-                    await scan(im, trades, now, cfg, hold=True)
-            else:
-                _, free = account(trades, cfg, "movers")
-                if free > 0:  # size new trades from the money that is actually free right now
-                    await scan(im, trades, now, {**cfg, "capital": free})
-            if team_cfg(cfg, "news").get("auto_trade", True) and not (has_open(trades, "news") and one_at_a_time):
-                _, free = account(trades, cfg, "news")
-                if free > 0:
-                    await news_team(im, trades, now, {**cfg, "capital": free})
-    save_trades(trades)
+    try:
+        async with IndMoney() as im:
+            await manage_open_trades(im, trades, now, cfg)
+            if _t(cfg["entry_start"]) <= now.time() <= _t(cfg["entry_end"]):
+                if has_open(trades, "movers") and one_at_a_time:
+                    # Busy: note setups we would have taken (every few minutes), but open nothing.
+                    if clock.time() - _hold_scan.get("at", 0) >= cfg.get("hold_scan_min", 10) * 60:
+                        _hold_scan["at"] = clock.time()
+                        await scan(im, trades, now, cfg, hold=True)
+                else:
+                    _, free = account(trades, cfg, "movers")
+                    if free > 0:  # size new trades from the money that is actually free right now
+                        await scan(im, trades, now, {**cfg, "capital": free})
+                if team_cfg(cfg, "news").get("auto_trade", True) and not (has_open(trades, "news") and one_at_a_time):
+                    _, free = account(trades, cfg, "news")
+                    if free > 0:
+                        await news_team(im, trades, now, {**cfg, "capital": free})
+    finally:
+        save_trades(trades)
 
 
 _hold_scan: dict = {}

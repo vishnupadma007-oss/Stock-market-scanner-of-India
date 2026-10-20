@@ -125,8 +125,14 @@ def day_move(daily: pd.DataFrame, day: date) -> float | None:
 
 
 async def stock_key(im, symbol: str) -> str:
+    """Looks up the INDmoney stock instrument key safely."""
     rows = await im.call("lookup_ind_keys", names=[symbol], filter_type="IN_STOCKS")
-    return next(r["ind_key"] for r in rows if r.get("ind_key", "").startswith("INDS"))
+    match = next((r["ind_key"] for r in rows if r.get("ind_key", "").startswith("INDS")), None)
+    if not match:
+        match = next((r["ind_key"] for r in rows if r.get("ind_key")), None)
+    if not match:
+        raise ValueError(f"No INDmoney key found for {symbol}")
+    return match
 
 
 async def for_symbol(im, symbol: str, key: str, event_time: datetime, nifty: pd.DataFrame | None = None,

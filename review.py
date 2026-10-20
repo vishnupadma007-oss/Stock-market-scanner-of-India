@@ -12,6 +12,7 @@ import re
 from datetime import date
 from pathlib import Path
 
+import numpy as np
 import pandas as pd
 
 ROOT = Path(__file__).resolve().parent
@@ -31,17 +32,25 @@ def load(path: Path = TRADES) -> pd.DataFrame:
     for col in NUMERIC:
         df[col] = pd.to_numeric(df[col], errors="coerce")
     closed = df[df["status"].isin(["TARGET", "SQUARED_OFF"])].copy()
-    closed["net_pct"] = closed["net_pnl"] / (closed["entry_ask"] * closed["qty"]) * 100
+    cost = (closed["entry_ask"] * closed["qty"]).replace(0.0, np.nan)
+    closed["net_pct"] = (closed["net_pnl"] / cost * 100.0).fillna(0.0)
     closed["hit"] = closed["status"] == "TARGET"
     return closed
 
 
 def last_change_date(path: Path = CHANGES) -> str:
-    dates = re.findall(r"^\|\s*(\d{4}-\d{2}-\d{2})", path.read_text(), re.M) if path.exists() else []
-    return max(dates) if dates else "0000-00-00"
+    if not path.exists():
+        return "0000-00-00"
+    try:
+        dates = re.findall(r"^\|\s*(\d{4}-\d{2}-\d{2})", path.read_text(encoding="utf-8"), re.M)
+        return max(dates) if dates else "0000-00-00"
+    except Exception:
+        return "0000-00-00"
 
 
 def _stats(g: pd.DataFrame) -> str:
+    if g.empty:
+        return "0 trades"
     return (f"{len(g)} trades, {g['hit'].mean() * 100:.0f}% hit target, "
             f"avg {g['net_pct'].mean():+.2f}% of premium, net ₹{g['net_pnl'].sum():,.0f}")
 
@@ -65,10 +74,10 @@ def scoreboard(df: pd.DataFrame, day: str, capitals: dict, chances: dict) -> lis
     out = ["## Team scoreboard: movers vs news", "",
            "| Team | Chances today | Trades today | Net today | Trades so far | Hit target | Avg per trade | Net so far | Return on capital |",
            "|---|---|---|---|---|---|---|---|---|"]
-    teams = team_of(df["strategy"]) if not df.empty else pd.Series(dtype=str)
+    teams = team_of(df["strategy"]) if not df.empty and "strategy" in df else pd.Series(dtype=str)
     for team, capital in capitals.items():
-        g = df[teams == team] if not df.empty else df
-        t = g[g["date"] == day] if not g.empty else g
+        g = df[teams == team] if not df.empty and not teams.empty else df
+        t = g[g["date"] == day] if not g.empty and "date" in g else g
         if g.empty:
             out.append(f"| {team} | {chances.get(team, 0)} | 0 | ₹0 | 0 | - | - | ₹0 | 0.0% |")
             continue
@@ -87,7 +96,7 @@ def review(df: pd.DataFrame, day: str, since: str, capitals: dict | None = None,
     if df.empty:
         return "\n".join(out + ["No closed paper trades yet."])
 
-    today = df[df["date"] == day]
+    today = df[df["date"] == day] if "date" in df else pd.DataFrame()
     out += ["## Today", ""]
     if today.empty:
         out += ["No trades closed today.", ""]
@@ -124,7 +133,7 @@ def review(df: pd.DataFrame, day: str, since: str, capitals: dict | None = None,
     out += _breakdown(df, "By forecast chance", pd.cut(df["hit_probability"], [0, 70, 85, 100],
                                                        labels=["under 70%", "70-85%", "over 85%"]))
 
-    n_since = int((df["date"] > since).sum())
+    n_since = int((df["date"] > since).sum()) if "date" in df else 0
     out += ["## Ready to change the strategy?", ""]
     if n_since >= MIN_TRADES_FOR_PROPOSAL:
         out.append(f"READY: {n_since} trades since the last strategy change ({since}). "
@@ -144,14 +153,14 @@ def main() -> None:
     df = load()
     held_path = ROOT / "journal" / "held_setups.csv"
     held = pd.read_csv(held_path, dtype=str) if held_path.exists() else pd.DataFrame(columns=["date"])
-    held = held[held["date"] == args.date]
+    held = held[held["date"] == args.date] if "date" in held.columns else held
     ideas_path = ROOT / "journal" / "news_ideas.csv"
     ideas = pd.read_csv(ideas_path, dtype=str) if ideas_path.exists() else pd.DataFrame(columns=["date"])
     opened = pd.read_csv(TRADES, dtype=str).fillna("") if TRADES.exists() else pd.DataFrame(columns=["date"])
-    opened = opened[opened["date"] == args.date]
+    opened = opened[opened["date"] == args.date] if "date" in opened.columns else opened
     opened_teams = team_of(opened["strategy"]) if "strategy" in opened else pd.Series("movers", index=opened.index)
     chances = {"movers": int((opened_teams == "movers").sum()) + len(held),
-               "news": int((ideas["date"] == args.date).sum())}
+               "news": int((ideas["date"] == args.date).sum()) if "date" in ideas.columns else 0}
     capitals = {team: (cfg.get("teams") or {}).get(team, {}).get("capital", cfg["capital"]) for team in ("movers", "news")}
     text = review(df, args.date, last_change_date(), capitals, chances)
     if not held.empty:
@@ -159,13 +168,14 @@ def main() -> None:
                  + "\n".join(f"- {r.time} {r.symbol} {r.contract} (score {r.score})" for r in held.itertuples())
                  + "\n")
     REVIEWS.mkdir(parents=True, exist_ok=True)
-    (REVIEWS / f"{args.date}.md").write_text(text)
-    if not df.empty:  # P&L as a fraction of each team's capital, for QuantForge's metrics.py
+    (REVIEWS / f"{args.date}.md").write_text(text, encoding="utf-8")
+    if not df.empty and "strategy" in df:
         teams = team_of(df["strategy"])
         for team, capital in capitals.items():
             g = df[teams == team]
-            g.assign(pnl=g["net_pnl"] / capital)[["date", "pnl"]].to_csv(REVIEWS / f"pnl_for_metrics_{team}.csv",
-                                                                         index=False)
+            if not g.empty:
+                g.assign(pnl=g["net_pnl"] / capital)[["date", "pnl"]].to_csv(REVIEWS / f"pnl_for_metrics_{team}.csv",
+                                                                             index=False)
     print(text)
 
 

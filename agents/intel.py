@@ -68,12 +68,13 @@ FINANCE_WORDS = r"stocks?|shares|markets?|\boil\b|crude|brent|econom\w+|rates?|y
 POSITIVE = r"\b(surge[sd]?|soar(s|ed)?|jump(s|ed)?|rall(y|ies|ied)|gain(s|ed)?|rise[sn]?|rose|climb(s|ed)?|" \
            r"record high|beat(s)?|outperform\w*|upgrade[sd]?|strong|robust|boost(s|ed)?|win(s)?|bag(s|ged)?|" \
            r"order(s)? worth|approval|approved|expan\w+|profit (up|rises|jumps)|buy rating|ceasefire|eases?|cut(s)? rates?|" \
-           r"growth|grows?|grew|improv\w+)\b"
+           r"growth|grows?|grew|improv\w+|bonus issue|dividend hike|all-time high|order inflow)\b"
 NEGATIVE = r"\b(plunge[sd]?|slump(s|ed)?|crash(es|ed)?|tumble[sd]?|sink(s)?|sank|fall(s|en)?|fell|drop(s|ped)?|" \
            r"slide[sd]?|decline[sd]?|miss(es|ed)?|downgrade[sd]?|weak|warn(s|ing)?|probe|raid(s|ed)?|penalt(y|ies)|" \
            r"fraud|ban(s|ned)?|default(s|ed)?|resign(s|ed|ation)?|loss(es)?|cut(s)? (guidance|forecast|target)|" \
-           r"sell rating|war|attack(s|ed)?|sanction(s|ed)?|tariff hike|slowdown|recession|outflows?|hike(s|d)? rates?)\b"
-MAJOR = r"\b(fraud|raid|probe|default|war|attack|sanction|crash|plunge|record high|rate (cut|hike)|ban)\w*"
+           r"sell rating|war|attack(s|ed)?|sanction(s|ed)?|tariff hike|slowdown|recession|outflows?|hike(s|d)? rates?|" \
+           r"promoter pledge|sebi order|tax notice|ed raid)\b"
+MAJOR = r"\b(fraud|raid|probe|default|war|attack|sanction|crash|plunge|record high|rate (cut|hike)|ban|sebi order)\w*"
 
 
 NEGATORS = r"\b(not|no|never|without|unlikely|neither|nor|hardly|fail(s|ed)? to|didn't|doesn't|don't|won't|isn't|wasn't)\b"
@@ -141,7 +142,7 @@ def append(items: list[dict], seen: set[str]) -> list[dict]:
     new = [i for i in items if i["id"] not in seen and i["scope"]]
     if new:
         DIR.mkdir(parents=True, exist_ok=True)
-        with open(path_for(datetime.now().date().isoformat()), "a") as f:
+        with open(path_for(datetime.now().date().isoformat()), "a", encoding="utf-8") as f:
             for item in new:
                 seen.add(item["id"])
                 f.write(json.dumps(item) + "\n")
@@ -153,5 +154,9 @@ def load(*days: str) -> list[dict]:
     for day in days:
         p = path_for(day)
         if p.exists():
-            items += [json.loads(line) for line in p.read_text().splitlines() if line.strip()]
+            for line in p.read_text(encoding="utf-8").splitlines():
+                try:
+                    items.append(json.loads(line))
+                except ValueError:
+                    continue  # skip a damaged line (e.g. cut short by a crash), keep the rest of the day
     return items

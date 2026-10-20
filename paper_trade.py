@@ -45,18 +45,25 @@ async def open_trade(symbol: str, direction: str, strategy: str, reason: str) ->
     problem = check_rules(trades, now, cfg)
     if problem:
         return {"opened": False, "reason": problem}
+
     _, free = account(trades, cfg, "news")
+    if free <= 0:
+        return {"opened": False, "reason": "No free capital available for news team"}
+
     side = "loser" if direction == "up" else "gainer"  # loser -> CALL, gainer -> PUT
     async with IndMoney() as im:
         key = await find_key(im, symbol)
         if not key:
             return {"opened": False, "reason": f"{symbol} not found on INDmoney"}
         option = pick_option(await im.option_chain(key), side, cfg["strike_choice"])
+
     if option is None:
         return {"opened": False, "reason": "no quoted option contract"}
+
     risk = plan(option, 0, now, {**cfg, "capital": free}, spread_pct=option["spread_pct"])
     if not risk["allowed"]:
         return {"opened": False, "reason": "; ".join(risk["blocks"])}
+
     row = {f: "" for f in FIELDS}
     row.update(date=now.date().isoformat(), opened=now.strftime("%H:%M"), symbol=symbol,
                side=side, contract=option["contract"], underlying_key=key,
@@ -65,6 +72,7 @@ async def open_trade(symbol: str, direction: str, strategy: str, reason: str) ->
                status="OPEN", claude_verdict="TRADE", notes=reason, strategy=strategy)
     trades.append(row)
     save_trades(trades)
+
     return {"opened": True, "contract": option["contract"], "qty": risk["qty"], "lot_size": option["lot_size"],
             "entry_ask": option["ask"], "target_bid": risk["target_premium"],
             "net_profit_at_target": round(risk["net_profit"]), "capital_used": round(risk["capital_used"]),
