@@ -66,6 +66,15 @@ psychology:
 # revenue/profit growth and reported as RESULT events; other material filings as NEWS.
 filings_poll_seconds: 30
 
+# News agent (RSS: ET, Mint, Business Standard, CNBC-TV18, Google News for global/India macro)
+# and Data Analyzer (combines filings, concalls and news into a forecast per stock).
+news_poll_seconds: 180
+analyzer:
+  forecast_score: 2.0   # stock's own news score (max 3) for a FORECAST; also needs 2+ sources or one major item
+  min_sources: 2
+  agree_points: 10      # analyzer agrees with a reversal trade's direction
+  against_points: -20   # news flow points the other way
+
 # Commodities agent: MCX crude, natural gas, gold, silver, copper, aluminium, zinc, nickel.
 commodities:
   move_pct: 1.5       # move that matters for the stocks linked to it

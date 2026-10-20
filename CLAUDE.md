@@ -15,6 +15,9 @@ Intraday mover-reversal options strategy on NSE F&O stocks, run by a team of age
   brief's day mode (`agents/daymode.py`, `journal/day_mode.json`), NSE Announcements
   (`agents/announcements.py`: live filings, results figures), Commodities (`agents/commodities.py`)
   and NSE holidays (`agents/holidays.py`).
+- Information agents write to one log (`agents/intel.py`, `journal/intel/<date>.jsonl`): NSE filings,
+  Concalls (`agents/concalls.py`), News (`agents/newsfeed.py`: ET, Mint, BS, CNBC-TV18, Google News).
+  The Data Analyzer (`agents/analyzer.py`) turns it into a forecast per stock + market mood.
 - `paper_trade.py`: Claude opens results/news paper trades with it; the watcher manages exits.
 - Run tests with `python -m pytest -q`.
 

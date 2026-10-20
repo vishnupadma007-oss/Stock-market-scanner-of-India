@@ -76,9 +76,11 @@ def test_news_agent_uses_nse_filings():
 
 def test_poll_filings_emits_once(monkeypatch, tmp_path, capsys):
     monkeypatch.setattr(watcher, "FILINGS_LOG", tmp_path / "ann.csv")
+    monkeypatch.setattr(watcher.intel, "DIR", tmp_path / "intel")
     rows = [filing("TCS", "Outcome of Board Meeting", "submitted the financial results for the quarter", seq="9",
                    t="2026-10-21 10:30:00", pdf="https://nse/x.pdf"),
-            filing("BEL", "Credit Rating", "Credit Rating", seq="8", t="2026-10-21 10:20:00")]
+            filing("BEL", "Credit Rating", "Credit Rating", seq="8", t="2026-10-21 10:20:00"),
+            filing("PNB", "Action(s) taken or orders passed", "penalty imposed by RBI", seq="7", t="2026-10-21 10:10:00")]
     monkeypatch.setattr(watcher.announcements, "fetch_feed", lambda: rows)
     monkeypatch.setattr(watcher.announcements, "results_summary",
                         lambda url: {"figures": announcements.figures_from_text(TECHM), "highlights": []})
@@ -86,12 +88,15 @@ def test_poll_filings_emits_once(monkeypatch, tmp_path, capsys):
     now = datetime(2026, 10, 21, 10, 31, tzinfo=IST)
     watcher.poll_filings(CFG, now)
     lines = capsys.readouterr().out.strip().splitlines()
-    assert lines[0].startswith("NEWS ") and lines[1].startswith("RESULT ")
+    # Major filing (regulatory) and results wake Claude; the routine rating only feeds the analyzer.
+    assert [l.split(" ", 1)[0] for l in lines] == ["NEWS", "RESULT"]
     assert json.loads(lines[1].split(" ", 1)[1])["read"]["view"] == "strong"
+    logged = [json.loads(l) for l in (tmp_path / "intel").glob("*.jsonl").__next__().read_text().splitlines()]
+    assert {i["category"] for i in logged} == {"REGULATORY", "RATING", "RESULTS"}
     watcher.poll_filings(CFG, now)
     assert capsys.readouterr().out == ""  # nothing repeated
     assert watcher._daily["filings"]["TCS"][0]["category"] == "RESULTS"
-    assert (tmp_path / "ann.csv").read_text().count("\n") == 3  # header + 2
+    assert (tmp_path / "ann.csv").read_text().count("\n") == 4  # header + 3
 
 
 def test_paper_trade_rules():

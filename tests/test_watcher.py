@@ -92,6 +92,7 @@ def offline(monkeypatch, tmp_path):
     monkeypatch.setattr(watcher, "usdinr_change", lambda: None)
     monkeypatch.setattr(watcher.daymode, "PATH", tmp_path / "day_mode.json")
     monkeypatch.setattr(watcher.daymode.load, "__defaults__", (tmp_path / "day_mode.json",))
+    monkeypatch.setattr(watcher.intel, "DIR", tmp_path / "intel")
     watcher._daily.clear()
     watcher._daily_candles.clear()
 

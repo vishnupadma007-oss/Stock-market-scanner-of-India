@@ -38,6 +38,8 @@ One short research pass that sets the day's mode. Keep it to a handful of search
    `notes` as a watchlist with the expected direction; after 09:45, if the price confirms that
    direction, open a results trade with `paper_trade.py` (one trade at a time).
    Then today's events: RBI policy, Budget, F&O expiry (last Tuesday of the month), big results.
+   Finally `python -m agents.analyzer`: the Data Analyzer's market mood and strongest stock
+   forecasts from the overnight intelligence log (filings, concalls, news). Mention the top ones.
    `python -c "from agents.news import results_calendar as r; import json; from datetime import date; print(json.dumps({s: [str(d) for d in v] for s, v in r().items() if date.today() in v}))"`
    lists companies with results today (the News agent already skips those stocks).
 3. Write `journal/day_mode.json`:
@@ -57,7 +59,7 @@ One short research pass that sets the day's mode. Keep it to a handful of search
    `python -m agents.indmoney finish "<address>"` and test again.
 2. Start the watcher in the background: `python watcher.py` (Bash, `run_in_background: true`,
    timeout 7200000). Then wait for its output with Monitor, waking only on lines that start
-   with `SIGNAL`, `EXIT`, `RESULT`, `NEWS`, `COMMODITY`, `ERROR` or `STATUS`. Waiting costs
+   with `SIGNAL`, `EXIT`, `RESULT`, `NEWS`, `FORECAST`, `COMMODITY`, `ERROR` or `STATUS`. Waiting costs
    nothing; do not poll.
 3. Background commands stop after 2 hours: when it ends before 15:30 IST on a weekday,
    start it again. Open trades are kept in `journal/paper_trades.csv`, so nothing is lost.
@@ -114,6 +116,16 @@ Usually say one line and move on; the News agent already counts it against rever
 that stock. Only dig deeper (read the PDF via `python -m agents.announcements results <pdf>`
 or one web search) if it could move the stock a lot (large order relative to the company, rating
 downgrade, regulatory action, CEO exit, merger). Use `paper_trade.py` only with a clear direction.
+
+## On a FORECAST line (the Data Analyzer's outlook for a stock turned strong)
+
+It combines every NSE filing, concall and news headline about the stock, its sector and the
+market (newer and more important items count more). Strong means the stock's own news is loud
+and confirmed by 2+ sources or one major item. The tone reading is a word list, so check it:
+read the `reasons` (and one web search if they are thin). If the story is real and the price
+agrees (one `get_indian_stocks_details` call), and it is 09:45-14:30 with no trade open, open a
+trade: `python paper_trade.py open --symbol X --direction up|down --strategy intel --reason "..."`.
+Tell the user in 2-3 lines. If it is noise (wrong company, old story, sarcasm), say so in one line.
 
 ## On a COMMODITY line (a commodity moved 3% or more today)
 

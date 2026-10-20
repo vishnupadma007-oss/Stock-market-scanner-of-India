@@ -208,3 +208,29 @@ def main(argv: list[str]) -> None:
 
 if __name__ == "__main__":
     main(sys.argv)
+
+
+# ---------------------------------------------------------------- intelligence log
+
+def to_intel(item: dict) -> dict:
+    """A material filing as an intelligence-log item for the Data Analyzer."""
+    from . import intel
+    text = f"{item['subject']} {item['text']}".lower()
+    cat = item["category"]
+    if cat == "RESULTS":
+        view = (item.get("read") or {}).get("view", "mixed")
+        mood, impact = {"strong": 1.0, "good": 0.5, "mixed": 0.0, "weak": -1.0}.get(view, 0.0), 3
+    elif cat == "RATING":
+        mood = 0.7 if re.search(r"upgrad|positive", text) else -0.7 if re.search(r"downgrad|negative|watch", text) else 0.0
+        impact = 2
+    elif cat == "ORDER":
+        mood, impact = 0.6, 2
+    elif cat == "REGULATORY":
+        mood, impact = -0.7, 3
+    elif cat == "MANAGEMENT":
+        mood, impact = (-0.5, 2) if re.search(r"\b(ceo|md|managing director|cfo|chief)\b", text) else (-0.2, 1)
+    else:  # DEAL, GUIDANCE: direction unclear from the filing title alone
+        mood, impact = intel.tone(text), 2
+    return intel.make_item(id=f"filing-{item['seq_id']}", time=item["time"], source="NSE filing", kind="filing",
+                           symbols=[item["symbol"]], category=cat, sentiment=mood, impact=impact,
+                           headline=f"{item['symbol']} {cat.lower()}: {item['text'][:200]}", url=item["pdf"])

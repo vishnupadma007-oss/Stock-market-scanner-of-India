@@ -5,8 +5,9 @@ look when there is a signal:
     SIGNAL {...}   new paper trade opened (rule-based agents said TRADE)
     EXIT {...}     paper trade closed (target reached, or square-off time)
     RESULT {...}   a company in our list filed results on NSE (figures already read)
-    NEWS {...}     other material NSE filing (rating, order, deal, regulatory, management)
+    NEWS {...}     a major NSE filing (regulatory action, etc.); other filings only feed the analyzer
     COMMODITY {...} a commodity moved sharply today (reported once per commodity per day)
+    FORECAST {...} the Data Analyzer's outlook for a stock turned strong (new or changed)
     ERROR {...}    something needs attention (each distinct error at most once an hour)
     STATUS {...}   start of watching / market closed
 
@@ -23,7 +24,8 @@ from datetime import datetime, time
 from pathlib import Path
 from zoneinfo import ZoneInfo
 
-from agents import announcements, commodities, daymode, holidays, macro, news, psychology
+from agents import (analyzer, announcements, commodities, concalls, daymode, holidays, intel, macro, news,
+                    newsfeed, psychology)
 from agents.chart_reader import read_chart
 from agents.config import load_config
 from agents.costs import round_trip_charges
@@ -80,7 +82,8 @@ def usdinr_change() -> float | None:
 def reset_daily(today: str) -> None:
     if _daily.get("date") != today:
         _daily.clear()
-        _daily.update(date=today, filings={}, seen_filings=set(), shocks_sent=set())
+        _daily.update(date=today, filings={}, seen_filings=set(), shocks_sent=set(), forecasts={},
+                      intel_seen={i["id"] for i in intel.load(today)})
 
 
 async def market_context(im: IndMoney, now: datetime, cfg: dict | None = None) -> dict:
@@ -112,15 +115,19 @@ def log_filing(item: dict) -> None:
 
 
 def poll_filings(cfg: dict, now: datetime) -> None:
-    """Announcements agent: new material NSE filings for our stocks. Results filings are read
-    straight away (revenue/profit growth) and reported as RESULT events; others as NEWS."""
+    """Announcements + Concall agents: new material NSE filings for our stocks. Results filings
+    are read straight away and reported as RESULT events; major filings (regulatory) as NEWS;
+    everything goes to the intelligence log for the Data Analyzer."""
     reset_daily(now.date().isoformat())
     try:
         rows = announcements.fetch_feed()
     except Exception as e:
         emit("ERROR", {"error": f"NSE announcements feed: {type(e).__name__}"})
         return
-    for item in announcements.material(rows, set(cfg["universe"]), since=now.date().isoformat()):
+    universe = set(cfg["universe"])
+    meets = [r for r in rows if f"concall-{r.get('seq_id')}" not in _daily["intel_seen"]]
+    intel.append(concalls.items_from_rows(meets, universe), _daily["intel_seen"])
+    for item in announcements.material(rows, universe, since=now.date().isoformat()):
         if item["seq_id"] in _daily["seen_filings"]:
             continue
         _daily["seen_filings"].add(item["seq_id"])
@@ -133,8 +140,31 @@ def poll_filings(cfg: dict, now: datetime) -> None:
             except Exception as e:
                 item = {**item, "read": {"view": "unread", "notes": [f"PDF not read: {type(e).__name__}"]}}
             emit("RESULT", item)
-        else:
+        intel_item = announcements.to_intel(item)
+        intel.append([intel_item], _daily["intel_seen"])
+        if item["category"] != "RESULTS" and intel_item["impact"] >= 3:
             emit("NEWS", item)
+
+
+def poll_news(cfg: dict, now: datetime) -> None:
+    """News agent: Indian business and global/domestic macro headlines into the intelligence log."""
+    reset_daily(now.date().isoformat())
+    items, failed = newsfeed.fetch_all()
+    intel.append(items, _daily["intel_seen"])
+    if len(failed) == len(newsfeed.FEEDS):
+        emit("ERROR", {"error": "all news feeds unreachable"})
+
+
+def run_analyzer(cfg: dict, now: datetime) -> None:
+    """Data Analyzer: re-forecast every stock; report strong forecasts that are new or changed."""
+    items = analyzer.recent_items(now)
+    for symbol in cfg["universe"]:
+        view = analyzer.stock_view(symbol, items, now, cfg)
+        prev = _daily["forecasts"].get(symbol)
+        if view["strong"] and (prev is None or prev["direction"] != view["direction"]
+                               or view["confidence"] >= prev["confidence"] + 20):
+            _daily["forecasts"][symbol] = view
+            emit("FORECAST", {**view, "market": analyzer.market_mood(items, now)["mood"]})
 
 
 def emit(kind: str, payload: dict) -> None:
@@ -257,6 +287,8 @@ async def scan(im: IndMoney, trades: list[dict], now: datetime, cfg: dict, hold:
                                                ctx["sectors"].get(sector_of(m["symbol"])), None,
                                                ctx["usdinr"], cfg))
                 extras.append(commodities.assess(m["symbol"], side, ctx["commodities"], cfg))
+                extras.append(analyzer.as_extra(
+                    analyzer.stock_view(m["symbol"], analyzer.recent_items(now), now, cfg), side, cfg))
                 crowd = psychology.assess(side, m["price"], m["change_pct"],
                                           await im.futures_oi_change(m["symbol"], option["expiry"]),
                                           m.get("52_week_high"), m.get("52_week_low"),
@@ -369,12 +401,16 @@ def main() -> None:
         return
     emit("STATUS", {"watching": True, "scan_every_min": args.interval, "exit_check_every_sec": exit_every,
                     "time": datetime.now(IST)})
-    last_scan = last_filings = 0.0
+    last_scan = last_filings = last_news = 0.0
     while True:
         now = datetime.now(IST)
         if not args.once and clock.time() - last_filings >= cfg.get("filings_poll_seconds", 30):
             last_filings = clock.time()
             poll_filings(cfg, now)  # NSE feed, not INDmoney: no effect on the call budget
+            if clock.time() - last_news >= cfg.get("news_poll_seconds", 180):
+                last_news = clock.time()
+                poll_news(cfg, now)
+            run_analyzer(cfg, now)
         if args.once or market_open(now):
             try:
                 used, budget = calls_last_hour(), cfg.get("indmoney_hourly_budget", 400)
