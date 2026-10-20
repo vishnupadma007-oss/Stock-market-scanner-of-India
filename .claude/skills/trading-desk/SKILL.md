@@ -19,6 +19,12 @@ lookups during market hours. On `ERROR ... hourly call limit reached` the watche
 
 ## Morning brief (about 09:00-09:15 IST, before starting the watcher)
 
+**First check that NSE is open today:**
+`python -c "from agents.holidays import holiday_name; from datetime import date; print(holiday_name(date.today()))"`
+(`None` = trading day). If it prints a holiday, tell the user the market is closed and why, do
+not start the watcher, and skip the rest. At the start of each month also run
+`python -c "from agents.holidays import refresh; refresh()"` and commit `journal/nse_holidays.json`.
+
 One short research pass that sets the day's mode. Keep it to a handful of searches.
 
 1. Web search: overnight US and Asian markets, GIFT Nifty, Brent crude, USD/INR, and major

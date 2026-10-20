@@ -7,6 +7,8 @@ import calendar
 import math
 from datetime import date, timedelta
 
+from .holidays import previous_trading_day
+
 
 def strike_step(price: float) -> float:
     for limit, step in ((100, 1), (250, 2.5), (500, 5), (1000, 10), (2500, 20), (5000, 50)):
@@ -22,10 +24,10 @@ def last_tuesday(year: int, month: int) -> date:
 
 def monthly_expiry(today: date, min_days: int) -> date:
     """NSE stock options expire on the last Tuesday of the month (moved a day earlier on holidays)."""
-    exp = last_tuesday(today.year, today.month)
+    exp = previous_trading_day(last_tuesday(today.year, today.month))
     if (exp - today).days < min_days:
         y, m = (today.year + 1, 1) if today.month == 12 else (today.year, today.month + 1)
-        exp = last_tuesday(y, m)
+        exp = previous_trading_day(last_tuesday(y, m))
     return exp
 
 

@@ -20,7 +20,7 @@ from datetime import datetime, time
 from pathlib import Path
 from zoneinfo import ZoneInfo
 
-from agents import daymode, macro, news, psychology
+from agents import daymode, holidays, macro, news, psychology
 from agents.chart_reader import read_chart
 from agents.config import load_config
 from agents.costs import round_trip_charges
@@ -159,6 +159,10 @@ async def scan(im: IndMoney, trades: list[dict], now: datetime, cfg: dict, hold:
         return
     cfg = daymode.apply(cfg, day)
     nifty, vix = await index_candles(im)
+    if not nifty.empty and nifty.index[-1].date() < now.date() and now.time() >= time(9, 30):
+        # No candle for today 15 minutes after the open: an unscheduled closure or a feed problem.
+        emit("ERROR", {"error": f"Stale data: last Nifty candle is {nifty.index[-1].date()}, market may be closed"})
+        return
     mkt = assess(nifty, vix, cfg)
     if mkt["no_trade"]:
         return
@@ -280,7 +284,7 @@ def leaf_errors(exc: BaseException) -> list[BaseException]:
 
 
 def market_open(now: datetime) -> bool:
-    return now.weekday() < 5 and time(9, 15) <= now.time() <= time(15, 30)
+    return holidays.is_trading_day(now.date()) and time(9, 15) <= now.time() <= time(15, 30)
 
 
 async def exits_only(cfg: dict) -> bool:
@@ -305,6 +309,10 @@ def main() -> None:
     exit_every = cfg.get("exit_check_seconds", 15)
     set_hourly_budget(cfg.get("indmoney_hourly_budget", 450))
 
+    closed = holidays.holiday_name(datetime.now(IST).date())
+    if closed and not args.once:
+        emit("STATUS", {"watching": False, "reason": f"NSE closed today: {closed}"})
+        return
     emit("STATUS", {"watching": True, "scan_every_min": args.interval, "exit_check_every_sec": exit_every,
                     "time": datetime.now(IST)})
     last_scan = 0.0

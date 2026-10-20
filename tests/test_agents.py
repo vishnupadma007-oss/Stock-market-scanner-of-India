@@ -54,7 +54,7 @@ def test_net_target_clears_charges():
 
 def test_expiry_is_last_tuesday_and_rolls():
     assert monthly_expiry(date(2026, 10, 1), 3) == date(2026, 10, 27)
-    assert monthly_expiry(date(2026, 10, 26), 3) == date(2026, 11, 24)
+    assert monthly_expiry(date(2026, 10, 26), 3) == date(2026, 11, 23)  # 24 Nov is a holiday
 
 
 def test_contract_side():

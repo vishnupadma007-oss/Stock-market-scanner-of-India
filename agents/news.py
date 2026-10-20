@@ -14,6 +14,8 @@ from datetime import date, datetime, timedelta
 import pandas as pd
 import requests
 
+from .holidays import is_trading_day
+
 DEFAULTS = {
     "block_results_day": True,
     "results_tomorrow_points": -10,
@@ -37,14 +39,14 @@ def headline_date(title: str) -> date | None:
 
 def previous_session(day: date) -> date:
     prev = day - timedelta(days=1)
-    while prev.weekday() >= 5:
+    while not is_trading_day(prev):
         prev -= timedelta(days=1)
     return prev
 
 
 def next_session(day: date) -> date:
     nxt = day + timedelta(days=1)
-    while nxt.weekday() >= 5:
+    while not is_trading_day(nxt):
         nxt += timedelta(days=1)
     return nxt
 

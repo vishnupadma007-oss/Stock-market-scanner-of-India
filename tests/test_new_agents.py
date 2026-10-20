@@ -97,3 +97,16 @@ def test_psychology_oi_types_and_modes():
     assert psychology.assess("gainer", 100, 9, None, None, None, 101, None, score)["block"]
     observed = psychology.assess("loser", 100, -3, 5, None, None, None, None, CFG)  # default: observe
     assert observed["points"] == 0 and observed["would_score"] == -15 and observed["notes"][0].startswith("(observe)")
+
+
+
+def test_holidays_and_expiry():
+    from agents import holidays
+    from agents.options import monthly_expiry
+    assert holidays.holiday_name(date(2026, 10, 20)) == "Dussehra"
+    assert holidays.holiday_name(date(2026, 10, 24)) == "Weekend"
+    assert holidays.is_trading_day(date(2026, 10, 21))
+    # Results "yesterday" skips the holiday: on Wed 21 Oct the previous session is Mon 19 Oct.
+    assert news.previous_session(date(2026, 10, 21)) == date(2026, 10, 19)
+    # Last Tuesday of Nov 2026 (24th) is a holiday, so stock options expire on Mon 23 Nov.
+    assert monthly_expiry(date(2026, 11, 2), 3) == date(2026, 11, 23)
