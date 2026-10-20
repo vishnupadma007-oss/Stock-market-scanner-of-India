@@ -27,7 +27,7 @@ from agents.costs import round_trip_charges
 from agents.decision import decide
 from agents.forecast import reversal_target
 from agents.indicators import intraday_sigma_per_min
-from agents.indmoney import IndMoney, LoginRequired, RateLimited, pick_option
+from agents.indmoney import IndMoney, LoginRequired, RateLimited, calls_last_hour, pick_option
 from agents.regime import assess
 from agents.risk import plan
 from agents.scanner import stock_profile
@@ -310,6 +310,12 @@ def main() -> None:
         now = datetime.now(IST)
         if args.once or market_open(now):
             try:
+                used, budget = calls_last_hour(), cfg.get("indmoney_hourly_budget", 400)
+                if used >= budget:  # leave the rest of INDmoney's 500/hour for Claude's own checks
+                    emit("ERROR", {"error": "INDmoney call budget used up for this hour", "used": used,
+                                   "budget": budget, "action": "waiting"})
+                    clock.sleep(60)
+                    continue
                 busy = has_open(load_trades()) and cfg.get("one_trade_at_a_time", True)
                 # While a trade is open, look for (and only record) setups every few minutes.
                 every = cfg.get("hold_scan_min", 5) if busy else args.interval

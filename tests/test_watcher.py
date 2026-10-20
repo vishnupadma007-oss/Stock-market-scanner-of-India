@@ -204,3 +204,16 @@ def test_rate_limit_reply_raises():
     with pytest.raises(RateLimited) as e:
         _parse(reply)
     assert e.value.retry_after == 1339
+
+
+def test_call_budget_counts_rolling_hour(tmp_path, monkeypatch):
+    import time as t
+    from agents import indmoney
+    monkeypatch.setattr(indmoney, "USAGE_FILE", tmp_path / "usage.json")
+    indmoney.record_call("get_indian_stocks_movers")  # costs 2
+    indmoney.record_call("get_indian_stocks_ohlc")
+    assert indmoney.calls_last_hour() == 3
+    rows = json.loads((tmp_path / "usage.json").read_text())
+    rows[0][0] = t.time() - 3700  # older than an hour drops out
+    (tmp_path / "usage.json").write_text(json.dumps(rows))
+    assert indmoney.calls_last_hour() == 1

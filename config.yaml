@@ -12,6 +12,7 @@ net_target_pct: 1.0        # target profit per trade, % of premium paid, AFTER a
 # open trades re-priced every 30 seconds. About 250-300 calls an hour.
 scan_interval_min: 5
 exit_check_seconds: 30
+indmoney_hourly_budget: 400   # watcher's share of the 500/hour; it pauses itself above this
 # One trade at a time: while a trade is open, no new trades or signals (no Claude credits).
 # Setups that qualify meanwhile are only recorded in journal/held_setups.csv (checked every
 # hold_scan_min). After the exit, a fresh scan runs on the next tick.

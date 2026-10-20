@@ -37,6 +37,29 @@ SCOPE = "market:read portfolio:read"
 TOKEN_FILE = Path(os.environ.get("INDMONEY_TOKEN_FILE", Path.home() / ".config" / "indmoney" / "token.json"))
 
 
+USAGE_FILE = TOKEN_FILE.parent / "usage.json"
+CALL_COST = {"get_indian_stocks_movers": 2}  # INDmoney counts some tools double
+
+
+def _usage() -> list[list[float]]:
+    try:
+        rows = json.loads(USAGE_FILE.read_text())
+    except (FileNotFoundError, json.JSONDecodeError):
+        return []
+    return [r for r in rows if r[0] > time.time() - 3600]
+
+
+def record_call(tool: str) -> None:
+    """Keep a rolling one-hour log of this script's INDmoney calls (survives restarts)."""
+    rows = _usage() + [[time.time(), CALL_COST.get(tool, 1)]]
+    USAGE_FILE.parent.mkdir(parents=True, exist_ok=True)
+    USAGE_FILE.write_text(json.dumps(rows))
+
+
+def calls_last_hour() -> int:
+    return int(sum(cost for _, cost in _usage()))
+
+
 class LoginRequired(RuntimeError):
     pass
 
@@ -180,6 +203,7 @@ class IndMoney:
         return await self._stack.__aexit__(*exc)
 
     async def call(self, tool: str, **args) -> dict:
+        record_call(tool)
         return _parse(await self._session.call_tool(tool, args))
 
     async def movers(self, category: str, limit: int = 50) -> list[dict]:
