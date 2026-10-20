@@ -27,7 +27,7 @@ from pathlib import Path
 from zoneinfo import ZoneInfo
 
 from agents import (analyzer, announcements, commodities, concalls, daymode, expectations, holidays, intel, macro,
-                    news, newsfeed, psychology, valuation)
+                    news, newsfeed, psychology, reaction, valuation)
 from agents.chart_reader import read_chart
 from agents.config import load_config
 from agents.costs import round_trip_charges
@@ -178,6 +178,23 @@ def add_idea(symbol: str, direction: str, confidence: int, source: str, reason: 
         "priced_in": expect.get("label"), "at": now}
 
 
+def results_reaction(item: dict, now: datetime) -> dict:
+    """Results Reaction analyst: expected gap/close from this stock's past results, plus tonight's
+    global cues when the results came after the close."""
+    if not item.get("figures"):
+        return {"notes": ["Figures not read: no reaction estimate"]}
+    try:
+        filed = datetime.strptime(item["time"], "%Y-%m-%d %H:%M:%S")
+        market_gap = 0.0
+        if filed.time() > time(15, 30) or filed.time() < time(9, 15):
+            if "market_gap" not in _daily:
+                _daily["market_gap"] = reaction.expected_market_gap()["expected_nifty_gap_pct"]
+            market_gap = _daily["market_gap"]
+        return reaction.forecast(item["symbol"], item["figures"], filed, market_gap)
+    except Exception as e:
+        return {"error": f"{type(e).__name__}: {e}"[:200], "notes": []}
+
+
 def poll_filings(cfg: dict, now: datetime) -> None:
     """Announcements + Concall agents: new material NSE filings for our stocks. Results filings
     are read straight away and reported as RESULT events; major filings (regulatory) as NEWS;
@@ -211,7 +228,15 @@ def poll_filings(cfg: dict, now: datetime) -> None:
             view = item["read"]["view"]
             item["expectations"] = check_expectations(item["symbol"], now,
                                                       view if view in ("strong", "good", "weak") else None)
-            if view in ("strong", "good", "weak"):
+            item["reaction_forecast"] = results_reaction(item, now)
+            rf = item["reaction_forecast"]
+            if rf.get("chance_up_pct") is not None:
+                # The Reaction analyst learned from this stock's past results: trust its direction and odds.
+                up = rf["expected_close_pct"] > 0
+                add_idea(item["symbol"], "up" if up else "down",
+                         rf["chance_up_pct"] if up else 100 - rf["chance_up_pct"], "results",
+                         f"Results {view}; " + "; ".join(rf["notes"]), item["expectations"], now)
+            elif view in ("strong", "good", "weak"):
                 confidence = {"strong": 80, "good": 65, "weak": 70}[view]
                 add_idea(item["symbol"], "up" if view != "weak" else "down", confidence, "results",
                          f"Results {view}: " + "; ".join(item["read"]["notes"]), item["expectations"], now)
@@ -243,6 +268,9 @@ def run_analyzer(cfg: dict, now: datetime) -> None:
             expect = check_expectations(symbol, now)
             add_idea(symbol, view["direction"], view["confidence"], "intel",
                      "Analyzer: " + "; ".join(str(r) for r in view.get("reasons", [])[:3]), expect, now)
+            move = reaction.typical_move(symbol)
+            if move:  # news forecasts are not calibrated yet: give the usual size of a day's move
+                view = {**view, "usual_day_move_pct": move}
             emit("FORECAST", {**expectations.adjust_forecast(view, expect),
                               "priced_in": {k: expect.get(k) for k in ("priced_in", "label", "bar", "notes", "error")
                                             if expect.get(k) is not None},

@@ -54,6 +54,11 @@ One short research pass that sets the day's mode. Keep it to a handful of search
    For F&O companies reporting today or tomorrow (results calendar), use the `earnings-preview`
    skill in short form: the 2-3 metrics that will move the stock and a bull/bear case each, so
    the RESULT can be judged in seconds when it lands. Keep it to a few lines per company.
+   Run `python -m agents.reaction market`: the likely Nifty open from US stocks and Brent since
+   India's last close (with its usual error). For each company reporting today or tomorrow, run
+   `python -m agents.reaction SYMBOL`: expected open and close for a strong / in-line / weak
+   quarter, learned from that stock's own past results, and its last six reactions. Give the
+   user the numbers (e.g. "strong quarter: open +2.1%, close +3.4%, range -0.5 to +7.3").
    Run `python -m agents.valuation` once (saves today's P/E and P/B snapshot vs sector peers;
    about a minute) and mention any stock on the watchlist that is far richer or cheaper than peers.
    Add `python -m agents.expectations SYMBOL` for each (3-4 INDmoney calls): is a good result
@@ -139,7 +144,11 @@ scanned filings: if `figures` is empty or disagrees with `highlights`, trust the
    consensus lifts the stock and an in-line quarter can fall ("sell the news"); if pessimism is
    priced in, a merely decent quarter can lift it. `reaction`, when present, says the price is
    already moving against the numbers: believe the price.
-4. Forecast: direction (up/down), how strong, and whether the price already moved too far.
+4. Forecast: the line carries `reaction_forecast` from the Results Reaction analyst: expected
+   gap and close in %, the likely range, the chance of closing up, and the most similar past
+   quarters of this stock with how it reacted. Start from those numbers, then adjust for what
+   the machine cannot see (consensus beat/miss, guidance, one-offs, management commentary) and
+   say how and why you adjusted. Always give the user a % estimate with a range.
 5. The news team already has this as a trade idea and will open it by itself once the price
    confirms (watch for its SIGNAL). Only if your read clearly differs from the machine's (e.g. it
    says "strong" but the quarter missed consensus), and it is 09:45-14:30 with no news-team trade
@@ -218,7 +227,10 @@ Run it when the watcher prints `STATUS ... market closed`, or whenever the user 
 4. Changes must keep the user's rules: intraday only, buying options, target at least 1% net,
    **no stop-loss**. If the evidence points at a stop-loss, report the numbers and leave the
    decision to the user.
-5. Commit and push `journal/` (trades and the review) so it survives the session.
+5. For companies that reported today: `python -m agents.reaction build SYM1 SYM2 ...` adds their
+   new quarter and refits the model (`journal/reaction_model.json`); mention if its direction
+   hit rate changed.
+6. Commit and push `journal/` (trades and the review) so it survives the session.
 
 ## Backtesting
 

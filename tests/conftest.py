@@ -9,3 +9,6 @@ def keep_journal_clean(monkeypatch, tmp_path):
     monkeypatch.setattr(watcher, "IDEAS", tmp_path / "news_ideas.csv")
     monkeypatch.setattr(watcher, "HELD", tmp_path / "held_setups.csv")
     monkeypatch.setattr(watcher, "FILINGS_LOG", tmp_path / "announcements.csv")
+    # No network in tests: the reaction analyst's price history comes from Yahoo.
+    monkeypatch.setattr(watcher, "results_reaction", lambda item, now: {"notes": []})
+    monkeypatch.setattr(watcher.reaction, "typical_move", lambda symbol: 1.8)
