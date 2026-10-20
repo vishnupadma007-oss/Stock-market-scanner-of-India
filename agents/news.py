@@ -23,6 +23,7 @@ DEFAULTS = {
     "no_news_points": 5,          # no news: more likely an overreaction
     "volume_spike_ratio": 3.0,    # last 3 candles' volume vs normal
     "volume_spike_points": -15,
+    "filing_points": -15,         # material NSE filing today (rating, order, deal, regulatory...)
 }
 _DATE = re.compile(r"(\d{1,2} [A-Za-z]{3},? \d{4})\s*$")
 
@@ -83,10 +84,20 @@ def volume_spike(intraday: pd.DataFrame, bars: int = 3) -> tuple[float, float]:
 
 
 def assess(symbol: str, side: str, stock_chg: float, today: date, headlines: list[dict] | None,
-           results: dict[str, list[date]] | None, intraday: pd.DataFrame, cfg: dict) -> dict:
+           results: dict[str, list[date]] | None, intraday: pd.DataFrame, cfg: dict,
+           filings: list[dict] | None = None) -> dict:
+    """filings: today's material NSE announcements for this stock (Announcements agent)."""
     c = {**DEFAULTS, **(cfg.get("news") or {})}
     move = 1 if stock_chg > 0 else -1
     points, notes, block = 0, [], False
+
+    for f in filings or []:
+        if f["category"] == "RESULTS":
+            block = c["block_results_day"]
+            notes.append(f"Results filed on NSE at {f['time'][11:16]}: earnings-driven move")
+        else:
+            points += c.get("filing_points", -15)
+            notes.append(f"NSE filing today ({f['category'].lower()}): {f['text'][:120]}")
 
     if results is None or not results:
         notes.append("Results calendar not checked")

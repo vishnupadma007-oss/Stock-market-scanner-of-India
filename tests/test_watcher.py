@@ -54,8 +54,11 @@ class FakeIndMoney:
     async def crude_key(self):
         return "CRUDE"
 
+    async def commodity_keys(self, names):
+        return {"crude oil": "CRUDE", "copper": "COPPER"}
+
     async def day_changes(self, keys):
-        return {k: (0.4 if k == "CRUDE" else self.sector_chg) for k in keys}
+        return {k: (0.4 if k in ("CRUDE", "COPPER") else self.sector_chg) for k in keys}
 
     async def news(self, key):
         return self.headlines

@@ -4,6 +4,9 @@ look when there is a signal:
 
     SIGNAL {...}   new paper trade opened (rule-based agents said TRADE)
     EXIT {...}     paper trade closed (target reached, or square-off time)
+    RESULT {...}   a company in our list filed results on NSE (figures already read)
+    NEWS {...}     other material NSE filing (rating, order, deal, regulatory, management)
+    COMMODITY {...} a commodity moved sharply today (reported once per commodity per day)
     ERROR {...}    something needs attention (each distinct error at most once an hour)
     STATUS {...}   start of watching / market closed
 
@@ -20,7 +23,7 @@ from datetime import datetime, time
 from pathlib import Path
 from zoneinfo import ZoneInfo
 
-from agents import daymode, holidays, macro, news, psychology
+from agents import announcements, commodities, daymode, holidays, macro, news, psychology
 from agents.chart_reader import read_chart
 from agents.config import load_config
 from agents.costs import round_trip_charges
@@ -40,7 +43,8 @@ TRADES = Path(__file__).resolve().parent / "journal" / "paper_trades.csv"
 HELD = Path(__file__).resolve().parent / "journal" / "held_setups.csv"
 FIELDS = ["date", "opened", "symbol", "side", "contract", "underlying_key", "derivative_id",
           "qty", "entry_ask", "target_bid", "spread_pct", "hit_probability", "chart_score", "oi_type",
-          "status", "closed", "exit_bid", "charges", "net_pnl", "claude_verdict", "notes"]
+          "status", "closed", "exit_bid", "charges", "net_pnl", "claude_verdict", "notes", "strategy"]
+FILINGS_LOG = Path(__file__).resolve().parent / "journal" / "announcements.csv"
 
 _errors_seen: dict[str, float] = {}
 _daily: dict = {}  # once-a-day lookups: results calendar, crude contract
@@ -73,17 +77,64 @@ def usdinr_change() -> float | None:
         return None
 
 
-async def market_context(im: IndMoney, now: datetime) -> dict:
-    """Sector, crude and rupee moves for the Macro agent; results calendar for the News agent."""
-    today = now.date().isoformat()
+def reset_daily(today: str) -> None:
     if _daily.get("date") != today:
         _daily.clear()
-        _daily.update(date=today, results=news.results_calendar(), crude_key=await im.crude_key())
-    keys = [k for k, _ in SECTORS.values()] + ([_daily["crude_key"]] if _daily["crude_key"] else [])
-    changes = await im.day_changes(keys)
-    return {"results": _daily["results"], "usdinr": usdinr_change(),
-            "crude": changes.get(_daily["crude_key"]),
+        _daily.update(date=today, filings={}, seen_filings=set(), shocks_sent=set())
+
+
+async def market_context(im: IndMoney, now: datetime, cfg: dict | None = None) -> dict:
+    """Sector, commodity and rupee moves for the Macro and Commodities agents; results calendar
+    for the News agent. Sharp commodity moves are reported once a day as COMMODITY events."""
+    reset_daily(now.date().isoformat())
+    if "commodity_keys" not in _daily:
+        _daily.update(results=news.results_calendar(),
+                      commodity_keys=await im.commodity_keys(commodities.COMMODITIES))
+    ckeys = _daily["commodity_keys"]
+    changes = await im.day_changes([k for k, _ in SECTORS.values()] + list(ckeys.values()))
+    moves = {name: changes.get(key) for name, key in ckeys.items()}
+    for shock in commodities.shocks(moves, cfg or {}):
+        if shock["commodity"] not in _daily["shocks_sent"]:
+            _daily["shocks_sent"].add(shock["commodity"])
+            emit("COMMODITY", shock)
+    return {"results": _daily["results"], "usdinr": usdinr_change(), "commodities": moves,
             "sectors": {name: changes.get(k) for name, (k, _) in SECTORS.items()}}
+
+
+def log_filing(item: dict) -> None:
+    new = not FILINGS_LOG.exists()
+    FILINGS_LOG.parent.mkdir(exist_ok=True)
+    with open(FILINGS_LOG, "a", newline="") as f:
+        w = csv.DictWriter(f, fieldnames=["time", "symbol", "category", "subject", "text", "pdf", "seq_id"])
+        if new:
+            w.writeheader()
+        w.writerow({k: item.get(k, "") for k in w.fieldnames})
+
+
+def poll_filings(cfg: dict, now: datetime) -> None:
+    """Announcements agent: new material NSE filings for our stocks. Results filings are read
+    straight away (revenue/profit growth) and reported as RESULT events; others as NEWS."""
+    reset_daily(now.date().isoformat())
+    try:
+        rows = announcements.fetch_feed()
+    except Exception as e:
+        emit("ERROR", {"error": f"NSE announcements feed: {type(e).__name__}"})
+        return
+    for item in announcements.material(rows, set(cfg["universe"]), since=now.date().isoformat()):
+        if item["seq_id"] in _daily["seen_filings"]:
+            continue
+        _daily["seen_filings"].add(item["seq_id"])
+        _daily["filings"].setdefault(item["symbol"], []).append(item)
+        log_filing(item)
+        if item["category"] == "RESULTS" and item["pdf"].endswith(".pdf"):
+            try:
+                summary = announcements.results_summary(item["pdf"])
+                item = {**item, **summary, "read": announcements.score_results(summary["figures"])}
+            except Exception as e:
+                item = {**item, "read": {"view": "unread", "notes": [f"PDF not read: {type(e).__name__}"]}}
+            emit("RESULT", item)
+        else:
+            emit("NEWS", item)
 
 
 def emit(kind: str, payload: dict) -> None:
@@ -167,7 +218,7 @@ async def scan(im: IndMoney, trades: list[dict], now: datetime, cfg: dict, hold:
     if mkt["no_trade"]:
         return
 
-    ctx = await market_context(im, now)
+    ctx = await market_context(im, now, cfg)
     universe = set(cfg["universe"]) - set(day["avoid"])
     today = now.date().isoformat()
     taken = {t["contract"] for t in trades if t["date"] == today}
@@ -198,11 +249,14 @@ async def scan(im: IndMoney, trades: list[dict], now: datetime, cfg: dict, hold:
                 risk = plan(option, trades_today, now, cfg, sigma_per_min=intraday_sigma_per_min(intraday),
                             spread_pct=option["spread_pct"], forecast=forecast)
                 extras = [news.assess(m["symbol"], side, m["change_pct"], now.date(), await im.news(m["ind_key"]),
-                                      ctx["results"], intraday, cfg)]
+                                      ctx["results"], intraday, cfg,
+                                      filings=_daily.get("filings", {}).get(m["symbol"], []))]
                 if cfg.get("use_macro", True):
+                    # Crude is handled with the other commodities below, so not passed here.
                     extras.append(macro.assess(m["symbol"], side, m["change_pct"],
-                                               ctx["sectors"].get(sector_of(m["symbol"])), ctx["crude"],
+                                               ctx["sectors"].get(sector_of(m["symbol"])), None,
                                                ctx["usdinr"], cfg))
+                extras.append(commodities.assess(m["symbol"], side, ctx["commodities"], cfg))
                 crowd = psychology.assess(side, m["price"], m["change_pct"],
                                           await im.futures_oi_change(m["symbol"], option["expiry"]),
                                           m.get("52_week_high"), m.get("52_week_low"),
@@ -221,7 +275,7 @@ async def scan(im: IndMoney, trades: list[dict], now: datetime, cfg: dict, hold:
                            derivative_id=option["derivative_id"], qty=risk["qty"], entry_ask=option["ask"],
                            target_bid=risk["target_premium"], spread_pct=round(option["spread_pct"], 2),
                            hit_probability=round(risk["hit_probability"]), chart_score=chart["score"],
-                           oi_type=crowd["oi_type"],
+                           oi_type=crowd["oi_type"], strategy="reversal",
                            status="OPEN")
                 trades.append(row)
                 taken.add(option["contract"])
@@ -315,9 +369,12 @@ def main() -> None:
         return
     emit("STATUS", {"watching": True, "scan_every_min": args.interval, "exit_check_every_sec": exit_every,
                     "time": datetime.now(IST)})
-    last_scan = 0.0
+    last_scan = last_filings = 0.0
     while True:
         now = datetime.now(IST)
+        if not args.once and clock.time() - last_filings >= cfg.get("filings_poll_seconds", 30):
+            last_filings = clock.time()
+            poll_filings(cfg, now)  # NSE feed, not INDmoney: no effect on the call budget
         if args.once or market_open(now):
             try:
                 used, budget = calls_last_hour(), cfg.get("indmoney_hourly_budget", 400)

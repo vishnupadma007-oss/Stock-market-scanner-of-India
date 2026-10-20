@@ -81,6 +81,8 @@ def review(df: pd.DataFrame, day: str, since: str) -> str:
         out.append("")
 
     out += ["## Where it wins and loses", ""]
+    if "strategy" in df and df["strategy"].ne("").any():
+        out += _breakdown(df, "By strategy", df["strategy"].replace("", "reversal"))
     out += _breakdown(df, "By side", "side")
     out += _breakdown(df, "By entry hour", df["opened"].str[:2] + ":00")
     out += _breakdown(df, "By bid-ask gap", pd.cut(df["spread_pct"], [0, 0.5, 1, 100],

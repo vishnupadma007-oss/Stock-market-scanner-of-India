@@ -266,6 +266,18 @@ class IndMoney:
         stats = (await self.quotes([key])).get(key, {}).get("entity_stats", {})
         return stats.get("open_interest_change")
 
+    async def commodity_keys(self, names: list[str]) -> dict[str, str]:
+        """Current MCX futures contract for each commodity name (e.g. "crude oil" -> CRUDEOIL Fut)."""
+        rows = await self.call("lookup_ind_keys", names=names, filter_type="IN_COMMODITY")
+        keys = {}
+        for name in names:
+            code = name.replace(" ", "").upper()
+            match = next((r for r in rows if r.get("ind_key") and
+                          r.get("name", "").upper().startswith(code + " ")), None)
+            if match:
+                keys[name] = match["ind_key"]
+        return keys
+
     async def crude_key(self) -> str | None:
         rows = await self.call("lookup_ind_keys", names=["crude oil"], filter_type="IN_COMMODITY")
         return next((r["ind_key"] for r in rows if r.get("ind_key")), None)

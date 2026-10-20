@@ -61,6 +61,17 @@ news:
 psychology:
   mode: observe
 
+# Announcements agent: NSE's live corporate-filings feed (results, ratings, orders, deals,
+# regulatory actions), read every 30 s while the watcher runs. Results filings are parsed for
+# revenue/profit growth and reported as RESULT events; other material filings as NEWS.
+filings_poll_seconds: 30
+
+# Commodities agent: MCX crude, natural gas, gold, silver, copper, aluminium, zinc, nickel.
+commodities:
+  move_pct: 1.5       # move that matters for the stocks linked to it
+  points: -20         # when the move pushes the stock against the trade
+  shock_pct: 3.0      # move reported once a day as a COMMODITY event for Claude to explain
+
 # Forecast agent: likely reversal level (VWAP or 38% retracement) is shown on every signal.
 # Backtest: blocking on it lowered results (-0.74%/trade), and aiming the target at it cut
 # the hit rate from 90% to 63% (-3.16%/trade), so both are off.

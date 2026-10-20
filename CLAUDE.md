@@ -12,7 +12,10 @@ Intraday mover-reversal options strategy on NSE F&O stocks, run by a team of age
 - Agents: regime, scanner, chart reader, options, risk, decision, journal, plus News & Events
   (`agents/news.py`), Macro (`agents/macro.py`), Forecast (`agents/forecast.py`), Crowd Psychology
   (`agents/psychology.py`, observe mode until paper trades prove it) and the morning
-  brief's day mode (`agents/daymode.py`, `journal/day_mode.json`).
+  brief's day mode (`agents/daymode.py`, `journal/day_mode.json`), NSE Announcements
+  (`agents/announcements.py`: live filings, results figures), Commodities (`agents/commodities.py`)
+  and NSE holidays (`agents/holidays.py`).
+- `paper_trade.py`: Claude opens results/news paper trades with it; the watcher manages exits.
 - Run tests with `python -m pytest -q`.
 
 Standing permission: restart the watcher during market hours as often as needed, without

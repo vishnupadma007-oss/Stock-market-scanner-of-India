@@ -31,7 +31,13 @@ One short research pass that sets the day's mode. Keep it to a handful of search
    geopolitical or policy news (wars, sanctions, OPEC, Fed/RBI). Use the
    `market-news-analyst` skill's references (geopolitical/commodity correlations, event
    patterns) to judge impact, but apply them to Indian stocks and sectors.
-2. Today's events: RBI policy, Budget, F&O expiry (last Tuesday of the month), big results.
+2. Overnight company filings: `python -m agents.announcements overnight` lists every material
+   NSE filing for our stocks since the last session's close (results with revenue/profit growth
+   already read, ratings, orders, deals, regulatory actions, management exits). For each
+   result, judge the likely opening reaction (see "On a RESULT line") and put strong ones in
+   `notes` as a watchlist with the expected direction; after 09:45, if the price confirms that
+   direction, open a results trade with `paper_trade.py` (one trade at a time).
+   Then today's events: RBI policy, Budget, F&O expiry (last Tuesday of the month), big results.
    `python -c "from agents.news import results_calendar as r; import json; from datetime import date; print(json.dumps({s: [str(d) for d in v] for s, v in r().items() if date.today() in v}))"`
    lists companies with results today (the News agent already skips those stocks).
 3. Write `journal/day_mode.json`:
@@ -51,7 +57,8 @@ One short research pass that sets the day's mode. Keep it to a handful of search
    `python -m agents.indmoney finish "<address>"` and test again.
 2. Start the watcher in the background: `python watcher.py` (Bash, `run_in_background: true`,
    timeout 7200000). Then wait for its output with Monitor, waking only on lines that start
-   with `SIGNAL`, `EXIT` or `ERROR`. Waiting costs nothing; do not poll.
+   with `SIGNAL`, `EXIT`, `RESULT`, `NEWS`, `COMMODITY`, `ERROR` or `STATUS`. Waiting costs
+   nothing; do not poll.
 3. Background commands stop after 2 hours: when it ends before 15:30 IST on a weekday,
    start it again. Open trades are kept in `journal/paper_trades.csv`, so nothing is lost.
    **Standing permission (user, 2026-10-20):** for paper trading, restart the watcher (and
@@ -82,6 +89,38 @@ credits are spent):
    why the stock is moving, and a one-line reason.
 5. Record your verdict in `journal/paper_trades.csv` (`claude_verdict` = TRADE/SKIP,
    `notes` = the reason). This lets the user compare rules-only vs rules-plus-Claude results.
+
+## On a RESULT line (a company in our list just filed results on NSE)
+
+The Announcements agent already read the filing: `figures` (revenue and profit: this quarter,
+last quarter, year ago, QoQ/YoY %), `highlights` (growth lines from the press release) and
+`read` (strong / good / mixed / weak from the numbers alone). Machine reading can fail on
+scanned filings: if `figures` is empty or disagrees with `highlights`, trust the highlights.
+
+1. Judge the quarter: growth, margins, guidance, one-offs. One web search for the consensus
+   estimate if it is a large company; markets react to results versus expectations, not to
+   growth alone.
+2. Check the first reaction: one `get_indian_stocks_details` call for the stock's live move.
+3. Forecast: direction (up/down), how strong, and whether the price already moved too far.
+4. If it is between 09:45 and 14:30 and the numbers and the first reaction agree, open a
+   results trade: `python paper_trade.py open --symbol X --direction up|down --strategy results
+   --reason "<one line>"`. It applies the same rules (one trade at a time, lot must fit, 1% net
+   target, no stop-loss) and the watcher manages the exit. Otherwise note it for the next morning.
+5. Tell the user in a few lines: the numbers, your read, the forecast, and what you did.
+
+## On a NEWS line (a material NSE filing: rating, order, deal, regulatory, management, guidance)
+
+Usually say one line and move on; the News agent already counts it against reversal trades in
+that stock. Only dig deeper (read the PDF via `python -m agents.announcements results <pdf>`
+or one web search) if it could move the stock a lot (large order relative to the company, rating
+downgrade, regulatory action, CEO exit, merger). Use `paper_trade.py` only with a clear direction.
+
+## On a COMMODITY line (a commodity moved 3% or more today)
+
+One web search for the reason (supply cut, sanctions, OPEC, mine shutdown, demand data). Tell the
+user in two lines: what moved, why, and which of our stocks it affects (`stocks_affected`). If
+the move is a lasting shock, add the affected stocks to today's `avoid` list in
+`journal/day_mode.json` (the watcher reads it every cycle).
 
 ## On an EXIT line
 
