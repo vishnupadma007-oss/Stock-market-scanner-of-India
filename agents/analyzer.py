@@ -1,7 +1,9 @@
 """Data Analyzer: combines everything the information agents found into one view per stock.
 
 For each stock it adds up the tone x importance of every item about it, its sector and the
-market, with older items counting less (news fades within hours, filings within a day or two).
+market, with older items counting less (news fades within hours, filings within about a
+session). Age is counted in market hours only: results filed on Monday evening before a
+holiday are still fresh at Wednesday's open, when the market first reacts to them.
 Several independent sources agreeing count for more than one loud headline.
 
 Output per stock: direction (up / down / neutral), confidence 0-100, and the reasons.
@@ -10,13 +12,17 @@ Claude when a stock's outlook turns strong, and in the morning brief.
 
     python -m agents.analyzer          # market mood + strongest forecasts right now
 """
+import functools
 import math
-from datetime import datetime, timedelta
+from datetime import date, datetime, time, timedelta
 
-from . import intel
+from . import holidays, intel
 from .sectors import STOCK_SECTOR
 
-HALF_LIFE_H = {"news": 3, "concall": 24, "filing": 24}
+# Half-lives in MARKET hours (one session = 6.25 h): news fades within the session, filings
+# and concalls over about one session.
+HALF_LIFE_H = {"news": 3, "concall": 6.5, "filing": 6.5}
+OPEN, CLOSE = time(9, 15), time(15, 30)
 SCOPE_WEIGHT = {"stock": 1.0, "sector": 0.5, "market": 0.3, "global": 0.3}
 DEFAULTS = {"forecast_score": 2.0, "min_sources": 2, "agree_points": 10, "against_points": -20}
 
@@ -33,11 +39,30 @@ def _parse_time(time_str: str) -> datetime | None:
         return None
 
 
+@functools.lru_cache(maxsize=64)
+def _trading_day(day: date) -> bool:
+    return holidays.is_trading_day(day)
+
+
+@functools.lru_cache(maxsize=20000)
+def market_hours_between(start: datetime, end: datetime) -> float:
+    """Hours the market was open between two plain IST times (nights, weekends, holidays skipped)."""
+    total, day = 0.0, start.date()
+    while day <= end.date():
+        if _trading_day(day):
+            s = max(start, datetime.combine(day, OPEN))
+            e = min(end, datetime.combine(day, CLOSE))
+            if e > s:
+                total += (e - s).total_seconds() / 3600
+        day += timedelta(days=1)
+    return total
+
+
 def _weight(item: dict, now: datetime) -> float:
     now = now.replace(tzinfo=None)  # log times are plain IST clock times
     t = _parse_time(item.get("time", ""))
     if t is not None:
-        age_h = (now - t.replace(tzinfo=None)).total_seconds() / 3600.0
+        age_h = market_hours_between(t.replace(tzinfo=None), now.replace(second=0, microsecond=0))
     else:
         age_h = 0.0
     half_life = HALF_LIFE_H.get(item.get("kind"), 6)
@@ -101,7 +126,10 @@ def as_extra(view: dict, side: str, cfg: dict) -> dict:
 
 
 def recent_items(now: datetime) -> list[dict]:
-    return intel.load((now - timedelta(days=1)).date().isoformat(), now.date().isoformat())
+    """Items logged since the start of the previous trading session (covers weekends and holidays)."""
+    first = holidays.previous_trading_day(now.date() - timedelta(days=1))
+    days = [(first + timedelta(days=d)).isoformat() for d in range((now.date() - first).days + 1)]
+    return intel.load(*days)
 
 
 def main() -> None:

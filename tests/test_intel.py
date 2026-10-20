@@ -69,3 +69,23 @@ def test_tone_negation_and_hedging():
     assert intel.tone("Profit jumps on strong demand") == 1.0
     hedged = intel.tone("Profit may rise if demand could improve amid uncertain headwinds")
     assert 0 < hedged < 1.0
+
+
+def test_news_ages_in_market_hours_only():
+    from agents import analyzer
+    # Results filed Monday 19 Oct 17:20; Tuesday 20 Oct is Dussehra: still fresh at Wednesday's open.
+    filed = datetime(2026, 10, 19, 17, 20)
+    assert analyzer.market_hours_between(filed, datetime(2026, 10, 21, 9, 15)) == 0
+    assert analyzer.market_hours_between(filed, datetime(2026, 10, 21, 12, 30)) == 3.25
+    item = {"time": "2026-10-19 17:20:00", "kind": "filing"}
+    assert analyzer._weight(item, datetime(2026, 10, 21, 9, 20)) > 0.95
+    assert 0.45 < analyzer._weight(item, datetime(2026, 10, 21, 15, 30)) < 0.55  # about half by the close
+
+
+def test_results_read_later_get_logged():
+    from agents import announcements
+    base = {"seq_id": "77", "time": "2026-10-19 17:20:38", "symbol": "BAJFINANCE", "category": "RESULTS",
+            "subject": "Outcome of Board Meeting", "text": "financial results", "pdf": "x.pdf"}
+    unread = announcements.to_intel({**base, "read": {"view": "unread"}})
+    strong = announcements.to_intel({**base, "read": {"view": "strong"}})
+    assert unread["id"] != strong["id"] and strong["sentiment"] == 1.0

@@ -22,7 +22,7 @@ import json
 import sys
 import threading
 import time as clock
-from datetime import datetime, time
+from datetime import datetime, time, timedelta
 from pathlib import Path
 from zoneinfo import ZoneInfo
 
@@ -183,15 +183,20 @@ def poll_filings(cfg: dict, now: datetime) -> None:
     are read straight away and reported as RESULT events; major filings (regulatory) as NEWS;
     everything goes to the intelligence log for the Data Analyzer."""
     reset_daily(now.date().isoformat())
+    if "filings_since" not in _daily:
+        # From the previous session's close, so results filed overnight (or over a holiday) reach
+        # the news team at the next open.
+        prev = holidays.previous_trading_day(now.date() - timedelta(days=1))
+        _daily.update(filings_since=f"{prev} 15:30:00", filings_from=prev)
     try:
-        rows = announcements.fetch_feed()
+        rows = announcements.fetch_feed(start=_daily["filings_from"], end=now.date())
     except Exception as e:
         emit("ERROR", {"error": f"NSE announcements feed: {type(e).__name__}"})
         return
     universe = set(cfg["universe"])
     meets = [r for r in rows if f"concall-{r.get('seq_id')}" not in _daily["intel_seen"]]
     intel.append(concalls.items_from_rows(meets, universe), _daily["intel_seen"])
-    for item in announcements.material(rows, universe, since=now.date().isoformat()):
+    for item in announcements.material(rows, universe, since=_daily["filings_since"]):
         if item["seq_id"] in _daily["seen_filings"]:
             continue
         _daily["seen_filings"].add(item["seq_id"])

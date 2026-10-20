@@ -232,7 +232,9 @@ def to_intel(item: dict) -> dict:
         mood, impact = (-0.5, 2) if re.search(r"\b(ceo|md|managing director|cfo|chief)\b", text) else (-0.2, 1)
     else:  # DEAL, GUIDANCE: direction unclear from the filing title alone
         mood, impact = intel.tone(text), 2
-    return intel.make_item(id=f"filing-{item['seq_id']}", time=item["time"], source="NSE filing", kind="filing",
+    # A results filing read later (first read failed) gets its own id, so the real view is logged.
+    view_tag = f"-{item['read']['view']}" if cat == "RESULTS" and (item.get("read") or {}).get("view") not in (None, "unread") else ""
+    return intel.make_item(id=f"filing-{item['seq_id']}{view_tag}", time=item["time"], source="NSE filing", kind="filing",
                            symbols=[item["symbol"]], category=cat, sentiment=mood, impact=impact,
                            headline=f"{item['symbol']} {cat.lower()}: {item['text'][:200]}", url=item["pdf"])
 

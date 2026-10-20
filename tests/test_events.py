@@ -81,7 +81,7 @@ def test_poll_filings_emits_once(monkeypatch, tmp_path, capsys):
                    t="2026-10-21 10:30:00", pdf="https://nse/x.pdf"),
             filing("BEL", "Credit Rating", "Credit Rating", seq="8", t="2026-10-21 10:20:00"),
             filing("PNB", "Action(s) taken or orders passed", "penalty imposed by RBI", seq="7", t="2026-10-21 10:10:00")]
-    monkeypatch.setattr(watcher.announcements, "fetch_feed", lambda: rows)
+    monkeypatch.setattr(watcher.announcements, "fetch_feed", lambda **kw: rows)
     monkeypatch.setattr(watcher.announcements, "results_summary",
                         lambda url: {"figures": announcements.figures_from_text(TECHM), "highlights": []})
     monkeypatch.setattr(watcher, "check_expectations", lambda s, now, view=None: {"label": "partly priced in", "view": view})
