@@ -1,12 +1,12 @@
 {
-  "date": "2026-10-19",
+  "date": "2026-10-20",
   "mode": "careful",
   "notes": [
-    "US tech sold off Friday: Nasdaq -2.2% (-3.9% on the week), S&P 500 -1.1%",
-    "Asia weak this morning: Nikkei -1.2% (-6.5% in 5 days), Kospi -15% in 5 days",
-    "Brent still high at about $108 despite Friday's -1.7%; rupee weaker at 94.95 per dollar",
-    "India itself calm: Nifty +4.1% last week, India VIX 14. Expect a weak open, IT under pressure",
-    "No F&O results today; this week: ETERNAL Wed; BPCL, COFORGE, DRREDDY, INDUSINDBK, INFY, JSWSTEEL, SHRIRAMFIN Fri"
+    "US bounced Monday: Nasdaq +1.1%, S&P 500 +0.4%",
+    "Asia still weak: Kospi -2.6% today (-12% in 5 days), Nikkei -0.6%, Hang Seng -0.8%",
+    "Brent high and rising: about $110 (+3% in 5 days); rupee steady at 94.92",
+    "Nifty fell 1.1% Monday; India VIX up 5% to 14.8 (still calm)",
+    "No F&O results today; ETERNAL reports tomorrow"
   ],
   "avoid": []
 }
