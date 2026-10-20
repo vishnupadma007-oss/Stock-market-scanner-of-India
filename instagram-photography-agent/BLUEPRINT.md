@@ -121,9 +121,9 @@ use, because a skill is code and instructions that run with the agent's credenti
 Never accept his Instagram password. Collect these instead:
 
 1. **Instagram account switched to Professional** (Creator or Business), category "Photographer".
-2. **A Facebook Page linked** to the Instagram account (needed for some Graph API features and the Messaging API).
-3. **A Meta Developer app** (developers.facebook.com) with the *Instagram* product added. Your friend
-   should be an admin of the app, or add you as a developer.
+2. **No Facebook Page needed:** use "API setup with Instagram business login" (Instagram Login), not the Facebook Login variant.
+3. **A Meta Developer app** (developers.facebook.com, use case "Manage messaging & content on Instagram").
+   Your friend should be an admin of the app, or add you as a developer. Step-by-step: see `GET_API_ACCESS.md`.
 4. From that app:
    - App ID and App Secret
    - Instagram **User ID**
