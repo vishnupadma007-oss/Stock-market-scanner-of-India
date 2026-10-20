@@ -48,6 +48,9 @@ One short research pass that sets the day's mode. Keep it to a handful of search
    with `SIGNAL`, `EXIT` or `ERROR`. Waiting costs nothing; do not poll.
 3. Background commands stop after 2 hours: when it ends before 15:30 IST on a weekday,
    start it again. Open trades are kept in `journal/paper_trades.csv`, so nothing is lost.
+   **Standing permission (user, 2026-10-20):** for paper trading, restart the watcher (and
+   re-arm the Monitor) as many times as needed during market hours without asking first.
+   Just mention restarts briefly in the next status line.
 
 ## On a SIGNAL line
 

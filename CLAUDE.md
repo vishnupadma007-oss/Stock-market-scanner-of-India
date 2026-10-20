@@ -15,6 +15,9 @@ Intraday mover-reversal options strategy on NSE F&O stocks, run by a team of age
   brief's day mode (`agents/daymode.py`, `journal/day_mode.json`).
 - Run tests with `python -m pytest -q`.
 
+Standing permission: restart the watcher during market hours as often as needed, without
+asking (paper trading only).
+
 User decisions to respect: intraday only; buy options (PE on fading gainers, CE on
 bouncing losers); target >= 1% net of all charges per trade; **no stop-loss**.
 
