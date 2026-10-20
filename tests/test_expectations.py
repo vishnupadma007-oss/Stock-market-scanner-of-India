@@ -76,3 +76,35 @@ def test_forecast_event_carries_priced_in(monkeypatch, capsys):
     payload = json.loads(body)
     assert kind == "FORECAST" and payload["confidence"] == 55
     assert payload["priced_in"]["label"] == "largely priced in" and "priced_in_note" in payload
+
+
+SNAP = {"TECHM": {"pe": 28.6, "forward_pe": 19.9, "peg": 1.86, "profit_growth": 0.325},
+        "INFY": {"pe": 15.4}, "TCS": {"pe": 18.0}, "WIPRO": {"pe": 17.0}, "HCLTECH": {"pe": 20.0},
+        "HDFCBANK": {"pe": 15.6, "pb": 1.87}, "ICICIBANK": {"pb": 2.9}, "AXISBANK": {"pb": 1.9},
+        "KOTAKBANK": {"pb": 2.6}, "PAYTM": {"pe": -20.0, "pb": 3.0}}
+
+
+def test_valuation_against_sector_peers():
+    from agents import valuation
+    techm = valuation.assess("TECHM", SNAP)
+    assert techm["label"] == "expensive vs peers" and techm["rich"] == 30 and techm["metric"] == "P/E"
+    assert "forward P/E 19.9" in techm["notes"][0] and "profit growth +32%" in techm["notes"][0]
+    hdfc = valuation.assess("HDFCBANK", SNAP)  # lenders on price-to-book
+    assert hdfc["metric"] == "P/B" and hdfc["rich"] == -15
+    assert valuation.assess("NESTLEIND", SNAP)["label"] == "unknown"
+    assert valuation.assess("INFY", SNAP)["rich"] <= -15
+
+
+def test_valuation_extra_observe_and_score():
+    from agents import valuation
+    rich = {"rich": 30, "label": "expensive vs peers", "notes": ["Valuation: P/E 28.6"]}
+    watch = valuation.as_extra(rich, "gainer", {})
+    assert watch["points"] == 0 and watch["would_score"] == 5 and watch["notes"][0].startswith("(observe)")
+    scored = valuation.as_extra(rich, "loser", {"valuation": {"mode": "score"}})
+    assert scored["points"] == -5  # buying a CE on an expensive faller argues against the bounce
+
+
+def test_valuation_feeds_priced_in():
+    base = expectations.assess({"vs_nifty_20d": 6}, {}, {})
+    rich = expectations.assess({"vs_nifty_20d": 6}, {}, {}, {"rich": 30, "notes": ["Valuation: expensive"]})
+    assert rich["priced_in"] == base["priced_in"] + 15 and "Valuation: expensive" in rich["notes"]

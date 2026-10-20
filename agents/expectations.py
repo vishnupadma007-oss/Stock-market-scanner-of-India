@@ -9,6 +9,7 @@ Signals:
   run-up    stock vs Nifty over 1 and 4 weeks before the event
   hype      how much and how positively the stock was covered in the days before
   analysts  price vs the average analyst target (INDmoney consensus)
+  valuation P/E (P/B for lenders) vs sector peers (agents/valuation.py): rich = good news held
   reaction  after the event: did the price move the way the news says? If not, it was priced in.
 
     python -m agents.expectations TECHM
@@ -54,9 +55,13 @@ def analysts(details: dict) -> dict:
             "analysts": t.get("num_analysts"), "buy_pct": c.get("buy_per")}
 
 
-def assess(run: dict, coverage: dict, street: dict) -> dict:
+def assess(run: dict, coverage: dict, street: dict, value: dict | None = None) -> dict:
     """Priced-in score: +100 = good news fully expected, -100 = bad news fully expected."""
     score, notes = 0, []
+    rich = (value or {}).get("rich", 0)
+    if rich:
+        score += rich // 2  # expensive vs peers +15, richer +7, cheaper -8, cheap -15
+        notes += value["notes"]
     rel = run.get("vs_nifty_20d")
     if rel is not None:
         if rel >= 10:
@@ -125,7 +130,7 @@ async def stock_key(im, symbol: str) -> str:
 
 
 async def for_symbol(im, symbol: str, key: str, event_time: datetime, nifty: pd.DataFrame | None = None,
-                     news_view: str | None = None) -> dict:
+                     news_view: str | None = None, value: dict | None = None) -> dict:
     """Full check for one stock (2-3 INDmoney calls). `news_view` ("strong"/"good"/"weak") adds
     the reaction check: is the price already going against the news?"""
     daily = await im.candles(key, "1day", "1y")
@@ -134,7 +139,9 @@ async def for_symbol(im, symbol: str, key: str, event_time: datetime, nifty: pd.
     details = (await im.quotes([key], ["analyst"])).get(key, {})
     out = {"run_up": run_up(daily, nifty, event_time.date()), "hype": hype(symbol, event_time),
            "analysts": analysts(details), "day_move_pct": day_move(daily, event_time.date())}
-    out.update(assess(out["run_up"], out["hype"], out["analysts"]))
+    if value is not None:
+        out["valuation"] = value
+    out.update(assess(out["run_up"], out["hype"], out["analysts"], value))
     if news_view and out["day_move_pct"] is not None:
         out["reaction"] = reaction(news_view, out["day_move_pct"])
     return out
@@ -146,8 +153,11 @@ def main(argv: list[str]) -> None:
     from .indmoney import IndMoney
 
     async def go(symbol):
+        from . import valuation
+        from .config import load_config
+        value = valuation.assess(symbol, valuation.snapshot(load_config()["universe"]))
         async with IndMoney() as im:
-            return await for_symbol(im, symbol, await stock_key(im, symbol), datetime.now())
+            return await for_symbol(im, symbol, await stock_key(im, symbol), datetime.now(), value=value)
     print(json.dumps(asyncio.run(go(argv[1].upper())), indent=1))
 
 

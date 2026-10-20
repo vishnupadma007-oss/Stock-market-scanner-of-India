@@ -26,7 +26,7 @@ from pathlib import Path
 from zoneinfo import ZoneInfo
 
 from agents import (analyzer, announcements, commodities, concalls, daymode, expectations, holidays, intel, macro,
-                    news, newsfeed, psychology)
+                    news, newsfeed, psychology, valuation)
 from agents.chart_reader import read_chart
 from agents.config import load_config
 from agents.costs import round_trip_charges
@@ -46,7 +46,8 @@ TRADES = Path(__file__).resolve().parent / "journal" / "paper_trades.csv"
 HELD = Path(__file__).resolve().parent / "journal" / "held_setups.csv"
 FIELDS = ["date", "opened", "symbol", "side", "contract", "underlying_key", "derivative_id",
           "qty", "entry_ask", "target_bid", "spread_pct", "hit_probability", "chart_score", "oi_type",
-          "status", "closed", "exit_bid", "charges", "net_pnl", "claude_verdict", "notes", "strategy"]
+          "status", "closed", "exit_bid", "charges", "net_pnl", "claude_verdict", "notes", "strategy",
+          "valuation"]
 FILINGS_LOG = Path(__file__).resolve().parent / "journal" / "announcements.csv"
 
 _errors_seen: dict[str, float] = {}
@@ -118,6 +119,19 @@ def log_filing(item: dict) -> None:
 _stock_keys: dict[str, str] = {}
 
 
+def valuations(cfg: dict, now: datetime) -> dict[str, dict]:
+    """Today's P/E and P/B snapshot (Yahoo, once a day; the morning brief usually saves it first)."""
+    reset_daily(now.date().isoformat())
+    if not _daily.get("valuations") and clock.time() >= _daily.get("valuations_retry", 0):
+        _daily["valuations"] = valuation.snapshot(cfg["universe"], now.date())
+        _daily["valuations_retry"] = clock.time() + 1800  # Yahoo down: try again in 30 minutes
+    return _daily["valuations"]
+
+
+def valuation_view(symbol: str) -> dict:
+    return valuation.assess(symbol, _daily.get("valuations") or {})
+
+
 def check_expectations(symbol: str, now: datetime, news_view: str | None = None) -> dict:
     """Expectations agent for one stock (run-up, hype, analyst targets): is the news priced in?
     Runs in the information thread with its own INDmoney session; once per stock per day,
@@ -131,7 +145,7 @@ def check_expectations(symbol: str, now: datetime, news_view: str | None = None)
             if symbol not in _stock_keys:
                 _stock_keys[symbol] = await expectations.stock_key(im, symbol)
             return await expectations.for_symbol(im, symbol, _stock_keys[symbol], now.replace(tzinfo=None),
-                                                 _index_cache.get("nifty"), news_view)
+                                                 _index_cache.get("nifty"), news_view, valuation_view(symbol))
     try:
         result = asyncio.run(go())
     except Exception as e:
@@ -222,7 +236,7 @@ def information_track(cfg: dict) -> None:
         started = clock.time()
         now = datetime.now(IST)
         if holidays.is_trading_day(now.date()):
-            for step in (poll_filings, poll_news, run_analyzer):
+            for step in (valuations, poll_filings, poll_news, run_analyzer):
                 try:
                     step(cfg, now)
                 except Exception as e:  # one failing source must not stop the others
@@ -348,6 +362,8 @@ async def scan(im: IndMoney, trades: list[dict], now: datetime, cfg: dict, hold:
                                           m.get("52_week_high"), m.get("52_week_low"),
                                           m.get("circuit_upper_limit"), m.get("circuit_lower_limit"), cfg)
                 extras.append(crowd)
+                value = valuation.as_extra(valuation_view(m["symbol"]), side, cfg)
+                extras.append(value)
                 decision = decide(side, mkt, chart, risk, None, cfg, extras)
                 if decision["verdict"] != "TRADE":
                     continue
@@ -361,7 +377,7 @@ async def scan(im: IndMoney, trades: list[dict], now: datetime, cfg: dict, hold:
                            derivative_id=option["derivative_id"], qty=risk["qty"], entry_ask=option["ask"],
                            target_bid=risk["target_premium"], spread_pct=round(option["spread_pct"], 2),
                            hit_probability=round(risk["hit_probability"]), chart_score=chart["score"],
-                           oi_type=crowd["oi_type"], strategy="reversal",
+                           oi_type=crowd["oi_type"], strategy="reversal", valuation=value["label"],
                            status="OPEN")
                 trades.append(row)
                 taken.add(option["contract"])
@@ -378,6 +394,7 @@ async def scan(im: IndMoney, trades: list[dict], now: datetime, cfg: dict, hold:
                                  "basis": forecast["basis"],
                                  "option_price_there": risk["forecast_premium"] and round(risk["forecast_premium"], 2)},
                     "day_mode": day["mode"],
+                    "valuation": {"label": value["label"], "would_score": value["would_score"]},
                     "crowd": {"oi_type": crowd["oi_type"], "would_score": crowd["would_score"],
                               "would_block": crowd["would_block"]},
                 })

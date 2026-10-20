@@ -41,9 +41,11 @@ One short research pass that sets the day's mode. Keep it to a handful of search
    For F&O companies reporting today or tomorrow (results calendar), use the `earnings-preview`
    skill in short form: the 2-3 metrics that will move the stock and a bull/bear case each, so
    the RESULT can be judged in seconds when it lands. Keep it to a few lines per company.
+   Run `python -m agents.valuation` once (saves today's P/E and P/B snapshot vs sector peers;
+   about a minute) and mention any stock on the watchlist that is far richer or cheaper than peers.
    Add `python -m agents.expectations SYMBOL` for each (3-4 INDmoney calls): is a good result
    already priced in (run-up vs Nifty, pre-results hype, price vs analyst target), and so what
-   bar the numbers must clear to move the stock.
+   bar the numbers must clear to move the stock (valuation vs peers counts towards it).
    Finally `python -m agents.analyzer`: the Data Analyzer's market mood and strongest stock
    forecasts from the overnight intelligence log (filings, concalls, news). Mention the top ones.
    `python -c "from agents.news import results_calendar as r; import json; from datetime import date; print(json.dumps({s: [str(d) for d in v] for s, v in r().items() if date.today() in v}))"`
@@ -80,7 +82,9 @@ carries what the agents found: `chart_signals`, `news_and_macro` (INDmoney headl
 sentiment, results calendar, sudden-pressure volume check, sector/crude/rupee moves),
 `forecast` (likely reversal level: VWAP or 38% retracement, and the option price there),
 `crowd` (Crowd Psychology agent: futures OI build-up type, 52-week extremes, circuit frenzy;
-in observe mode it does not change the score yet, but weigh it in your verdict) and `day_mode`. Give your own verdict, using as few tool calls as possible (this is where Claude
+in observe mode it does not change the score yet, but weigh it in your verdict), `valuation`
+(P/E or P/B vs sector peers, also observe mode: an expensive gainer fades more easily, a cheap
+loser bounces more easily) and `day_mode`. Give your own verdict, using as few tool calls as possible (this is where Claude
 credits are spent):
 
 1. Why is it moving? Read `news_and_macro`. Only if it is unclear (no headline but a
@@ -112,7 +116,8 @@ scanned filings: if `figures` is empty or disagrees with `highlights`, trust the
 2. Check the first reaction: one `get_indian_stocks_details` call for the stock's live move.
 3. Priced in? The line carries `expectations`: `label` and `bar` say how much good (or bad)
    news the price already holds, from the run-up vs Nifty, the hype in the days before and the
-   price vs the average analyst target. If it is "largely priced in", only a clear beat on
+   price vs the average analyst target, plus valuation (P/E or, for lenders, P/B vs sector
+   peers: an expensive stock already holds good news). If it is "largely priced in", only a clear beat on
    consensus lifts the stock and an in-line quarter can fall ("sell the news"); if pessimism is
    priced in, a merely decent quarter can lift it. `reaction`, when present, says the price is
    already moving against the numbers: believe the price.

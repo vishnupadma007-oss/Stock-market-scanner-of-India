@@ -21,7 +21,7 @@ SECTORS = {
 STOCK_SECTOR = {
     **dict.fromkeys(["INFY", "TCS", "WIPRO", "HCLTECH", "TECHM", "PERSISTENT", "COFORGE", "MPHASIS"], "IT"),
     **dict.fromkeys(["HDFCBANK", "ICICIBANK", "AXISBANK", "KOTAKBANK", "INDUSINDBK", "IDFCFIRSTB",
-                     "FEDERALBNK", "AUBANK", "BAJFINANCE", "BAJFINSV", "SHRIRAMFIN", "CHOLAFIN",
+                     "FEDERALBNK", "AUBANK", "BAJFINANCE", "BAJAJFINSV", "SHRIRAMFIN", "CHOLAFIN",
                      "MUTHOOTFIN", "RECLTD", "PFC", "PAYTM", "POLICYBZR"], "Bank"),
     **dict.fromkeys(["SBIN", "BANKBARODA", "PNB", "CANBK"], "PSU Bank"),
     **dict.fromkeys(["MARUTI", "M&M", "EICHERMOT", "HEROMOTOCO", "BAJAJ-AUTO", "TVSMOTOR"], "Auto"),

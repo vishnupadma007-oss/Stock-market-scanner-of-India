@@ -61,6 +61,13 @@ news:
 psychology:
   mode: observe
 
+# Valuation agent: P/E (P/B for lenders) vs sector peers, from Yahoo once a day. Observe mode:
+# shown on signals and logged per trade; switch to score once the evening review shows it helps.
+valuation:
+  mode: observe
+  agree_points: 5       # expensive gainer fading (PE) / cheap loser bouncing (CE)
+  against_points: -5
+
 # Announcements agent: NSE's live corporate-filings feed (results, ratings, orders, deals,
 # regulatory actions), read every 30 s while the watcher runs. Results filings are parsed for
 # revenue/profit growth and reported as RESULT events; major filings as NEWS.

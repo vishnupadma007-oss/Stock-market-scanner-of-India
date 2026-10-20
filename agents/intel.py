@@ -24,7 +24,7 @@ ALIASES = {
     "SBIN": ["sbi", "state bank of india"], "AXISBANK": ["axis bank"], "KOTAKBANK": ["kotak mahindra bank", "kotak bank"],
     "BHARTIARTL": ["bharti airtel", "airtel"], "LT": ["larsen & toubro", "larsen and toubro", "l&t"],
     "ITC": ["itc"], "HINDUNILVR": ["hindustan unilever", "hul"], "BAJFINANCE": ["bajaj finance"],
-    "BAJFINSV": ["bajaj finserv"], "MARUTI": ["maruti suzuki", "maruti"], "M&M": ["mahindra & mahindra", "mahindra and mahindra", "m&m"],
+    "BAJAJFINSV": ["bajaj finserv"], "MARUTI": ["maruti suzuki", "maruti"], "M&M": ["mahindra & mahindra", "mahindra and mahindra", "m&m"],
     "SUNPHARMA": ["sun pharma", "sun pharmaceutical"], "TITAN": ["titan company", "titan"],
     "ULTRACEMCO": ["ultratech cement", "ultratech"], "WIPRO": ["wipro"], "HCLTECH": ["hcl tech", "hcltech", "hcl technologies"],
     "TECHM": ["tech mahindra", "techm"], "PERSISTENT": ["persistent systems"], "COFORGE": ["coforge"],
