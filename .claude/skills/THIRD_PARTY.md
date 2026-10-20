@@ -15,7 +15,18 @@ Its generic risk advice (stops, kill switch) is overridden by this project's no-
 and reference guides only, uses web search, no keys. US-focused: the trading-desk morning brief
 applies its commodity and geopolitics guides to Indian stocks.
 
-Reviewed and not installed: tradermonty `earnings-trade-analyzer` (needs a paid US data key),
+`earnings-preview` and `earnings-analysis` come from Anthropic's
+[financial-services](https://github.com/anthropics/financial-services) plugins (Apache 2.0),
+copied unchanged. The trading desk uses earnings-preview for companies reporting soon and the
+beat/miss-versus-expectations checklist from earnings-analysis when results land; the full
+8-12 page report format is only for when the user asks for a report.
+
+`nlp-earnings-sentiment` comes from [gajetoso/financeskills](https://github.com/gajetoso/financeskills)
+(MIT, KOMVIA), without its eval files. Its finance-lexicon ideas (negation windows, uncertainty
+words) are also built into `agents/intel.py`.
+
+Reviewed and not installed: Anthropic `financial-statements` (bookkeeping, not investing),
+OctagonAI earnings-call skills (need the paid Octagon data service), tradermonty `earnings-trade-analyzer` (needs a paid US data key),
 himself65 `finance-sentiment` (paid key, US social-media sentiment), `timesfm-forecasting`
 (large price-forecasting model; no evidence it helps intraday reversals, heavy to run), wshobson/agents `backtesting-frameworks` (generic; covered by the above).
 

@@ -38,6 +38,9 @@ One short research pass that sets the day's mode. Keep it to a handful of search
    `notes` as a watchlist with the expected direction; after 09:45, if the price confirms that
    direction, open a results trade with `paper_trade.py` (one trade at a time).
    Then today's events: RBI policy, Budget, F&O expiry (last Tuesday of the month), big results.
+   For F&O companies reporting today or tomorrow (results calendar), use the `earnings-preview`
+   skill in short form: the 2-3 metrics that will move the stock and a bull/bear case each, so
+   the RESULT can be judged in seconds when it lands. Keep it to a few lines per company.
    Finally `python -m agents.analyzer`: the Data Analyzer's market mood and strongest stock
    forecasts from the overnight intelligence log (filings, concalls, news). Mention the top ones.
    `python -c "from agents.news import results_calendar as r; import json; from datetime import date; print(json.dumps({s: [str(d) for d in v] for s, v in r().items() if date.today() in v}))"`
@@ -99,9 +102,10 @@ last quarter, year ago, QoQ/YoY %), `highlights` (growth lines from the press re
 `read` (strong / good / mixed / weak from the numbers alone). Machine reading can fail on
 scanned filings: if `figures` is empty or disagrees with `highlights`, trust the highlights.
 
-1. Judge the quarter: growth, margins, guidance, one-offs. One web search for the consensus
-   estimate if it is a large company; markets react to results versus expectations, not to
-   growth alone.
+1. Judge the quarter with the beat/miss checklist from the `earnings-analysis` skill (not its
+   full report format): revenue, margins and profit versus the consensus estimate (one web
+   search for a large company) and versus this morning's preview, guidance, one-offs. Markets
+   react to results versus expectations, not to growth alone.
 2. Check the first reaction: one `get_indian_stocks_details` call for the stock's live move.
 3. Forecast: direction (up/down), how strong, and whether the price already moved too far.
 4. If it is between 09:45 and 14:30 and the numbers and the first reaction agree, open a
@@ -109,6 +113,10 @@ scanned filings: if `figures` is empty or disagrees with `highlights`, trust the
    --reason "<one line>"`. It applies the same rules (one trade at a time, lot must fit, 1% net
    target, no stop-loss) and the watcher manages the exit. Otherwise note it for the next morning.
 5. Tell the user in a few lines: the numbers, your read, the forecast, and what you did.
+
+For a concall transcript, apply the `nlp-earnings-sentiment` ideas: management's tone and
+hedging versus last quarter, and evasive answers in the Q&A; tone that diverges from the
+numbers is the signal.
 
 ## On a NEWS line (a material NSE filing: rating, order, deal, regulatory, management, guidance)
 

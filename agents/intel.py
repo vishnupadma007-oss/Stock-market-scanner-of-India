@@ -67,7 +67,8 @@ FINANCE_WORDS = r"stocks?|shares|markets?|\boil\b|crude|brent|econom\w+|rates?|y
 
 POSITIVE = r"\b(surge[sd]?|soar(s|ed)?|jump(s|ed)?|rall(y|ies|ied)|gain(s|ed)?|rise[sn]?|rose|climb(s|ed)?|" \
            r"record high|beat(s)?|outperform\w*|upgrade[sd]?|strong|robust|boost(s|ed)?|win(s)?|bag(s|ged)?|" \
-           r"order(s)? worth|approval|approved|expan\w+|profit (up|rises|jumps)|buy rating|ceasefire|eases?|cut(s)? rates?)\b"
+           r"order(s)? worth|approval|approved|expan\w+|profit (up|rises|jumps)|buy rating|ceasefire|eases?|cut(s)? rates?|" \
+           r"growth|grows?|grew|improv\w+)\b"
 NEGATIVE = r"\b(plunge[sd]?|slump(s|ed)?|crash(es|ed)?|tumble[sd]?|sink(s)?|sank|fall(s|en)?|fell|drop(s|ped)?|" \
            r"slide[sd]?|decline[sd]?|miss(es|ed)?|downgrade[sd]?|weak|warn(s|ing)?|probe|raid(s|ed)?|penalt(y|ies)|" \
            r"fraud|ban(s|ned)?|default(s|ed)?|resign(s|ed|ation)?|loss(es)?|cut(s)? (guidance|forecast|target)|" \
@@ -75,9 +76,34 @@ NEGATIVE = r"\b(plunge[sd]?|slump(s|ed)?|crash(es|ed)?|tumble[sd]?|sink(s)?|sank
 MAJOR = r"\b(fraud|raid|probe|default|war|attack|sanction|crash|plunge|record high|rate (cut|hike)|ban)\w*"
 
 
+NEGATORS = r"\b(not|no|never|without|unlikely|neither|nor|hardly|fail(s|ed)? to|didn't|doesn't|don't|won't|isn't|wasn't)\b"
+# Loughran-McDonald style uncertainty / weak-modal words: hedged good news counts for less.
+UNCERTAIN = r"\b(may|might|could|uncertain\w*|volatil\w+|unclear|subject to|risks?|challeng\w+|headwinds?|" \
+            r"cautious\w*|approximately|depend\w*|tentative\w*)\b"
+
+
+def _negated(text: str, start: int) -> bool:
+    """A negation word in the three words before a match flips it ("does not expect growth")."""
+    before = text[:start].split()[-3:]
+    return bool(re.search(NEGATORS, " ".join(before), re.I))
+
+
 def tone(text: str) -> float:
-    pos, neg = len(re.findall(POSITIVE, text, re.I)), len(re.findall(NEGATIVE, text, re.I))
-    return 0.0 if pos == neg else round((pos - neg) / (pos + neg), 2)
+    """-1..+1 from finance word lists, with negation handling and a discount for hedged language."""
+    pos = neg = 0
+    for pattern, sign in ((POSITIVE, 1), (NEGATIVE, -1)):
+        for m in re.finditer(pattern, text, re.I):
+            if (sign > 0) != _negated(text, m.start()):
+                pos += 1
+            else:
+                neg += 1
+    if pos == neg:
+        return 0.0
+    score = (pos - neg) / (pos + neg)
+    hedges = len(re.findall(UNCERTAIN, text, re.I))
+    if score > 0 and hedges:
+        score *= max(0.4, 1 - 0.2 * hedges)  # good news full of "may" and "could" counts for less
+    return round(score, 2)
 
 
 def symbols_in(text: str) -> list[str]:

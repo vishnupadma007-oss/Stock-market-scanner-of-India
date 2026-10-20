@@ -61,3 +61,11 @@ def test_analyzer_accepts_ist_aware_time():
     v = analyzer.stock_view("INFY", [item("Infosys shares jump on strong results")],
                             NOW.replace(tzinfo=ZoneInfo("Asia/Kolkata")), CFG)
     assert v["direction"] in ("up", "neutral")
+
+
+def test_tone_negation_and_hedging():
+    assert intel.tone("Company does not expect growth this year") < 0
+    assert intel.tone("Margins did not decline despite costs") > 0
+    assert intel.tone("Profit jumps on strong demand") == 1.0
+    hedged = intel.tone("Profit may rise if demand could improve amid uncertain headwinds")
+    assert 0 < hedged < 1.0
