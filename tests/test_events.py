@@ -110,3 +110,11 @@ def test_scanned_misreads_are_not_trusted():
     f = announcements.figures_from_text(bad + "\n" + good)
     assert f["profit"]["quarter"] == 10881.62 and f["profit"]["year_ago"] == 8455.0
     assert announcements.figures_from_text(bad) == {}
+
+
+def test_contract_expiry_from_name():
+    from agents.indmoney import contract_expiry
+    today = date(2026, 10, 20)
+    assert contract_expiry("CRUDEOIL 19 Oct Fut", today) == date(2026, 10, 19)  # expired yesterday
+    assert contract_expiry("CRUDEOIL 18 Nov Fut", today) == date(2026, 11, 18)
+    assert contract_expiry("GOLD 05 Feb Fut", date(2026, 12, 20)) == date(2027, 2, 5)

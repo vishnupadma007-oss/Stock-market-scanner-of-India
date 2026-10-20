@@ -17,9 +17,11 @@ import base64
 import hashlib
 import json
 import os
+import re
 import secrets
 import sys
 import time
+from datetime import datetime, timedelta
 from pathlib import Path
 from urllib.parse import parse_qs, urlencode, urlparse
 
@@ -269,11 +271,24 @@ class IndMoney:
     async def commodity_keys(self, names: list[str]) -> dict[str, str]:
         """Current MCX futures contract for each commodity name (e.g. "crude oil" -> CRUDEOIL Fut)."""
         rows = await self.call("lookup_ind_keys", names=names, filter_type="IN_COMMODITY")
+        today = datetime.now().date()
         keys = {}
         for name in names:
             code = name.replace(" ", "").upper()
-            match = next((r for r in rows if r.get("ind_key") and
-                          r.get("name", "").upper().startswith(code + " ")), None)
+            match = next((r for r in rows if r.get("ind_key") and r.get("name", "").upper().endswith(" FUT")
+                          and r["name"].upper().startswith(code + " ")), None)
+            if match and contract_expiry(match["name"], today) < today:
+                # Lookup returned an expired contract (e.g. on the day after expiry): ask for the next one.
+                nxt = (today.replace(day=1) + timedelta(days=32)).strftime("%b")
+                # Search only offers next month's options then; an option's parent is the future.
+                more = await self.call("lookup_ind_keys", names=[f"{code} {nxt}"], filter_type="IN_COMMODITY")
+                opt = next((r["ind_key"] for r in more if r.get("ind_key")
+                            and r.get("name", "").upper().startswith(code + " ")), None)
+                if opt:
+                    parent = (await self.quotes([opt])).get(opt, {}).get("entity_basic", {}).get(
+                        "underlying_parent_ind_key")
+                    if parent:
+                        match = {"ind_key": parent, "name": f"{code} {nxt} Fut"}
             if match:
                 keys[name] = match["ind_key"]
         return keys
@@ -290,6 +305,15 @@ def candles_frame(rows: list[dict]) -> pd.DataFrame:
     df.index = pd.to_datetime(df["datetime_ist"]).dt.tz_localize("Asia/Kolkata")
     df = df.rename(columns=str.capitalize)[["Open", "High", "Low", "Close", "Volume"]]
     return df.astype(float)
+
+
+def contract_expiry(name: str, today) -> "date":
+    """Expiry from a contract name like 'CRUDEOIL 19 Oct Fut' (year inferred; Dec->Jan rolls over)."""
+    m = re.search(r"(\d{1,2}) ([A-Za-z]{3})", name)
+    if not m:
+        return today
+    d = datetime.strptime(f"{m.group(1)} {m.group(2)} {today.year}", "%d %b %Y").date()
+    return d.replace(year=d.year + 1) if (today - d).days > 180 else d
 
 
 def pick_option(chain: dict, side: str, strike_choice: str) -> dict | None:
