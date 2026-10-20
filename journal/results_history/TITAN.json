@@ -1,0 +1,389 @@
+[
+ {
+  "seq_id": "157319",
+  "filed": "2023-11-03 15:00:39",
+  "pdf": "https://nsearchives.nseindia.com/corporate/129SEQ2result_03112023150039.pdf",
+  "figures": {
+   "revenue": {
+    "quarter": 11660.0,
+    "prev_quarter": 11145.0,
+    "year_ago": 8730.0,
+    "qoq_pct": 4.6,
+    "yoy_pct": 33.6
+   }
+  },
+  "view": "good",
+  "reaction": {
+   "reaction_day": "2023-11-03",
+   "when": "during market",
+   "gap_pct": 0.11,
+   "close_pct": 2.28,
+   "high_pct": 2.7,
+   "low_pct": 0.11,
+   "nifty_gap_pct": 0.56,
+   "nifty_close_pct": 0.51,
+   "runup_20d": 2.66,
+   "excess_close_pct": 1.77,
+   "excess_gap_pct": null
+  },
+  "profit_yoy": null,
+  "profit_surprise": null,
+  "revenue_yoy": 33.6,
+  "revenue_surprise": null
+ },
+ {
+  "seq_id": "159528",
+  "filed": "2024-02-01 15:04:56",
+  "pdf": "https://nsearchives.nseindia.com/corporate/QuickresultQ3202324_01022024150456.pdf",
+  "figures": {
+   "profit": {
+    "quarter": 1040.0,
+    "prev_quarter": 940.0,
+    "year_ago": 951.0,
+    "qoq_pct": 10.6,
+    "yoy_pct": 9.4
+   }
+  },
+  "view": "good",
+  "reaction": {
+   "reaction_day": "2024-02-01",
+   "when": "during market",
+   "gap_pct": 1.09,
+   "close_pct": -1.9,
+   "high_pct": 1.09,
+   "low_pct": -2.61,
+   "nifty_gap_pct": 0.25,
+   "nifty_close_pct": -0.13,
+   "runup_20d": 0.63,
+   "excess_close_pct": -1.77,
+   "excess_gap_pct": null
+  },
+  "profit_yoy": 9.4,
+  "profit_surprise": null,
+  "revenue_yoy": null,
+  "revenue_surprise": null
+ },
+ {
+  "seq_id": "161364",
+  "filed": "2024-05-03 16:28:28",
+  "pdf": "https://nsearchives.nseindia.com/corporate/QuickresultQ4202324_03052024162828.pdf",
+  "figures": {
+   "revenue": {
+    "quarter": 11257.0,
+    "prev_quarter": 13052.0,
+    "year_ago": 9704.0,
+    "qoq_pct": -13.8,
+    "yoy_pct": 16.0
+   }
+  },
+  "view": "mixed",
+  "reaction": {
+   "reaction_day": "2024-05-06",
+   "when": "after close",
+   "gap_pct": -1.64,
+   "close_pct": -7.18,
+   "high_pct": -1.28,
+   "low_pct": -7.84,
+   "nifty_gap_pct": 0.38,
+   "nifty_close_pct": -0.15,
+   "runup_20d": -6.01,
+   "excess_close_pct": -7.03,
+   "excess_gap_pct": -2.02
+  },
+  "profit_yoy": null,
+  "profit_surprise": null,
+  "revenue_yoy": 16.0,
+  "revenue_surprise": -17.6
+ },
+ {
+  "seq_id": "164192",
+  "filed": "2024-08-02 17:22:06",
+  "pdf": "https://nsearchives.nseindia.com/corporate/outcomeofbmQ1202425_02082024172206.pdf",
+  "figures": {
+   "profit": {
+    "quarter": 770.0,
+    "prev_quarter": 786.0,
+    "year_ago": 777.0,
+    "qoq_pct": -2.0,
+    "yoy_pct": -0.9
+   }
+  },
+  "view": "mixed",
+  "reaction": {
+   "reaction_day": "2024-08-05",
+   "when": "after close",
+   "gap_pct": -4.11,
+   "close_pct": -2.5,
+   "high_pct": -0.1,
+   "low_pct": -4.21,
+   "nifty_gap_pct": -1.68,
+   "nifty_close_pct": -2.68,
+   "runup_20d": 2.08,
+   "excess_close_pct": 0.18,
+   "excess_gap_pct": -2.43
+  },
+  "profit_yoy": -0.9,
+  "profit_surprise": -10.3,
+  "revenue_yoy": null,
+  "revenue_surprise": null
+ },
+ {
+  "seq_id": "166492",
+  "filed": "2024-11-05 16:10:09",
+  "pdf": "https://nsearchives.nseindia.com/corporate/SEoutcomeQ22024_05112024161009.pdf",
+  "figures": {
+   "revenue": {
+    "quarter": 13215.0,
+    "prev_quarter": 12053.0,
+    "year_ago": 11660.0,
+    "qoq_pct": 9.6,
+    "yoy_pct": 13.3
+   },
+   "profit": {
+    "quarter": 940.0,
+    "prev_quarter": 705.0,
+    "year_ago": -25.0,
+    "qoq_pct": 33.3,
+    "yoy_pct": -3860.0
+   }
+  },
+  "view": "weak",
+  "reaction": {
+   "reaction_day": "2024-11-06",
+   "when": "after close",
+   "gap_pct": -2.64,
+   "close_pct": -1.65,
+   "high_pct": -0.66,
+   "low_pct": -3.6,
+   "nifty_gap_pct": 0.39,
+   "nifty_close_pct": 1.12,
+   "runup_20d": -4.33,
+   "excess_close_pct": -2.77,
+   "excess_gap_pct": -3.03
+  },
+  "profit_yoy": -100.0,
+  "profit_surprise": -104.2,
+  "revenue_yoy": 13.3,
+  "revenue_surprise": -11.5
+ },
+ {
+  "seq_id": "169104",
+  "filed": "2025-02-04 17:33:53",
+  "pdf": "https://nsearchives.nseindia.com/corporate/SEoutcomeQ3_04022025173353.pdf",
+  "figures": {
+   "revenue": {
+    "quarter": 16097.0,
+    "prev_quarter": 13215.0,
+    "year_ago": 13052.0,
+    "qoq_pct": 21.8,
+    "yoy_pct": 23.3
+   },
+   "profit": {
+    "quarter": 990.0,
+    "prev_quarter": 705.0,
+    "year_ago": 1040.0,
+    "qoq_pct": 40.4,
+    "yoy_pct": -4.8
+   }
+  },
+  "view": "mixed",
+  "reaction": {
+   "reaction_day": "2025-02-05",
+   "when": "after close",
+   "gap_pct": -0.05,
+   "close_pct": -2.97,
+   "high_pct": 1.51,
+   "low_pct": -3.49,
+   "nifty_gap_pct": 0.26,
+   "nifty_close_pct": -0.18,
+   "runup_20d": 3.05,
+   "excess_close_pct": -2.79,
+   "excess_gap_pct": -0.31
+  },
+  "profit_yoy": -4.8,
+  "profit_surprise": -3.9,
+  "revenue_yoy": 23.3,
+  "revenue_surprise": 8.7
+ },
+ {
+  "seq_id": "106330048",
+  "filed": "2025-08-07 17:10:41",
+  "pdf": "https://nsearchives.nseindia.com/corporate/TITAN_07082025170814_SEoutcomeQ1.pdf",
+  "figures": {
+   "revenue": {
+    "quarter": 14564.0,
+    "prev_quarter": 13477.0,
+    "year_ago": 12053.0,
+    "qoq_pct": 8.1,
+    "yoy_pct": 20.8
+   },
+   "profit": {
+    "quarter": 1030.0,
+    "prev_quarter": 870.0,
+    "year_ago": 770.0,
+    "qoq_pct": 18.4,
+    "yoy_pct": 33.8
+   }
+  },
+  "view": "strong",
+  "reaction": {
+   "reaction_day": "2025-08-08",
+   "when": "after close",
+   "gap_pct": 1.01,
+   "close_pct": 1.3,
+   "high_pct": 2.17,
+   "low_pct": -0.37,
+   "nifty_gap_pct": -0.21,
+   "nifty_close_pct": -0.95,
+   "runup_20d": 2.87,
+   "excess_close_pct": 2.25,
+   "excess_gap_pct": 1.22
+  },
+  "profit_yoy": 33.8,
+  "profit_surprise": 38.6,
+  "revenue_yoy": 20.8,
+  "revenue_surprise": 4.8
+ },
+ {
+  "seq_id": "106425063",
+  "filed": "2025-11-03 18:22:12",
+  "pdf": "https://nsearchives.nseindia.com/corporate/TITAN_03112025181921_SEoutcomeBMQ2.pdf",
+  "figures": {
+   "revenue": {
+    "quarter": 16534.0,
+    "prev_quarter": 14564.0,
+    "year_ago": 13215.0,
+    "qoq_pct": 13.5,
+    "yoy_pct": 25.1
+   }
+  },
+  "view": "good",
+  "reaction": {
+   "reaction_day": "2025-11-04",
+   "when": "after close",
+   "gap_pct": 0.0,
+   "close_pct": 2.39,
+   "high_pct": 2.75,
+   "low_pct": -0.26,
+   "nifty_gap_pct": -0.07,
+   "nifty_close_pct": -0.64,
+   "runup_20d": 4.36,
+   "excess_close_pct": 3.03,
+   "excess_gap_pct": 0.07
+  },
+  "profit_yoy": null,
+  "profit_surprise": null,
+  "revenue_yoy": 25.1,
+  "revenue_surprise": 4.3
+ },
+ {
+  "seq_id": "106528344",
+  "filed": "2026-02-10 17:04:16",
+  "pdf": "https://nsearchives.nseindia.com/corporate/TITAN_10022026165938_SEoutcomeofBMQ3.pdf",
+  "figures": {
+   "revenue": {
+    "quarter": 22522.0,
+    "prev_quarter": 16534.0,
+    "year_ago": 16097.0,
+    "qoq_pct": 36.2,
+    "yoy_pct": 39.9
+   },
+   "profit": {
+    "quarter": 1047.0,
+    "prev_quarter": 1684.0,
+    "year_ago": 61.0,
+    "qoq_pct": -37.8,
+    "yoy_pct": 1616.4
+   }
+  },
+  "view": "strong",
+  "reaction": {
+   "reaction_day": "2026-02-11",
+   "when": "after close",
+   "gap_pct": 1.9,
+   "close_pct": -0.47,
+   "high_pct": 2.56,
+   "low_pct": -1.43,
+   "nifty_gap_pct": 0.24,
+   "nifty_close_pct": 0.07,
+   "runup_20d": -0.09,
+   "excess_close_pct": -0.54,
+   "excess_gap_pct": 1.66
+  },
+  "profit_yoy": 100.0,
+  "profit_surprise": 104.8,
+  "revenue_yoy": 39.9,
+  "revenue_surprise": 17.8
+ },
+ {
+  "seq_id": "106614413",
+  "filed": "2026-05-08 13:53:28",
+  "pdf": "https://nsearchives.nseindia.com/corporate/TITAN_08052026135234_SEoutcomeBMQ4202526.pdf",
+  "figures": {
+   "profit": {
+    "quarter": 11.0,
+    "prev_quarter": 24.0,
+    "year_ago": 1470.0,
+    "qoq_pct": -54.2,
+    "yoy_pct": -99.3
+   }
+  },
+  "view": "weak",
+  "reaction": {
+   "reaction_day": "2026-05-08",
+   "when": "during market",
+   "gap_pct": 0.15,
+   "close_pct": 4.68,
+   "high_pct": 6.91,
+   "low_pct": -2.18,
+   "nifty_gap_pct": -0.38,
+   "nifty_close_pct": -0.62,
+   "runup_20d": -3.38,
+   "excess_close_pct": 5.3,
+   "excess_gap_pct": null
+  },
+  "profit_yoy": -99.3,
+  "profit_surprise": -133.1,
+  "revenue_yoy": null,
+  "revenue_surprise": null
+ },
+ {
+  "seq_id": "106731256",
+  "filed": "2026-08-07 16:04:29",
+  "pdf": "https://nsearchives.nseindia.com/corporate/TITAN_07082026160159_SEresultQ127.pdf",
+  "figures": {
+   "revenue": {
+    "quarter": 18101.0,
+    "prev_quarter": 23934.0,
+    "year_ago": 14564.0,
+    "qoq_pct": -24.4,
+    "yoy_pct": 24.3
+   },
+   "profit": {
+    "quarter": 1699.0,
+    "prev_quarter": 1124.0,
+    "year_ago": 1030.0,
+    "qoq_pct": 51.2,
+    "yoy_pct": 65.0
+   }
+  },
+  "view": "strong",
+  "reaction": {
+   "reaction_day": "2026-08-10",
+   "when": "after close",
+   "gap_pct": -0.18,
+   "close_pct": 3.02,
+   "high_pct": 3.67,
+   "low_pct": -1.11,
+   "nifty_gap_pct": 0.04,
+   "nifty_close_pct": 0.05,
+   "runup_20d": 6.28,
+   "excess_close_pct": 2.97,
+   "excess_gap_pct": -0.22
+  },
+  "profit_yoy": 65.0,
+  "profit_surprise": 31.2,
+  "revenue_yoy": 24.3,
+  "revenue_surprise": -0.8
+ }
+]

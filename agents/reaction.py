@@ -212,6 +212,20 @@ def fit(df: pd.DataFrame) -> dict:
                      "typical_abs_move": round(float(g_all["close_pct"].abs().median()), 2),
                      "typical_abs_gap": round(float(g_all.loc[g_all["when"] != "during market", "gap_pct"].abs().median()), 2)}
     model["stocks"] = habits
+    # What happens after the open: does the day follow a results gap? (the one pattern that held)
+    g = full[full["when"] != "during market"]
+    after_open = g["close_pct"] - g["gap_pct"]
+    follow = {}
+    for lo in (1, 2, 3):
+        up, dn = g["excess_gap_pct"] >= lo, g["excess_gap_pct"] <= -lo
+        follow[f"gap_up_{lo}"] = {"n": int(up.sum()), "kept_rising_pct": round(float((after_open[up] > 0).mean() * 100)),
+                                  "avg_open_to_close": round(float(after_open[up].mean()), 2)}
+        follow[f"gap_down_{lo}"] = {"n": int(dn.sum()), "kept_falling_pct": round(float((after_open[dn] < 0).mean() * 100)),
+                                    "avg_open_to_close": round(float(after_open[dn].mean()), 2)}
+    model["gap_follow"] = follow
+    model["size"] = {"median_abs_close": round(float(full["close_pct"].abs().median()), 2),
+                     "move_3pct_or_more": round(float((full["close_pct"].abs() >= 3).mean() * 100)),
+                     "move_5pct_or_more": round(float((full["close_pct"].abs() >= 5).mean() * 100))}
     return model
 
 
@@ -298,6 +312,17 @@ def forecast(symbol: str, figures: dict, filed: datetime, market_gap: float = 0.
                      f"{out['gap_range_pct'][1]:+.1f}), close {out['expected_close_pct']:+.1f}% (likely "
                      f"{out['close_range_pct'][0]:+.1f} to {out['close_range_pct'][1]:+.1f}), "
                      f"{out['chance_up_pct']}% chance of closing up")
+    out["direction_reliable"] = model.get("direction_hit_pct", 0) >= 55
+    if not out["direction_reliable"]:
+        notes.append(f"Direction from the figures alone has been a coin flip ({model.get('direction_hit_pct')}% right "
+                     f"over {model.get('n')} past quarters): judge it from consensus, guidance and the first price move")
+    size = model.get("stocks", {}).get(symbol, {}).get("typical_abs_move")
+    if size:
+        notes.append(f"{symbol} usually moves about {size:.1f}% either way on results day")
+    gd = model.get("gap_follow", {}).get("gap_down_2")
+    if gd and gd["n"] >= 30:
+        notes.append(f"If it opens 2%+ below Nifty, history says it kept falling {gd['kept_falling_pct']}% of the time "
+                     f"(avg {gd['avg_open_to_close']:+.1f}% more); gap-ups did not reliably continue")
     out["notes"] = notes
     return out
 
@@ -376,13 +401,25 @@ def main(argv: list[str]) -> None:
     from .config import load_config
     cmd = argv[1] if len(argv) > 1 else ""
     if cmd == "build":
-        universe = argv[2:] or load_config()["universe"]
-        for s in universe:
+        # Several stocks at once (plain Python threads, no AI). NSE blocks heavy traffic, so keep
+        # it to a handful: python -m agents.reaction build --workers 5 [SYMBOLS...]
+        args = argv[2:]
+        workers = 4
+        if args[:1] == ["--workers"]:
+            workers, args = int(args[1]), args[2:]
+        universe = args or load_config()["universe"]
+        prices("^NSEI")  # load the index once before the threads start
+
+        def one(sym: str) -> str:
             try:
-                h = build_history(s)
-                print(s, len(h), "quarters", sum(1 for q in h if q.get("figures")), "read", flush=True)
+                h = build_history(sym)
+                return f"{sym} {len(h)} quarters {sum(1 for q in h if q.get('figures'))} read"
             except Exception as e:
-                print(s, "failed:", type(e).__name__, e, flush=True)
+                return f"{sym} failed: {type(e).__name__} {e}"
+        from concurrent.futures import ThreadPoolExecutor
+        with ThreadPoolExecutor(max_workers=workers) as pool:
+            for line in pool.map(one, universe):
+                print(line, flush=True)
         model = fit(dataset(load_config()["universe"]))
         MODEL.write_text(json.dumps(model, indent=1))
         print(json.dumps({k: v for k, v in model.items() if k != "stocks"}, indent=1))

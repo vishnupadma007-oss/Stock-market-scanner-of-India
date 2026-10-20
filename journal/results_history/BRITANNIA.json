@@ -1,0 +1,431 @@
+[
+ {
+  "seq_id": "157221",
+  "filed": "2023-11-01 20:50:18",
+  "pdf": "https://nsearchives.nseindia.com/corporate/Outcome_01112023205018.pdf",
+  "figures": {
+   "revenue": {
+    "quarter": 4432.88,
+    "prev_quarter": 4010.7,
+    "year_ago": 4379.61,
+    "qoq_pct": 10.5,
+    "yoy_pct": 1.2
+   },
+   "profit": {
+    "quarter": 586.5,
+    "prev_quarter": 455.45,
+    "year_ago": 490.58,
+    "qoq_pct": 28.8,
+    "yoy_pct": 19.6
+   }
+  },
+  "view": "strong",
+  "reaction": {
+   "reaction_day": "2023-11-02",
+   "when": "after close",
+   "gap_pct": 2.61,
+   "close_pct": 2.96,
+   "high_pct": 3.9,
+   "low_pct": 1.3,
+   "nifty_gap_pct": 0.69,
+   "nifty_close_pct": 0.76,
+   "runup_20d": 0.58,
+   "excess_close_pct": 2.2,
+   "excess_gap_pct": 1.92
+  },
+  "profit_yoy": 19.6,
+  "profit_surprise": null,
+  "revenue_yoy": 1.2,
+  "revenue_surprise": null
+ },
+ {
+  "seq_id": "159831",
+  "filed": "2024-02-06 19:23:41",
+  "pdf": "https://nsearchives.nseindia.com/corporate/Outcome_06022024192341.pdf",
+  "figures": {
+   "revenue": {
+    "quarter": 4256.33,
+    "prev_quarter": 4432.88,
+    "year_ago": 4196.8,
+    "qoq_pct": -4.0,
+    "yoy_pct": 1.4
+   },
+   "profit": {
+    "quarter": 555.66,
+    "prev_quarter": 586.5,
+    "year_ago": 932.4,
+    "qoq_pct": -5.3,
+    "yoy_pct": -40.4
+   }
+  },
+  "view": "weak",
+  "reaction": {
+   "reaction_day": "2024-02-07",
+   "when": "after close",
+   "gap_pct": 2.66,
+   "close_pct": 1.42,
+   "high_pct": 3.53,
+   "low_pct": -1.64,
+   "nifty_gap_pct": 0.53,
+   "nifty_close_pct": 0.01,
+   "runup_20d": -6.04,
+   "excess_close_pct": 1.41,
+   "excess_gap_pct": 2.13
+  },
+  "profit_yoy": -40.4,
+  "profit_surprise": -60.0,
+  "revenue_yoy": 1.4,
+  "revenue_surprise": 0.2
+ },
+ {
+  "seq_id": "161374",
+  "filed": "2024-05-03 20:23:42",
+  "pdf": "https://nsearchives.nseindia.com/corporate/Outcome_Signed_03052024202342.pdf",
+  "figures": {
+   "revenue": {
+    "quarter": 4069.36,
+    "prev_quarter": 4256.33,
+    "year_ago": 4023.18,
+    "qoq_pct": -4.4,
+    "yoy_pct": 1.1
+   },
+   "profit": {
+    "quarter": 536.61,
+    "prev_quarter": 555.66,
+    "year_ago": 557.6,
+    "qoq_pct": -3.4,
+    "yoy_pct": -3.8
+   }
+  },
+  "view": "mixed",
+  "reaction": {
+   "reaction_day": "2024-05-06",
+   "when": "after close",
+   "gap_pct": 1.57,
+   "close_pct": 6.68,
+   "high_pct": 9.71,
+   "low_pct": 1.21,
+   "nifty_gap_pct": 0.38,
+   "nifty_close_pct": -0.15,
+   "runup_20d": -3.27,
+   "excess_close_pct": 6.83,
+   "excess_gap_pct": 1.19
+  },
+  "profit_yoy": -3.8,
+  "profit_surprise": 6.6,
+  "revenue_yoy": 1.1,
+  "revenue_surprise": -0.2
+ },
+ {
+  "seq_id": "164196",
+  "filed": "2024-08-02 17:31:05",
+  "pdf": "https://nsearchives.nseindia.com/corporate/Outcome_signed_02082024173105.pdf",
+  "figures": {
+   "revenue": {
+    "quarter": 4250.29,
+    "prev_quarter": 4069.36,
+    "year_ago": 4010.7,
+    "qoq_pct": 4.4,
+    "yoy_pct": 6.0
+   },
+   "profit": {
+    "quarter": 504.88,
+    "prev_quarter": 536.61,
+    "year_ago": 455.45,
+    "qoq_pct": -5.9,
+    "yoy_pct": 10.9
+   }
+  },
+  "view": "mixed",
+  "reaction": {
+   "reaction_day": "2024-08-05",
+   "when": "after close",
+   "gap_pct": -0.18,
+   "close_pct": -0.39,
+   "high_pct": 2.14,
+   "low_pct": -1.23,
+   "nifty_gap_pct": -1.68,
+   "nifty_close_pct": -2.68,
+   "runup_20d": 3.71,
+   "excess_close_pct": 2.29,
+   "excess_gap_pct": 1.5
+  },
+  "profit_yoy": 10.9,
+  "profit_surprise": 14.7,
+  "revenue_yoy": 6.0,
+  "revenue_surprise": 4.8
+ },
+ {
+  "seq_id": "166993",
+  "filed": "2024-11-11 18:07:21",
+  "pdf": "https://nsearchives.nseindia.com/corporate/Outcome_Signed__4__11112024180721.pdf",
+  "figures": {
+   "revenue": {
+    "quarter": 4667.57,
+    "prev_quarter": 4250.29,
+    "year_ago": 4432.88,
+    "qoq_pct": 9.8,
+    "yoy_pct": 5.3
+   },
+   "profit": {
+    "quarter": 531.55,
+    "prev_quarter": 504.88,
+    "year_ago": 586.5,
+    "qoq_pct": 5.3,
+    "yoy_pct": -9.4
+   }
+  },
+  "view": "mixed",
+  "reaction": {
+   "reaction_day": "2024-11-12",
+   "when": "after close",
+   "gap_pct": -0.27,
+   "close_pct": -7.49,
+   "high_pct": -0.14,
+   "low_pct": -7.91,
+   "nifty_gap_pct": 0.35,
+   "nifty_close_pct": -1.07,
+   "runup_20d": -5.16,
+   "excess_close_pct": -6.42,
+   "excess_gap_pct": -0.62
+  },
+  "profit_yoy": -9.4,
+  "profit_surprise": -13.0,
+  "revenue_yoy": 5.3,
+  "revenue_surprise": 4.0
+ },
+ {
+  "seq_id": "169312",
+  "filed": "2025-02-06 19:18:25",
+  "pdf": "https://nsearchives.nseindia.com/corporate/Outcome_06022025191825.pdf",
+  "figures": {
+   "revenue": {
+    "quarter": 4592.62,
+    "prev_quarter": 4667.57,
+    "year_ago": 4256.33,
+    "qoq_pct": -1.6,
+    "yoy_pct": 7.9
+   },
+   "profit": {
+    "quarter": 582.3,
+    "prev_quarter": 531.55,
+    "year_ago": 555.66,
+    "qoq_pct": 9.5,
+    "yoy_pct": 4.8
+   }
+  },
+  "view": "mixed",
+  "reaction": {
+   "reaction_day": "2025-02-07",
+   "when": "after close",
+   "gap_pct": 1.09,
+   "close_pct": -1.73,
+   "high_pct": 2.41,
+   "low_pct": -2.26,
+   "nifty_gap_pct": 0.2,
+   "nifty_close_pct": -0.18,
+   "runup_20d": -0.39,
+   "excess_close_pct": -1.55,
+   "excess_gap_pct": 0.89
+  },
+  "profit_yoy": 4.8,
+  "profit_surprise": 11.4,
+  "revenue_yoy": 7.9,
+  "revenue_surprise": 4.6
+ },
+ {
+  "seq_id": "106326152",
+  "filed": "2025-08-05 18:12:36",
+  "pdf": "https://nsearchives.nseindia.com/corporate/BRITANNIA1_05082025181126_Outcome.pdf",
+  "figures": {
+   "revenue": {
+    "quarter": 4622.22,
+    "prev_quarter": 4432.19,
+    "year_ago": 4250.29,
+    "qoq_pct": 4.3,
+    "yoy_pct": 8.8
+   },
+   "profit": {
+    "quarter": 520.13,
+    "prev_quarter": 559.13,
+    "year_ago": 504.88,
+    "qoq_pct": -7.0,
+    "yoy_pct": 3.0
+   }
+  },
+  "view": "mixed",
+  "reaction": {
+   "reaction_day": "2025-08-06",
+   "when": "after close",
+   "gap_pct": -0.64,
+   "close_pct": -4.13,
+   "high_pct": -0.19,
+   "low_pct": -4.69,
+   "nifty_gap_pct": -0.03,
+   "nifty_close_pct": -0.31,
+   "runup_20d": -0.06,
+   "excess_close_pct": -3.82,
+   "excess_gap_pct": -0.61
+  },
+  "profit_yoy": 3.0,
+  "profit_surprise": 2.5,
+  "revenue_yoy": 8.8,
+  "revenue_surprise": 3.2
+ },
+ {
+  "seq_id": "106428686",
+  "filed": "2025-11-05 19:37:14",
+  "pdf": "https://nsearchives.nseindia.com/corporate/BRITANNIA1_05112025193419_Outcome5112025.pdf",
+  "figures": {
+   "revenue": {
+    "quarter": 4840.63,
+    "prev_quarter": 4622.22,
+    "year_ago": 4667.57,
+    "qoq_pct": 4.7,
+    "yoy_pct": 3.7
+   },
+   "profit": {
+    "quarter": 655.06,
+    "prev_quarter": 520.13,
+    "year_ago": 531.55,
+    "qoq_pct": 25.9,
+    "yoy_pct": 23.2
+   }
+  },
+  "view": "strong",
+  "reaction": {
+   "reaction_day": "2025-11-06",
+   "when": "after close",
+   "gap_pct": 4.98,
+   "close_pct": 2.05,
+   "high_pct": 5.07,
+   "low_pct": 1.71,
+   "nifty_gap_pct": -0.02,
+   "nifty_close_pct": -0.34,
+   "runup_20d": -4.04,
+   "excess_close_pct": 2.39,
+   "excess_gap_pct": 5.0
+  },
+  "profit_yoy": 23.2,
+  "profit_surprise": 19.3,
+  "revenue_yoy": 3.7,
+  "revenue_surprise": -3.2
+ },
+ {
+  "seq_id": "106528723",
+  "filed": "2026-02-10 18:47:45",
+  "pdf": "https://nsearchives.nseindia.com/corporate/BRITANNIA1_10022026184557_Outcome.pdf",
+  "figures": {
+   "revenue": {
+    "quarter": 4969.82,
+    "prev_quarter": 4840.63,
+    "year_ago": 4592.62,
+    "qoq_pct": 2.7,
+    "yoy_pct": 8.2
+   },
+   "profit": {
+    "quarter": 682.14,
+    "prev_quarter": 655.06,
+    "year_ago": 582.3,
+    "qoq_pct": 4.1,
+    "yoy_pct": 17.1
+   }
+  },
+  "view": "strong",
+  "reaction": {
+   "reaction_day": "2026-02-11",
+   "when": "after close",
+   "gap_pct": 2.15,
+   "close_pct": 2.48,
+   "high_pct": 4.81,
+   "low_pct": 1.7,
+   "nifty_gap_pct": 0.24,
+   "nifty_close_pct": 0.07,
+   "runup_20d": -2.16,
+   "excess_close_pct": 2.41,
+   "excess_gap_pct": 1.91
+  },
+  "profit_yoy": 17.1,
+  "profit_surprise": 13.2,
+  "revenue_yoy": 8.2,
+  "revenue_surprise": 1.6
+ },
+ {
+  "seq_id": "106613580",
+  "filed": "2026-05-07 20:46:59",
+  "pdf": "https://nsearchives.nseindia.com/corporate/BRITANNIA1_07052026204613_Outcome.pdf",
+  "figures": {
+   "revenue": {
+    "quarter": 4718.92,
+    "prev_quarter": 4969.82,
+    "year_ago": 4432.19,
+    "qoq_pct": -5.0,
+    "yoy_pct": 6.5
+   },
+   "profit": {
+    "quarter": 679.68,
+    "prev_quarter": 682.14,
+    "year_ago": 559.13,
+    "qoq_pct": -0.4,
+    "yoy_pct": 21.6
+   }
+  },
+  "view": "strong",
+  "reaction": {
+   "reaction_day": "2026-05-08",
+   "when": "after close",
+   "gap_pct": -3.1,
+   "close_pct": -5.06,
+   "high_pct": -2.75,
+   "low_pct": -5.35,
+   "nifty_gap_pct": -0.38,
+   "nifty_close_pct": -0.62,
+   "runup_20d": -0.29,
+   "excess_close_pct": -4.44,
+   "excess_gap_pct": -2.72
+  },
+  "profit_yoy": 21.6,
+  "profit_surprise": 10.7,
+  "revenue_yoy": 6.5,
+  "revenue_surprise": -1.6
+ },
+ {
+  "seq_id": "106729475",
+  "filed": "2026-08-06 18:52:56",
+  "pdf": "https://nsearchives.nseindia.com/corporate/BRITANNIA1_06082026185151_Outcome_Signed.pdf",
+  "figures": {
+   "revenue": {
+    "quarter": 4999.97,
+    "prev_quarter": 4718.92,
+    "year_ago": 4622.22,
+    "qoq_pct": 6.0,
+    "yoy_pct": 8.2
+   },
+   "profit": {
+    "quarter": 593.38,
+    "prev_quarter": 679.68,
+    "year_ago": 520.13,
+    "qoq_pct": -12.7,
+    "yoy_pct": 14.1
+   }
+  },
+  "view": "mixed",
+  "reaction": {
+   "reaction_day": "2026-08-07",
+   "when": "after close",
+   "gap_pct": 1.82,
+   "close_pct": 1.96,
+   "high_pct": 4.74,
+   "low_pct": 1.78,
+   "nifty_gap_pct": -0.39,
+   "nifty_close_pct": -0.27,
+   "runup_20d": -2.02,
+   "excess_close_pct": 2.23,
+   "excess_gap_pct": 2.21
+  },
+  "profit_yoy": 14.1,
+  "profit_surprise": -5.3,
+  "revenue_yoy": 8.2,
+  "revenue_surprise": 0.8
+ }
+]

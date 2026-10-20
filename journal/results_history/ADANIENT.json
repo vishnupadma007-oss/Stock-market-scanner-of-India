@@ -1,0 +1,404 @@
+[
+ {
+  "seq_id": "105662256",
+  "filed": "2023-11-02 15:22:06",
+  "pdf": "https://nsearchives.nseindia.com/corporate/ADANIENT_02112023152206_MRANDPPT.pdf",
+  "figures": {},
+  "view": "unread",
+  "reaction": {
+   "reaction_day": "2023-11-02",
+   "when": "during market",
+   "gap_pct": 1.34,
+   "close_pct": -0.09,
+   "high_pct": 3.64,
+   "low_pct": -0.59,
+   "nifty_gap_pct": 0.69,
+   "nifty_close_pct": 0.76,
+   "runup_20d": -4.36,
+   "excess_close_pct": -0.85,
+   "excess_gap_pct": null
+  },
+  "profit_yoy": null,
+  "profit_surprise": null,
+  "revenue_yoy": null,
+  "revenue_surprise": null
+ },
+ {
+  "seq_id": "159519",
+  "filed": "2024-02-01 14:09:11",
+  "pdf": "https://nsearchives.nseindia.com/corporate/OutcomeBM01022024_01022024140911.pdf",
+  "figures": {
+   "revenue": {
+    "quarter": 28336.38,
+    "prev_quarter": 2251733.0,
+    "year_ago": 26612.23,
+    "qoq_pct": -98.7,
+    "yoy_pct": 6.5
+   },
+   "profit": {
+    "quarter": 718.46,
+    "prev_quarter": 761.79,
+    "year_ago": 269.71,
+    "qoq_pct": -5.7,
+    "yoy_pct": 166.4
+   }
+  },
+  "view": "good",
+  "reaction": {
+   "reaction_day": "2024-02-01",
+   "when": "during market",
+   "gap_pct": 0.47,
+   "close_pct": 0.37,
+   "high_pct": 3.02,
+   "low_pct": -1.88,
+   "nifty_gap_pct": 0.25,
+   "nifty_close_pct": -0.13,
+   "runup_20d": 7.78,
+   "excess_close_pct": 0.5,
+   "excess_gap_pct": null
+  },
+  "profit_yoy": 100.0,
+  "profit_surprise": null,
+  "revenue_yoy": 6.5,
+  "revenue_surprise": null
+ },
+ {
+  "seq_id": "161299",
+  "filed": "2024-05-02 15:09:36",
+  "pdf": "https://nsearchives.nseindia.com/corporate/outcome_02052024150936.pdf",
+  "figures": {
+   "revenue": {
+    "quarter": 29180.02,
+    "prev_quarter": 25050.23,
+    "year_ago": 28943.84,
+    "qoq_pct": 16.5,
+    "yoy_pct": 0.8
+   },
+   "profit": {
+    "quarter": 350.8,
+    "prev_quarter": 1971.8,
+    "year_ago": 793.46,
+    "qoq_pct": -82.2,
+    "yoy_pct": -55.8
+   }
+  },
+  "view": "weak",
+  "reaction": {
+   "reaction_day": "2024-05-02",
+   "when": "during market",
+   "gap_pct": 0.56,
+   "close_pct": -0.49,
+   "high_pct": 2.13,
+   "low_pct": -1.3,
+   "nifty_gap_pct": -0.16,
+   "nifty_close_pct": 0.19,
+   "runup_20d": -5.7,
+   "excess_close_pct": -0.68,
+   "excess_gap_pct": null
+  },
+  "profit_yoy": -55.8,
+  "profit_surprise": -155.8,
+  "revenue_yoy": 0.8,
+  "revenue_surprise": -5.7
+ },
+ {
+  "seq_id": "164109",
+  "filed": "2024-08-01 14:51:16",
+  "pdf": "https://nsearchives.nseindia.com/corporate/AELOutcomeofBM01082024_01082024145116.pdf",
+  "figures": {},
+  "view": "unread",
+  "reaction": {
+   "reaction_day": "2024-08-01",
+   "when": "during market",
+   "gap_pct": 0.33,
+   "close_pct": 1.51,
+   "high_pct": 2.8,
+   "low_pct": -0.56,
+   "nifty_gap_pct": 0.32,
+   "nifty_close_pct": 0.24,
+   "runup_20d": -2.92,
+   "excess_close_pct": 1.27,
+   "excess_gap_pct": null
+  },
+  "profit_yoy": null,
+  "profit_surprise": null,
+  "revenue_yoy": null,
+  "revenue_surprise": null
+ },
+ {
+  "seq_id": "106038716",
+  "filed": "2024-10-29 14:55:50",
+  "pdf": "https://nsearchives.nseindia.com/corporate/ADANIENT_29102024145550_AELOutcomeofBM29102024.pdf",
+  "figures": {
+   "revenue": {
+    "quarter": 22608.07,
+    "prev_quarter": 25472.4,
+    "year_ago": 19546.25,
+    "qoq_pct": -11.2,
+    "yoy_pct": 15.7
+   },
+   "profit": {
+    "quarter": 1994.73,
+    "prev_quarter": 1776.02,
+    "year_ago": 333.4,
+    "qoq_pct": 12.3,
+    "yoy_pct": 498.3
+   }
+  },
+  "view": "strong",
+  "reaction": {
+   "reaction_day": "2024-10-29",
+   "when": "during market",
+   "gap_pct": 0.16,
+   "close_pct": 1.78,
+   "high_pct": 2.3,
+   "low_pct": -2.35,
+   "nifty_gap_pct": -0.04,
+   "nifty_close_pct": 0.52,
+   "runup_20d": -3.57,
+   "excess_close_pct": 1.26,
+   "excess_gap_pct": null
+  },
+  "profit_yoy": 100.0,
+  "profit_surprise": 77.9,
+  "revenue_yoy": 15.7,
+  "revenue_surprise": 12.0
+ },
+ {
+  "seq_id": "168841",
+  "filed": "2025-01-30 14:17:21",
+  "pdf": "https://nsearchives.nseindia.com/corporate/AELOutcomeofBM30012025_30012025141721.pdf",
+  "figures": {
+   "revenue": {
+    "quarter": 22848.42,
+    "prev_quarter": 22608.07,
+    "year_ago": 25050.23,
+    "qoq_pct": 1.1,
+    "yoy_pct": -8.8
+   },
+   "profit": {
+    "quarter": -3.66,
+    "prev_quarter": -5.54,
+    "year_ago": 0.95,
+    "qoq_pct": -33.9,
+    "yoy_pct": -485.3
+   }
+  },
+  "view": "weak",
+  "reaction": {
+   "reaction_day": "2025-01-30",
+   "when": "during market",
+   "gap_pct": 0.28,
+   "close_pct": -2.85,
+   "high_pct": 1.42,
+   "low_pct": -5.06,
+   "nifty_gap_pct": 0.03,
+   "nifty_close_pct": 0.37,
+   "runup_20d": -6.81,
+   "excess_close_pct": -3.22,
+   "excess_gap_pct": null
+  },
+  "profit_yoy": -100.0,
+  "profit_surprise": -200.0,
+  "revenue_yoy": -8.8,
+  "revenue_surprise": -15.3
+ },
+ {
+  "seq_id": "106217527",
+  "filed": "2025-05-01 14:55:17",
+  "pdf": "https://nsearchives.nseindia.com/corporate/nishant_joshi_adani_com_01052025145459_AELsubmissionofMediaRelease01052025_1.pdf",
+  "figures": {
+   "profit": {
+    "quarter": 1.0,
+    "prev_quarter": 449.0,
+    "year_ago": 38452.0,
+    "qoq_pct": -99.8,
+    "yoy_pct": -100.0
+   }
+  },
+  "view": "weak",
+  "reaction": {
+   "reaction_day": "2025-05-02",
+   "when": "after close",
+   "gap_pct": 2.11,
+   "close_pct": -0.1,
+   "high_pct": 3.09,
+   "low_pct": -0.49,
+   "nifty_gap_pct": -0.09,
+   "nifty_close_pct": 0.05,
+   "runup_20d": -5.77,
+   "excess_close_pct": -0.15,
+   "excess_gap_pct": 2.2
+  },
+  "profit_yoy": -100.0,
+  "profit_surprise": -44.2,
+  "revenue_yoy": null,
+  "revenue_surprise": null
+ },
+ {
+  "seq_id": "106319095",
+  "filed": "2025-07-31 14:38:23",
+  "pdf": "https://nsearchives.nseindia.com/corporate/nishant_joshi_adani_com_31072025143559_AELOutcomeBM31072025.pdf",
+  "figures": {
+   "revenue": {
+    "quarter": 5875.6,
+    "prev_quarter": 6164.55,
+    "year_ago": 7800.75,
+    "qoq_pct": -4.7,
+    "yoy_pct": -24.7
+   },
+   "profit": {
+    "quarter": 976.48,
+    "prev_quarter": 4014.9,
+    "year_ago": 1776.02,
+    "qoq_pct": -75.7,
+    "yoy_pct": -45.0
+   }
+  },
+  "view": "weak",
+  "reaction": {
+   "reaction_day": "2025-07-31",
+   "when": "during market",
+   "gap_pct": -0.91,
+   "close_pct": -4.03,
+   "high_pct": -0.51,
+   "low_pct": -4.35,
+   "nifty_gap_pct": -0.86,
+   "nifty_close_pct": -0.35,
+   "runup_20d": -1.35,
+   "excess_close_pct": -3.68,
+   "excess_gap_pct": null
+  },
+  "profit_yoy": -45.0,
+  "profit_surprise": 55.0,
+  "revenue_yoy": -24.7,
+  "revenue_surprise": -28.1
+ },
+ {
+  "seq_id": "106426258",
+  "filed": "2025-11-04 14:56:50",
+  "pdf": "https://nsearchives.nseindia.com/corporate/nishant_joshi_adani_com_04112025145642_AELsubmissionofMediaRelease04112025.pdf",
+  "figures": {
+   "profit": {
+    "quarter": 1.0,
+    "prev_quarter": 1742.0,
+    "year_ago": 3199.0,
+    "qoq_pct": -99.9,
+    "yoy_pct": -100.0
+   }
+  },
+  "view": "weak",
+  "reaction": {
+   "reaction_day": "2025-11-04",
+   "when": "during market",
+   "gap_pct": 0.52,
+   "close_pct": -1.91,
+   "high_pct": 0.89,
+   "low_pct": -3.1,
+   "nifty_gap_pct": -0.07,
+   "nifty_close_pct": -0.64,
+   "runup_20d": -8.24,
+   "excess_close_pct": -1.27,
+   "excess_gap_pct": null
+  },
+  "profit_yoy": -100.0,
+  "profit_surprise": -27.5,
+  "revenue_yoy": null,
+  "revenue_surprise": null
+ },
+ {
+  "seq_id": "106517539",
+  "filed": "2026-02-03 14:41:34",
+  "pdf": "https://nsearchives.nseindia.com/corporate/ADANIENT_03022026143851_AELOutcomeofBM03022026.pdf",
+  "figures": {
+   "revenue": {
+    "quarter": 24819.59,
+    "prev_quarter": 21248.51,
+    "year_ago": 22848.42,
+    "qoq_pct": 16.8,
+    "yoy_pct": 8.6
+   },
+   "profit": {
+    "quarter": -3.66,
+    "prev_quarter": -12.96,
+    "year_ago": -12.96,
+    "qoq_pct": -71.8,
+    "yoy_pct": -71.8
+   }
+  },
+  "view": "weak",
+  "reaction": {
+   "reaction_day": "2026-02-03",
+   "when": "during market",
+   "gap_pct": 7.75,
+   "close_pct": 10.38,
+   "high_pct": 11.93,
+   "low_pct": 6.8,
+   "nifty_gap_pct": 4.86,
+   "nifty_close_pct": 2.55,
+   "runup_20d": -8.43,
+   "excess_close_pct": 7.83,
+   "excess_gap_pct": null
+  },
+  "profit_yoy": -71.8,
+  "profit_surprise": 28.2,
+  "revenue_yoy": 8.6,
+  "revenue_surprise": 25.4
+ },
+ {
+  "seq_id": "106605717",
+  "filed": "2026-04-30 15:48:55",
+  "pdf": "https://nsearchives.nseindia.com/corporate/ADANIENT_30042026154840_AELsubmissionofMediaRelease30042025.pdf",
+  "figures": {},
+  "view": "unread",
+  "reaction": {
+   "reaction_day": "2026-05-04",
+   "when": "after close",
+   "gap_pct": -0.75,
+   "close_pct": 3.21,
+   "high_pct": 4.43,
+   "low_pct": -1.39,
+   "nifty_gap_pct": 0.28,
+   "nifty_close_pct": 0.51,
+   "runup_20d": 29.47,
+   "excess_close_pct": 2.7,
+   "excess_gap_pct": -1.03
+  },
+  "profit_yoy": null,
+  "profit_surprise": null,
+  "revenue_yoy": null,
+  "revenue_surprise": null
+ },
+ {
+  "seq_id": "106715199",
+  "filed": "2026-07-29 14:36:38",
+  "pdf": "https://nsearchives.nseindia.com/corporate/ADANIENT_29072026143517_AELBMOutcome29072026_1.pdf",
+  "figures": {
+   "profit": {
+    "quarter": -1461.54,
+    "prev_quarter": -166.8,
+    "year_ago": 976.48,
+    "qoq_pct": 776.2,
+    "yoy_pct": -249.7
+   }
+  },
+  "view": "weak",
+  "reaction": {
+   "reaction_day": "2026-07-29",
+   "when": "during market",
+   "gap_pct": 0.52,
+   "close_pct": 0.74,
+   "high_pct": 1.53,
+   "low_pct": -0.99,
+   "nifty_gap_pct": 0.8,
+   "nifty_close_pct": 1.1,
+   "runup_20d": -1.61,
+   "excess_close_pct": -0.36,
+   "excess_gap_pct": null
+  },
+  "profit_yoy": -100.0,
+  "profit_surprise": -28.2,
+  "revenue_yoy": null,
+  "revenue_surprise": null
+ }
+]

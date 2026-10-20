@@ -1,0 +1,403 @@
+[
+ {
+  "seq_id": "105653797",
+  "filed": "2023-10-26 13:43:13",
+  "pdf": "https://nsearchives.nseindia.com/corporate/ASIANPAINT_26102023134313_SEINTIMATIONFSPR.pdf",
+  "figures": {
+   "revenue": {
+    "quarter": 7342.22,
+    "prev_quarter": 8.0,
+    "year_ago": 11.0,
+    "qoq_pct": 91677.8,
+    "yoy_pct": 66647.5
+   },
+   "profit": {
+    "quarter": 1160.25,
+    "prev_quarter": 1508.37,
+    "year_ago": 763.29,
+    "qoq_pct": -23.1,
+    "yoy_pct": 52.0
+   }
+  },
+  "view": "strong",
+  "reaction": {
+   "reaction_day": "2023-10-26",
+   "when": "during market",
+   "gap_pct": -0.32,
+   "close_pct": -3.28,
+   "high_pct": -0.19,
+   "low_pct": -3.95,
+   "nifty_gap_pct": -0.5,
+   "nifty_close_pct": -1.39,
+   "runup_20d": -5.09,
+   "excess_close_pct": -1.89,
+   "excess_gap_pct": null
+  },
+  "profit_yoy": 52.0,
+  "profit_surprise": null,
+  "revenue_yoy": 100.0,
+  "revenue_surprise": null
+ },
+ {
+  "seq_id": "105727696",
+  "filed": "2024-01-17 14:44:41",
+  "pdf": "https://nsearchives.nseindia.com/corporate/ASIANPAINT_17012024144441_finaloutcomeofBM17012024.pdf",
+  "figures": {
+   "revenue": {
+    "quarter": 9103.09,
+    "prev_quarter": 847.0,
+    "year_ago": 8.0,
+    "qoq_pct": 974.7,
+    "yoy_pct": 113688.6
+   }
+  },
+  "view": "good",
+  "reaction": {
+   "reaction_day": "2024-01-17",
+   "when": "during market",
+   "gap_pct": -0.08,
+   "close_pct": -1.66,
+   "high_pct": 0.23,
+   "low_pct": -3.15,
+   "nifty_gap_pct": -1.75,
+   "nifty_close_pct": -2.09,
+   "runup_20d": -3.92,
+   "excess_close_pct": 0.43,
+   "excess_gap_pct": null
+  },
+  "profit_yoy": null,
+  "profit_surprise": null,
+  "revenue_yoy": 100.0,
+  "revenue_surprise": 0.0
+ },
+ {
+  "seq_id": "105839913",
+  "filed": "2024-05-09 13:38:05",
+  "pdf": "https://nsearchives.nseindia.com/corporate/ASIANPAINT_09052024133805_SEINTIMATIONOUTCOME.pdf",
+  "figures": {
+   "revenue": {
+    "quarter": 7480.93,
+    "prev_quarter": 7913.01,
+    "year_ago": 7626.0,
+    "qoq_pct": -5.5,
+    "yoy_pct": -1.9
+   }
+  },
+  "view": "mixed",
+  "reaction": {
+   "reaction_day": "2024-05-09",
+   "when": "during market",
+   "gap_pct": -0.54,
+   "close_pct": -4.68,
+   "high_pct": 0.37,
+   "low_pct": -4.91,
+   "nifty_gap_pct": -0.35,
+   "nifty_close_pct": -1.55,
+   "runup_20d": -0.45,
+   "excess_close_pct": -3.13,
+   "excess_gap_pct": null
+  },
+  "profit_yoy": null,
+  "profit_surprise": null,
+  "revenue_yoy": -1.9,
+  "revenue_surprise": -101.9
+ },
+ {
+  "seq_id": "163529",
+  "filed": "2024-07-17 14:16:21",
+  "pdf": "https://nsearchives.nseindia.com/corporate/BMoutcome17july2024_17072024141621.pdf",
+  "figures": {
+   "revenue": {
+    "quarter": 7881.62,
+    "prev_quarter": 7480.93,
+    "year_ago": 8113.96,
+    "qoq_pct": 5.4,
+    "yoy_pct": -2.9
+   },
+   "profit": {
+    "quarter": 1192.4,
+    "prev_quarter": 1209.39,
+    "year_ago": 1508.37,
+    "qoq_pct": -1.4,
+    "yoy_pct": -20.9
+   }
+  },
+  "view": "weak",
+  "reaction": {
+   "reaction_day": "2024-07-18",
+   "when": "after close",
+   "gap_pct": -3.34,
+   "close_pct": -1.44,
+   "high_pct": -0.56,
+   "low_pct": -4.45,
+   "nifty_gap_pct": -0.28,
+   "nifty_close_pct": 0.76,
+   "runup_20d": -2.56,
+   "excess_close_pct": -2.2,
+   "excess_gap_pct": -3.06
+  },
+  "profit_yoy": -20.9,
+  "profit_surprise": -72.9,
+  "revenue_yoy": -2.9,
+  "revenue_surprise": -102.9
+ },
+ {
+  "seq_id": "106052018",
+  "filed": "2024-11-09 14:34:16",
+  "pdf": "https://nsearchives.nseindia.com/corporate/ASIANPAINT_09112024143416_OutcomeofBM09112024.pdf",
+  "figures": {
+   "revenue": {
+    "quarter": 6868.37,
+    "prev_quarter": 7881.62,
+    "year_ago": 7342.22,
+    "qoq_pct": -12.9,
+    "yoy_pct": -6.5
+   },
+   "profit": {
+    "quarter": 602.31,
+    "prev_quarter": 1192.4,
+    "year_ago": 1160.25,
+    "qoq_pct": -49.5,
+    "yoy_pct": -48.1
+   }
+  },
+  "view": "weak",
+  "reaction": {
+   "reaction_day": "2024-11-11",
+   "when": "after close",
+   "gap_pct": -7.38,
+   "close_pct": -8.17,
+   "high_pct": -6.16,
+   "low_pct": -9.51,
+   "nifty_gap_pct": -0.25,
+   "nifty_close_pct": -0.03,
+   "runup_20d": -5.55,
+   "excess_close_pct": -8.14,
+   "excess_gap_pct": -7.13
+  },
+  "profit_yoy": -48.1,
+  "profit_surprise": -63.7,
+  "revenue_yoy": -6.5,
+  "revenue_surprise": -55.5
+ },
+ {
+  "seq_id": "106136034",
+  "filed": "2025-02-04 14:05:40",
+  "pdf": "https://nsearchives.nseindia.com/corporate/ASIANPAINT_04022025140453_OUTCOMEOFBM04022025.pdf",
+  "figures": {
+   "revenue": {
+    "quarter": 7.0,
+    "prev_quarter": 320.53,
+    "year_ago": 6868.0,
+    "qoq_pct": -97.8,
+    "yoy_pct": -99.9
+   },
+   "profit": {
+    "quarter": 1.0,
+    "prev_quarter": 108.59,
+    "year_ago": 602.0,
+    "qoq_pct": -99.1,
+    "yoy_pct": -99.8
+   }
+  },
+  "view": "weak",
+  "reaction": {
+   "reaction_day": "2025-02-04",
+   "when": "during market",
+   "gap_pct": 0.54,
+   "close_pct": 2.71,
+   "high_pct": 5.51,
+   "low_pct": -1.24,
+   "nifty_gap_pct": 0.64,
+   "nifty_close_pct": 1.62,
+   "runup_20d": 1.45,
+   "excess_close_pct": 1.09,
+   "excess_gap_pct": null
+  },
+  "profit_yoy": -99.8,
+  "profit_surprise": -65.3,
+  "revenue_yoy": -99.9,
+  "revenue_surprise": -97.5
+ },
+ {
+  "seq_id": "106315572",
+  "filed": "2025-07-29 14:11:31",
+  "pdf": "https://nsearchives.nseindia.com/corporate/ASIANPAINT_29072025140836_StockexchangeintimationFRQ1FY26.pdf",
+  "figures": {
+   "profit": {
+    "quarter": 1099.63,
+    "prev_quarter": 694.28,
+    "year_ago": 1.0,
+    "qoq_pct": 58.4,
+    "yoy_pct": 109863.0
+   }
+  },
+  "view": "strong",
+  "reaction": {
+   "reaction_day": "2025-07-29",
+   "when": "during market",
+   "gap_pct": -0.03,
+   "close_pct": 1.78,
+   "high_pct": 2.49,
+   "low_pct": -1.47,
+   "nifty_gap_pct": -0.29,
+   "nifty_close_pct": 0.57,
+   "runup_20d": 4.07,
+   "excess_close_pct": 1.21,
+   "excess_gap_pct": null
+  },
+  "profit_yoy": 100.0,
+  "profit_surprise": 148.1,
+  "revenue_yoy": null,
+  "revenue_surprise": null
+ },
+ {
+  "seq_id": "106439267",
+  "filed": "2025-11-12 15:05:01",
+  "pdf": "https://nsearchives.nseindia.com/corporate/ASIANPAINT_12112025150413_SEINTIMATIONFSH12025.pdf",
+  "figures": {
+   "revenue": {
+    "quarter": 7356.29,
+    "prev_quarter": 7868.45,
+    "year_ago": 6966.78,
+    "qoq_pct": -6.5,
+    "yoy_pct": 5.6
+   },
+   "profit": {
+    "quarter": 955.56,
+    "prev_quarter": 1099.63,
+    "year_ago": 597.36,
+    "qoq_pct": -13.1,
+    "yoy_pct": 60.0
+   }
+  },
+  "view": "good",
+  "reaction": {
+   "reaction_day": "2025-11-12",
+   "when": "during market",
+   "gap_pct": 0.11,
+   "close_pct": 4.24,
+   "high_pct": 6.83,
+   "low_pct": -0.57,
+   "nifty_gap_pct": 0.54,
+   "nifty_close_pct": 0.7,
+   "runup_20d": 11.93,
+   "excess_close_pct": 3.54,
+   "excess_gap_pct": null
+  },
+  "profit_yoy": 60.0,
+  "profit_surprise": 94.5,
+  "revenue_yoy": 5.6,
+  "revenue_surprise": 12.1
+ },
+ {
+  "seq_id": "106508031",
+  "filed": "2026-01-27 13:58:57",
+  "pdf": "https://nsearchives.nseindia.com/corporate/ASIANPAINT_27012026135708_SEINTIMATIONQ3FY26.pdf",
+  "figures": {
+   "revenue": {
+    "quarter": 8867.02,
+    "prev_quarter": 8531.27,
+    "year_ago": 8549.44,
+    "qoq_pct": 3.9,
+    "yoy_pct": 3.7
+   },
+   "profit": {
+    "quarter": 1025.34,
+    "prev_quarter": 955.56,
+    "year_ago": 1.0,
+    "qoq_pct": 7.3,
+    "yoy_pct": 102434.0
+   }
+  },
+  "view": "strong",
+  "reaction": {
+   "reaction_day": "2026-01-27",
+   "when": "during market",
+   "gap_pct": 0.6,
+   "close_pct": -2.99,
+   "high_pct": 1.15,
+   "low_pct": -5.83,
+   "nifty_gap_pct": 0.06,
+   "nifty_close_pct": 0.51,
+   "runup_20d": 2.62,
+   "excess_close_pct": -3.5,
+   "excess_gap_pct": null
+  },
+  "profit_yoy": 100.0,
+  "profit_surprise": 94.0,
+  "revenue_yoy": 3.7,
+  "revenue_surprise": 10.2
+ },
+ {
+  "seq_id": "106646892",
+  "filed": "2026-05-29 14:06:54",
+  "pdf": "https://nsearchives.nseindia.com/corporate/ASIANPAINT_29052026140521_SEIntimationoutcomeFY26.pdf",
+  "figures": {
+   "revenue": {
+    "quarter": 7920.24,
+    "prev_quarter": 7624.5,
+    "year_ago": 7192.41,
+    "qoq_pct": 3.9,
+    "yoy_pct": 10.1
+   },
+   "profit": {
+    "quarter": 1.0,
+    "prev_quarter": 185.49,
+    "year_ago": 1073.92,
+    "qoq_pct": -99.5,
+    "yoy_pct": -99.9
+   }
+  },
+  "view": "weak",
+  "reaction": {
+   "reaction_day": "2026-05-29",
+   "when": "during market",
+   "gap_pct": 0.16,
+   "close_pct": -0.01,
+   "high_pct": 2.86,
+   "low_pct": -1.51,
+   "nifty_gap_pct": -0.02,
+   "nifty_close_pct": -1.5,
+   "runup_20d": 8.87,
+   "excess_close_pct": 1.49,
+   "excess_gap_pct": null
+  },
+  "profit_yoy": -99.9,
+  "profit_surprise": -179.9,
+  "revenue_yoy": 10.1,
+  "revenue_surprise": 6.4
+ },
+ {
+  "seq_id": "106715163",
+  "filed": "2026-07-29 14:02:54",
+  "pdf": "https://nsearchives.nseindia.com/corporate/ASIANPAINT_29072026140039_SEintimationJune26.pdf",
+  "figures": {
+   "profit": {
+    "quarter": 1478.35,
+    "prev_quarter": 1160.74,
+    "year_ago": 1100.52,
+    "qoq_pct": 27.4,
+    "yoy_pct": 34.3
+   }
+  },
+  "view": "strong",
+  "reaction": {
+   "reaction_day": "2026-07-29",
+   "when": "during market",
+   "gap_pct": 0.37,
+   "close_pct": 0.81,
+   "high_pct": 4.67,
+   "low_pct": -0.65,
+   "nifty_gap_pct": 0.8,
+   "nifty_close_pct": 1.1,
+   "runup_20d": 3.31,
+   "excess_close_pct": -0.29,
+   "excess_gap_pct": null
+  },
+  "profit_yoy": 34.3,
+  "profit_surprise": -45.7,
+  "revenue_yoy": null,
+  "revenue_surprise": null
+ }
+]

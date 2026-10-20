@@ -17,6 +17,7 @@ import tempfile
 from datetime import datetime, timedelta
 
 import requests
+from urllib.parse import quote
 
 FEED = "https://www.nseindia.com/api/corporate-announcements?index=equities"
 HEADERS = {
@@ -72,7 +73,7 @@ def classify(row: dict) -> str | None:
 def fetch_feed(symbol: str | None = None, start=None, end=None) -> list[dict]:
     """All filings (optionally for one symbol) between two dates; today's by default."""
     start, end = start or datetime.now().date(), end or datetime.now().date()
-    url = FEED + f"&from_date={start:%d-%m-%Y}&to_date={end:%d-%m-%Y}" + (f"&symbol={symbol}" if symbol else "")
+    url = FEED + f"&from_date={start:%d-%m-%Y}&to_date={end:%d-%m-%Y}" + (f"&symbol={quote(symbol)}" if symbol else "")
     session = get_nse_session()
     try:
         resp = session.get(url, timeout=20)

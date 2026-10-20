@@ -1,0 +1,455 @@
+[
+ {
+  "seq_id": "157059",
+  "filed": "2023-10-30 16:46:35",
+  "pdf": "https://nsearchives.nseindia.com/corporate/SDTVSMSERESULTQ22023_30102023164635.pdf",
+  "figures": {
+   "revenue": {
+    "quarter": 8144.61,
+    "prev_quarter": 7217.91,
+    "year_ago": 7219.18,
+    "qoq_pct": 12.8,
+    "yoy_pct": 12.8
+   },
+   "profit": {
+    "quarter": 536.55,
+    "prev_quarter": 467.67,
+    "year_ago": 407.47,
+    "qoq_pct": 14.7,
+    "yoy_pct": 31.7
+   }
+  },
+  "view": "strong",
+  "reaction": {
+   "reaction_day": "2023-10-31",
+   "when": "after close",
+   "gap_pct": 1.57,
+   "close_pct": -1.12,
+   "high_pct": 1.57,
+   "low_pct": -1.45,
+   "nifty_gap_pct": 0.48,
+   "nifty_close_pct": -0.32,
+   "runup_20d": 7.53,
+   "excess_close_pct": -0.8,
+   "excess_gap_pct": 1.09
+  },
+  "profit_yoy": 31.7,
+  "profit_surprise": null,
+  "revenue_yoy": 12.8,
+  "revenue_surprise": null
+ },
+ {
+  "seq_id": "159198",
+  "filed": "2024-01-24 16:46:41",
+  "pdf": "https://nsearchives.nseindia.com/corporate/TVSMNSEBSERESULTSQ3_24012024164641.pdf",
+  "figures": {
+   "revenue": {
+    "quarter": 10113.94,
+    "prev_quarter": 9932.82,
+    "year_ago": 8066.13,
+    "qoq_pct": 1.8,
+    "yoy_pct": 25.4
+   },
+   "profit": {
+    "quarter": 593.35,
+    "prev_quarter": 536.55,
+    "year_ago": 352.75,
+    "qoq_pct": 10.6,
+    "yoy_pct": 68.2
+   }
+  },
+  "view": "strong",
+  "reaction": {
+   "reaction_day": "2024-01-25",
+   "when": "after close",
+   "gap_pct": 2.7,
+   "close_pct": -2.99,
+   "high_pct": 2.7,
+   "low_pct": -3.89,
+   "nifty_gap_pct": 0.0,
+   "nifty_close_pct": -0.47,
+   "runup_20d": 0.18,
+   "excess_close_pct": -2.52,
+   "excess_gap_pct": 2.7
+  },
+  "profit_yoy": 68.2,
+  "profit_surprise": 36.5,
+  "revenue_yoy": 25.4,
+  "revenue_surprise": 12.6
+ },
+ {
+  "seq_id": "161494",
+  "filed": "2024-05-08 16:49:59",
+  "pdf": "https://nsearchives.nseindia.com/corporate/TVSMNSEBSEResultsQ4_08052024164959.pdf",
+  "figures": {
+   "revenue": {
+    "quarter": 8168.84,
+    "prev_quarter": 8245.01,
+    "year_ago": 6604.78,
+    "qoq_pct": -0.9,
+    "yoy_pct": 23.7
+   },
+   "profit": {
+    "quarter": 485.43,
+    "prev_quarter": 593.35,
+    "year_ago": 410.27,
+    "qoq_pct": -18.2,
+    "yoy_pct": 18.3
+   }
+  },
+  "view": "strong",
+  "reaction": {
+   "reaction_day": "2024-05-09",
+   "when": "after close",
+   "gap_pct": 1.36,
+   "close_pct": 3.35,
+   "high_pct": 6.33,
+   "low_pct": 1.36,
+   "nifty_gap_pct": -0.35,
+   "nifty_close_pct": -1.55,
+   "runup_20d": -2.58,
+   "excess_close_pct": 4.9,
+   "excess_gap_pct": 1.71
+  },
+  "profit_yoy": 18.3,
+  "profit_surprise": -31.7,
+  "revenue_yoy": 23.7,
+  "revenue_surprise": 4.6
+ },
+ {
+  "seq_id": "164331",
+  "filed": "2024-08-06 13:46:18",
+  "pdf": "https://nsearchives.nseindia.com/corporate/TVSMRESULTSSD_06082024134618.pdf",
+  "figures": {
+   "revenue": {
+    "quarter": 8375.59,
+    "prev_quarter": 8168.84,
+    "year_ago": 7217.91,
+    "qoq_pct": 2.5,
+    "yoy_pct": 16.0
+   },
+   "profit": {
+    "quarter": 577.32,
+    "prev_quarter": 485.43,
+    "year_ago": 467.67,
+    "qoq_pct": 18.9,
+    "yoy_pct": 23.4
+   }
+  },
+  "view": "strong",
+  "reaction": {
+   "reaction_day": "2024-08-06",
+   "when": "during market",
+   "gap_pct": 0.86,
+   "close_pct": -0.58,
+   "high_pct": 1.47,
+   "low_pct": -2.66,
+   "nifty_gap_pct": 0.56,
+   "nifty_close_pct": -0.26,
+   "runup_20d": 3.7,
+   "excess_close_pct": -0.32,
+   "excess_gap_pct": null
+  },
+  "profit_yoy": 23.4,
+  "profit_surprise": -8.3,
+  "revenue_yoy": 16.0,
+  "revenue_surprise": -7.7
+ },
+ {
+  "seq_id": "165856",
+  "filed": "2024-10-23 15:04:47",
+  "pdf": "https://nsearchives.nseindia.com/corporate/TVSMResultssigned_23102024150447.pdf",
+  "figures": {
+   "revenue": {
+    "quarter": 9228.24,
+    "prev_quarter": 8375.59,
+    "year_ago": 8144.61,
+    "qoq_pct": 10.2,
+    "yoy_pct": 13.3
+   },
+   "profit": {
+    "quarter": 662.62,
+    "prev_quarter": 577.32,
+    "year_ago": 536.55,
+    "qoq_pct": 14.8,
+    "yoy_pct": 23.5
+   }
+  },
+  "view": "strong",
+  "reaction": {
+   "reaction_day": "2024-10-23",
+   "when": "during market",
+   "gap_pct": 1.03,
+   "close_pct": -3.74,
+   "high_pct": 4.11,
+   "low_pct": -6.63,
+   "nifty_gap_pct": -0.38,
+   "nifty_close_pct": -0.15,
+   "runup_20d": -0.77,
+   "excess_close_pct": -3.59,
+   "excess_gap_pct": null
+  },
+  "profit_yoy": 23.5,
+  "profit_surprise": -4.0,
+  "revenue_yoy": 13.3,
+  "revenue_surprise": -6.6
+ },
+ {
+  "seq_id": "168663",
+  "filed": "2025-01-28 13:13:23",
+  "pdf": "https://nsearchives.nseindia.com/corporate/SE_IntimationSGD_28012025131323.pdf",
+  "figures": {
+   "revenue": {
+    "quarter": 9097.05,
+    "prev_quarter": 9228.24,
+    "year_ago": 8245.01,
+    "qoq_pct": -1.4,
+    "yoy_pct": 10.3
+   },
+   "profit": {
+    "quarter": 618.48,
+    "prev_quarter": 662.62,
+    "year_ago": 593.35,
+    "qoq_pct": -6.7,
+    "yoy_pct": 4.2
+   }
+  },
+  "view": "mixed",
+  "reaction": {
+   "reaction_day": "2025-01-28",
+   "when": "during market",
+   "gap_pct": 1.01,
+   "close_pct": 4.68,
+   "high_pct": 6.43,
+   "low_pct": -0.64,
+   "nifty_gap_pct": 0.58,
+   "nifty_close_pct": 0.56,
+   "runup_20d": -1.74,
+   "excess_close_pct": 4.12,
+   "excess_gap_pct": null
+  },
+  "profit_yoy": 4.2,
+  "profit_surprise": -19.2,
+  "revenue_yoy": 10.3,
+  "revenue_surprise": -9.6
+ },
+ {
+  "seq_id": "106213735",
+  "filed": "2025-04-28 15:32:38",
+  "pdf": "https://nsearchives.nseindia.com/corporate/TVSMOTOR_28042025153222_TVSMPRESSRELEASESD.pdf",
+  "figures": {},
+  "view": "unread",
+  "reaction": {
+   "reaction_day": "2025-04-29",
+   "when": "after close",
+   "gap_pct": -0.68,
+   "close_pct": -3.24,
+   "high_pct": 0.17,
+   "low_pct": -4.05,
+   "nifty_gap_pct": 0.17,
+   "nifty_close_pct": 0.03,
+   "runup_20d": 12.56,
+   "excess_close_pct": -3.27,
+   "excess_gap_pct": -0.85
+  },
+  "profit_yoy": null,
+  "profit_surprise": null,
+  "revenue_yoy": null,
+  "revenue_surprise": null
+ },
+ {
+  "seq_id": "106318985",
+  "filed": "2025-07-31 13:37:02",
+  "pdf": "https://nsearchives.nseindia.com/corporate/TVSMOTOR_31072025132551_NSEBSEresultsintimation_sd.pdf",
+  "figures": {
+   "revenue": {
+    "quarter": 10081.0,
+    "prev_quarter": 9550.44,
+    "year_ago": 8375.59,
+    "qoq_pct": 5.6,
+    "yoy_pct": 20.4
+   },
+   "profit": {
+    "quarter": 778.59,
+    "prev_quarter": 852.12,
+    "year_ago": 577.32,
+    "qoq_pct": -8.6,
+    "yoy_pct": 34.9
+   }
+  },
+  "view": "strong",
+  "reaction": {
+   "reaction_day": "2025-07-31",
+   "when": "during market",
+   "gap_pct": -1.2,
+   "close_pct": 0.29,
+   "high_pct": 1.88,
+   "low_pct": -1.38,
+   "nifty_gap_pct": -0.86,
+   "nifty_close_pct": -0.35,
+   "runup_20d": -1.26,
+   "excess_close_pct": 0.64,
+   "excess_gap_pct": null
+  },
+  "profit_yoy": 34.9,
+  "profit_surprise": 11.5,
+  "revenue_yoy": 20.4,
+  "revenue_surprise": 7.1
+ },
+ {
+  "seq_id": "106417895",
+  "filed": "2025-10-28 14:53:07",
+  "pdf": "https://nsearchives.nseindia.com/corporate/TVSMOTOR_28102025145111_TVSMNSEBSE_RESULTS_sd.pdf",
+  "figures": {
+   "revenue": {
+    "quarter": 11905.43,
+    "prev_quarter": 10081.0,
+    "year_ago": 9228.24,
+    "qoq_pct": 18.1,
+    "yoy_pct": 29.0
+   },
+   "profit": {
+    "quarter": 906.09,
+    "prev_quarter": 778.59,
+    "year_ago": 662.62,
+    "qoq_pct": 16.4,
+    "yoy_pct": 36.7
+   }
+  },
+  "view": "strong",
+  "reaction": {
+   "reaction_day": "2025-10-28",
+   "when": "during market",
+   "gap_pct": 0.28,
+   "close_pct": -2.14,
+   "high_pct": 1.1,
+   "low_pct": -3.19,
+   "nifty_gap_pct": -0.1,
+   "nifty_close_pct": -0.11,
+   "runup_20d": 2.47,
+   "excess_close_pct": -2.03,
+   "excess_gap_pct": null
+  },
+  "profit_yoy": 36.7,
+  "profit_surprise": 13.2,
+  "revenue_yoy": 29.0,
+  "revenue_surprise": 15.7
+ },
+ {
+  "seq_id": "106509384",
+  "filed": "2026-01-28 13:09:26",
+  "pdf": "https://nsearchives.nseindia.com/corporate/TVSMOTOR_28012026130856_TVSMNSEBSEresults_sd.pdf",
+  "figures": {
+   "revenue": {
+    "quarter": 12476.26,
+    "prev_quarter": 11905.43,
+    "year_ago": 9097.05,
+    "qoq_pct": 4.8,
+    "yoy_pct": 37.1
+   },
+   "profit": {
+    "quarter": 940.37,
+    "prev_quarter": 906.09,
+    "year_ago": 618.48,
+    "qoq_pct": 3.8,
+    "yoy_pct": 52.0
+   }
+  },
+  "view": "strong",
+  "reaction": {
+   "reaction_day": "2026-01-28",
+   "when": "during market",
+   "gap_pct": 0.28,
+   "close_pct": 4.5,
+   "high_pct": 5.07,
+   "low_pct": -2.02,
+   "nifty_gap_pct": 0.33,
+   "nifty_close_pct": 0.66,
+   "runup_20d": 3.16,
+   "excess_close_pct": 3.84,
+   "excess_gap_pct": null
+  },
+  "profit_yoy": 52.0,
+  "profit_surprise": 17.1,
+  "revenue_yoy": 37.1,
+  "revenue_surprise": 16.7
+ },
+ {
+  "seq_id": "106620212",
+  "filed": "2026-05-13 13:10:26",
+  "pdf": "https://nsearchives.nseindia.com/corporate/TVSMOTOR_13052026130924_TVSMNSEBSESD.pdf",
+  "figures": {
+   "revenue": {
+    "quarter": 12807.63,
+    "prev_quarter": 12476.26,
+    "year_ago": 9550.44,
+    "qoq_pct": 2.7,
+    "yoy_pct": 34.1
+   },
+   "profit": {
+    "quarter": 997.7,
+    "prev_quarter": 938.23,
+    "year_ago": 749.87,
+    "qoq_pct": 6.3,
+    "yoy_pct": 33.0
+   }
+  },
+  "view": "strong",
+  "reaction": {
+   "reaction_day": "2026-05-13",
+   "when": "during market",
+   "gap_pct": 0.11,
+   "close_pct": -0.95,
+   "high_pct": 2.43,
+   "low_pct": -2.19,
+   "nifty_gap_pct": -0.07,
+   "nifty_close_pct": 0.14,
+   "runup_20d": -4.47,
+   "excess_close_pct": -1.09,
+   "excess_gap_pct": null
+  },
+  "profit_yoy": 33.0,
+  "profit_surprise": -3.7,
+  "revenue_yoy": 34.1,
+  "revenue_surprise": 5.1
+ },
+ {
+  "seq_id": "106704842",
+  "filed": "2026-07-21 14:09:50",
+  "pdf": "https://nsearchives.nseindia.com/corporate/TVSMOTOR_21072026140752_BSENSEResultsQ1FY27SD.pdf",
+  "figures": {
+   "revenue": {
+    "quarter": 13896.08,
+    "prev_quarter": 12807.63,
+    "year_ago": 10081.0,
+    "qoq_pct": 8.5,
+    "yoy_pct": 37.8
+   },
+   "profit": {
+    "quarter": 1173.97,
+    "prev_quarter": 997.7,
+    "year_ago": 775.65,
+    "qoq_pct": 17.7,
+    "yoy_pct": 51.4
+   }
+  },
+  "view": "strong",
+  "reaction": {
+   "reaction_day": "2026-07-21",
+   "when": "during market",
+   "gap_pct": 0.0,
+   "close_pct": 5.62,
+   "high_pct": 6.12,
+   "low_pct": -0.37,
+   "nifty_gap_pct": -0.09,
+   "nifty_close_pct": -0.21,
+   "runup_20d": 3.34,
+   "excess_close_pct": 5.83,
+   "excess_gap_pct": null
+  },
+  "profit_yoy": 51.4,
+  "profit_surprise": 15.6,
+  "revenue_yoy": 37.8,
+  "revenue_surprise": 6.2
+ }
+]

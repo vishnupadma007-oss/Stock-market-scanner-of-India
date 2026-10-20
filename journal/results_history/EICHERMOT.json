@@ -1,0 +1,346 @@
+[
+ {
+  "seq_id": "158564",
+  "filed": "2023-11-10 17:35:56",
+  "pdf": "https://nsearchives.nseindia.com/corporate/EMLFinancialResultsSeptember2023Signedfinalstx_10112023173556.pdf",
+  "figures": {
+   "revenue": {
+    "quarter": 3930.71,
+    "prev_quarter": 3901.18,
+    "year_ago": 3397.19,
+    "qoq_pct": 0.8,
+    "yoy_pct": 15.7
+   }
+  },
+  "view": "good",
+  "reaction": {
+   "reaction_day": "2023-11-13",
+   "when": "after close",
+   "gap_pct": 1.39,
+   "close_pct": 2.96,
+   "high_pct": 3.79,
+   "low_pct": 1.28,
+   "nifty_gap_pct": 0.32,
+   "nifty_close_pct": 0.09,
+   "runup_20d": 3.19,
+   "excess_close_pct": 2.87,
+   "excess_gap_pct": 1.07
+  },
+  "profit_yoy": null,
+  "profit_surprise": null,
+  "revenue_yoy": 15.7,
+  "revenue_surprise": null
+ },
+ {
+  "seq_id": "160568",
+  "filed": "2024-02-13 14:40:43",
+  "pdf": "https://nsearchives.nseindia.com/corporate/EMLFinancialResults13022024Signed_13022024144043.pdf",
+  "figures": {},
+  "view": "unread",
+  "reaction": {
+   "reaction_day": "2024-02-13",
+   "when": "during market",
+   "gap_pct": 0.59,
+   "close_pct": -0.46,
+   "high_pct": 1.66,
+   "low_pct": -2.75,
+   "nifty_gap_pct": 0.22,
+   "nifty_close_pct": 0.59,
+   "runup_20d": -0.29,
+   "excess_close_pct": -1.05,
+   "excess_gap_pct": null
+  },
+  "profit_yoy": null,
+  "profit_surprise": null,
+  "revenue_yoy": null,
+  "revenue_surprise": null
+ },
+ {
+  "seq_id": "161486",
+  "filed": "2024-05-11 13:41:36",
+  "pdf": "https://nsearchives.nseindia.com/corporate/EMLOutcomeofBoardMeetingMay102024Signed_11052024134136.pdf",
+  "figures": {
+   "revenue": {
+    "quarter": 4192.08,
+    "prev_quarter": 4054.19,
+    "year_ago": 3831.35,
+    "qoq_pct": 3.4,
+    "yoy_pct": 9.4
+   }
+  },
+  "view": "mixed",
+  "reaction": {
+   "reaction_day": "2024-05-13",
+   "when": "after close",
+   "gap_pct": 0.45,
+   "close_pct": -0.01,
+   "high_pct": 1.63,
+   "low_pct": -2.78,
+   "nifty_gap_pct": -0.12,
+   "nifty_close_pct": 0.22,
+   "runup_20d": 12.23,
+   "excess_close_pct": -0.23,
+   "excess_gap_pct": 0.57
+  },
+  "profit_yoy": null,
+  "profit_surprise": null,
+  "revenue_yoy": 9.4,
+  "revenue_surprise": -6.3
+ },
+ {
+  "seq_id": "164588",
+  "filed": "2024-08-08 17:37:16",
+  "pdf": "https://nsearchives.nseindia.com/corporate/EMLOutcomeofBoardMeetingAugust82024Signedbse_08082024173716.pdf",
+  "figures": {
+   "revenue": {
+    "quarter": 4231.28,
+    "prev_quarter": 4192.08,
+    "year_ago": 3901.18,
+    "qoq_pct": 0.9,
+    "yoy_pct": 8.5
+   }
+  },
+  "view": "mixed",
+  "reaction": {
+   "reaction_day": "2024-08-09",
+   "when": "after close",
+   "gap_pct": 5.0,
+   "close_pct": 5.54,
+   "high_pct": 6.03,
+   "low_pct": 3.06,
+   "nifty_gap_pct": 1.12,
+   "nifty_close_pct": 1.04,
+   "runup_20d": -4.76,
+   "excess_close_pct": 4.5,
+   "excess_gap_pct": 3.88
+  },
+  "profit_yoy": null,
+  "profit_surprise": null,
+  "revenue_yoy": 8.5,
+  "revenue_surprise": -4.1
+ },
+ {
+  "seq_id": "167457",
+  "filed": "2024-11-13 16:06:03",
+  "pdf": "https://nsearchives.nseindia.com/corporate/EMLSFSCFSLRRSep24results13112024Signedfinal_13112024160603.pdf",
+  "figures": {
+   "revenue": {
+    "quarter": 4205.44,
+    "prev_quarter": 4231.28,
+    "year_ago": 3930.71,
+    "qoq_pct": -0.6,
+    "yoy_pct": 7.0
+   }
+  },
+  "view": "mixed",
+  "reaction": {
+   "reaction_day": "2024-11-14",
+   "when": "after close",
+   "gap_pct": 2.98,
+   "close_pct": 6.43,
+   "high_pct": 8.37,
+   "low_pct": 2.54,
+   "nifty_gap_pct": -0.07,
+   "nifty_close_pct": -0.11,
+   "runup_20d": 3.74,
+   "excess_close_pct": 6.54,
+   "excess_gap_pct": 3.05
+  },
+  "profit_yoy": null,
+  "profit_surprise": null,
+  "revenue_yoy": 7.0,
+  "revenue_surprise": -2.4
+ },
+ {
+  "seq_id": "169571",
+  "filed": "2025-02-10 17:17:37",
+  "pdf": "https://nsearchives.nseindia.com/corporate/EMLFinancialResults_Dec_24_FinalSigned_10022025171737.pdf",
+  "figures": {
+   "revenue": {
+    "quarter": 4908.14,
+    "prev_quarter": 4205.44,
+    "year_ago": 4054.19,
+    "qoq_pct": 16.7,
+    "yoy_pct": 21.1
+   }
+  },
+  "view": "good",
+  "reaction": {
+   "reaction_day": "2025-02-11",
+   "when": "after close",
+   "gap_pct": -3.68,
+   "close_pct": -6.8,
+   "high_pct": -3.67,
+   "low_pct": -7.13,
+   "nifty_gap_pct": 0.01,
+   "nifty_close_pct": -1.32,
+   "runup_20d": 5.19,
+   "excess_close_pct": -5.48,
+   "excess_gap_pct": -3.69
+  },
+  "profit_yoy": null,
+  "profit_surprise": null,
+  "revenue_yoy": 21.1,
+  "revenue_surprise": 12.6
+ },
+ {
+  "seq_id": "106319550",
+  "filed": "2025-07-31 17:21:15",
+  "pdf": "https://nsearchives.nseindia.com/corporate/EICHERMOT_31072025171927_EMLOutcomeofBoardMeetingJuly312025Signed.pdf",
+  "figures": {
+   "revenue": {
+    "quarter": 4908.41,
+    "prev_quarter": 5106.6,
+    "year_ago": 4231.28,
+    "qoq_pct": -3.9,
+    "yoy_pct": 16.0
+   }
+  },
+  "view": "good",
+  "reaction": {
+   "reaction_day": "2025-08-01",
+   "when": "after close",
+   "gap_pct": 1.51,
+   "close_pct": 1.09,
+   "high_pct": 3.68,
+   "low_pct": 0.12,
+   "nifty_gap_pct": -0.14,
+   "nifty_close_pct": -0.82,
+   "runup_20d": -1.82,
+   "excess_close_pct": 1.91,
+   "excess_gap_pct": 1.65
+  },
+  "profit_yoy": null,
+  "profit_surprise": null,
+  "revenue_yoy": 16.0,
+  "revenue_surprise": 7.1
+ },
+ {
+  "seq_id": "106441679",
+  "filed": "2025-11-13 15:13:44",
+  "pdf": "https://nsearchives.nseindia.com/corporate/EICHERMOT_13112025151125_EMLFinancialResultsSeptember302025Signed.pdf",
+  "figures": {
+   "revenue": {
+    "quarter": 5902.07,
+    "prev_quarter": 4908.41,
+    "year_ago": 4205.44,
+    "qoq_pct": 20.2,
+    "yoy_pct": 40.3
+   }
+  },
+  "view": "good",
+  "reaction": {
+   "reaction_day": "2025-11-13",
+   "when": "during market",
+   "gap_pct": -0.06,
+   "close_pct": -0.35,
+   "high_pct": 0.98,
+   "low_pct": -1.75,
+   "nifty_gap_pct": 0.12,
+   "nifty_close_pct": 0.01,
+   "runup_20d": -3.05,
+   "excess_close_pct": -0.36,
+   "excess_gap_pct": null
+  },
+  "profit_yoy": null,
+  "profit_surprise": null,
+  "revenue_yoy": 40.3,
+  "revenue_surprise": 28.0
+ },
+ {
+  "seq_id": "106528293",
+  "filed": "2026-02-10 16:41:18",
+  "pdf": "https://nsearchives.nseindia.com/corporate/EICHERMOT_10022026163937_EMLOutcomeBM10022026Signed.pdf",
+  "figures": {
+   "revenue": {
+    "quarter": 5987.83,
+    "prev_quarter": 5902.07,
+    "year_ago": 4908.14,
+    "qoq_pct": 1.5,
+    "yoy_pct": 22.0
+   }
+  },
+  "view": "good",
+  "reaction": {
+   "reaction_day": "2026-02-11",
+   "when": "after close",
+   "gap_pct": 2.86,
+   "close_pct": 6.51,
+   "high_pct": 6.98,
+   "low_pct": 2.81,
+   "nifty_gap_pct": 0.24,
+   "nifty_close_pct": 0.07,
+   "runup_20d": -2.86,
+   "excess_close_pct": 6.44,
+   "excess_gap_pct": 2.62
+  },
+  "profit_yoy": null,
+  "profit_surprise": null,
+  "revenue_yoy": 22.0,
+  "revenue_surprise": 3.4
+ },
+ {
+  "seq_id": "106636316",
+  "filed": "2026-05-22 16:51:45",
+  "pdf": "https://nsearchives.nseindia.com/corporate/EICHERMOT_22052026164926_EMLOutcomeofBoardMeetingMay222026Signed.pdf",
+  "figures": {
+   "revenue": {
+    "quarter": 5901.42,
+    "prev_quarter": 5987.83,
+    "year_ago": 5106.6,
+    "qoq_pct": -1.4,
+    "yoy_pct": 15.6
+   }
+  },
+  "view": "good",
+  "reaction": {
+   "reaction_day": "2026-05-25",
+   "when": "after close",
+   "gap_pct": 3.66,
+   "close_pct": 6.19,
+   "high_pct": 6.45,
+   "low_pct": 3.34,
+   "nifty_gap_pct": 0.93,
+   "nifty_close_pct": 1.32,
+   "runup_20d": 0.31,
+   "excess_close_pct": 4.87,
+   "excess_gap_pct": 2.73
+  },
+  "profit_yoy": null,
+  "profit_surprise": null,
+  "revenue_yoy": 15.6,
+  "revenue_surprise": -6.0
+ },
+ {
+  "seq_id": "106715837",
+  "filed": "2026-07-29 18:29:49",
+  "pdf": "https://nsearchives.nseindia.com/corporate/EICHERMOT_29072026182700_EMLOutcomeofBoardMeetingJuly292026Signed.pdf",
+  "figures": {
+   "revenue": {
+    "quarter": 6213.61,
+    "prev_quarter": 5901.42,
+    "year_ago": 4908.41,
+    "qoq_pct": 5.3,
+    "yoy_pct": 26.6
+   }
+  },
+  "view": "good",
+  "reaction": {
+   "reaction_day": "2026-07-30",
+   "when": "after close",
+   "gap_pct": 1.16,
+   "close_pct": 1.72,
+   "high_pct": 1.94,
+   "low_pct": -0.63,
+   "nifty_gap_pct": -0.0,
+   "nifty_close_pct": 0.28,
+   "runup_20d": 7.95,
+   "excess_close_pct": 1.44,
+   "excess_gap_pct": 1.16
+  },
+  "profit_yoy": null,
+  "profit_surprise": null,
+  "revenue_yoy": 26.6,
+  "revenue_surprise": 7.6
+ }
+]

@@ -1,0 +1,463 @@
+[
+ {
+  "seq_id": "156981",
+  "filed": "2023-10-27 19:25:53",
+  "pdf": "https://nsearchives.nseindia.com/corporate/Financialresults_27102023192553.pdf",
+  "figures": {
+   "revenue": {
+    "quarter": 234956.0,
+    "prev_quarter": 210831.0,
+    "year_ago": 232217.0,
+    "qoq_pct": 11.4,
+    "yoy_pct": 1.2
+   },
+   "profit": {
+    "quarter": 19878.0,
+    "prev_quarter": 18258.0,
+    "year_ago": 15512.0,
+    "qoq_pct": 8.9,
+    "yoy_pct": 28.1
+   }
+  },
+  "view": "strong",
+  "reaction": {
+   "reaction_day": "2023-10-30",
+   "when": "after close",
+   "gap_pct": 0.36,
+   "close_pct": 2.06,
+   "high_pct": 2.61,
+   "low_pct": 0.18,
+   "nifty_gap_pct": 0.03,
+   "nifty_close_pct": 0.49,
+   "runup_20d": -0.96,
+   "excess_close_pct": 1.57,
+   "excess_gap_pct": 0.33
+  },
+  "profit_yoy": 28.1,
+  "profit_surprise": null,
+  "revenue_yoy": 1.2,
+  "revenue_surprise": null
+ },
+ {
+  "seq_id": "159048",
+  "filed": "2024-01-19 18:13:53",
+  "pdf": "https://nsearchives.nseindia.com/corporate/RILLR19012024_19012024181354.pdf",
+  "figures": {
+   "revenue": {
+    "quarter": 227970.0,
+    "prev_quarter": 234956.0,
+    "year_ago": 220165.0,
+    "qoq_pct": -3.0,
+    "yoy_pct": 3.5
+   },
+   "profit": {
+    "quarter": 19641.0,
+    "prev_quarter": 19878.0,
+    "year_ago": 17806.0,
+    "qoq_pct": -1.2,
+    "yoy_pct": 10.3
+   }
+  },
+  "view": "good",
+  "reaction": {
+   "reaction_day": "2024-01-23",
+   "when": "after close",
+   "gap_pct": 0.31,
+   "close_pct": -2.84,
+   "high_pct": 0.31,
+   "low_pct": -3.28,
+   "nifty_gap_pct": 0.44,
+   "nifty_close_pct": -1.77,
+   "runup_20d": 5.0,
+   "excess_close_pct": -1.07,
+   "excess_gap_pct": -0.13
+  },
+  "profit_yoy": 10.3,
+  "profit_surprise": -17.8,
+  "revenue_yoy": 3.5,
+  "revenue_surprise": 2.3
+ },
+ {
+  "seq_id": "161086",
+  "filed": "2024-04-22 19:01:25",
+  "pdf": "https://nsearchives.nseindia.com/corporate/SELETTER_22042024190125.pdf",
+  "figures": {
+   "revenue": {
+    "quarter": 227970.0,
+    "prev_quarter": 216265.0,
+    "year_ago": 891311.0,
+    "qoq_pct": 5.4,
+    "yoy_pct": -74.4
+   },
+   "profit": {
+    "quarter": 19641.0,
+    "prev_quarter": 21327.0,
+    "year_ago": 74088.0,
+    "qoq_pct": -7.9,
+    "yoy_pct": -73.5
+   }
+  },
+  "view": "weak",
+  "reaction": {
+   "reaction_day": "2024-04-23",
+   "when": "after close",
+   "gap_pct": -0.06,
+   "close_pct": -1.39,
+   "high_pct": 0.92,
+   "low_pct": -1.64,
+   "nifty_gap_pct": 0.5,
+   "nifty_close_pct": 0.14,
+   "runup_20d": 1.45,
+   "excess_close_pct": -1.53,
+   "excess_gap_pct": -0.56
+  },
+  "profit_yoy": -73.5,
+  "profit_surprise": -92.7,
+  "revenue_yoy": -74.4,
+  "revenue_surprise": -76.8
+ },
+ {
+  "seq_id": "163612",
+  "filed": "2024-07-19 19:16:04",
+  "pdf": "https://nsearchives.nseindia.com/corporate/SEFR_19072024191604.pdf",
+  "figures": {
+   "profit": {
+    "quarter": 448.0,
+    "prev_quarter": 21143.0,
+    "year_ago": 18182.0,
+    "qoq_pct": -97.9,
+    "yoy_pct": -97.5
+   }
+  },
+  "view": "weak",
+  "reaction": {
+   "reaction_day": "2024-07-22",
+   "when": "after close",
+   "gap_pct": -1.15,
+   "close_pct": -3.5,
+   "high_pct": -1.13,
+   "low_pct": -3.59,
+   "nifty_gap_pct": -0.35,
+   "nifty_close_pct": -0.09,
+   "runup_20d": 1.44,
+   "excess_close_pct": -3.41,
+   "excess_gap_pct": -0.8
+  },
+  "profit_yoy": -97.5,
+  "profit_surprise": -107.8,
+  "revenue_yoy": null,
+  "revenue_surprise": null
+ },
+ {
+  "seq_id": "165657",
+  "filed": "2024-10-14 19:02:31",
+  "pdf": "https://nsearchives.nseindia.com/corporate/BM_SE_14102024190232.pdf",
+  "figures": {
+   "revenue": {
+    "quarter": 134054.0,
+    "prev_quarter": 134331.0,
+    "year_ago": 140450.0,
+    "qoq_pct": -0.2,
+    "yoy_pct": -4.6
+   },
+   "profit": {
+    "quarter": 19101.0,
+    "prev_quarter": 17448.0,
+    "year_ago": 19820.0,
+    "qoq_pct": 9.5,
+    "yoy_pct": -3.6
+   }
+  },
+  "view": "weak",
+  "reaction": {
+   "reaction_day": "2024-10-15",
+   "when": "after close",
+   "gap_pct": -1.02,
+   "close_pct": -2.08,
+   "high_pct": -0.06,
+   "low_pct": -2.32,
+   "nifty_gap_pct": 0.23,
+   "nifty_close_pct": -0.28,
+   "runup_20d": -5.9,
+   "excess_close_pct": -1.8,
+   "excess_gap_pct": -1.25
+  },
+  "profit_yoy": -3.6,
+  "profit_surprise": 28.0,
+  "revenue_yoy": -4.6,
+  "revenue_surprise": -5.8
+ },
+ {
+  "seq_id": "168342",
+  "filed": "2025-01-16 19:25:42",
+  "pdf": "https://nsearchives.nseindia.com/corporate/SE_Result_16012025192542.pdf",
+  "figures": {
+   "revenue": {
+    "quarter": 134054.0,
+    "prev_quarter": 130579.0,
+    "year_ago": 396928.0,
+    "qoq_pct": 2.7,
+    "yoy_pct": -66.2
+   },
+   "profit": {
+    "quarter": 7713.0,
+    "prev_quarter": 9924.0,
+    "year_ago": 30759.0,
+    "qoq_pct": -22.3,
+    "yoy_pct": -74.9
+   }
+  },
+  "view": "weak",
+  "reaction": {
+   "reaction_day": "2025-01-17",
+   "when": "after close",
+   "gap_pct": 4.41,
+   "close_pct": 2.83,
+   "high_pct": 4.7,
+   "low_pct": 1.46,
+   "nifty_gap_pct": -0.15,
+   "nifty_close_pct": -0.47,
+   "runup_20d": 4.72,
+   "excess_close_pct": 3.3,
+   "excess_gap_pct": 4.56
+  },
+  "profit_yoy": -74.9,
+  "profit_surprise": -36.4,
+  "revenue_yoy": -66.2,
+  "revenue_surprise": -61.6
+ },
+ {
+  "seq_id": "106212483",
+  "filed": "2025-04-25 20:05:15",
+  "pdf": "https://nsearchives.nseindia.com/corporate/kavinavora_25042025200131_SE_FR.pdf",
+  "figures": {
+   "revenue": {
+    "quarter": 128.0,
+    "prev_quarter": 260.0,
+    "year_ago": 151.0,
+    "qoq_pct": -50.8,
+    "yoy_pct": -15.2
+   },
+   "profit": {
+    "quarter": 21804.0,
+    "prev_quarter": 21143.0,
+    "year_ago": 78633.0,
+    "qoq_pct": 3.1,
+    "yoy_pct": -72.3
+   }
+  },
+  "view": "weak",
+  "reaction": {
+   "reaction_day": "2025-04-28",
+   "when": "after close",
+   "gap_pct": 3.05,
+   "close_pct": 5.26,
+   "high_pct": 5.71,
+   "low_pct": 1.52,
+   "nifty_gap_pct": 0.13,
+   "nifty_close_pct": 1.2,
+   "runup_20d": -1.74,
+   "excess_close_pct": 4.06,
+   "excess_gap_pct": 2.92
+  },
+  "profit_yoy": -72.3,
+  "profit_surprise": 1.9,
+  "revenue_yoy": -15.2,
+  "revenue_surprise": 51.0
+ },
+ {
+  "seq_id": "106304771",
+  "filed": "2025-07-18 19:31:34",
+  "pdf": "https://nsearchives.nseindia.com/corporate/kavinavora_18072025193102_SE_FR.pdf",
+  "figures": {
+   "revenue": {
+    "quarter": 248660.0,
+    "prev_quarter": 264573.0,
+    "year_ago": 236217.0,
+    "qoq_pct": -6.0,
+    "yoy_pct": 5.3
+   },
+   "profit": {
+    "quarter": 30681.0,
+    "prev_quarter": 22434.0,
+    "year_ago": 17448.0,
+    "qoq_pct": 36.8,
+    "yoy_pct": 75.8
+   }
+  },
+  "view": "strong",
+  "reaction": {
+   "reaction_day": "2025-07-21",
+   "when": "after close",
+   "gap_pct": -0.75,
+   "close_pct": -3.21,
+   "high_pct": 0.0,
+   "low_pct": -3.58,
+   "nifty_gap_pct": 0.12,
+   "nifty_close_pct": 0.49,
+   "runup_20d": 1.24,
+   "excess_close_pct": -3.7,
+   "excess_gap_pct": -0.87
+  },
+  "profit_yoy": 75.8,
+  "profit_surprise": 149.4,
+  "revenue_yoy": 5.3,
+  "revenue_surprise": 20.5
+ },
+ {
+  "seq_id": "106411661",
+  "filed": "2025-10-17 19:01:21",
+  "pdf": "https://nsearchives.nseindia.com/corporate/kavinavora_17102025190048_SE_F.pdf",
+  "figures": {
+   "revenue": {
+    "quarter": 258898.0,
+    "prev_quarter": 248660.0,
+    "year_ago": 235481.0,
+    "qoq_pct": 4.1,
+    "yoy_pct": 9.9
+   },
+   "profit": {
+    "quarter": 22146.0,
+    "prev_quarter": 30681.0,
+    "year_ago": 19101.0,
+    "qoq_pct": -27.8,
+    "yoy_pct": 15.9
+   }
+  },
+  "view": "good",
+  "reaction": {
+   "reaction_day": "2025-10-20",
+   "when": "after close",
+   "gap_pct": 1.64,
+   "close_pct": 3.53,
+   "high_pct": 4.02,
+   "low_pct": 1.16,
+   "nifty_gap_pct": 0.45,
+   "nifty_close_pct": 0.52,
+   "runup_20d": -1.0,
+   "excess_close_pct": 3.01,
+   "excess_gap_pct": 1.19
+  },
+  "profit_yoy": 15.9,
+  "profit_surprise": 53.8,
+  "revenue_yoy": 9.9,
+  "revenue_surprise": 19.8
+ },
+ {
+  "seq_id": "106499452",
+  "filed": "2026-01-16 19:09:20",
+  "pdf": "https://nsearchives.nseindia.com/corporate/kavinavora_16012026190810_FR_1.pdf",
+  "figures": {
+   "revenue": {
+    "quarter": 258898.0,
+    "prev_quarter": 243865.0,
+    "year_ago": 715563.0,
+    "qoq_pct": 6.2,
+    "yoy_pct": -63.8
+   },
+   "profit": {
+    "quarter": 9129.0,
+    "prev_quarter": 8721.0,
+    "year_ago": 24045.0,
+    "qoq_pct": 4.7,
+    "yoy_pct": -62.0
+   }
+  },
+  "view": "weak",
+  "reaction": {
+   "reaction_day": "2026-01-19",
+   "when": "after close",
+   "gap_pct": -0.5,
+   "close_pct": -3.04,
+   "high_pct": -0.5,
+   "low_pct": -3.75,
+   "nifty_gap_pct": -0.16,
+   "nifty_close_pct": -0.42,
+   "runup_20d": -5.12,
+   "excess_close_pct": -2.62,
+   "excess_gap_pct": -0.34
+  },
+  "profit_yoy": -62.0,
+  "profit_surprise": -33.8,
+  "revenue_yoy": -63.8,
+  "revenue_surprise": -58.8
+ },
+ {
+  "seq_id": "106599908",
+  "filed": "2026-04-24 19:26:28",
+  "pdf": "https://nsearchives.nseindia.com/corporate/kavinavora_24042026192614_SE_24042026_FR.pdf",
+  "figures": {
+   "revenue": {
+    "quarter": 269496.0,
+    "prev_quarter": 264573.0,
+    "year_ago": 980136.0,
+    "qoq_pct": 1.9,
+    "yoy_pct": -72.5
+   },
+   "profit": {
+    "quarter": 22167.0,
+    "prev_quarter": 22434.0,
+    "year_ago": 80787.0,
+    "qoq_pct": -1.2,
+    "yoy_pct": -72.6
+   }
+  },
+  "view": "weak",
+  "reaction": {
+   "reaction_day": "2026-04-27",
+   "when": "after close",
+   "gap_pct": -1.11,
+   "close_pct": 2.86,
+   "high_pct": 3.3,
+   "low_pct": -1.27,
+   "nifty_gap_pct": 0.2,
+   "nifty_close_pct": 0.81,
+   "runup_20d": -11.84,
+   "excess_close_pct": 2.05,
+   "excess_gap_pct": -1.31
+  },
+  "profit_yoy": -72.6,
+  "profit_surprise": -49.5,
+  "revenue_yoy": -72.5,
+  "revenue_surprise": -67.5
+ },
+ {
+  "seq_id": "106701986",
+  "filed": "2026-07-17 19:07:44",
+  "pdf": "https://nsearchives.nseindia.com/corporate/kavinavora_17072026190726_SE_FR_1.pdf",
+  "figures": {
+   "revenue": {
+    "quarter": 166013.0,
+    "prev_quarter": 146385.0,
+    "year_ago": 121369.0,
+    "qoq_pct": 13.4,
+    "yoy_pct": 36.8
+   },
+   "profit": {
+    "quarter": 20616.0,
+    "prev_quarter": 30681.0,
+    "year_ago": 95610.0,
+    "qoq_pct": -32.8,
+    "yoy_pct": -78.4
+   }
+  },
+  "view": "weak",
+  "reaction": {
+   "reaction_day": "2026-07-20",
+   "when": "after close",
+   "gap_pct": -0.75,
+   "close_pct": -0.31,
+   "high_pct": 1.41,
+   "low_pct": -0.93,
+   "nifty_gap_pct": -0.59,
+   "nifty_close_pct": -0.39,
+   "runup_20d": -0.76,
+   "excess_close_pct": 0.08,
+   "excess_gap_pct": -0.16
+  },
+  "profit_yoy": -78.4,
+  "profit_surprise": -55.4,
+  "revenue_yoy": 36.8,
+  "revenue_surprise": 66.0
+ }
+]

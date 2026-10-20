@@ -1,0 +1,375 @@
+[
+ {
+  "seq_id": "157895",
+  "filed": "2023-11-08 16:08:44",
+  "pdf": "https://nsearchives.nseindia.com/corporate/BHELQ2FR_08112023160844.pdf",
+  "figures": {},
+  "view": "unread",
+  "reaction": {
+   "reaction_day": "2023-11-09",
+   "when": "after close",
+   "gap_pct": -1.0,
+   "close_pct": 0.4,
+   "high_pct": 1.68,
+   "low_pct": -2.67,
+   "nifty_gap_pct": 0.07,
+   "nifty_close_pct": -0.25,
+   "runup_20d": -3.25,
+   "excess_close_pct": 0.65,
+   "excess_gap_pct": -1.07
+  },
+  "profit_yoy": null,
+  "profit_surprise": null,
+  "revenue_yoy": null,
+  "revenue_surprise": null
+ },
+ {
+  "seq_id": "160567",
+  "filed": "2024-02-13 14:40:25",
+  "pdf": "https://nsearchives.nseindia.com/corporate/bhelresults_13022024144025.pdf",
+  "figures": {
+   "profit": {
+    "quarter": -162.77,
+    "prev_quarter": -233.41,
+    "year_ago": 31.0,
+    "qoq_pct": -30.3,
+    "yoy_pct": -625.1
+   }
+  },
+  "view": "weak",
+  "reaction": {
+   "reaction_day": "2024-02-13",
+   "when": "during market",
+   "gap_pct": 0.14,
+   "close_pct": -1.55,
+   "high_pct": 0.35,
+   "low_pct": -7.08,
+   "nifty_gap_pct": 0.22,
+   "nifty_close_pct": 0.59,
+   "runup_20d": 9.73,
+   "excess_close_pct": -2.14,
+   "excess_gap_pct": null
+  },
+  "profit_yoy": -100.0,
+  "profit_surprise": null,
+  "revenue_yoy": null,
+  "revenue_surprise": null
+ },
+ {
+  "seq_id": "162104",
+  "filed": "2024-05-21 16:26:42",
+  "pdf": "https://nsearchives.nseindia.com/corporate/BHELQ4FRS_21052024162642.pdf",
+  "figures": {
+   "revenue": {
+    "quarter": 8260.25,
+    "prev_quarter": 5503.81,
+    "year_ago": 8226.99,
+    "qoq_pct": 50.1,
+    "yoy_pct": 0.4
+   }
+  },
+  "view": "mixed",
+  "reaction": {
+   "reaction_day": "2024-05-22",
+   "when": "after close",
+   "gap_pct": -5.39,
+   "close_pct": -5.4,
+   "high_pct": -2.99,
+   "low_pct": -7.58,
+   "nifty_gap_pct": 0.21,
+   "nifty_close_pct": 0.31,
+   "runup_20d": 23.67,
+   "excess_close_pct": -5.71,
+   "excess_gap_pct": -5.6
+  },
+  "profit_yoy": null,
+  "profit_surprise": null,
+  "revenue_yoy": 0.4,
+  "revenue_surprise": null
+ },
+ {
+  "seq_id": "164000",
+  "filed": "2024-07-31 12:55:44",
+  "pdf": "https://nsearchives.nseindia.com/corporate/BHELQ1FY2425_31072024125544.pdf",
+  "figures": {},
+  "view": "unread",
+  "reaction": {
+   "reaction_day": "2024-07-31",
+   "when": "during market",
+   "gap_pct": -0.32,
+   "close_pct": -0.68,
+   "high_pct": 0.65,
+   "low_pct": -1.75,
+   "nifty_gap_pct": 0.12,
+   "nifty_close_pct": 0.38,
+   "runup_20d": 2.0,
+   "excess_close_pct": -1.06,
+   "excess_gap_pct": null
+  },
+  "profit_yoy": null,
+  "profit_surprise": null,
+  "revenue_yoy": null,
+  "revenue_surprise": null
+ },
+ {
+  "seq_id": "166145",
+  "filed": "2024-10-28 14:31:26",
+  "pdf": "https://nsearchives.nseindia.com/corporate/33UFR30092024_28102024143126.pdf",
+  "figures": {
+   "profit": {
+    "quarter": 96.67,
+    "prev_quarter": -212.52,
+    "year_ago": -58.3,
+    "qoq_pct": -145.5,
+    "yoy_pct": -265.8
+   }
+  },
+  "view": "weak",
+  "reaction": {
+   "reaction_day": "2024-10-28",
+   "when": "during market",
+   "gap_pct": 0.69,
+   "close_pct": 5.95,
+   "high_pct": 9.98,
+   "low_pct": -1.66,
+   "nifty_gap_pct": 0.29,
+   "nifty_close_pct": 0.65,
+   "runup_20d": -14.97,
+   "excess_close_pct": 5.3,
+   "excess_gap_pct": null
+  },
+  "profit_yoy": -100.0,
+  "profit_surprise": 0.0,
+  "revenue_yoy": null,
+  "revenue_surprise": null
+ },
+ {
+  "seq_id": "168719",
+  "filed": "2025-01-28 18:39:45",
+  "pdf": "https://nsearchives.nseindia.com/corporate/31122024quickresults_28012025183945.pdf",
+  "figures": {
+   "revenue": {
+    "quarter": 7277.09,
+    "prev_quarter": 6584.1,
+    "year_ago": 5503.8,
+    "qoq_pct": 10.5,
+    "yoy_pct": 32.2
+   }
+  },
+  "view": "good",
+  "reaction": {
+   "reaction_day": "2025-01-29",
+   "when": "after close",
+   "gap_pct": -1.85,
+   "close_pct": 6.52,
+   "high_pct": 6.88,
+   "low_pct": -1.85,
+   "nifty_gap_pct": 0.3,
+   "nifty_close_pct": 0.9,
+   "runup_20d": -15.3,
+   "excess_close_pct": 5.62,
+   "excess_gap_pct": -2.15
+  },
+  "profit_yoy": null,
+  "profit_surprise": null,
+  "revenue_yoy": 32.2,
+  "revenue_surprise": 31.8
+ },
+ {
+  "seq_id": "106328183",
+  "filed": "2025-08-06 18:19:34",
+  "pdf": "https://nsearchives.nseindia.com/corporate/BHEL_06082025181820_BHELQ1FRS.pdf",
+  "figures": {
+   "revenue": {
+    "quarter": 5486.91,
+    "prev_quarter": 8993.37,
+    "year_ago": 5484.92,
+    "qoq_pct": -39.0,
+    "yoy_pct": 0.0
+   },
+   "profit": {
+    "quarter": -454.89,
+    "prev_quarter": 504.05,
+    "year_ago": -212.52,
+    "qoq_pct": -190.2,
+    "yoy_pct": 114.0
+   }
+  },
+  "view": "mixed",
+  "reaction": {
+   "reaction_day": "2025-08-07",
+   "when": "after close",
+   "gap_pct": -3.33,
+   "close_pct": -4.95,
+   "high_pct": -2.98,
+   "low_pct": -7.19,
+   "nifty_gap_pct": -0.45,
+   "nifty_close_pct": 0.09,
+   "runup_20d": -4.94,
+   "excess_close_pct": -5.04,
+   "excess_gap_pct": -2.88
+  },
+  "profit_yoy": 100.0,
+  "profit_surprise": 200.0,
+  "revenue_yoy": 0.0,
+  "revenue_surprise": -16.3
+ },
+ {
+  "seq_id": "106419471",
+  "filed": "2025-10-29 17:00:47",
+  "pdf": "https://nsearchives.nseindia.com/corporate/BHEL_29102025165959_BHELH1FRs.pdf",
+  "figures": {},
+  "view": "unread",
+  "reaction": {
+   "reaction_day": "2025-10-30",
+   "when": "after close",
+   "gap_pct": 3.51,
+   "close_pct": 6.48,
+   "high_pct": 6.92,
+   "low_pct": -0.11,
+   "nifty_gap_pct": -0.27,
+   "nifty_close_pct": -0.68,
+   "runup_20d": -0.88,
+   "excess_close_pct": 7.16,
+   "excess_gap_pct": 3.78
+  },
+  "profit_yoy": null,
+  "profit_surprise": null,
+  "revenue_yoy": null,
+  "revenue_surprise": null
+ },
+ {
+  "seq_id": "106500566",
+  "filed": "2026-01-19 11:40:10",
+  "pdf": "https://nsearchives.nseindia.com/corporate/BHEL_19012026113829_BHELQ3FRS.pdf",
+  "figures": {
+   "profit": {
+    "quarter": 382.49,
+    "prev_quarter": 367.67,
+    "year_ago": 124.77,
+    "qoq_pct": 4.0,
+    "yoy_pct": 206.6
+   }
+  },
+  "view": "strong",
+  "reaction": {
+   "reaction_day": "2026-01-19",
+   "when": "during market",
+   "gap_pct": 0.0,
+   "close_pct": -0.87,
+   "high_pct": 1.41,
+   "low_pct": -3.35,
+   "nifty_gap_pct": -0.16,
+   "nifty_close_pct": -0.42,
+   "runup_20d": -3.03,
+   "excess_close_pct": -0.45,
+   "excess_gap_pct": null
+  },
+  "profit_yoy": 100.0,
+  "profit_surprise": 100.0,
+  "revenue_yoy": null,
+  "revenue_surprise": null
+ },
+ {
+  "seq_id": "106607850",
+  "filed": "2026-05-04 11:24:21",
+  "pdf": "https://nsearchives.nseindia.com/corporate/BHEL_04052026112323_BHELQ4FR.pdf",
+  "figures": {
+   "revenue": {
+    "quarter": 12310.37,
+    "prev_quarter": 8473.1,
+    "year_ago": 8993.37,
+    "qoq_pct": 45.3,
+    "yoy_pct": 36.9
+   },
+   "profit": {
+    "quarter": 1282.68,
+    "prev_quarter": 382.49,
+    "year_ago": 504.05,
+    "qoq_pct": 235.3,
+    "yoy_pct": 154.5
+   }
+  },
+  "view": "strong",
+  "reaction": {
+   "reaction_day": "2026-05-04",
+   "when": "during market",
+   "gap_pct": 0.73,
+   "close_pct": 6.99,
+   "high_pct": 13.22,
+   "low_pct": 0.37,
+   "nifty_gap_pct": 0.28,
+   "nifty_close_pct": 0.51,
+   "runup_20d": 36.09,
+   "excess_close_pct": 6.48,
+   "excess_gap_pct": null
+  },
+  "profit_yoy": 100.0,
+  "profit_surprise": 0.0,
+  "revenue_yoy": 36.9,
+  "revenue_surprise": 20.8
+ },
+ {
+  "seq_id": "106700043",
+  "filed": "2026-07-16 14:20:07",
+  "pdf": "https://nsearchives.nseindia.com/corporate/BHEL_16072026141931_BHELQ1RESULTS.pdf",
+  "figures": {
+   "revenue": {
+    "quarter": 7697.72,
+    "prev_quarter": 12310.37,
+    "year_ago": 5486.91,
+    "qoq_pct": -37.5,
+    "yoy_pct": 40.3
+   },
+   "profit": {
+    "quarter": 381.91,
+    "prev_quarter": 1282.68,
+    "year_ago": -454.89,
+    "qoq_pct": -70.2,
+    "yoy_pct": -184.0
+   }
+  },
+  "view": "weak",
+  "reaction": {
+   "reaction_day": "2026-07-16",
+   "when": "during market",
+   "gap_pct": 1.5,
+   "close_pct": 4.18,
+   "high_pct": 5.52,
+   "low_pct": -2.61,
+   "nifty_gap_pct": 0.26,
+   "nifty_close_pct": -0.02,
+   "runup_20d": 8.41,
+   "excess_close_pct": 4.2,
+   "excess_gap_pct": null
+  },
+  "profit_yoy": -100.0,
+  "profit_surprise": -200.0,
+  "revenue_yoy": 40.3,
+  "revenue_surprise": 21.8
+ },
+ {
+  "seq_id": "106817112",
+  "filed": "2026-10-14 13:38:41",
+  "pdf": "https://nsearchives.nseindia.com/corporate/BHEL_14102026133809_BHELRESULTS.pdf",
+  "figures": {},
+  "view": "unread",
+  "reaction": {
+   "reaction_day": "2026-10-14",
+   "when": "during market",
+   "gap_pct": 0.6,
+   "close_pct": 4.89,
+   "high_pct": 4.89,
+   "low_pct": -0.72,
+   "nifty_gap_pct": -0.03,
+   "nifty_close_pct": -0.44,
+   "runup_20d": 5.52,
+   "excess_close_pct": 5.33,
+   "excess_gap_pct": null
+  },
+  "profit_yoy": null,
+  "profit_surprise": null,
+  "revenue_yoy": null,
+  "revenue_surprise": null
+ }
+]

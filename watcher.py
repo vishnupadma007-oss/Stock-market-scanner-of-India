@@ -230,12 +230,14 @@ def poll_filings(cfg: dict, now: datetime) -> None:
                                                       view if view in ("strong", "good", "weak") else None)
             item["reaction_forecast"] = results_reaction(item, now)
             rf = item["reaction_forecast"]
-            if rf.get("chance_up_pct") is not None:
+            if rf.get("chance_up_pct") is not None and rf.get("direction_reliable"):
                 # The Reaction analyst learned from this stock's past results: trust its direction and odds.
                 up = rf["expected_close_pct"] > 0
                 add_idea(item["symbol"], "up" if up else "down",
                          rf["chance_up_pct"] if up else 100 - rf["chance_up_pct"], "results",
                          f"Results {view}; " + "; ".join(rf["notes"]), item["expectations"], now)
+            elif "direction_reliable" in rf:
+                pass  # 3 years of history: figures alone do not tell the direction, so no trade idea from them
             elif view in ("strong", "good", "weak"):
                 confidence = {"strong": 80, "good": 65, "weak": 70}[view]
                 add_idea(item["symbol"], "up" if view != "weak" else "down", confidence, "results",

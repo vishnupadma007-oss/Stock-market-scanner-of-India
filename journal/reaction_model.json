@@ -1,0 +1,675 @@
+{
+ "n_quarters": 869,
+ "fitted": "2026-10-20 11:57",
+ "targets": {
+  "excess_close_pct": {
+   "coef": {
+    "const": 0.2287,
+    "profit_surprise": -0.0008,
+    "revenue_surprise": 0.0045,
+    "runup_20d": -0.0175
+   },
+   "resid_sd": 3.7,
+   "r2": 0.003
+  },
+  "excess_gap_pct": {
+   "coef": {
+    "const": 0.3692,
+    "profit_surprise": 0.0064,
+    "revenue_surprise": -0.0074,
+    "runup_20d": -0.0044
+   },
+   "resid_sd": 2.66,
+   "r2": 0.022
+  }
+ },
+ "n": 381,
+ "direction_hit_pct": 49.6,
+ "stocks": {
+  "ADANIENT": {
+   "n": 8,
+   "bias": -0.38,
+   "resid_sd": 3.28,
+   "move_sd": 2.98,
+   "typical_abs_move": 1.65,
+   "typical_abs_gap": 1.43
+  },
+  "ADANIPORTS": {
+   "n": 10,
+   "bias": 0.18,
+   "resid_sd": 2.74,
+   "move_sd": 2.74,
+   "typical_abs_move": 1.52,
+   "typical_abs_gap": NaN
+  },
+  "APOLLOHOSP": {
+   "n": 0,
+   "bias": 0.0,
+   "resid_sd": null,
+   "move_sd": 3.47,
+   "typical_abs_move": 1.53,
+   "typical_abs_gap": 1.49
+  },
+  "ASIANPAINT": {
+   "n": 8,
+   "bias": -0.91,
+   "resid_sd": 3.48,
+   "move_sd": 3.2,
+   "typical_abs_move": 2.71,
+   "typical_abs_gap": 5.36
+  },
+  "AUBANK": {
+   "n": 2,
+   "bias": -1.87,
+   "resid_sd": null,
+   "move_sd": 5.97,
+   "typical_abs_move": 3.24,
+   "typical_abs_gap": 1.69
+  },
+  "AXISBANK": {
+   "n": 0,
+   "bias": 0.0,
+   "resid_sd": null,
+   "move_sd": 4.29,
+   "typical_abs_move": 4.55,
+   "typical_abs_gap": 3.31
+  },
+  "BAJAJ-AUTO": {
+   "n": 6,
+   "bias": -2.29,
+   "resid_sd": 4.62,
+   "move_sd": 4.48,
+   "typical_abs_move": 2.4,
+   "typical_abs_gap": 0.99
+  },
+  "BAJAJFINSV": {
+   "n": 10,
+   "bias": -1.25,
+   "resid_sd": 2.96,
+   "move_sd": 3.1,
+   "typical_abs_move": 2.45,
+   "typical_abs_gap": NaN
+  },
+  "BAJFINANCE": {
+   "n": 6,
+   "bias": 0.81,
+   "resid_sd": 1.91,
+   "move_sd": 3.62,
+   "typical_abs_move": 1.38,
+   "typical_abs_gap": 1.52
+  },
+  "BANKBARODA": {
+   "n": 0,
+   "bias": 0.0,
+   "resid_sd": null,
+   "move_sd": 3.87,
+   "typical_abs_move": 4.02,
+   "typical_abs_gap": 1.75
+  },
+  "BEL": {
+   "n": 9,
+   "bias": 2.65,
+   "resid_sd": 4.52,
+   "move_sd": 4.03,
+   "typical_abs_move": 1.57,
+   "typical_abs_gap": 0.61
+  },
+  "BHARTIARTL": {
+   "n": 5,
+   "bias": 1.62,
+   "resid_sd": 1.46,
+   "move_sd": 1.85,
+   "typical_abs_move": 1.71,
+   "typical_abs_gap": 0.98
+  },
+  "BHEL": {
+   "n": 5,
+   "bias": 1.94,
+   "resid_sd": 4.29,
+   "move_sd": 4.56,
+   "typical_abs_move": 4.92,
+   "typical_abs_gap": 3.33
+  },
+  "BPCL": {
+   "n": 10,
+   "bias": -0.11,
+   "resid_sd": 2.73,
+   "move_sd": 2.72,
+   "typical_abs_move": 2.75,
+   "typical_abs_gap": 1.61
+  },
+  "BRITANNIA": {
+   "n": 10,
+   "bias": -0.14,
+   "resid_sd": 3.85,
+   "move_sd": 3.9,
+   "typical_abs_move": 2.48,
+   "typical_abs_gap": 1.82
+  },
+  "CANBK": {
+   "n": 0,
+   "bias": 0.0,
+   "resid_sd": null,
+   "move_sd": 3.34,
+   "typical_abs_move": 3.2,
+   "typical_abs_gap": 0.48
+  },
+  "CHOLAFIN": {
+   "n": 0,
+   "bias": 0.0,
+   "resid_sd": null,
+   "move_sd": 1.67,
+   "typical_abs_move": 1.43,
+   "typical_abs_gap": 1.54
+  },
+  "CIPLA": {
+   "n": 2,
+   "bias": 0.4,
+   "resid_sd": null,
+   "move_sd": 3.33,
+   "typical_abs_move": 2.59,
+   "typical_abs_gap": 4.3
+  },
+  "COALINDIA": {
+   "n": 1,
+   "bias": -2.14,
+   "resid_sd": null,
+   "move_sd": 3.71,
+   "typical_abs_move": 2.82,
+   "typical_abs_gap": 1.35
+  },
+  "COFORGE": {
+   "n": 6,
+   "bias": 3.55,
+   "resid_sd": 7.5,
+   "move_sd": 6.78,
+   "typical_abs_move": 4.01,
+   "typical_abs_gap": 2.72
+  },
+  "DIVISLAB": {
+   "n": 10,
+   "bias": 0.85,
+   "resid_sd": 3.56,
+   "move_sd": 3.54,
+   "typical_abs_move": 3.36,
+   "typical_abs_gap": 1.99
+  },
+  "DIXON": {
+   "n": 8,
+   "bias": 0.58,
+   "resid_sd": 4.43,
+   "move_sd": 5.4,
+   "typical_abs_move": 2.22,
+   "typical_abs_gap": 2.04
+  },
+  "DLF": {
+   "n": 2,
+   "bias": 0.99,
+   "resid_sd": null,
+   "move_sd": 2.48,
+   "typical_abs_move": 1.63,
+   "typical_abs_gap": 1.09
+  },
+  "DRREDDY": {
+   "n": 10,
+   "bias": -0.1,
+   "resid_sd": 2.73,
+   "move_sd": 2.78,
+   "typical_abs_move": 1.45,
+   "typical_abs_gap": 1.51
+  },
+  "EICHERMOT": {
+   "n": 0,
+   "bias": 0.0,
+   "resid_sd": null,
+   "move_sd": 3.63,
+   "typical_abs_move": 2.96,
+   "typical_abs_gap": 2.86
+  },
+  "ETERNAL": {
+   "n": 0,
+   "bias": 0.0,
+   "resid_sd": null,
+   "move_sd": 4.63,
+   "typical_abs_move": 3.24,
+   "typical_abs_gap": 0.0
+  },
+  "FEDERALBNK": {
+   "n": 0,
+   "bias": 0.0,
+   "resid_sd": null,
+   "move_sd": 4.69,
+   "typical_abs_move": 3.48,
+   "typical_abs_gap": 1.94
+  },
+  "GAIL": {
+   "n": 6,
+   "bias": 0.11,
+   "resid_sd": 2.84,
+   "move_sd": 2.73,
+   "typical_abs_move": 3.09,
+   "typical_abs_gap": 2.34
+  },
+  "GRASIM": {
+   "n": 10,
+   "bias": -0.95,
+   "resid_sd": 2.01,
+   "move_sd": 2.45,
+   "typical_abs_move": 0.74,
+   "typical_abs_gap": 0.7
+  },
+  "HAL": {
+   "n": 4,
+   "bias": 2.59,
+   "resid_sd": 3.96,
+   "move_sd": 3.12,
+   "typical_abs_move": 1.45,
+   "typical_abs_gap": 0.55
+  },
+  "HCLTECH": {
+   "n": 6,
+   "bias": -4.59,
+   "resid_sd": 4.01,
+   "move_sd": 5.15,
+   "typical_abs_move": 3.3,
+   "typical_abs_gap": 1.83
+  },
+  "HDFCBANK": {
+   "n": 0,
+   "bias": 0.0,
+   "resid_sd": null,
+   "move_sd": 2.87,
+   "typical_abs_move": 2.19,
+   "typical_abs_gap": 0.84
+  },
+  "HEROMOTOCO": {
+   "n": 7,
+   "bias": 0.95,
+   "resid_sd": 3.02,
+   "move_sd": 2.89,
+   "typical_abs_move": 2.93,
+   "typical_abs_gap": 0.82
+  },
+  "HINDALCO": {
+   "n": 9,
+   "bias": -0.29,
+   "resid_sd": 2.13,
+   "move_sd": 4.19,
+   "typical_abs_move": 0.77,
+   "typical_abs_gap": 1.5
+  },
+  "HINDUNILVR": {
+   "n": 0,
+   "bias": 0.0,
+   "resid_sd": null,
+   "move_sd": 1.97,
+   "typical_abs_move": 2.16,
+   "typical_abs_gap": 0.98
+  },
+  "ICICIBANK": {
+   "n": 0,
+   "bias": 0.0,
+   "resid_sd": null,
+   "move_sd": 1.18,
+   "typical_abs_move": 1.16,
+   "typical_abs_gap": 0.51
+  },
+  "IDFCFIRSTB": {
+   "n": 8,
+   "bias": 1.11,
+   "resid_sd": 3.35,
+   "move_sd": 4.11,
+   "typical_abs_move": 3.51,
+   "typical_abs_gap": 1.18
+  },
+  "INDUSINDBK": {
+   "n": 0,
+   "bias": 0.0,
+   "resid_sd": null,
+   "move_sd": 6.13,
+   "typical_abs_move": 1.95,
+   "typical_abs_gap": 1.43
+  },
+  "INFY": {
+   "n": 5,
+   "bias": -3.36,
+   "resid_sd": 2.12,
+   "move_sd": 4.19,
+   "typical_abs_move": 2.07,
+   "typical_abs_gap": 3.78
+  },
+  "IOC": {
+   "n": 0,
+   "bias": 0.0,
+   "resid_sd": null,
+   "move_sd": 2.19,
+   "typical_abs_move": 1.73,
+   "typical_abs_gap": 1.68
+  },
+  "ITC": {
+   "n": 10,
+   "bias": 0.16,
+   "resid_sd": 1.39,
+   "move_sd": 1.55,
+   "typical_abs_move": 1.11,
+   "typical_abs_gap": 0.87
+  },
+  "JSWSTEEL": {
+   "n": 0,
+   "bias": 0.0,
+   "resid_sd": null,
+   "move_sd": 0.99,
+   "typical_abs_move": 1.33,
+   "typical_abs_gap": 1.57
+  },
+  "KOTAKBANK": {
+   "n": 9,
+   "bias": -0.84,
+   "resid_sd": 4.71,
+   "move_sd": 4.54,
+   "typical_abs_move": 3.42,
+   "typical_abs_gap": 1.94
+  },
+  "LT": {
+   "n": 8,
+   "bias": 1.3,
+   "resid_sd": 3.89,
+   "move_sd": 3.83,
+   "typical_abs_move": 3.95,
+   "typical_abs_gap": 2.04
+  },
+  "LUPIN": {
+   "n": 3,
+   "bias": 0.54,
+   "resid_sd": null,
+   "move_sd": 1.92,
+   "typical_abs_move": 0.83,
+   "typical_abs_gap": 1.43
+  },
+  "M&M": {
+   "n": 10,
+   "bias": 0.82,
+   "resid_sd": 1.36,
+   "move_sd": 1.69,
+   "typical_abs_move": 1.64,
+   "typical_abs_gap": 0.5
+  },
+  "MARUTI": {
+   "n": 0,
+   "bias": 0.0,
+   "resid_sd": null,
+   "move_sd": 1.75,
+   "typical_abs_move": 1.31,
+   "typical_abs_gap": 0.61
+  },
+  "MPHASIS": {
+   "n": 8,
+   "bias": 2.55,
+   "resid_sd": 2.38,
+   "move_sd": 3.36,
+   "typical_abs_move": 2.79,
+   "typical_abs_gap": 1.76
+  },
+  "MUTHOOTFIN": {
+   "n": 6,
+   "bias": 0.5,
+   "resid_sd": 7.19,
+   "move_sd": 7.26,
+   "typical_abs_move": 6.18,
+   "typical_abs_gap": 3.93
+  },
+  "NATIONALUM": {
+   "n": 0,
+   "bias": 0.0,
+   "resid_sd": null,
+   "move_sd": 5.77,
+   "typical_abs_move": 3.94,
+   "typical_abs_gap": 2.85
+  },
+  "NESTLEIND": {
+   "n": 0,
+   "bias": 0.0,
+   "resid_sd": null,
+   "move_sd": 4.67,
+   "typical_abs_move": 3.46,
+   "typical_abs_gap": NaN
+  },
+  "NMDC": {
+   "n": 0,
+   "bias": 0.0,
+   "resid_sd": null,
+   "move_sd": 3.04,
+   "typical_abs_move": 2.45,
+   "typical_abs_gap": 1.49
+  },
+  "NTPC": {
+   "n": 11,
+   "bias": -0.98,
+   "resid_sd": 1.02,
+   "move_sd": 1.02,
+   "typical_abs_move": 1.15,
+   "typical_abs_gap": 1.09
+  },
+  "ONGC": {
+   "n": 0,
+   "bias": 0.0,
+   "resid_sd": null,
+   "move_sd": 1.62,
+   "typical_abs_move": 1.34,
+   "typical_abs_gap": 1.21
+  },
+  "PAYTM": {
+   "n": 4,
+   "bias": 1.46,
+   "resid_sd": 4.39,
+   "move_sd": 4.18,
+   "typical_abs_move": 3.49,
+   "typical_abs_gap": 1.86
+  },
+  "PERSISTENT": {
+   "n": 5,
+   "bias": -1.58,
+   "resid_sd": 4.54,
+   "move_sd": 6.24,
+   "typical_abs_move": 4.88,
+   "typical_abs_gap": 1.71
+  },
+  "PFC": {
+   "n": 1,
+   "bias": -0.72,
+   "resid_sd": null,
+   "move_sd": 3.17,
+   "typical_abs_move": 2.16,
+   "typical_abs_gap": 1.31
+  },
+  "PNB": {
+   "n": 1,
+   "bias": 2.1,
+   "resid_sd": null,
+   "move_sd": 2.94,
+   "typical_abs_move": 3.05,
+   "typical_abs_gap": 3.14
+  },
+  "POLICYBZR": {
+   "n": 4,
+   "bias": -1.03,
+   "resid_sd": 6.07,
+   "move_sd": 4.76,
+   "typical_abs_move": 2.47,
+   "typical_abs_gap": 2.31
+  },
+  "POWERGRID": {
+   "n": 7,
+   "bias": -2.72,
+   "resid_sd": 0.95,
+   "move_sd": 1.17,
+   "typical_abs_move": 2.16,
+   "typical_abs_gap": 0.96
+  },
+  "RECLTD": {
+   "n": 3,
+   "bias": -0.77,
+   "resid_sd": null,
+   "move_sd": 3.23,
+   "typical_abs_move": 1.81,
+   "typical_abs_gap": 0.96
+  },
+  "RELIANCE": {
+   "n": 11,
+   "bias": -0.36,
+   "resid_sd": 2.66,
+   "move_sd": 2.73,
+   "typical_abs_move": 2.85,
+   "typical_abs_gap": 0.89
+  },
+  "SAIL": {
+   "n": 10,
+   "bias": -0.51,
+   "resid_sd": 3.18,
+   "move_sd": 3.58,
+   "typical_abs_move": 3.19,
+   "typical_abs_gap": 1.47
+  },
+  "SBIN": {
+   "n": 0,
+   "bias": 0.0,
+   "resid_sd": null,
+   "move_sd": 3.11,
+   "typical_abs_move": 1.12,
+   "typical_abs_gap": 1.85
+  },
+  "SHRIRAMFIN": {
+   "n": 11,
+   "bias": 0.64,
+   "resid_sd": 3.39,
+   "move_sd": 3.41,
+   "typical_abs_move": 1.73,
+   "typical_abs_gap": 4.96
+  },
+  "SUNPHARMA": {
+   "n": 0,
+   "bias": 0.0,
+   "resid_sd": null,
+   "move_sd": 2.05,
+   "typical_abs_move": 1.8,
+   "typical_abs_gap": 2.43
+  },
+  "TATAPOWER": {
+   "n": 7,
+   "bias": -1.76,
+   "resid_sd": 3.21,
+   "move_sd": 2.72,
+   "typical_abs_move": 1.9,
+   "typical_abs_gap": 1.42
+  },
+  "TATASTEEL": {
+   "n": 9,
+   "bias": -1.37,
+   "resid_sd": 1.92,
+   "move_sd": 2.03,
+   "typical_abs_move": 1.74,
+   "typical_abs_gap": 1.62
+  },
+  "TCS": {
+   "n": 9,
+   "bias": 0.65,
+   "resid_sd": 2.96,
+   "move_sd": 3.25,
+   "typical_abs_move": 2.5,
+   "typical_abs_gap": 1.43
+  },
+  "TECHM": {
+   "n": 11,
+   "bias": 1.18,
+   "resid_sd": 3.93,
+   "move_sd": 3.92,
+   "typical_abs_move": 2.55,
+   "typical_abs_gap": 1.75
+  },
+  "TITAN": {
+   "n": 7,
+   "bias": 0.42,
+   "resid_sd": 2.8,
+   "move_sd": 3.5,
+   "typical_abs_move": 2.39,
+   "typical_abs_gap": 1.32
+  },
+  "TRENT": {
+   "n": 4,
+   "bias": -1.22,
+   "resid_sd": 6.99,
+   "move_sd": 8.06,
+   "typical_abs_move": 5.3,
+   "typical_abs_gap": 0.98
+  },
+  "TVSMOTOR": {
+   "n": 10,
+   "bias": 0.74,
+   "resid_sd": 3.24,
+   "move_sd": 3.35,
+   "typical_abs_move": 3.12,
+   "typical_abs_gap": 1.47
+  },
+  "ULTRACEMCO": {
+   "n": 9,
+   "bias": 0.51,
+   "resid_sd": 2.46,
+   "move_sd": 2.43,
+   "typical_abs_move": 1.81,
+   "typical_abs_gap": 0.91
+  },
+  "VEDL": {
+   "n": 10,
+   "bias": -1.22,
+   "resid_sd": 3.53,
+   "move_sd": 3.61,
+   "typical_abs_move": 1.59,
+   "typical_abs_gap": 0.06
+  },
+  "WIPRO": {
+   "n": 0,
+   "bias": 0.0,
+   "resid_sd": null,
+   "move_sd": 5.25,
+   "typical_abs_move": 4.42,
+   "typical_abs_gap": 2.5
+  }
+ },
+ "gap_follow": {
+  "gap_up_1": {
+   "n": 195,
+   "kept_rising_pct": 52,
+   "avg_open_to_close": 0.2
+  },
+  "gap_down_1": {
+   "n": 149,
+   "kept_falling_pct": 60,
+   "avg_open_to_close": -0.52
+  },
+  "gap_up_2": {
+   "n": 111,
+   "kept_rising_pct": 53,
+   "avg_open_to_close": 0.07
+  },
+  "gap_down_2": {
+   "n": 84,
+   "kept_falling_pct": 69,
+   "avg_open_to_close": -0.96
+  },
+  "gap_up_3": {
+   "n": 63,
+   "kept_rising_pct": 54,
+   "avg_open_to_close": -0.03
+  },
+  "gap_down_3": {
+   "n": 48,
+   "kept_falling_pct": 73,
+   "avg_open_to_close": -1.15
+  }
+ },
+ "size": {
+  "median_abs_close": 2.28,
+  "move_3pct_or_more": 39,
+  "move_5pct_or_more": 18
+ }
+}

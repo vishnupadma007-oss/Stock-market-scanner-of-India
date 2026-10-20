@@ -1,0 +1,431 @@
+[
+ {
+  "seq_id": "156944",
+  "filed": "2023-10-27 15:24:07",
+  "pdf": "https://nsearchives.nseindia.com/corporate/OutcomeofBM27102023_27102023152407.pdf",
+  "figures": {
+   "revenue": {
+    "quarter": 69026.0,
+    "prev_quarter": 67579.0,
+    "year_ago": 63318.0,
+    "qoq_pct": 2.1,
+    "yoy_pct": 9.0
+   },
+   "profit": {
+    "quarter": 14800.0,
+    "prev_quarter": 14025.0,
+    "year_ago": 11128.0,
+    "qoq_pct": 5.5,
+    "yoy_pct": 33.0
+   }
+  },
+  "view": "strong",
+  "reaction": {
+   "reaction_day": "2023-10-27",
+   "when": "during market",
+   "gap_pct": -0.0,
+   "close_pct": -0.45,
+   "high_pct": 0.59,
+   "low_pct": -1.31,
+   "nifty_gap_pct": 0.38,
+   "nifty_close_pct": 1.01,
+   "runup_20d": 3.27,
+   "excess_close_pct": -1.46,
+   "excess_gap_pct": null
+  },
+  "profit_yoy": 33.0,
+  "profit_surprise": null,
+  "revenue_yoy": 9.0,
+  "revenue_surprise": null
+ },
+ {
+  "seq_id": "159385",
+  "filed": "2024-01-30 15:58:53",
+  "pdf": "https://nsearchives.nseindia.com/corporate/SEintimation_30012024_30012024155853.pdf",
+  "figures": {
+   "revenue": {
+    "quarter": 72368.0,
+    "prev_quarter": 69026.0,
+    "year_ago": 67898.0,
+    "qoq_pct": 4.8,
+    "yoy_pct": 6.6
+   },
+   "profit": {
+    "quarter": 13789.0,
+    "prev_quarter": 14800.0,
+    "year_ago": 12471.0,
+    "qoq_pct": -6.8,
+    "yoy_pct": 10.6
+   }
+  },
+  "view": "mixed",
+  "reaction": {
+   "reaction_day": "2024-01-31",
+   "when": "after close",
+   "gap_pct": -0.27,
+   "close_pct": 4.8,
+   "high_pct": 5.08,
+   "low_pct": -0.58,
+   "nifty_gap_pct": -0.16,
+   "nifty_close_pct": 0.95,
+   "runup_20d": 1.71,
+   "excess_close_pct": 3.85,
+   "excess_gap_pct": -0.11
+  },
+  "profit_yoy": 10.6,
+  "profit_surprise": -22.4,
+  "revenue_yoy": 6.6,
+  "revenue_surprise": -2.4
+ },
+ {
+  "seq_id": "161450",
+  "filed": "2024-05-07 16:11:01",
+  "pdf": "https://nsearchives.nseindia.com/corporate/SEintimation07052024_Outcome_Results_07052024161101.pdf",
+  "figures": {
+   "revenue": {
+    "quarter": 71138.0,
+    "prev_quarter": 72368.0,
+    "year_ago": 63152.0,
+    "qoq_pct": -1.7,
+    "yoy_pct": 12.6
+   },
+   "profit": {
+    "quarter": 13098.0,
+    "prev_quarter": 13809.0,
+    "year_ago": 9601.0,
+    "qoq_pct": -5.1,
+    "yoy_pct": 36.4
+   }
+  },
+  "view": "good",
+  "reaction": {
+   "reaction_day": "2024-05-08",
+   "when": "after close",
+   "gap_pct": -2.52,
+   "close_pct": -3.22,
+   "high_pct": -2.28,
+   "low_pct": -4.87,
+   "nifty_gap_pct": -0.32,
+   "nifty_close_pct": 0.0,
+   "runup_20d": 2.82,
+   "excess_close_pct": -3.22,
+   "excess_gap_pct": -2.2
+  },
+  "profit_yoy": 36.4,
+  "profit_surprise": 14.6,
+  "revenue_yoy": 12.6,
+  "revenue_surprise": 4.8
+ },
+ {
+  "seq_id": "163870",
+  "filed": "2024-07-27 16:13:24",
+  "pdf": "https://nsearchives.nseindia.com/corporate/SEintimation_OutcomeofBM_July272024_27072024161324.pdf",
+  "figures": {
+   "revenue": {
+    "quarter": 76961.0,
+    "prev_quarter": 71138.0,
+    "year_ago": 67579.0,
+    "qoq_pct": 8.2,
+    "yoy_pct": 13.9
+   },
+   "profit": {
+    "quarter": 167.0,
+    "prev_quarter": 13920.0,
+    "year_ago": 168.0,
+    "qoq_pct": -98.8,
+    "yoy_pct": -0.6
+   }
+  },
+  "view": "weak",
+  "reaction": {
+   "reaction_day": "2024-07-29",
+   "when": "after close",
+   "gap_pct": 0.6,
+   "close_pct": -0.56,
+   "high_pct": 1.01,
+   "low_pct": -2.09,
+   "nifty_gap_pct": 0.44,
+   "nifty_close_pct": 0.01,
+   "runup_20d": 7.02,
+   "excess_close_pct": -0.57,
+   "excess_gap_pct": 0.16
+  },
+  "profit_yoy": -0.6,
+  "profit_surprise": -33.6,
+  "revenue_yoy": 13.9,
+  "revenue_surprise": 4.9
+ },
+ {
+  "seq_id": "166491",
+  "filed": "2024-11-05 16:05:19",
+  "pdf": "https://nsearchives.nseindia.com/corporate/SEintimation_BMOutcome_05112024_05112024160519.pdf",
+  "figures": {
+   "revenue": {
+    "quarter": 80382.0,
+    "prev_quarter": 76961.0,
+    "year_ago": 69026.0,
+    "qoq_pct": 4.4,
+    "yoy_pct": 16.5
+   },
+   "profit": {
+    "quarter": 13415.0,
+    "prev_quarter": 13920.0,
+    "year_ago": 14800.0,
+    "qoq_pct": -3.6,
+    "yoy_pct": -9.4
+   }
+  },
+  "view": "mixed",
+  "reaction": {
+   "reaction_day": "2024-11-06",
+   "when": "after close",
+   "gap_pct": 0.14,
+   "close_pct": 2.35,
+   "high_pct": 3.91,
+   "low_pct": -1.62,
+   "nifty_gap_pct": 0.39,
+   "nifty_close_pct": 1.12,
+   "runup_20d": -1.24,
+   "excess_close_pct": 1.23,
+   "excess_gap_pct": -0.25
+  },
+  "profit_yoy": -9.4,
+  "profit_surprise": -31.2,
+  "revenue_yoy": 16.5,
+  "revenue_surprise": 5.7
+ },
+ {
+  "seq_id": "168503",
+  "filed": "2025-01-23 17:00:02",
+  "pdf": "https://nsearchives.nseindia.com/corporate/SEintimation_BM_Outcome_23012025_1_23012025170002.pdf",
+  "figures": {
+   "revenue": {
+    "quarter": 83812.0,
+    "prev_quarter": 80382.0,
+    "year_ago": 72368.0,
+    "qoq_pct": 4.3,
+    "yoy_pct": 15.8
+   },
+   "profit": {
+    "quarter": 14042.0,
+    "prev_quarter": 13419.0,
+    "year_ago": 13809.0,
+    "qoq_pct": 4.6,
+    "yoy_pct": 1.7
+   }
+  },
+  "view": "good",
+  "reaction": {
+   "reaction_day": "2025-01-24",
+   "when": "after close",
+   "gap_pct": -4.61,
+   "close_pct": -5.04,
+   "high_pct": -2.85,
+   "low_pct": -6.66,
+   "nifty_gap_pct": -0.09,
+   "nifty_close_pct": -0.49,
+   "runup_20d": -2.56,
+   "excess_close_pct": -4.55,
+   "excess_gap_pct": -4.52
+  },
+  "profit_yoy": 1.7,
+  "profit_surprise": -3.3,
+  "revenue_yoy": 15.8,
+  "revenue_surprise": 2.6
+ },
+ {
+  "seq_id": "106309165",
+  "filed": "2025-07-23 16:37:13",
+  "pdf": "https://nsearchives.nseindia.com/corporate/DRREDDY_23072025163644_SEintimation_Outcome_Results_23072025_Final_1_signed.pdf",
+  "figures": {
+   "revenue": {
+    "quarter": 85721.0,
+    "prev_quarter": 85284.0,
+    "year_ago": 76961.0,
+    "qoq_pct": 0.5,
+    "yoy_pct": 11.4
+   },
+   "profit": {
+    "quarter": 14096.0,
+    "prev_quarter": 15873.0,
+    "year_ago": 13920.0,
+    "qoq_pct": -11.2,
+    "yoy_pct": 1.3
+   }
+  },
+  "view": "mixed",
+  "reaction": {
+   "reaction_day": "2025-07-24",
+   "when": "after close",
+   "gap_pct": 1.1,
+   "close_pct": 1.45,
+   "high_pct": 3.25,
+   "low_pct": 0.7,
+   "nifty_gap_pct": 0.09,
+   "nifty_close_pct": -0.63,
+   "runup_20d": -6.92,
+   "excess_close_pct": 2.08,
+   "excess_gap_pct": 1.01
+  },
+  "profit_yoy": 1.3,
+  "profit_surprise": 0.8,
+  "revenue_yoy": 11.4,
+  "revenue_surprise": -3.5
+ },
+ {
+  "seq_id": "106415373",
+  "filed": "2025-10-24 16:44:48",
+  "pdf": "https://nsearchives.nseindia.com/corporate/DRREDDY_24102025164215_SEintimation_Outcome_Results_24102025_signed_final.pdf",
+  "figures": {
+   "revenue": {
+    "quarter": 88283.0,
+    "prev_quarter": 85721.0,
+    "year_ago": 80382.0,
+    "qoq_pct": 3.0,
+    "yoy_pct": 9.8
+   },
+   "profit": {
+    "quarter": 13368.0,
+    "prev_quarter": 14099.0,
+    "year_ago": 13419.0,
+    "qoq_pct": -5.2,
+    "yoy_pct": -0.4
+   }
+  },
+  "view": "weak",
+  "reaction": {
+   "reaction_day": "2025-10-27",
+   "when": "after close",
+   "gap_pct": -0.05,
+   "close_pct": 0.05,
+   "high_pct": 0.76,
+   "low_pct": -1.48,
+   "nifty_gap_pct": 0.19,
+   "nifty_close_pct": 0.66,
+   "runup_20d": -4.06,
+   "excess_close_pct": -0.61,
+   "excess_gap_pct": -0.24
+  },
+  "profit_yoy": -0.4,
+  "profit_surprise": -0.8,
+  "revenue_yoy": 9.8,
+  "revenue_surprise": -5.1
+ },
+ {
+  "seq_id": "106503659",
+  "filed": "2026-01-21 17:03:34",
+  "pdf": "https://nsearchives.nseindia.com/corporate/DRREDDY_21012026165722_SE_Intimation_Outcome_of_BM.pdf",
+  "figures": {
+   "revenue": {
+    "quarter": 87534.0,
+    "prev_quarter": 88283.0,
+    "year_ago": 83812.0,
+    "qoq_pct": -0.8,
+    "yoy_pct": 4.4
+   },
+   "profit": {
+    "quarter": 11896.0,
+    "prev_quarter": 14268.0,
+    "year_ago": 14038.0,
+    "qoq_pct": -16.6,
+    "yoy_pct": -15.3
+   }
+  },
+  "view": "weak",
+  "reaction": {
+   "reaction_day": "2026-01-22",
+   "when": "after close",
+   "gap_pct": 3.27,
+   "close_pct": 5.21,
+   "high_pct": 5.86,
+   "low_pct": 2.64,
+   "nifty_gap_pct": 0.74,
+   "nifty_close_pct": 0.53,
+   "runup_20d": -5.96,
+   "excess_close_pct": 4.68,
+   "excess_gap_pct": 2.53
+  },
+  "profit_yoy": -15.3,
+  "profit_surprise": -15.8,
+  "revenue_yoy": 4.4,
+  "revenue_surprise": -9.2
+ },
+ {
+  "seq_id": "106618698",
+  "filed": "2026-05-12 16:39:16",
+  "pdf": "https://nsearchives.nseindia.com/corporate/DRREDDY_12052026163727_SEintimation_Outcome_of_BM_12052026_signed.pdf",
+  "figures": {
+   "revenue": {
+    "quarter": 75464.0,
+    "prev_quarter": 87534.0,
+    "year_ago": 85284.0,
+    "qoq_pct": -13.8,
+    "yoy_pct": -11.5
+   },
+   "profit": {
+    "quarter": 2205.0,
+    "prev_quarter": 11896.0,
+    "year_ago": 15873.0,
+    "qoq_pct": -81.5,
+    "yoy_pct": -86.1
+   }
+  },
+  "view": "weak",
+  "reaction": {
+   "reaction_day": "2026-05-13",
+   "when": "after close",
+   "gap_pct": -1.92,
+   "close_pct": -0.37,
+   "high_pct": 2.66,
+   "low_pct": -3.15,
+   "nifty_gap_pct": -0.07,
+   "nifty_close_pct": 0.14,
+   "runup_20d": 5.86,
+   "excess_close_pct": -0.51,
+   "excess_gap_pct": -1.85
+  },
+  "profit_yoy": -86.1,
+  "profit_surprise": -86.5,
+  "revenue_yoy": -11.5,
+  "revenue_surprise": -22.1
+ },
+ {
+  "seq_id": "106706597",
+  "filed": "2026-07-22 16:18:02",
+  "pdf": "https://nsearchives.nseindia.com/corporate/DRREDDY_22072026161515_SE_Intimation_Outcome_results_22072026_1.pdf",
+  "figures": {
+   "revenue": {
+    "quarter": 80998.0,
+    "prev_quarter": 75464.0,
+    "year_ago": 85721.0,
+    "qoq_pct": 7.3,
+    "yoy_pct": -5.5
+   },
+   "profit": {
+    "quarter": 4348.0,
+    "prev_quarter": 2205.0,
+    "year_ago": 14096.0,
+    "qoq_pct": 97.2,
+    "yoy_pct": -69.2
+   }
+  },
+  "view": "weak",
+  "reaction": {
+   "reaction_day": "2026-07-23",
+   "when": "after close",
+   "gap_pct": -6.92,
+   "close_pct": -1.39,
+   "high_pct": -0.95,
+   "low_pct": -6.92,
+   "nifty_gap_pct": -0.38,
+   "nifty_close_pct": -0.53,
+   "runup_20d": -9.83,
+   "excess_close_pct": -0.86,
+   "excess_gap_pct": -6.54
+  },
+  "profit_yoy": -69.2,
+  "profit_surprise": -61.4,
+  "revenue_yoy": -5.5,
+  "revenue_surprise": -12.6
+ }
+]

@@ -1,0 +1,479 @@
+[
+ {
+  "seq_id": "158721",
+  "filed": "2023-11-13 20:09:54",
+  "pdf": "https://nsearchives.nseindia.com/corporate/SEIntimationOutcome_13112023200954.pdf",
+  "figures": {
+   "revenue": {
+    "quarter": 6442.02,
+    "prev_quarter": 6237.55,
+    "year_ago": 6745.24,
+    "qoq_pct": 3.3,
+    "yoy_pct": -4.5
+   },
+   "profit": {
+    "quarter": 2024.05,
+    "prev_quarter": 257635.0,
+    "year_ago": 1509.19,
+    "qoq_pct": -99.2,
+    "yoy_pct": 34.1
+   }
+  },
+  "view": "mixed",
+  "reaction": {
+   "reaction_day": "2023-11-15",
+   "when": "after close",
+   "gap_pct": 0.94,
+   "close_pct": 0.78,
+   "high_pct": 1.84,
+   "low_pct": 0.32,
+   "nifty_gap_pct": 1.07,
+   "nifty_close_pct": 1.19,
+   "runup_20d": -1.15,
+   "excess_close_pct": -0.41,
+   "excess_gap_pct": -0.13
+  },
+  "profit_yoy": 34.1,
+  "profit_surprise": null,
+  "revenue_yoy": -4.5,
+  "revenue_surprise": null
+ },
+ {
+  "seq_id": "105752780",
+  "filed": "2024-02-08 20:23:55",
+  "pdf": "https://nsearchives.nseindia.com/corporate/GRASIM_08022024202356_SEIntimationPressRelease.pdf",
+  "figures": {},
+  "view": "unread",
+  "reaction": {
+   "reaction_day": "2024-02-09",
+   "when": "after close",
+   "gap_pct": -0.0,
+   "close_pct": 5.41,
+   "high_pct": 6.06,
+   "low_pct": -0.51,
+   "nifty_gap_pct": 0.04,
+   "nifty_close_pct": 0.3,
+   "runup_20d": -0.73,
+   "excess_close_pct": 5.11,
+   "excess_gap_pct": -0.04
+  },
+  "profit_yoy": null,
+  "profit_surprise": null,
+  "revenue_yoy": null,
+  "revenue_surprise": null
+ },
+ {
+  "seq_id": "162238",
+  "filed": "2024-05-22 21:42:40",
+  "pdf": "https://nsearchives.nseindia.com/corporate/SEIntimationFinancialResults_22052024214240.pdf",
+  "figures": {
+   "revenue": {
+    "quarter": 6767.51,
+    "prev_quarter": 6400.25,
+    "year_ago": 6645.83,
+    "qoq_pct": 5.7,
+    "yoy_pct": 1.8
+   },
+   "profit": {
+    "quarter": -440.93,
+    "prev_quarter": 236.31,
+    "year_ago": 93.51,
+    "qoq_pct": -286.6,
+    "yoy_pct": -571.5
+   }
+  },
+  "view": "weak",
+  "reaction": {
+   "reaction_day": "2024-05-23",
+   "when": "after close",
+   "gap_pct": 0.22,
+   "close_pct": 0.7,
+   "high_pct": 1.04,
+   "low_pct": -1.68,
+   "nifty_gap_pct": 0.07,
+   "nifty_close_pct": 1.64,
+   "runup_20d": 5.67,
+   "excess_close_pct": -0.94,
+   "excess_gap_pct": 0.15
+  },
+  "profit_yoy": -100.0,
+  "profit_surprise": -134.1,
+  "revenue_yoy": 1.8,
+  "revenue_surprise": 6.3
+ },
+ {
+  "seq_id": "164660",
+  "filed": "2024-08-09 13:52:20",
+  "pdf": "https://nsearchives.nseindia.com/corporate/SEIntimationFinancialResults_09082024135220.pdf",
+  "figures": {
+   "revenue": {
+    "quarter": 6893.87,
+    "prev_quarter": 6767.51,
+    "year_ago": 6237.55,
+    "qoq_pct": 1.9,
+    "yoy_pct": 10.5
+   },
+   "profit": {
+    "quarter": 2267.74,
+    "prev_quarter": 2721.81,
+    "year_ago": 2576.35,
+    "qoq_pct": -16.7,
+    "yoy_pct": -12.0
+   }
+  },
+  "view": "weak",
+  "reaction": {
+   "reaction_day": "2024-08-09",
+   "when": "during market",
+   "gap_pct": 0.45,
+   "close_pct": 1.1,
+   "high_pct": 3.71,
+   "low_pct": -0.18,
+   "nifty_gap_pct": 1.12,
+   "nifty_close_pct": 1.04,
+   "runup_20d": -8.34,
+   "excess_close_pct": 0.06,
+   "excess_gap_pct": null
+  },
+  "profit_yoy": -12.0,
+  "profit_surprise": 21.0,
+  "revenue_yoy": 10.5,
+  "revenue_surprise": 11.8
+ },
+ {
+  "seq_id": "105975173",
+  "filed": "2024-09-03 12:15:03",
+  "pdf": "https://nsearchives.nseindia.com/corporate/GRASIM_03092024121503_ReplytoNSEResultsQuery.pdf",
+  "figures": {},
+  "view": "unread",
+  "reaction": {
+   "reaction_day": "2024-09-03",
+   "when": "during market",
+   "gap_pct": -0.4,
+   "close_pct": 0.6,
+   "high_pct": 0.71,
+   "low_pct": -0.4,
+   "nifty_gap_pct": 0.14,
+   "nifty_close_pct": 0.0,
+   "runup_20d": -2.86,
+   "excess_close_pct": 0.6,
+   "excess_gap_pct": null
+  },
+  "profit_yoy": null,
+  "profit_surprise": null,
+  "revenue_yoy": null,
+  "revenue_surprise": null
+ },
+ {
+  "seq_id": "168083",
+  "filed": "2024-11-14 20:27:05",
+  "pdf": "https://nsearchives.nseindia.com/corporate/SEIntimationFinancialResults_14112024202705.pdf",
+  "figures": {
+   "revenue": {
+    "quarter": 7623.33,
+    "prev_quarter": 6893.87,
+    "year_ago": 6442.02,
+    "qoq_pct": 10.6,
+    "yoy_pct": 18.3
+   },
+   "profit": {
+    "quarter": 720.86,
+    "prev_quarter": -52.12,
+    "year_ago": 794.74,
+    "qoq_pct": -1483.1,
+    "yoy_pct": -9.3
+   }
+  },
+  "view": "mixed",
+  "reaction": {
+   "reaction_day": "2024-11-18",
+   "when": "after close",
+   "gap_pct": -1.07,
+   "close_pct": -0.27,
+   "high_pct": 1.14,
+   "low_pct": -1.78,
+   "nifty_gap_pct": 0.31,
+   "nifty_close_pct": -0.34,
+   "runup_20d": -1.8,
+   "excess_close_pct": 0.07,
+   "excess_gap_pct": -1.38
+  },
+  "profit_yoy": -9.3,
+  "profit_surprise": 46.7,
+  "revenue_yoy": 18.3,
+  "revenue_surprise": 12.2
+ },
+ {
+  "seq_id": "169619",
+  "filed": "2025-02-10 19:38:07",
+  "pdf": "https://nsearchives.nseindia.com/corporate/SEIntimationResults_10022025193807.pdf",
+  "figures": {
+   "revenue": {
+    "quarter": 8120.28,
+    "prev_quarter": 7623.33,
+    "year_ago": 6400.25,
+    "qoq_pct": 6.5,
+    "yoy_pct": 26.9
+   },
+   "profit": {
+    "quarter": 1844.3,
+    "prev_quarter": 1100.16,
+    "year_ago": 2603.43,
+    "qoq_pct": 67.6,
+    "yoy_pct": -29.2
+   }
+  },
+  "view": "mixed",
+  "reaction": {
+   "reaction_day": "2025-02-11",
+   "when": "after close",
+   "gap_pct": -0.54,
+   "close_pct": 0.74,
+   "high_pct": 2.78,
+   "low_pct": -0.7,
+   "nifty_gap_pct": 0.01,
+   "nifty_close_pct": -1.32,
+   "runup_20d": 6.15,
+   "excess_close_pct": 2.06,
+   "excess_gap_pct": -0.55
+  },
+  "profit_yoy": -29.2,
+  "profit_surprise": -17.2,
+  "revenue_yoy": 26.9,
+  "revenue_surprise": 16.4
+ },
+ {
+  "seq_id": "106244443",
+  "filed": "2025-05-22 19:58:44",
+  "pdf": "https://nsearchives.nseindia.com/corporate/GRASIM_22052025195828_SEIntimationOutcome.pdf",
+  "figures": {
+   "revenue": {
+    "quarter": 8925.75,
+    "prev_quarter": 8120.28,
+    "year_ago": 6767.51,
+    "qoq_pct": 9.9,
+    "yoy_pct": 31.9
+   },
+   "profit": {
+    "quarter": -287.99,
+    "prev_quarter": -168.65,
+    "year_ago": -440.93,
+    "qoq_pct": 70.8,
+    "yoy_pct": -34.7
+   }
+  },
+  "view": "mixed",
+  "reaction": {
+   "reaction_day": "2025-05-23",
+   "when": "after close",
+   "gap_pct": 0.01,
+   "close_pct": -0.57,
+   "high_pct": 2.7,
+   "low_pct": -0.88,
+   "nifty_gap_pct": 0.12,
+   "nifty_close_pct": 0.99,
+   "runup_20d": -1.56,
+   "excess_close_pct": -1.56,
+   "excess_gap_pct": -0.11
+  },
+  "profit_yoy": -34.7,
+  "profit_surprise": -22.7,
+  "revenue_yoy": 31.9,
+  "revenue_surprise": 13.6
+ },
+ {
+  "seq_id": "106331861",
+  "filed": "2025-08-08 14:13:37",
+  "pdf": "https://nsearchives.nseindia.com/corporate/GRASIM_08082025141052_SEIntimationResults.pdf",
+  "figures": {
+   "revenue": {
+    "quarter": 9223.13,
+    "prev_quarter": 8925.75,
+    "year_ago": 6893.87,
+    "qoq_pct": 3.3,
+    "yoy_pct": 33.8
+   },
+   "profit": {
+    "quarter": -118.18,
+    "prev_quarter": -287.99,
+    "year_ago": -52.12,
+    "qoq_pct": -59.0,
+    "yoy_pct": 126.7
+   }
+  },
+  "view": "strong",
+  "reaction": {
+   "reaction_day": "2025-08-08",
+   "when": "during market",
+   "gap_pct": 0.0,
+   "close_pct": -1.9,
+   "high_pct": 0.19,
+   "low_pct": -2.59,
+   "nifty_gap_pct": -0.21,
+   "nifty_close_pct": -0.95,
+   "runup_20d": 1.86,
+   "excess_close_pct": -0.95,
+   "excess_gap_pct": null
+  },
+  "profit_yoy": 100.0,
+  "profit_surprise": 129.2,
+  "revenue_yoy": 33.8,
+  "revenue_surprise": 6.9
+ },
+ {
+  "seq_id": "106427789",
+  "filed": "2025-11-05 13:54:08",
+  "pdf": "https://nsearchives.nseindia.com/corporate/GRASIM_05112025135355_SEIntimationResults.pdf",
+  "figures": {
+   "revenue": {
+    "quarter": 9610.34,
+    "prev_quarter": 9223.13,
+    "year_ago": 7623.33,
+    "qoq_pct": 4.2,
+    "yoy_pct": 26.1
+   },
+   "profit": {
+    "quarter": 804.55,
+    "prev_quarter": -118.18,
+    "year_ago": 720.86,
+    "qoq_pct": -780.8,
+    "yoy_pct": 11.6
+   }
+  },
+  "view": "good",
+  "reaction": {
+   "reaction_day": "2025-11-06",
+   "when": "after close",
+   "gap_pct": -2.95,
+   "close_pct": -6.31,
+   "high_pct": -2.85,
+   "low_pct": -6.59,
+   "nifty_gap_pct": -0.02,
+   "nifty_close_pct": -0.34,
+   "runup_20d": 0.58,
+   "excess_close_pct": -5.97,
+   "excess_gap_pct": -2.93
+  },
+  "profit_yoy": 11.6,
+  "profit_surprise": 30.9,
+  "revenue_yoy": 26.1,
+  "revenue_surprise": -3.3
+ },
+ {
+  "seq_id": "106528497",
+  "filed": "2026-02-10 17:50:12",
+  "pdf": "https://nsearchives.nseindia.com/corporate/GRASIM_10022026174958_SEIntimationOutcomeFinal.pdf",
+  "figures": {
+   "revenue": {
+    "quarter": 10431.76,
+    "prev_quarter": 9610.34,
+    "year_ago": 8120.28,
+    "qoq_pct": 8.5,
+    "yoy_pct": 28.5
+   },
+   "profit": {
+    "quarter": -174.44,
+    "prev_quarter": 804.55,
+    "year_ago": -168.65,
+    "qoq_pct": -121.7,
+    "yoy_pct": 3.4
+   }
+  },
+  "view": "mixed",
+  "reaction": {
+   "reaction_day": "2026-02-11",
+   "when": "after close",
+   "gap_pct": 0.85,
+   "close_pct": -0.72,
+   "high_pct": 0.85,
+   "low_pct": -2.0,
+   "nifty_gap_pct": 0.24,
+   "nifty_close_pct": 0.07,
+   "runup_20d": 4.26,
+   "excess_close_pct": -0.79,
+   "excess_gap_pct": 0.61
+  },
+  "profit_yoy": 3.4,
+  "profit_surprise": 12.2,
+  "revenue_yoy": 28.5,
+  "revenue_surprise": -0.9
+ },
+ {
+  "seq_id": "106631326",
+  "filed": "2026-05-20 14:37:37",
+  "pdf": "https://nsearchives.nseindia.com/corporate/GRASIM_20052026143701_Seintimationfinal.pdf",
+  "figures": {
+   "revenue": {
+    "quarter": 11774.25,
+    "prev_quarter": 10431.76,
+    "year_ago": 8925.75,
+    "qoq_pct": 12.9,
+    "yoy_pct": 31.9
+   },
+   "profit": {
+    "quarter": -163.54,
+    "prev_quarter": -174.44,
+    "year_ago": -287.99,
+    "qoq_pct": -6.2,
+    "yoy_pct": -43.2
+   }
+  },
+  "view": "weak",
+  "reaction": {
+   "reaction_day": "2026-05-20",
+   "when": "during market",
+   "gap_pct": -0.92,
+   "close_pct": 1.22,
+   "high_pct": 1.8,
+   "low_pct": -1.86,
+   "nifty_gap_pct": -0.68,
+   "nifty_close_pct": 0.17,
+   "runup_20d": 9.41,
+   "excess_close_pct": 1.05,
+   "excess_gap_pct": null
+  },
+  "profit_yoy": -43.2,
+  "profit_surprise": -50.7,
+  "revenue_yoy": 31.9,
+  "revenue_surprise": 1.7
+ },
+ {
+  "seq_id": "106738833",
+  "filed": "2026-08-12 14:27:39",
+  "pdf": "https://nsearchives.nseindia.com/corporate/GRASIM_12082026142619_Seintimation.pdf",
+  "figures": {
+   "revenue": {
+    "quarter": 11794.71,
+    "prev_quarter": 11774.25,
+    "year_ago": 9223.13,
+    "qoq_pct": 0.2,
+    "yoy_pct": 27.9
+   },
+   "profit": {
+    "quarter": 246.65,
+    "prev_quarter": -163.54,
+    "year_ago": -118.18,
+    "qoq_pct": -250.8,
+    "yoy_pct": -308.7
+   }
+  },
+  "view": "weak",
+  "reaction": {
+   "reaction_day": "2026-08-12",
+   "when": "during market",
+   "gap_pct": 0.09,
+   "close_pct": -0.43,
+   "high_pct": 2.16,
+   "low_pct": -1.55,
+   "nifty_gap_pct": 0.0,
+   "nifty_close_pct": -0.15,
+   "runup_20d": 4.97,
+   "excess_close_pct": -0.28,
+   "excess_gap_pct": null
+  },
+  "profit_yoy": -100.0,
+  "profit_surprise": -107.5,
+  "revenue_yoy": 27.9,
+  "revenue_surprise": -2.3
+ }
+]

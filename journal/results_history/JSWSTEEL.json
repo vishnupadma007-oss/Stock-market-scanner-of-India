@@ -1,0 +1,297 @@
+[
+ {
+  "seq_id": "159245",
+  "filed": "2024-01-25 15:14:02",
+  "pdf": "https://nsearchives.nseindia.com/corporate/results_25012024151402.pdf",
+  "figures": {},
+  "view": "unread",
+  "reaction": {
+   "reaction_day": "2024-01-25",
+   "when": "during market",
+   "gap_pct": 0.34,
+   "close_pct": 0.43,
+   "high_pct": 1.08,
+   "low_pct": -2.39,
+   "nifty_gap_pct": 0.0,
+   "nifty_close_pct": -0.47,
+   "runup_20d": -4.76,
+   "excess_close_pct": 0.9,
+   "excess_gap_pct": null
+  },
+  "profit_yoy": null,
+  "profit_surprise": null,
+  "revenue_yoy": null,
+  "revenue_surprise": null
+ },
+ {
+  "seq_id": "161936",
+  "filed": "2024-05-17 15:41:13",
+  "pdf": "https://nsearchives.nseindia.com/corporate/Results_17052024154113.pdf",
+  "figures": {},
+  "view": "unread",
+  "reaction": {
+   "reaction_day": "2024-05-21",
+   "when": "after close",
+   "gap_pct": -1.7,
+   "close_pct": 1.76,
+   "high_pct": 2.37,
+   "low_pct": -1.83,
+   "nifty_gap_pct": -0.27,
+   "nifty_close_pct": 0.28,
+   "runup_20d": 5.28,
+   "excess_close_pct": 1.48,
+   "excess_gap_pct": -1.43
+  },
+  "profit_yoy": null,
+  "profit_surprise": null,
+  "revenue_yoy": null,
+  "revenue_surprise": null
+ },
+ {
+  "seq_id": "163593",
+  "filed": "2024-07-19 15:57:54",
+  "pdf": "https://nsearchives.nseindia.com/corporate/results_19072024155754.pdf",
+  "figures": {},
+  "view": "unread",
+  "reaction": {
+   "reaction_day": "2024-07-22",
+   "when": "after close",
+   "gap_pct": -1.57,
+   "close_pct": -0.1,
+   "high_pct": 0.44,
+   "low_pct": -2.73,
+   "nifty_gap_pct": -0.35,
+   "nifty_close_pct": -0.09,
+   "runup_20d": -8.41,
+   "excess_close_pct": -0.01,
+   "excess_gap_pct": -1.22
+  },
+  "profit_yoy": null,
+  "profit_surprise": null,
+  "revenue_yoy": null,
+  "revenue_surprise": null
+ },
+ {
+  "seq_id": "166004",
+  "filed": "2024-10-25 14:00:04",
+  "pdf": "https://nsearchives.nseindia.com/corporate/results_25102024140004.pdf",
+  "figures": {},
+  "view": "unread",
+  "reaction": {
+   "reaction_day": "2024-10-25",
+   "when": "during market",
+   "gap_pct": 0.0,
+   "close_pct": -1.49,
+   "high_pct": 0.19,
+   "low_pct": -3.27,
+   "nifty_gap_pct": 0.08,
+   "nifty_close_pct": -0.9,
+   "runup_20d": 3.67,
+   "excess_close_pct": -0.59,
+   "excess_gap_pct": null
+  },
+  "profit_yoy": null,
+  "profit_surprise": null,
+  "revenue_yoy": null,
+  "revenue_surprise": null
+ },
+ {
+  "seq_id": "168535",
+  "filed": "2025-01-24 16:07:35",
+  "pdf": "https://nsearchives.nseindia.com/corporate/RESULTS_24012025160735.pdf",
+  "figures": {},
+  "view": "unread",
+  "reaction": {
+   "reaction_day": "2025-01-27",
+   "when": "after close",
+   "gap_pct": -3.36,
+   "close_pct": -1.4,
+   "high_pct": -0.58,
+   "low_pct": -3.36,
+   "nifty_gap_pct": -0.66,
+   "nifty_close_pct": -1.14,
+   "runup_20d": 5.13,
+   "excess_close_pct": -0.26,
+   "excess_gap_pct": -2.7
+  },
+  "profit_yoy": null,
+  "profit_surprise": null,
+  "revenue_yoy": null,
+  "revenue_surprise": null
+ },
+ {
+  "seq_id": "106245685",
+  "filed": "2025-05-23 15:52:19",
+  "pdf": "https://nsearchives.nseindia.com/corporate/jessydenny_23052025154848_Signed_Results_FY_25.pdf",
+  "figures": {},
+  "view": "unread",
+  "reaction": {
+   "reaction_day": "2025-05-26",
+   "when": "after close",
+   "gap_pct": 0.07,
+   "close_pct": 2.36,
+   "high_pct": 2.73,
+   "low_pct": -2.88,
+   "nifty_gap_pct": 0.27,
+   "nifty_close_pct": 0.6,
+   "runup_20d": -5.95,
+   "excess_close_pct": 1.76,
+   "excess_gap_pct": -0.2
+  },
+  "profit_yoy": null,
+  "profit_surprise": null,
+  "revenue_yoy": null,
+  "revenue_surprise": null
+ },
+ {
+  "seq_id": "106304312",
+  "filed": "2025-07-18 15:27:53",
+  "pdf": "https://nsearchives.nseindia.com/corporate/jessydenny_18072025152733_results_signed.pdf",
+  "figures": {},
+  "view": "unread",
+  "reaction": {
+   "reaction_day": "2025-07-18",
+   "when": "during market",
+   "gap_pct": 0.46,
+   "close_pct": 0.02,
+   "high_pct": 1.87,
+   "low_pct": -0.7,
+   "nifty_gap_pct": -0.01,
+   "nifty_close_pct": -0.57,
+   "runup_20d": 2.55,
+   "excess_close_pct": 0.59,
+   "excess_gap_pct": null
+  },
+  "profit_yoy": null,
+  "profit_surprise": null,
+  "revenue_yoy": null,
+  "revenue_surprise": null
+ },
+ {
+  "seq_id": "106411112",
+  "filed": "2025-10-17 14:52:36",
+  "pdf": "https://nsearchives.nseindia.com/corporate/Supriya_17102025145203_Results.pdf",
+  "figures": {
+   "revenue": {
+    "quarter": 42149.0,
+    "prev_quarter": 40510.0,
+    "year_ago": 37496.0,
+    "qoq_pct": 4.0,
+    "yoy_pct": 12.4
+   }
+  },
+  "view": "mixed",
+  "reaction": {
+   "reaction_day": "2025-10-17",
+   "when": "during market",
+   "gap_pct": 0.25,
+   "close_pct": -0.75,
+   "high_pct": 0.5,
+   "low_pct": -1.92,
+   "nifty_gap_pct": -0.15,
+   "nifty_close_pct": 0.49,
+   "runup_20d": 4.49,
+   "excess_close_pct": -1.24,
+   "excess_gap_pct": null
+  },
+  "profit_yoy": null,
+  "profit_surprise": null,
+  "revenue_yoy": 12.4,
+  "revenue_surprise": null
+ },
+ {
+  "seq_id": "106506221",
+  "filed": "2026-01-23 15:29:13",
+  "pdf": "https://nsearchives.nseindia.com/corporate/Supriya_23012026152658_results.pdf",
+  "figures": {
+   "revenue": {
+    "quarter": 32127.0,
+    "prev_quarter": 32859.0,
+    "year_ago": 31799.0,
+    "qoq_pct": -2.2,
+    "yoy_pct": 1.0
+   }
+  },
+  "view": "mixed",
+  "reaction": {
+   "reaction_day": "2026-01-23",
+   "when": "during market",
+   "gap_pct": 0.75,
+   "close_pct": -1.22,
+   "high_pct": 0.75,
+   "low_pct": -1.65,
+   "nifty_gap_pct": 0.22,
+   "nifty_close_pct": -0.95,
+   "runup_20d": 11.92,
+   "excess_close_pct": -0.27,
+   "excess_gap_pct": null
+  },
+  "profit_yoy": null,
+  "profit_surprise": null,
+  "revenue_yoy": 1.0,
+  "revenue_surprise": -11.4
+ },
+ {
+  "seq_id": "106622458",
+  "filed": "2026-05-14 15:32:30",
+  "pdf": "https://nsearchives.nseindia.com/corporate/jessydenny_14052026153116_Results.pdf",
+  "figures": {},
+  "view": "unread",
+  "reaction": {
+   "reaction_day": "2026-05-15",
+   "when": "after close",
+   "gap_pct": 1.32,
+   "close_pct": -1.4,
+   "high_pct": 1.32,
+   "low_pct": -1.75,
+   "nifty_gap_pct": 0.18,
+   "nifty_close_pct": -0.19,
+   "runup_20d": 8.66,
+   "excess_close_pct": -1.21,
+   "excess_gap_pct": 1.14
+  },
+  "profit_yoy": null,
+  "profit_surprise": null,
+  "revenue_yoy": null,
+  "revenue_surprise": null
+ },
+ {
+  "seq_id": "106701404",
+  "filed": "2026-07-17 14:43:55",
+  "pdf": "https://nsearchives.nseindia.com/corporate/jessydenny_17072026144125_Results_covering.pdf",
+  "figures": {
+   "revenue": {
+    "quarter": 47364.0,
+    "prev_quarter": 51180.0,
+    "year_ago": 43147.0,
+    "qoq_pct": -7.5,
+    "yoy_pct": 9.8
+   },
+   "profit": {
+    "quarter": 2094.0,
+    "prev_quarter": 2156.0,
+    "year_ago": 2178.0,
+    "qoq_pct": -2.9,
+    "yoy_pct": -3.9
+   }
+  },
+  "view": "mixed",
+  "reaction": {
+   "reaction_day": "2026-07-17",
+   "when": "during market",
+   "gap_pct": 0.0,
+   "close_pct": 1.33,
+   "high_pct": 1.88,
+   "low_pct": -0.25,
+   "nifty_gap_pct": 0.23,
+   "nifty_close_pct": 1.09,
+   "runup_20d": -5.09,
+   "excess_close_pct": 0.24,
+   "excess_gap_pct": null
+  },
+  "profit_yoy": -3.9,
+  "profit_surprise": null,
+  "revenue_yoy": 9.8,
+  "revenue_surprise": 3.1
+ }
+]
