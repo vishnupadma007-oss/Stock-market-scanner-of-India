@@ -3,6 +3,20 @@
 # ------------------------------------------------------------------
 
 capital: 30000             # starting paper-trading capital (₹); realised P&L is added back
+
+# Two teams trade side by side, each with its own paper capital and one trade at a time, to see
+# which finds more chances and makes more money. The evening review keeps a scoreboard.
+teams:
+  movers:                  # top gainers/losers reversal: price, chart, options, sector moves only
+    capital: 30000
+    news_votes: false      # true = also let news/filings/forecast agents vote on its trades
+  news:                    # NSE filings, results, concalls, news -> Data Analyzer forecasts
+    capital: 30000
+    auto_trade: true       # opens trades by itself; Claude can also open them with paper_trade.py
+    min_confidence: 60     # forecast confidence needed, after the priced-in cut
+    confirm_pct: 0.5       # the stock must already move the forecast's way by this much today
+    max_move_pct: 4.0      # ...but not more (move used up)
+    max_age_min: 120       # forget ideas older than this
 max_capital_per_trade: 1.0   # share of available money one trade may use (1.0 = all of it)
 max_trades_per_day: 50     # effectively no cap: trade every setup that passes the agents
 net_target_pct: 1.0        # target profit per trade, % of premium paid, AFTER all charges

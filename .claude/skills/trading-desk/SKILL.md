@@ -13,6 +13,19 @@ argue for one on every signal; mention risk only when something is unusual.
 
 These are **paper trades**. INDmoney access is read-only; never claim an order was placed.
 
+**Two teams trade side by side** (`config.yaml` -> `teams`), each with its own paper capital
+(₹30,000 each) and its own one-trade-at-a-time rule, so the user can see which one finds more
+chances and makes more money:
+- **Movers team** (strategy `reversal`): the top gainers/losers reversal above, read from price,
+  charts, options and sector moves only (`news_votes: false`).
+- **News team** (strategies `results`, `intel`): NSE filings, results, concalls and news, turned
+  into forecasts by the Data Analyzer and checked by the Expectations agent (priced in?). The
+  watcher opens its trades by itself when the price confirms the forecast's direction (moving
+  0.5-4% that way today); you can also open one with `paper_trade.py`. Buys a CALL for "up",
+  a PUT for "down"; same 1% net target, no stop-loss, same exits.
+Each SIGNAL line says its `team`. Keep the teams apart: never close one team's trade because of
+the other, and report results per team.
+
 **INDmoney allows 500 calls per hour for the whole account**, shared by the watcher (about
 250-300 an hour) and your own INDmoney tool calls. Keep your calls few: no surveys or bulk
 lookups during market hours. On `ERROR ... hourly call limit reached` the watcher pauses by itself.
@@ -77,6 +90,11 @@ One short research pass that sets the day's mode. Keep it to a handful of search
 
 ## On a SIGNAL line
 
+A **news-team** signal (`team: news`) carries `source` (results / intel), `reason`,
+`confidence`, `priced_in` and `valuation`. Check that the story is real (the reason, and one web
+search if thin) and that it is not already priced in, then give TRADE/SKIP in 2-3 lines. The
+rest of this section is about **movers-team** signals.
+
 The rule-based agents already opened a paper trade at the live ask. The signal already
 carries what the agents found: `chart_signals`, `news_and_macro` (INDmoney headlines with
 sentiment, results calendar, sudden-pressure volume check, sector/crude/rupee moves),
@@ -122,10 +140,12 @@ scanned filings: if `figures` is empty or disagrees with `highlights`, trust the
    priced in, a merely decent quarter can lift it. `reaction`, when present, says the price is
    already moving against the numbers: believe the price.
 4. Forecast: direction (up/down), how strong, and whether the price already moved too far.
-5. If it is between 09:45 and 14:30 and the numbers, expectations and the first reaction agree, open a
-   results trade: `python paper_trade.py open --symbol X --direction up|down --strategy results
-   --reason "<one line>"`. It applies the same rules (one trade at a time, lot must fit, 1% net
-   target, no stop-loss) and the watcher manages the exit. Otherwise note it for the next morning.
+5. The news team already has this as a trade idea and will open it by itself once the price
+   confirms (watch for its SIGNAL). Only if your read clearly differs from the machine's (e.g. it
+   says "strong" but the quarter missed consensus), and it is 09:45-14:30 with no news-team trade
+   open, open the trade yourself: `python paper_trade.py open --symbol X --direction up|down
+   --strategy results --reason "<one line>"` (same rules: lot must fit, 1% net target, no
+   stop-loss; the watcher manages the exit). Otherwise note it for the next morning.
 6. Tell the user in a few lines: the numbers, your read, priced in or not, the forecast, and what you did.
 
 For a concall transcript, apply the `nlp-earnings-sentiment` ideas: management's tone and
@@ -147,10 +167,10 @@ and confirmed by 2+ sources or one major item. The tone reading is a word list, 
 read the `reasons` (and one web search if they are thin). `priced_in` says whether the price
 already holds the story; when it does, the confidence was cut by 25 and `priced_in_note` says
 what it would take to move further: prefer no trade unless the news is clearly bigger than
-what was expected. If the story is real and the price
-agrees (one `get_indian_stocks_details` call), and it is 09:45-14:30 with no trade open, open a
-trade: `python paper_trade.py open --symbol X --direction up|down --strategy intel --reason "..."`.
-Tell the user in 2-3 lines. If it is noise (wrong company, old story, sarcasm), say so in one line.
+what was expected. The news team turns it into a trade by itself when the price confirms, so
+usually just tell the user in 2-3 lines whether the story is real. Open a trade yourself
+(`python paper_trade.py open --symbol X --direction up|down --strategy intel --reason "..."`)
+only for a story the machine under-rated. If it is noise (wrong company, old story, sarcasm), say so in one line.
 
 ## On a COMMODITY line (a commodity moved 3% or more today)
 
@@ -161,15 +181,18 @@ the move is a lasting shock, add the affected stocks to today's `avoid` list in
 
 ## On an EXIT line
 
-Tell the user the result in one line (contract, entry, exit, net P&L). The desk trades one
-position at a time: setups found while a trade is open are only recorded in
+Tell the user the result in one line (team, contract, entry, exit, net P&L). Each team trades
+one position at a time: movers setups found while its trade is open are only recorded in
 `journal/held_setups.csv` (no SIGNAL), and a fresh scan runs right after the exit.
 
 ## Evening review
 
 Run it when the watcher prints `STATUS ... market closed`, or whenever the user asks.
 
-1. `python review.py` writes `journal/reviews/<date>.md`: today's trades, running totals,
+1. `python review.py` writes `journal/reviews/<date>.md`. It starts with the **team scoreboard**
+   (movers vs news: chances found, trades, hit rate, net ₹, return on each team's capital);
+   lead the user's summary with it. Do not call a winner before both teams have 30+ trades.
+   Then: today's trades, running totals,
    rules-only vs Claude-confirmed, and breakdowns by side, entry hour, bid-ask gap and
    forecast chance. Send the user a short summary: today's P&L, the running totals, and one
    notable observation.
@@ -186,7 +209,7 @@ Run it when the watcher prints `STATUS ... market closed`, or whenever the user 
         without `--set`.
      b. Check both the paper trades and the backtest with the `quantforge-ai` validation gates
         and `python .claude/skills/quantforge-ai/scripts/metrics.py --trades
-        journal/reviews/pnl_for_metrics.csv`. Keep only changes that help in **both** paper
+        journal/reviews/pnl_for_metrics_movers.csv` (and `_news.csv`). Keep only changes that help in **both** paper
         trading and the backtest.
      c. Propose at most two changes to the user, each with before/after numbers.
 3. **Never apply a change without the user's explicit OK.** When they approve: edit

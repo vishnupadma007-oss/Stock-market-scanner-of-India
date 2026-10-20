@@ -103,12 +103,14 @@ def test_poll_filings_emits_once(monkeypatch, tmp_path, capsys):
 
 
 def test_paper_trade_rules():
-    open_row = [{"status": "OPEN"}]
+    open_row = [{"status": "OPEN", "strategy": "results"}]
     at = lambda h, m, d=21: datetime(2026, 10, d, h, m, tzinfo=IST)
     assert "closed" in paper_trade.check_rules([], at(11, 0, 20), CFG)  # Dussehra
     assert "window" in paper_trade.check_rules([], at(9, 30), CFG)
     assert "already open" in paper_trade.check_rules(open_row, at(11, 0), CFG)
     assert paper_trade.check_rules([], at(11, 0), CFG) is None
+    # A movers-team trade does not block the news team: the two teams trade side by side.
+    assert paper_trade.check_rules([{"status": "OPEN", "strategy": "reversal"}], at(11, 0), CFG) is None
 
 
 def test_scanned_misreads_are_not_trusted():

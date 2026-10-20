@@ -3,8 +3,9 @@
     python paper_trade.py open --symbol TECHM --direction up --strategy results --reason "Q2 beat"
     python paper_trade.py status
 
-direction "up" buys a CALL, "down" buys a PUT. The same rules as the scanner apply: trading day,
-entry window, one trade at a time, lot must fit the free money, target = net target after all
+direction "up" buys a CALL, "down" buys a PUT. These trades belong to the news team and use its
+own paper capital. The same rules as the scanner apply: trading day, entry window, one news-team
+trade at a time, lot must fit the team's free money, target = net target after all
 charges and the bid-ask gap, no stop-loss. The running watcher re-prices the trade and closes it
 at the target or at square-off.
 """
@@ -17,7 +18,7 @@ from agents import holidays
 from agents.config import load_config
 from agents.indmoney import IndMoney, pick_option
 from agents.risk import plan
-from watcher import FIELDS, IST, _t, account, has_open, load_trades, save_trades
+from watcher import FIELDS, IST, TEAMS, _t, account, has_open, load_trades, save_trades
 
 
 async def find_key(im: IndMoney, symbol: str) -> str | None:
@@ -32,8 +33,8 @@ def check_rules(trades: list[dict], now: datetime, cfg: dict) -> str | None:
         return f"NSE closed today ({closed})"
     if not _t(cfg["entry_start"]) <= now.time() <= _t(cfg["entry_end"]):
         return f"outside the entry window {cfg['entry_start']}-{cfg['entry_end']}"
-    if has_open(trades) and cfg.get("one_trade_at_a_time", True):
-        return "a trade is already open (one at a time)"
+    if has_open(trades, "news") and cfg.get("one_trade_at_a_time", True):
+        return "a news-team trade is already open (one at a time)"
     return None
 
 
@@ -44,7 +45,7 @@ async def open_trade(symbol: str, direction: str, strategy: str, reason: str) ->
     problem = check_rules(trades, now, cfg)
     if problem:
         return {"opened": False, "reason": problem}
-    _, free = account(trades, cfg)
+    _, free = account(trades, cfg, "news")
     side = "loser" if direction == "up" else "gainer"  # loser -> CALL, gainer -> PUT
     async with IndMoney() as im:
         key = await find_key(im, symbol)
@@ -85,9 +86,11 @@ def main() -> None:
     else:
         cfg = load_config()
         trades = load_trades()
-        value, free = account(trades, cfg)
-        print(json.dumps({"account_value": round(value), "free": round(free),
-                          "open": [t for t in trades if t["status"] == "OPEN"]}, default=str))
+        teams = {}
+        for team in TEAMS:
+            value, free = account(trades, cfg, team)
+            teams[team] = {"account_value": round(value), "free": round(free)}
+        print(json.dumps({"teams": teams, "open": [t for t in trades if t["status"] == "OPEN"]}, default=str))
 
 
 if __name__ == "__main__":

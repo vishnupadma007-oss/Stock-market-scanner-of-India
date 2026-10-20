@@ -26,6 +26,8 @@ def load(path: Path = TRADES) -> pd.DataFrame:
     if not path.exists():
         return pd.DataFrame()
     df = pd.read_csv(path, dtype=str).fillna("")
+    if "strategy" not in df:  # logs from before the strategy column: all scanner (movers) trades
+        df["strategy"] = ""
     for col in NUMERIC:
         df[col] = pd.to_numeric(df[col], errors="coerce")
     closed = df[df["status"].isin(["TARGET", "SQUARED_OFF"])].copy()
@@ -51,8 +53,37 @@ def _breakdown(df: pd.DataFrame, title: str, key) -> list[str]:
     return lines + [""]
 
 
-def review(df: pd.DataFrame, day: str, since: str) -> str:
+NEWS_STRATEGIES = ("results", "intel", "news")
+
+
+def team_of(strategy: pd.Series) -> pd.Series:
+    return strategy.isin(NEWS_STRATEGIES).map({True: "news", False: "movers"})
+
+
+def scoreboard(df: pd.DataFrame, day: str, capitals: dict, chances: dict) -> list[str]:
+    """Movers team vs news team: chances found, trades, hit rate, money made, return on own capital."""
+    out = ["## Team scoreboard: movers vs news", "",
+           "| Team | Chances today | Trades today | Net today | Trades so far | Hit target | Avg per trade | Net so far | Return on capital |",
+           "|---|---|---|---|---|---|---|---|---|"]
+    teams = team_of(df["strategy"]) if not df.empty else pd.Series(dtype=str)
+    for team, capital in capitals.items():
+        g = df[teams == team] if not df.empty else df
+        t = g[g["date"] == day] if not g.empty else g
+        if g.empty:
+            out.append(f"| {team} | {chances.get(team, 0)} | 0 | ₹0 | 0 | - | - | ₹0 | 0.0% |")
+            continue
+        out.append(f"| {team} | {chances.get(team, 0)} | {len(t)} | ₹{t['net_pnl'].sum():,.0f} | {len(g)} | "
+                   f"{g['hit'].mean() * 100:.0f}% | {g['net_pct'].mean():+.2f}% | ₹{g['net_pnl'].sum():,.0f} | "
+                   f"{g['net_pnl'].sum() / capital * 100:+.1f}% |")
+    return out + ["", "Chances = setups that passed the team's checks (movers: trades + setups held while busy; "
+                      "news: new results/forecast ideas). Judge a winner only after 30+ trades per team.", ""]
+
+
+def review(df: pd.DataFrame, day: str, since: str, capitals: dict | None = None,
+           chances: dict | None = None) -> str:
     out = [f"# Evening review: {day}", ""]
+    if capitals:
+        out += scoreboard(df, day, capitals, chances or {})
     if df.empty:
         return "\n".join(out + ["No closed paper trades yet."])
 
@@ -82,6 +113,7 @@ def review(df: pd.DataFrame, day: str, since: str) -> str:
 
     out += ["## Where it wins and loses", ""]
     if "strategy" in df and df["strategy"].ne("").any():
+        out += _breakdown(df, "By team", team_of(df["strategy"]))
         out += _breakdown(df, "By strategy", df["strategy"].replace("", "reversal"))
     out += _breakdown(df, "By side", "side")
     out += _breakdown(df, "By entry hour", df["opened"].str[:2] + ":00")
@@ -107,22 +139,33 @@ def main() -> None:
     ap = argparse.ArgumentParser()
     ap.add_argument("--date", default=date.today().isoformat())
     args = ap.parse_args()
+    from agents.config import load_config
+    cfg = load_config()
     df = load()
-    text = review(df, args.date, last_change_date())
     held_path = ROOT / "journal" / "held_setups.csv"
-    if held_path.exists():
-        held = pd.read_csv(held_path, dtype=str)
-        held = held[held["date"] == args.date]
-        if not held.empty:
-            text += (f"\n## Setups held while a trade was open: {len(held)}\n\n"
-                     + "\n".join(f"- {r.time} {r.symbol} {r.contract} (score {r.score})" for r in held.itertuples())
-                     + "\n")
+    held = pd.read_csv(held_path, dtype=str) if held_path.exists() else pd.DataFrame(columns=["date"])
+    held = held[held["date"] == args.date]
+    ideas_path = ROOT / "journal" / "news_ideas.csv"
+    ideas = pd.read_csv(ideas_path, dtype=str) if ideas_path.exists() else pd.DataFrame(columns=["date"])
+    opened = pd.read_csv(TRADES, dtype=str).fillna("") if TRADES.exists() else pd.DataFrame(columns=["date"])
+    opened = opened[opened["date"] == args.date]
+    opened_teams = team_of(opened["strategy"]) if "strategy" in opened else pd.Series("movers", index=opened.index)
+    chances = {"movers": int((opened_teams == "movers").sum()) + len(held),
+               "news": int((ideas["date"] == args.date).sum())}
+    capitals = {team: (cfg.get("teams") or {}).get(team, {}).get("capital", cfg["capital"]) for team in ("movers", "news")}
+    text = review(df, args.date, last_change_date(), capitals, chances)
+    if not held.empty:
+        text += (f"\n## Setups held while a trade was open: {len(held)}\n\n"
+                 + "\n".join(f"- {r.time} {r.symbol} {r.contract} (score {r.score})" for r in held.itertuples())
+                 + "\n")
     REVIEWS.mkdir(parents=True, exist_ok=True)
     (REVIEWS / f"{args.date}.md").write_text(text)
-    if not df.empty:  # P&L as a fraction of capital, for QuantForge's metrics.py
-        from agents.config import load_config
-        capital = load_config()["capital"]
-        df.assign(pnl=df["net_pnl"] / capital)[["date", "pnl"]].to_csv(REVIEWS / "pnl_for_metrics.csv", index=False)
+    if not df.empty:  # P&L as a fraction of each team's capital, for QuantForge's metrics.py
+        teams = team_of(df["strategy"])
+        for team, capital in capitals.items():
+            g = df[teams == team]
+            g.assign(pnl=g["net_pnl"] / capital)[["date", "pnl"]].to_csv(REVIEWS / f"pnl_for_metrics_{team}.csv",
+                                                                         index=False)
     print(text)
 
 

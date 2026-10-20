@@ -13,7 +13,8 @@ from agents.indmoney import candles_frame, pick_option
 from tests.test_agents import SPIKE_THEN_FADE, intraday
 
 IST = ZoneInfo("Asia/Kolkata")
-CFG = {**load_config(), "capital": 200000, "strike_choice": "ITM1"}  # one TECHM lot (~₹30k) must fit the per-trade budget
+CFG = {**load_config(), "capital": 200000, "strike_choice": "ITM1",  # one TECHM lot (~₹30k) must fit the per-trade budget
+       "teams": {"movers": {"news_votes": True}}}  # these tests cover the news votes too
 
 
 def leg(did, slug, price, delta, bid, ask):

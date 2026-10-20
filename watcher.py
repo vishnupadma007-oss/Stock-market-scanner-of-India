@@ -2,7 +2,8 @@
 until something happens. It prints one line per event, so Claude (or you) only needs to
 look when there is a signal:
 
-    SIGNAL {...}   new paper trade opened (rule-based agents said TRADE)
+    SIGNAL {...}   new paper trade opened; "team" says which team opened it:
+                   movers = top gainers/losers reversal, news = filings/results/news forecasts
     EXIT {...}     paper trade closed (target reached, or square-off time)
     RESULT {...}   a company in our list filed results on NSE (figures read, priced-in check done)
     NEWS {...}     a major NSE filing (regulatory action, etc.); other filings only feed the analyzer
@@ -49,6 +50,7 @@ FIELDS = ["date", "opened", "symbol", "side", "contract", "underlying_key", "der
           "status", "closed", "exit_bid", "charges", "net_pnl", "claude_verdict", "notes", "strategy",
           "valuation"]
 FILINGS_LOG = Path(__file__).resolve().parent / "journal" / "announcements.csv"
+IDEAS = Path(__file__).resolve().parent / "journal" / "news_ideas.csv"  # the news team's trade ideas
 
 _errors_seen: dict[str, float] = {}
 _daily: dict = {}  # once-a-day lookups: results calendar, crude contract
@@ -155,6 +157,27 @@ def check_expectations(symbol: str, now: datetime, news_view: str | None = None)
     return result
 
 
+def add_idea(symbol: str, direction: str, confidence: int, source: str, reason: str,
+             expect: dict, now: datetime) -> None:
+    """A trade idea for the news team. Confidence is cut when the move is already priced in."""
+    if direction not in ("up", "down"):
+        return
+    adjusted = expectations.adjust_forecast({"direction": direction, "confidence": confidence}, expect)
+    prev = (_daily.get("ideas") or {}).get(symbol)
+    if prev is None or prev["direction"] != direction:  # the review counts these as the news team's chances
+        new = not IDEAS.exists()
+        IDEAS.parent.mkdir(exist_ok=True)
+        with open(IDEAS, "a", newline="") as f:
+            w = csv.writer(f)
+            if new:
+                w.writerow(["date", "time", "symbol", "direction", "confidence", "source", "priced_in"])
+            w.writerow([now.date().isoformat(), now.strftime("%H:%M"), symbol, direction,
+                        adjusted["confidence"], source, expect.get("label", "")])
+    _daily.setdefault("ideas", {})[symbol] = {
+        "direction": direction, "confidence": adjusted["confidence"], "source": source, "reason": reason[:300],
+        "priced_in": expect.get("label"), "at": now}
+
+
 def poll_filings(cfg: dict, now: datetime) -> None:
     """Announcements + Concall agents: new material NSE filings for our stocks. Results filings
     are read straight away and reported as RESULT events; major filings (regulatory) as NEWS;
@@ -183,6 +206,10 @@ def poll_filings(cfg: dict, now: datetime) -> None:
             view = item["read"]["view"]
             item["expectations"] = check_expectations(item["symbol"], now,
                                                       view if view in ("strong", "good", "weak") else None)
+            if view in ("strong", "good", "weak"):
+                confidence = {"strong": 80, "good": 65, "weak": 70}[view]
+                add_idea(item["symbol"], "up" if view != "weak" else "down", confidence, "results",
+                         f"Results {view}: " + "; ".join(item["read"]["notes"]), item["expectations"], now)
             emit("RESULT", item)
         intel_item = announcements.to_intel(item)
         intel.append([intel_item], _daily["intel_seen"])
@@ -209,6 +236,8 @@ def run_analyzer(cfg: dict, now: datetime) -> None:
                                or view["confidence"] >= prev["confidence"] + 20):
             _daily["forecasts"][symbol] = view
             expect = check_expectations(symbol, now)
+            add_idea(symbol, view["direction"], view["confidence"], "intel",
+                     "Analyzer: " + "; ".join(str(r) for r in view.get("reasons", [])[:3]), expect, now)
             emit("FORECAST", {**expectations.adjust_forecast(view, expect),
                               "priced_in": {k: expect.get(k) for k in ("priced_in", "label", "bar", "notes", "error")
                                             if expect.get(k) is not None},
@@ -320,7 +349,9 @@ async def scan(im: IndMoney, trades: list[dict], now: datetime, cfg: dict, hold:
     universe = set(cfg["universe"]) - set(day["avoid"])
     today = now.date().isoformat()
     taken = {t["contract"] for t in trades if t["date"] == today}
-    trades_today = sum(t["date"] == today for t in trades)
+    trades_today = sum(t["date"] == today and team_of(t) == "movers" for t in trades)
+    # The movers team reads price only; news, filings and forecasts are the news team's job.
+    news_votes = team_cfg(cfg, "movers").get("news_votes", False)
 
     for side, category, ok in (("gainer", "top-gainers", mkt["gainers_ok"]),
                                ("loser", "top-losers", mkt["losers_ok"])):
@@ -346,24 +377,28 @@ async def scan(im: IndMoney, trades: list[dict], now: datetime, cfg: dict, hold:
                 forecast = reversal_target(intraday, float(prev_close), side)
                 risk = plan(option, trades_today, now, cfg, sigma_per_min=intraday_sigma_per_min(intraday),
                             spread_pct=option["spread_pct"], forecast=forecast)
-                extras = [news.assess(m["symbol"], side, m["change_pct"], now.date(), await im.news(m["ind_key"]),
-                                      ctx["results"], intraday, cfg,
-                                      filings=_daily.get("filings", {}).get(m["symbol"], []))]
+                extras = []
+                if news_votes:
+                    extras.append(news.assess(m["symbol"], side, m["change_pct"], now.date(),
+                                              await im.news(m["ind_key"]), ctx["results"], intraday, cfg,
+                                              filings=_daily.get("filings", {}).get(m["symbol"], [])))
                 if cfg.get("use_macro", True):
                     # Crude is handled with the other commodities below, so not passed here.
                     extras.append(macro.assess(m["symbol"], side, m["change_pct"],
                                                ctx["sectors"].get(sector_of(m["symbol"])), None,
                                                ctx["usdinr"], cfg))
-                extras.append(commodities.assess(m["symbol"], side, ctx["commodities"], cfg))
-                extras.append(analyzer.as_extra(
-                    analyzer.stock_view(m["symbol"], analyzer.recent_items(now), now, cfg), side, cfg))
+                if news_votes:
+                    extras.append(commodities.assess(m["symbol"], side, ctx["commodities"], cfg))
+                    extras.append(analyzer.as_extra(
+                        analyzer.stock_view(m["symbol"], analyzer.recent_items(now), now, cfg), side, cfg))
                 crowd = psychology.assess(side, m["price"], m["change_pct"],
                                           await im.futures_oi_change(m["symbol"], option["expiry"]),
                                           m.get("52_week_high"), m.get("52_week_low"),
                                           m.get("circuit_upper_limit"), m.get("circuit_lower_limit"), cfg)
                 extras.append(crowd)
                 value = valuation.as_extra(valuation_view(m["symbol"]), side, cfg)
-                extras.append(value)
+                if news_votes:
+                    extras.append(value)
                 decision = decide(side, mkt, chart, risk, None, cfg, extras)
                 if decision["verdict"] != "TRADE":
                     continue
@@ -383,13 +418,15 @@ async def scan(im: IndMoney, trades: list[dict], now: datetime, cfg: dict, hold:
                 taken.add(option["contract"])
                 trades_today += 1
                 emit("SIGNAL", {
+                    "team": "movers",
                     **{k: row[k] for k in ("symbol", "side", "contract", "qty", "entry_ask", "target_bid",
                                            "spread_pct", "hit_probability", "chart_score")},
                     "spot": m["price"], "day_change_pct": m["change_pct"], "lot_size": option["lot_size"],
                     "net_profit_at_target": round(risk["net_profit"]), "square_off": cfg["square_off_time"],
                     "chart_signals": [s for s, _ in chart["signals"]], "market": mkt["notes"],
                     "news_and_macro": [n for e in extras for n in e["notes"]],
-                    "news_driven": extras[0]["news_driven"], "decision_score": decision["score"],
+                    "news_driven": next((e["news_driven"] for e in extras if "news_driven" in e), None),
+                    "decision_score": decision["score"],
                     "forecast": {"level": forecast.get("level") and round(forecast["level"], 2),
                                  "basis": forecast["basis"],
                                  "option_price_there": risk["forecast_premium"] and round(risk["forecast_premium"], 2)},
@@ -404,33 +441,127 @@ async def scan(im: IndMoney, trades: list[dict], now: datetime, cfg: dict, hold:
                 emit("ERROR", {"error": f"{m['symbol']}: {type(e).__name__}: {e}"})
 
 
-def account(trades: list[dict], cfg: dict) -> tuple[float, float]:
+NEWS_DEFAULTS = {
+    "auto_trade": True,
+    "min_confidence": 60,   # after the priced-in cut
+    "confirm_pct": 0.5,     # the stock must already be moving the forecast's way by this much today
+    "max_move_pct": 4.0,    # ...but not so far that the move is used up
+    "max_age_min": 120,     # ideas older than this are dropped
+}
+
+
+async def news_team(im: IndMoney, trades: list[dict], now: datetime, cfg: dict) -> None:
+    """News team: trade the strongest results/forecast idea once the price confirms its direction.
+    Buys a CALL for "up" and a PUT for "down"; same 1% net target, no stop-loss, same exits."""
+    c = {**NEWS_DEFAULTS, **team_cfg(cfg, "news")}
+    today = now.date().isoformat()
+    done = {t["symbol"] for t in trades if t["date"] == today and team_of(t) == "news"}
+    ideas = sorted(((sym, i) for sym, i in (_daily.get("ideas") or {}).items()
+                    if sym not in done and i["confidence"] >= c["min_confidence"]
+                    and (now - i["at"]).total_seconds() <= c["max_age_min"] * 60),
+                   key=lambda x: -x[1]["confidence"])[:10]
+    if not ideas:
+        return
+    for sym, _ in ideas:
+        if sym not in _stock_keys:
+            _stock_keys[sym] = await expectations.stock_key(im, sym)
+    quotes = await im.quotes([_stock_keys[sym] for sym, _ in ideas])
+    trades_today = sum(t["date"] == today and team_of(t) == "news" for t in trades)
+    for sym, idea in ideas:
+        try:
+            stats = (quotes.get(_stock_keys[sym]) or {}).get("entity_stats") or {}
+            move = stats.get("day_change_percentage")
+            if move is None:
+                continue
+            sign = 1 if idea["direction"] == "up" else -1
+            if not c["confirm_pct"] <= sign * move <= c["max_move_pct"]:
+                continue  # price not confirming yet, or already moved too far
+            side = "loser" if idea["direction"] == "up" else "gainer"  # loser -> CALL, gainer -> PUT
+            option = pick_option(await im.option_chain(_stock_keys[sym]), side, cfg["strike_choice"])
+            if option is None:
+                continue
+            risk = plan(option, trades_today, now, cfg, spread_pct=option["spread_pct"])
+            if not risk["allowed"]:
+                continue
+            row = {f: "" for f in FIELDS}
+            row.update(date=today, opened=now.strftime("%H:%M"), symbol=sym, side=side,
+                       contract=option["contract"], underlying_key=_stock_keys[sym],
+                       derivative_id=option["derivative_id"], qty=risk["qty"], entry_ask=option["ask"],
+                       target_bid=risk["target_premium"], spread_pct=round(option["spread_pct"], 2),
+                       status="OPEN", notes=idea["reason"], strategy=idea["source"],
+                       valuation=valuation_view(sym).get("label", ""))
+            trades.append(row)
+            emit("SIGNAL", {"team": "news", "symbol": sym, "direction": idea["direction"],
+                            "contract": option["contract"], "qty": risk["qty"], "entry_ask": option["ask"],
+                            "target_bid": risk["target_premium"], "spread_pct": row["spread_pct"],
+                            "spot": stats.get("live_price"), "day_change_pct": move,
+                            "lot_size": option["lot_size"], "net_profit_at_target": round(risk["net_profit"]),
+                            "square_off": cfg["square_off_time"], "source": idea["source"],
+                            "confidence": idea["confidence"], "priced_in": idea["priced_in"],
+                            "reason": idea["reason"], "valuation": row["valuation"]})
+            return  # one trade at a time
+        except (LoginRequired, RateLimited):
+            raise
+        except Exception as e:
+            emit("ERROR", {"error": f"news team {sym}: {type(e).__name__}: {e}"})
+
+
+def account(trades: list[dict], cfg: dict, team: str | None = None) -> tuple[float, float]:
     """(account value, money free for a new trade): starting capital plus realised P&L,
-    minus the premium tied up in open trades."""
+    minus the premium tied up in open trades. With `team`, that team's own book only."""
+    if team:
+        trades = [t for t in trades if team_of(t) == team]
+        cfg = team_cfg(cfg, team)
     realised = sum(float(t["net_pnl"] or 0) for t in trades if t["status"] in ("TARGET", "SQUARED_OFF"))
     tied_up = sum(float(t["entry_ask"]) * int(t["qty"]) for t in trades if t["status"] == "OPEN")
     value = cfg["capital"] + realised
     return value, max(value - tied_up, 0.0)
 
 
-def has_open(trades: list[dict]) -> bool:
-    return any(t["status"] == "OPEN" for t in trades)
+def has_open(trades: list[dict], team: str | None = None) -> bool:
+    return any(t["status"] == "OPEN" and (team is None or team_of(t) == team) for t in trades)
+
+
+# Two teams trade side by side, each with its own paper capital, so their results can be compared:
+#   movers  top gainers/losers reversal, read from price, charts and options (strategy "reversal")
+#   news    NSE filings, results, concalls and news forecasts (strategies "results", "intel")
+TEAMS = ("movers", "news")
+NEWS_STRATEGIES = ("results", "intel", "news")
+
+
+def team_of(trade: dict) -> str:
+    return "news" if trade.get("strategy") in NEWS_STRATEGIES else "movers"
+
+
+def team_cfg(cfg: dict, team: str) -> dict:
+    return {"capital": cfg["capital"], **(cfg.get("teams") or {}).get(team, {})}
 
 
 async def cycle(cfg: dict) -> None:
+    """One round for both teams. Each team has its own capital and its own one-trade-at-a-time rule."""
     now = datetime.now(IST)
     trades = load_trades()
+    one_at_a_time = cfg.get("one_trade_at_a_time", True)
     async with IndMoney() as im:
         await manage_open_trades(im, trades, now, cfg)
         if _t(cfg["entry_start"]) <= now.time() <= _t(cfg["entry_end"]):
-            if has_open(trades) and cfg.get("one_trade_at_a_time", True):
-                # Busy: note setups we would have taken, but open nothing and wake no one.
-                await scan(im, trades, now, cfg, hold=True)
+            if has_open(trades, "movers") and one_at_a_time:
+                # Busy: note setups we would have taken (every few minutes), but open nothing.
+                if clock.time() - _hold_scan.get("at", 0) >= cfg.get("hold_scan_min", 10) * 60:
+                    _hold_scan["at"] = clock.time()
+                    await scan(im, trades, now, cfg, hold=True)
             else:
-                _, free = account(trades, cfg)
+                _, free = account(trades, cfg, "movers")
                 if free > 0:  # size new trades from the money that is actually free right now
                     await scan(im, trades, now, {**cfg, "capital": free})
+            if team_cfg(cfg, "news").get("auto_trade", True) and not (has_open(trades, "news") and one_at_a_time):
+                _, free = account(trades, cfg, "news")
+                if free > 0:
+                    await news_team(im, trades, now, {**cfg, "capital": free})
     save_trades(trades)
+
+
+_hold_scan: dict = {}
 
 
 def leaf_errors(exc: BaseException) -> list[BaseException]:
@@ -485,7 +616,8 @@ def main() -> None:
                                    "budget": budget, "action": "waiting"})
                     clock.sleep(60)
                     continue
-                busy = has_open(load_trades()) and cfg.get("one_trade_at_a_time", True)
+                trades = load_trades()
+                busy = all(has_open(trades, t) for t in TEAMS) and cfg.get("one_trade_at_a_time", True)
                 # While a trade is open, look for (and only record) setups every few minutes.
                 every = cfg.get("hold_scan_min", 5) if busy else args.interval
                 if args.once or clock.time() - last_scan >= every * 60:

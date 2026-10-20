@@ -22,7 +22,11 @@ Intraday mover-reversal options strategy on NSE F&O stocks, run by a team of age
   in (run-up vs Nifty, pre-event hype, price vs analyst target, valuation) on every RESULT and FORECAST.
   The Valuation agent (`agents/valuation.py`, Yahoo P/E, P/B for lenders, vs sector peers, daily
   snapshot in `journal/valuations/`) feeds it and shows on signals (observe mode).
-- `paper_trade.py`: Claude opens results/news paper trades with it; the watcher manages exits.
+- Two teams trade side by side, each with its own paper capital (`config.yaml` -> `teams`):
+  movers (top gainers/losers reversal, price-only) and news (filings/results/news forecasts; the
+  watcher opens its trades when the price confirms; ideas logged in `journal/news_ideas.csv`).
+  `review.py` keeps a team scoreboard. The user will pick the better team once both have 30+ trades.
+- `paper_trade.py`: Claude opens news-team paper trades with it; the watcher manages exits.
 - Run tests with `python -m pytest -q`.
 
 Standing permission: restart the watcher during market hours as often as needed, without
