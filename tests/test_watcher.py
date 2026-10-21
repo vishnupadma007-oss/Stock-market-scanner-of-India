@@ -236,3 +236,19 @@ def test_calls_are_paced_evenly():
     asyncio.run(three())
     assert t.monotonic() - start >= 0.29  # 1 + 2 units after the first call
     indmoney.set_hourly_budget(450)
+
+
+class TwoGainers(FakeIndMoney):
+    async def movers(self, category, limit):
+        return [{"symbol": "TECHM", "ind_key": "INDS01469", "price": 1790, "change_pct": 8.48},
+                {"symbol": "WIPRO", "ind_key": "INDS00999", "price": 1790, "change_pct": 8.0}] \
+            if category == "top-gainers" else []
+
+
+def test_one_scan_opens_at_most_one_trade(tmp_path, monkeypatch, capsys):
+    # 21 Oct: WIPRO and TCS were both opened in one scan, using twice the team's capital.
+    monkeypatch.setattr(watcher, "HELD", tmp_path / "held.csv")
+    trades = []
+    asyncio.run(watcher.scan(TwoGainers(), trades, NOW, {**CFG, "universe": [*CFG["universe"], "WIPRO"]}))
+    assert len(trades) == 1
+    assert capsys.readouterr().out.count("SIGNAL") == 1

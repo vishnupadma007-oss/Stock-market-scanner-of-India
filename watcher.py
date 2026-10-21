@@ -456,6 +456,8 @@ async def scan(im: IndMoney, trades: list[dict], now: datetime, cfg: dict, hold:
                 trades.append(row)
                 taken.add(option["contract"])
                 trades_today += 1
+                if cfg.get("one_trade_at_a_time", True):
+                    hold = True  # the rest of this scan only records setups (one trade at a time)
                 emit("SIGNAL", {
                     "team": "movers",
                     **{k: row[k] for k in ("symbol", "side", "contract", "qty", "entry_ask", "target_bid",
