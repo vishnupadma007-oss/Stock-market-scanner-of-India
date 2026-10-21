@@ -125,6 +125,10 @@ credits are spent):
 5. Record your verdict in `journal/paper_trades.csv` (`claude_verdict` = TRADE/SKIP,
    `notes` = the reason). This lets the user compare rules-only vs rules-plus-Claude results.
 
+After every SIGNAL verdict, append a row to `journal/claude_verdicts.csv`
+(`date,symbol,contract,verdict,reason`): the watcher rewrites the trade log, so verdicts written
+there are lost. The evening review merges this file to compare rules-only with your calls.
+
 ## On a RESULT line (a company in our list just filed results on NSE)
 
 The Announcements agent already read the filing: `figures` (revenue and profit: this quarter,

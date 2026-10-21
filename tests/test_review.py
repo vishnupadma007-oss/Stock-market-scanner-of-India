@@ -47,3 +47,14 @@ def test_last_change_date(tmp_path):
 
 def test_review_with_no_trades(tmp_path):
     assert "No closed paper trades yet" in review.review(review.load(tmp_path / "none.csv"), "2026-10-19", "x")
+
+
+def test_claude_verdicts_file_is_merged(tmp_path):
+    import review
+    (tmp_path / "paper_trades.csv").write_text(
+        "date,opened,symbol,side,contract,qty,entry_ask,target_bid,spread_pct,hit_probability,chart_score,"
+        "status,closed,exit_bid,net_pnl,claude_verdict,strategy\n"
+        "2026-10-21,10:00,INFY,gainer,INFY-PUT,800,35,35.6,0.8,90,90,TARGET,11:00,35.7,300,,reversal\n")
+    (tmp_path / "claude_verdicts.csv").write_text("date,symbol,contract,verdict,reason\n2026-10-21,INFY,INFY-PUT,SKIP,x\n")
+    df = review.load(tmp_path / "paper_trades.csv")
+    assert df.loc[0, "claude_verdict"] == "SKIP"

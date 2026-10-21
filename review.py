@@ -35,6 +35,13 @@ def load(path: Path = TRADES) -> pd.DataFrame:
     cost = (closed["entry_ask"] * closed["qty"]).replace(0.0, np.nan)
     closed["net_pct"] = (closed["net_pnl"] / cost * 100.0).fillna(0.0)
     closed["hit"] = closed["status"] == "TARGET"
+    # Claude's TRADE/SKIP calls are kept in their own file (the watcher rewrites the trade log).
+    verdicts = path.parent / "claude_verdicts.csv"
+    if verdicts.exists() and not closed.empty:
+        v = pd.read_csv(verdicts, dtype=str).drop_duplicates(["date", "contract"], keep="last")
+        closed = closed.merge(v[["date", "contract", "verdict"]], on=["date", "contract"], how="left")
+        closed["claude_verdict"] = closed["verdict"].fillna(closed["claude_verdict"]).fillna("")
+        closed = closed.drop(columns="verdict")
     return closed
 
 
