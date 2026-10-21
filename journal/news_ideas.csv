@@ -24,3 +24,4 @@ date,time,symbol,direction,confidence,source,priced_in
 2026-10-21,11:44,INFY,up,81,intel,
 2026-10-21,11:44,AXISBANK,down,80,intel,
 2026-10-21,11:44,PNB,up,87,intel,
+2026-10-21,12:24,RELIANCE,up,98,intel,partly priced in
