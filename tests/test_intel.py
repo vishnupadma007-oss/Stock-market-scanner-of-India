@@ -95,3 +95,10 @@ def test_stop_loss_jargon_is_not_bad_news():
     from agents import intel
     assert intel.tone("Top stocks to buy: Experts bet on SBI, Bank of Baroda - Target price, stop-loss") >= 0
     assert intel.tone("SBI shares fall 3%") < 0
+
+
+def test_lookalike_company_names():
+    from agents import intel
+    assert "LT" not in intel.symbols_in("Q2 Results: L&T Tech shares surge 12%")
+    assert "LT" not in intel.symbols_in("L&amp;T Technology Services wins deal")
+    assert intel.symbols_in("L&T bags mega order") == ["LT"]
