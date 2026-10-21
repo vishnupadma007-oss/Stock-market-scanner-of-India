@@ -123,6 +123,10 @@ def sectors_in(text: str) -> list[str]:
     return sorted(s for s, pattern in SECTOR_WORDS.items() if re.search(pattern, text, re.I))
 
 
+ROUNDUP = r"\blive\b|stocks? to (watch|buy)|top (gainers|losers)|gainers and losers|buzzing stocks|" \
+          r"stocks? in (news|focus)|market highlights|closing bell|opening bell|report today|results today"
+
+
 def make_item(*, id: str, time: str, source: str, kind: str, headline: str, url: str = "",
               symbols: list[str] | None = None, category: str = "", sentiment: float | None = None,
               impact: int | None = None) -> dict:
@@ -134,9 +138,13 @@ def make_item(*, id: str, time: str, source: str, kind: str, headline: str, url:
         "market" if re.search(MARKET_WORDS, headline, re.I) else "sector" if sectors else ""
     if impact is None:
         impact = 3 if re.search(MAJOR, headline, re.I) else 2 if scope in ("global", "market") else 1
+    if sentiment is None:
+        # Round-ups mix many companies: "LIVE: L&T Tech surges 12%; Eternal reports today" says
+        # nothing good or bad about Eternal, so their tone is not given to the stocks named.
+        sentiment = 0.0 if symbols and re.search(ROUNDUP, headline, re.I) else tone(headline)
     return {"id": id, "time": time, "source": source, "kind": kind, "scope": scope, "symbols": symbols,
             "sectors": sectors, "category": category, "headline": headline[:300],
-            "sentiment": tone(headline) if sentiment is None else sentiment, "impact": impact, "url": url}
+            "sentiment": sentiment, "impact": impact, "url": url}
 
 
 def path_for(day: str) -> Path:

@@ -102,3 +102,13 @@ def test_lookalike_company_names():
     assert "LT" not in intel.symbols_in("Q2 Results: L&T Tech shares surge 12%")
     assert "LT" not in intel.symbols_in("L&amp;T Technology Services wins deal")
     assert intel.symbols_in("L&T bags mega order") == ["LT"]
+
+
+def test_roundup_headlines_carry_no_stock_tone():
+    from agents import intel
+    i = intel.make_item(id="r", time="2026-10-21 10:00:00", source="ET", kind="news",
+                        headline="Q2 Results LIVE Updates: L&T Tech shares surge 12%; Eternal, SRF report today")
+    assert i["symbols"] == ["ETERNAL"] and i["sentiment"] == 0.0
+    j = intel.make_item(id="s", time="2026-10-21 10:00:00", source="ET", kind="news",
+                        headline="Eternal shares surge 8% after strong Q2")
+    assert j["sentiment"] > 0
