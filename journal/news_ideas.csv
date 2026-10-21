@@ -11,3 +11,5 @@ date,time,symbol,direction,confidence,source,priced_in
 2026-10-21,10:08,INFY,up,72,intel,partly priced in
 2026-10-21,10:08,TCS,up,46,intel,largely priced in
 2026-10-21,10:26,RELIANCE,up,98,intel,
+2026-10-21,10:26,INFY,up,79,intel,
+2026-10-21,10:26,TCS,up,78,intel,
