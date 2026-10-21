@@ -91,6 +91,8 @@ def _negated(text: str, start: int) -> bool:
 
 def tone(text: str) -> float:
     """-1..+1 from finance word lists, with negation handling and a discount for hedged language."""
+    # Trading jargon that is not news: "target price, stop-loss" in a stock-tips headline.
+    text = re.sub(r"stop[- ]?loss(es)?|profit[- ]booking", " ", text, flags=re.I)
     pos = neg = 0
     for pattern, sign in ((POSITIVE, 1), (NEGATIVE, -1)):
         for m in re.finditer(pattern, text, re.I):

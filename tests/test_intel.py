@@ -89,3 +89,9 @@ def test_results_read_later_get_logged():
     unread = announcements.to_intel({**base, "read": {"view": "unread"}})
     strong = announcements.to_intel({**base, "read": {"view": "strong"}})
     assert unread["id"] != strong["id"] and strong["sentiment"] == 1.0
+
+
+def test_stop_loss_jargon_is_not_bad_news():
+    from agents import intel
+    assert intel.tone("Top stocks to buy: Experts bet on SBI, Bank of Baroda - Target price, stop-loss") >= 0
+    assert intel.tone("SBI shares fall 3%") < 0
