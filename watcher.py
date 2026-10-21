@@ -151,6 +151,8 @@ def check_expectations(symbol: str, now: datetime, news_view: str | None = None)
     try:
         result = asyncio.run(go())
     except Exception as e:
+        if cached:  # keep the last good check (e.g. INDmoney's hourly limit was hit)
+            return cached
         errors = leaf_errors(e)
         return {"error": f"{type(errors[0]).__name__}: {errors[0]}"[:200]}
     _daily["expectations"][symbol] = result
@@ -493,8 +495,9 @@ async def news_team(im: IndMoney, trades: list[dict], now: datetime, cfg: dict) 
     c = {**NEWS_DEFAULTS, **team_cfg(cfg, "news")}
     today = now.date().isoformat()
     done = {t["symbol"] for t in trades if t["date"] == today and team_of(t) == "news"}
+    # An idea whose priced-in check failed is not traded: unchecked is not "not priced in".
     ideas = sorted(((sym, i) for sym, i in (_daily.get("ideas") or {}).items()
-                    if sym not in done and i["confidence"] >= c["min_confidence"]
+                    if sym not in done and i["confidence"] >= c["min_confidence"] and i.get("priced_in")
                     and (now - i["at"]).total_seconds() <= c["max_age_min"] * 60),
                    key=lambda x: -x[1]["confidence"])[:10]
     if not ideas:

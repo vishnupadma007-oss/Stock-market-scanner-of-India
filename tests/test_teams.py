@@ -91,3 +91,11 @@ def test_scoreboard():
     text = "\n".join(review.scoreboard(df, "2026-10-21", {"movers": 30000, "news": 30000}, {"movers": 4, "news": 6}))
     assert "| movers | 4 | 1 | ₹300 | 1 | 100% | +1.00% | ₹300 | +1.0% |" in text
     assert "| news | 6 | 2 | ₹300 | 2 | 50% | +0.35% | ₹300 | +1.0% |" in text
+
+
+def test_news_team_skips_ideas_whose_priced_in_check_failed():
+    idea("up")
+    watcher._daily["ideas"]["TECHM"]["priced_in"] = None  # e.g. INDmoney's hourly limit was hit
+    trades = []
+    asyncio.run(watcher.news_team(FakeIndMoney(move=1.2), trades, NOW, {**CFG, "capital": 200000}))
+    assert trades == []
