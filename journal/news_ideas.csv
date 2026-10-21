@@ -2,38 +2,12 @@ date,time,symbol,direction,confidence,source,priced_in
 2026-10-21,08:53,RELIANCE,up,87,intel,partly priced in
 2026-10-21,08:53,ICICIBANK,up,77,intel,partly priced in
 2026-10-21,08:53,SBIN,down,69,intel,some pessimism priced in
-2026-10-21,08:56,RELIANCE,up,87,intel,partly priced in
-2026-10-21,08:56,ICICIBANK,up,77,intel,partly priced in
 2026-10-21,08:56,AXISBANK,down,87,intel,some pessimism priced in
 2026-10-21,08:56,PNB,up,60,intel,largely priced in
 2026-10-21,08:56,PAYTM,up,58,intel,partly priced in
 2026-10-21,09:48,LT,up,71,intel,not priced in
 2026-10-21,10:08,INFY,up,72,intel,partly priced in
 2026-10-21,10:08,TCS,up,46,intel,largely priced in
-2026-10-21,10:26,RELIANCE,up,98,intel,
-2026-10-21,10:26,INFY,up,79,intel,
-2026-10-21,10:26,TCS,up,78,intel,
-2026-10-21,10:26,AXISBANK,down,84,intel,
-2026-10-21,10:26,LT,up,79,intel,
-2026-10-21,10:26,PNB,up,88,intel,
 2026-10-21,10:51,ETERNAL,up,75,intel,partly priced in
 2026-10-21,10:52,VEDL,up,71,intel,not priced in
-2026-10-21,10:53,ICICIBANK,up,72,intel,partly priced in
-2026-10-21,11:44,RELIANCE,up,98,intel,
-2026-10-21,11:44,ICICIBANK,up,68,intel,
-2026-10-21,11:44,INFY,up,81,intel,
-2026-10-21,11:44,AXISBANK,down,80,intel,
-2026-10-21,11:44,PNB,up,87,intel,
-2026-10-21,12:24,RELIANCE,up,98,intel,partly priced in
-2026-10-21,12:24,INFY,up,80,intel,partly priced in
-2026-10-21,12:24,AXISBANK,down,77,intel,some pessimism priced in
-2026-10-21,12:24,PNB,up,60,intel,largely priced in
-2026-10-21,12:31,RELIANCE,up,98,intel,partly priced in
-2026-10-21,12:31,INFY,up,80,intel,partly priced in
-2026-10-21,12:31,AXISBANK,down,76,intel,some pessimism priced in
-2026-10-21,12:31,PNB,up,60,intel,largely priced in
 2026-10-21,14:06,IOC,down,66,intel,not priced in
-2026-10-21,14:31,RELIANCE,up,98,intel,partly priced in
-2026-10-21,14:31,INFY,up,76,intel,partly priced in
-2026-10-21,14:31,IOC,down,76,intel,not priced in
-2026-10-21,14:31,PNB,up,52,intel,largely priced in

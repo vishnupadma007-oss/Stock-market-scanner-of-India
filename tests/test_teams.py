@@ -99,3 +99,12 @@ def test_news_team_skips_ideas_whose_priced_in_check_failed():
     trades = []
     asyncio.run(watcher.news_team(FakeIndMoney(move=1.2), trades, NOW, {**CFG, "capital": 200000}))
     assert trades == []
+
+
+def test_restart_does_not_log_the_same_idea_twice(monkeypatch, tmp_path):
+    monkeypatch.setattr(watcher, "IDEAS", tmp_path / "ideas.csv")
+    for _ in range(2):  # two watcher runs on the same day
+        watcher._daily.clear()
+        watcher.reset_daily(NOW.date().isoformat())
+        watcher.add_idea("TECHM", "up", 80, "intel", "x", {"label": "not priced in"}, NOW)
+    assert (tmp_path / "ideas.csv").read_text().count("TECHM") == 1

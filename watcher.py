@@ -171,7 +171,12 @@ def add_idea(symbol: str, direction: str, confidence: int, source: str, reason: 
         return
     adjusted = expectations.adjust_forecast({"direction": direction, "confidence": confidence}, expect)
     prev = (_daily.get("ideas") or {}).get(symbol)
-    if prev is None or prev["direction"] != direction:  # the review counts these as the news team's chances
+    if "ideas_logged" not in _daily:  # what is already in today's log (a restart must not log it again)
+        rows = csv.reader(open(IDEAS)) if IDEAS.exists() else []
+        _daily["ideas_logged"] = {(r[0], r[2], r[3]) for r in rows if len(r) > 3}
+    key = (now.date().isoformat(), symbol, direction)
+    if (prev is None or prev["direction"] != direction) and key not in _daily["ideas_logged"]:
+        _daily["ideas_logged"].add(key)  # the review counts these as the news team's chances
         new = not IDEAS.exists()
         IDEAS.parent.mkdir(exist_ok=True)
         with open(IDEAS, "a", newline="") as f:
