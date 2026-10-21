@@ -2,3 +2,4 @@ date,symbol,contract,verdict,reason
 2026-10-21,RELIANCE,RELIANCE-27-OCT-1220-CALL,TRADE,Jio IPO opens today; price confirms; small target
 2026-10-21,PNB,PNB-27-OCT-122-CALL,SKIP,Largely priced in; priced-in check failed (rate limit) so confidence was not cut
 2026-10-21,INFY,INFY-27-OCT-1180-PUT,SKIP,Forecast level short of target; sector-wide IT rally; long build-up; results Friday
+2026-10-21,WIPRO,WIPRO-27-OCT-190-PUT,TRADE,Room to forecast level (3.82 vs 3.15 target); no OI build-up; Nifty turned down; IT sector rally is the risk
