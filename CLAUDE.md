@@ -28,7 +28,8 @@ Intraday mover-reversal options strategy on NSE F&O stocks, run by a team of age
   also the likely Nifty open from US stocks and Brent (`python -m agents.reaction market`).
 - Two teams trade side by side, each with its own paper capital (`config.yaml` -> `teams`):
   movers (top gainers/losers reversal, price-only) and news (filings/results/news forecasts; the
-  watcher opens its trades when the price confirms; ideas logged in `journal/news_ideas.csv`).
+  watcher opens its trades when the price confirms and the Trend Checker, `agents/momentum.py`,
+  scores the chart 60+; ideas logged in `journal/news_ideas.csv`).
   `review.py` keeps a team scoreboard. The user will pick the better team once both have 30+ trades.
 - `paper_trade.py`: Claude opens news-team paper trades with it; the watcher manages exits.
 - Run tests with `python -m pytest -q`.

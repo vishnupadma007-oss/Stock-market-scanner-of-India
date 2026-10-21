@@ -8,6 +8,10 @@ import pandas as pd
 import review
 import watcher
 from agents.config import load_config
+import numpy as np
+
+from agents import momentum
+from tests.test_agents import intraday
 from tests.test_watcher import chain
 
 IST = ZoneInfo("Asia/Kolkata")
@@ -19,6 +23,15 @@ CFG = {**load_config(), "strike_choice": "ITM1",
 class FakeIndMoney:
     def __init__(self, move):
         self.move = move
+
+    async def candles(self, key, interval, lookback):
+        # A steady climb in the move's direction, with a small dip: a healthy trend.
+        path = 1750 + np.sign(self.move) * (np.arange(30) * 1.2 - 3 * (np.arange(30) % 4 == 3))
+        if interval == "1day":
+            idx = pd.bdate_range(end="2026-10-20", periods=60, tz="Asia/Kolkata")
+            c = 1700 + np.sign(self.move) * np.arange(60) * 2.0
+            return pd.DataFrame({"Open": c, "High": c * 1.01, "Low": c * 0.99, "Close": c, "Volume": 1e6}, index=idx)
+        return intraday(path)
 
     async def call(self, tool, **args):
         return [{"ind_key": "INDS01469", "name": "Tech Mahindra"}]
@@ -108,3 +121,24 @@ def test_restart_does_not_log_the_same_idea_twice(monkeypatch, tmp_path):
         watcher.reset_daily(NOW.date().isoformat())
         watcher.add_idea("TECHM", "up", 80, "intel", "x", {"label": "not priced in"}, NOW)
     assert (tmp_path / "ideas.csv").read_text().count("TECHM") == 1
+
+
+def test_trend_checker_backs_or_blocks_the_news():
+    rising = intraday(1750 + np.arange(30) * 1.2 - 3 * (np.arange(30) % 4 == 3))
+    up = momentum.read_trend(rising, {"dist_sma20_atr": 1.0}, "up")
+    assert up["score"] >= 60, up["signals"]
+    assert momentum.read_trend(rising, {"dist_sma20_atr": 1.0}, "down")["score"] < 60  # chart against a PUT
+    fading = intraday(np.r_[np.linspace(1750, 1800, 15), np.linspace(1800, 1760, 15)])
+    assert momentum.read_trend(fading, {"dist_sma20_atr": 1.0}, "up")["score"] < 60  # news up, chart rolling over
+
+
+def test_news_team_skips_when_the_chart_disagrees():
+    class Fading(FakeIndMoney):
+        async def candles(self, key, interval, lookback):
+            if interval == "1day":
+                return await super().candles(key, interval, lookback)
+            return intraday(np.r_[np.linspace(1750, 1800, 15), np.linspace(1800, 1760, 15)])
+    idea("up")
+    trades = []
+    asyncio.run(watcher.news_team(Fading(move=1.2), trades, NOW, {**CFG, "capital": 200000}))
+    assert trades == [] and "TECHM" in watcher._daily["trend_failed"]

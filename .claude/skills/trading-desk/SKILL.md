@@ -95,7 +95,8 @@ One short research pass that sets the day's mode. Keep it to a handful of search
 
 ## On a SIGNAL line
 
-A **news-team** signal (`team: news`) carries `source` (results / intel), `reason`,
+A **news-team** signal (`team: news`) has passed the Trend Checker (`trend_score` 60+ and
+`trend_signals`: the chart backs the news's direction) and carries `source` (results / intel), `reason`,
 `confidence`, `priced_in` and `valuation`. Check that the story is real (the reason, and one web
 search if thin) and that it is not already priced in, then give TRADE/SKIP in 2-3 lines. The
 rest of this section is about **movers-team** signals.

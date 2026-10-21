@@ -34,6 +34,7 @@ from agents.costs import round_trip_charges
 from agents.decision import decide
 from agents.forecast import reversal_target
 from agents.indicators import intraday_sigma_per_min
+from agents.momentum import read_trend
 from agents.indmoney import (IndMoney, LoginRequired, RateLimited, calls_last_hour, pick_option,
                              set_hourly_budget)
 from agents.regime import assess
@@ -498,6 +499,8 @@ NEWS_DEFAULTS = {
     "confirm_pct": 0.5,     # the stock must already be moving the forecast's way by this much today
     "max_move_pct": 4.0,    # ...but not so far that the move is used up
     "max_age_min": 120,     # ideas older than this are dropped
+    "min_trend_score": 60,  # Trend Checker: the chart must back the news's direction
+    "trend_recheck_min": 5,  # a stock whose chart failed is looked at again after this long
 }
 
 
@@ -528,6 +531,17 @@ async def news_team(im: IndMoney, trades: list[dict], now: datetime, cfg: dict) 
             sign = 1 if idea["direction"] == "up" else -1
             if not c["confirm_pct"] <= sign * move <= c["max_move_pct"]:
                 continue  # price not confirming yet, or already moved too far
+            # Trend Checker: does the chart back the news, with strength left? (2 INDmoney calls,
+            # so a stock that failed is not re-checked for a few minutes)
+            failed_at = _daily.setdefault("trend_failed", {}).get(sym)
+            if failed_at and (now - failed_at).total_seconds() < c["trend_recheck_min"] * 60:
+                continue
+            daily = await daily_candles(im, _stock_keys[sym], now.date())
+            intraday = await im.candles(_stock_keys[sym], "5minute", "7d")
+            trend = read_trend(intraday, stock_profile(daily) if len(daily) >= 25 else {}, idea["direction"])
+            if trend["score"] < c["min_trend_score"]:
+                _daily["trend_failed"][sym] = now
+                continue
             side = "loser" if idea["direction"] == "up" else "gainer"  # loser -> CALL, gainer -> PUT
             option = pick_option(await im.option_chain(_stock_keys[sym]), side, cfg["strike_choice"])
             if option is None:
@@ -540,7 +554,7 @@ async def news_team(im: IndMoney, trades: list[dict], now: datetime, cfg: dict) 
                        contract=option["contract"], underlying_key=_stock_keys[sym],
                        derivative_id=option["derivative_id"], qty=risk["qty"], entry_ask=option["ask"],
                        target_bid=risk["target_premium"], spread_pct=round(option["spread_pct"], 2),
-                       status="OPEN", notes=idea["reason"], strategy=idea["source"],
+                       chart_score=trend["score"], status="OPEN", notes=idea["reason"], strategy=idea["source"],
                        valuation=valuation_view(sym).get("label", ""))
             trades.append(row)
             emit("SIGNAL", {"team": "news", "symbol": sym, "direction": idea["direction"],
@@ -550,7 +564,8 @@ async def news_team(im: IndMoney, trades: list[dict], now: datetime, cfg: dict) 
                             "lot_size": option["lot_size"], "net_profit_at_target": round(risk["net_profit"]),
                             "square_off": cfg["square_off_time"], "source": idea["source"],
                             "confidence": idea["confidence"], "priced_in": idea["priced_in"],
-                            "reason": idea["reason"], "valuation": row["valuation"]})
+                            "reason": idea["reason"], "valuation": row["valuation"],
+                            "trend_score": trend["score"], "trend_signals": [t for t, _ in trend["signals"]]})
             return  # one trade at a time
         except (LoginRequired, RateLimited):
             raise
