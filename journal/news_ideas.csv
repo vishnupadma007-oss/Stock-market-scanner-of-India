@@ -3,3 +3,4 @@ date,time,symbol,direction,confidence,source,priced_in
 2026-10-21,08:53,ICICIBANK,up,77,intel,partly priced in
 2026-10-21,08:53,SBIN,down,69,intel,some pessimism priced in
 2026-10-21,08:56,RELIANCE,up,87,intel,partly priced in
+2026-10-21,08:56,ICICIBANK,up,77,intel,partly priced in
