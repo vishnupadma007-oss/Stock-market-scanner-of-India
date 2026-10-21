@@ -121,6 +121,7 @@ def test_results_day_blocks(capsys, monkeypatch):
 def test_sector_wide_move_lowers_score(capsys):
     signals(FakeIndMoney(sector_chg=0.3))
     calm = json.loads(capsys.readouterr().out.split(" ", 1)[1])["decision_score"]
+    watcher._daily.pop("changes_at")  # sector moves are cached for 10 minutes; force a refresh
     signals(FakeIndMoney(sector_chg=4.0))
     sector_wide = json.loads(capsys.readouterr().out.split(" ", 1)[1])["decision_score"]
     assert calm - sector_wide == 20  # loses the +5 "stock-specific" and takes -15 "with its sector"
@@ -252,3 +253,11 @@ def test_one_scan_opens_at_most_one_trade(tmp_path, monkeypatch, capsys):
     asyncio.run(watcher.scan(TwoGainers(), trades, NOW, {**CFG, "universe": [*CFG["universe"], "WIPRO"]}))
     assert len(trades) == 1
     assert capsys.readouterr().out.count("SIGNAL") == 1
+
+
+def test_details_calls_cost_one_per_instrument(tmp_path, monkeypatch):
+    from agents import indmoney
+    monkeypatch.setattr(indmoney, "USAGE_FILE", tmp_path / "usage.json")
+    indmoney.record_call("get_indian_stocks_details", 17)
+    indmoney.record_call("get_indian_stocks_movers")
+    assert indmoney.calls_last_hour() == 19

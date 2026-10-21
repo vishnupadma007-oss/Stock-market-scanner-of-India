@@ -59,10 +59,10 @@ def _usage() -> list[list[float]]:
 _usage_lock = threading.Lock()  # the scanner and the information thread both record calls
 
 
-def record_call(tool: str) -> None:
+def record_call(tool: str, cost: int | None = None) -> None:
     """Keep a rolling one-hour log of this script's INDmoney calls (survives restarts)."""
     with _usage_lock:
-        rows = _usage() + [[time.time(), CALL_COST.get(tool, 1), tool]]
+        rows = _usage() + [[time.time(), CALL_COST.get(tool, 1) if cost is None else cost, tool]]
         USAGE_FILE.parent.mkdir(parents=True, exist_ok=True)
         USAGE_FILE.write_text(json.dumps(rows))
 
@@ -233,8 +233,11 @@ class IndMoney:
         return await self._stack.__aexit__(*exc)
 
     async def call(self, tool: str, **args) -> dict:
-        await _wait_turn(CALL_COST.get(tool, 1))
-        record_call(tool)
+        # INDmoney charges a details call per instrument asked for (seen 21 Oct: our per-request
+        # count read 253 when INDmoney said 500), so count it the same way.
+        cost = max(1, len(args.get("ind_keys", []))) if tool == "get_indian_stocks_details" else CALL_COST.get(tool, 1)
+        await _wait_turn(cost)
+        record_call(tool, cost)
         return _parse(await self._session.call_tool(tool, args))
 
     async def movers(self, category: str, limit: int = 50) -> list[dict]:

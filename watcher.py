@@ -98,7 +98,12 @@ async def market_context(im: IndMoney, now: datetime, cfg: dict | None = None) -
         _daily.update(results=news.results_calendar(),
                       commodity_keys=await im.commodity_keys(commodities.COMMODITIES))
     ckeys = _daily["commodity_keys"]
-    changes = await im.day_changes([k for k, _ in SECTORS.values()] + list(ckeys.values()))
+    # Sector and commodity moves: every 10 minutes is fresh enough, and each instrument costs
+    # one INDmoney call (17 of them every 2-minute scan would use the whole hourly allowance).
+    if clock.time() - _daily.get("changes_at", 0) >= (cfg or {}).get("market_context_min", 10) * 60:
+        _daily["changes"] = await im.day_changes([k for k, _ in SECTORS.values()] + list(ckeys.values()))
+        _daily["changes_at"] = clock.time()
+    changes = _daily["changes"]
     moves = {name: changes.get(key) for name, key in ckeys.items()}
     for shock in commodities.shocks(moves, cfg or {}):
         if shock["commodity"] not in _daily["shocks_sent"]:
