@@ -20,6 +20,7 @@ import os
 import re
 import secrets
 import sys
+import threading
 import time
 from datetime import datetime, timedelta
 from pathlib import Path
@@ -55,15 +56,19 @@ def _usage() -> list[list[float]]:
     return [r for r in rows if r[0] > time.time() - 3600]
 
 
+_usage_lock = threading.Lock()  # the scanner and the information thread both record calls
+
+
 def record_call(tool: str) -> None:
     """Keep a rolling one-hour log of this script's INDmoney calls (survives restarts)."""
-    rows = _usage() + [[time.time(), CALL_COST.get(tool, 1)]]
-    USAGE_FILE.parent.mkdir(parents=True, exist_ok=True)
-    USAGE_FILE.write_text(json.dumps(rows))
+    with _usage_lock:
+        rows = _usage() + [[time.time(), CALL_COST.get(tool, 1), tool]]
+        USAGE_FILE.parent.mkdir(parents=True, exist_ok=True)
+        USAGE_FILE.write_text(json.dumps(rows))
 
 
 def calls_last_hour() -> int:
-    return int(sum(cost for _, cost in _usage()))
+    return int(sum(row[1] for row in _usage()))  # rows: [time, cost] or [time, cost, tool]
 
 
 # Even pacing: calls are spread evenly through the hour instead of in bursts. With a budget of
