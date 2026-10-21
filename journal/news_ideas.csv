@@ -14,3 +14,5 @@ date,time,symbol,direction,confidence,source,priced_in
 2026-10-21,10:26,INFY,up,79,intel,
 2026-10-21,10:26,TCS,up,78,intel,
 2026-10-21,10:26,AXISBANK,down,84,intel,
+2026-10-21,10:26,LT,up,79,intel,
+2026-10-21,10:26,PNB,up,88,intel,
