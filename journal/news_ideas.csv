@@ -33,3 +33,4 @@ date,time,symbol,direction,confidence,source,priced_in
 2026-10-21,12:31,AXISBANK,down,76,intel,some pessimism priced in
 2026-10-21,12:31,PNB,up,60,intel,largely priced in
 2026-10-21,14:06,IOC,down,66,intel,not priced in
+2026-10-21,14:31,RELIANCE,up,98,intel,partly priced in
