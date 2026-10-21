@@ -1,12 +1,12 @@
 {
-  "date": "2026-10-20",
+  "date": "2026-10-21",
   "mode": "careful",
   "notes": [
-    "US bounced Monday: Nasdaq +1.1%, S&P 500 +0.4%",
-    "Asia still weak: Kospi -2.6% today (-12% in 5 days), Nikkei -0.6%, Hang Seng -0.8%",
-    "Brent high and rising: about $110 (+3% in 5 days); rupee steady at 94.92",
-    "Nifty fell 1.1% Monday; India VIX up 5% to 14.8 (still calm)",
-    "No F&O results today; ETERNAL reports tomorrow"
+    "First session after Dussehra; Nifty fell 1.1% Monday (banks), market news mood negative",
+    "Expected Nifty open about +0.2% (likely -0.3% to +0.7%): S&P 500 +0.7%, Brent +0.6% since Monday's close",
+    "Brent near $110 on fresh West Asia attacks",
+    "Bajaj Finance reacts to Monday-evening results (profit +29%); ETERNAL reports today",
+    "Results days move about 2x normal; gap-downs of 2%+ kept falling 69% of the time, so the movers team skips results stocks today"
   ],
-  "avoid": []
+  "avoid": ["BAJFINANCE", "ETERNAL"]
 }
