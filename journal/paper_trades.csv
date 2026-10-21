@@ -4,3 +4,4 @@ date,opened,symbol,side,contract,underlying_key,derivative_id,qty,entry_ask,targ
 2026-10-21,11:37,INFY,gainer,INFY-27-OCT-1180-PUT,INDS00577,INDON06Y258D,800,35.15,35.65,0.85,92,90,long build-up,TARGET,12:18,36.05,100.5,619.5,,,reversal,cheap vs peers
 2026-10-21,12:20,WIPRO,gainer,WIPRO-27-OCT-190-PUT,INDS00209,INDONETPKU9E,9000,3.09,3.15,0.97,92,90,no clear OI change,TARGET,12:24,3.19,100.17,799.83,,,reversal,cheap vs peers
 2026-10-21,12:20,TCS,gainer,TCS-27-OCT-2520-PUT,INDS01489,INDON0RXC2O1,675,41.7,42.3,0.96,94,90,no clear OI change,VOID,,,,,,"Void: opened in the same scan as WIPRO, breaking one-trade-at-a-time (bug fixed 12:30)",reversal,cheaper than peers
+2026-10-21,12:50,TCS,gainer,TCS-27-OCT-2540-PUT,INDS01489,INDONTPGXXB2,450,50,50.7,0.9,93,90,short covering,OPEN,,,,,,,reversal,cheaper than peers
