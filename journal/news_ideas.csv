@@ -19,3 +19,5 @@ date,time,symbol,direction,confidence,source,priced_in
 2026-10-21,10:51,ETERNAL,up,75,intel,partly priced in
 2026-10-21,10:52,VEDL,up,71,intel,not priced in
 2026-10-21,10:53,ICICIBANK,up,72,intel,partly priced in
+2026-10-21,11:44,RELIANCE,up,98,intel,
+2026-10-21,11:44,ICICIBANK,up,68,intel,
