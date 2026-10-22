@@ -112,3 +112,14 @@ def test_roundup_headlines_carry_no_stock_tone():
     j = intel.make_item(id="s", time="2026-10-21 10:00:00", source="ET", kind="news",
                         headline="Eternal shares surge 8% after strong Q2")
     assert j["sentiment"] > 0
+
+
+def test_war_only_counts_for_real_conflicts():
+    from agents import intel
+    ad = intel.make_item(id="w1", time="2026-10-22 09:00:00", source="X", kind="news",
+                         headline="BECO's 'War on What's Hidden' campaign against HUL put the brand in focus")
+    assert ad["sentiment"] == 0.0 and ad["impact"] < 3
+    assert intel.tone("Iran war escalates with missile strikes on Gulf") < 0
+    assert intel.make_item(id="w2", time="2026-10-22 09:00:00", source="X", kind="news",
+                           headline="Markets fall as US-Iran war escalates")["impact"] == 3
+    assert intel.tone("Telecom price war hits margins") <= 0  # 'hits' is not in the lists; no war bonus either

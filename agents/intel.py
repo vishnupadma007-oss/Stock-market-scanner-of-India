@@ -72,9 +72,13 @@ POSITIVE = r"\b(surge[sd]?|soar(s|ed)?|jump(s|ed)?|rall(y|ies|ied)|gain(s|ed)?|r
 NEGATIVE = r"\b(plunge[sd]?|slump(s|ed)?|crash(es|ed)?|tumble[sd]?|sink(s)?|sank|fall(s|en)?|fell|drop(s|ped)?|" \
            r"slide[sd]?|decline[sd]?|miss(es|ed)?|downgrade[sd]?|weak|warn(s|ing)?|probe|raid(s|ed)?|penalt(y|ies)|" \
            r"fraud|ban(s|ned)?|default(s|ed)?|resign(s|ed|ation)?|loss(es)?|cut(s)? (guidance|forecast|target)|" \
-           r"sell rating|war|attack(s|ed)?|sanction(s|ed)?|tariff hike|slowdown|recession|outflows?|hike(s|d)? rates?|" \
+           r"sell rating|attack(s|ed)?|sanction(s|ed)?|tariff hike|slowdown|recession|outflows?|hike(s|d)? rates?|" \
            r"promoter pledge|sebi order|tax notice|ed raid)\b"
-MAJOR = r"\b(fraud|raid|probe|default|war|attack|sanction|crash|plunge|record high|rate (cut|hike)|ban|sebi order)\w*"
+MAJOR = r"\b(fraud|raid|probe|default|attack|sanction|crash|plunge|record high|rate (cut|hike)|ban|sebi order)\w*"
+# "War" is bad news only when it is a real conflict: not a price war, ad campaign or talent war.
+CONFLICT = r"\bwar\b(?=.{0,60}\b(iran|israel|russia|ukraine|china|taiwan|pakistan|gaza|hamas|hezbollah|houthi|middle east|"\
+           r"west asia|military|missile|troops|ceasefire|escalat|attack|strike))|\b(iran|israel|russia|ukraine|middle east|"\
+           r"west asia|us|gaza)\b.{0,40}\bwar\b"
 
 
 NEGATORS = r"\b(not|no|never|without|unlikely|neither|nor|hardly|fail(s|ed)? to|didn't|doesn't|don't|won't|isn't|wasn't)\b"
@@ -100,6 +104,8 @@ def tone(text: str) -> float:
                 pos += 1
             else:
                 neg += 1
+    if re.search(CONFLICT, text, re.I):
+        neg += 1  # a real war counts against the market
     if pos == neg:
         return 0.0
     score = (pos - neg) / (pos + neg)
@@ -137,7 +143,8 @@ def make_item(*, id: str, time: str, source: str, kind: str, headline: str, url:
         "global" if re.search(GLOBAL_WORDS, headline, re.I) and re.search(FINANCE_WORDS, headline, re.I) else \
         "market" if re.search(MARKET_WORDS, headline, re.I) else "sector" if sectors else ""
     if impact is None:
-        impact = 3 if re.search(MAJOR, headline, re.I) else 2 if scope in ("global", "market") else 1
+        impact = 3 if re.search(MAJOR, headline, re.I) or re.search(CONFLICT, headline, re.I) else \
+            2 if scope in ("global", "market") else 1
     if sentiment is None:
         # Round-ups mix many companies: "LIVE: L&T Tech surges 12%; Eternal reports today" says
         # nothing good or bad about Eternal, so their tone is not given to the stocks named.
