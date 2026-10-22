@@ -18,7 +18,8 @@ Intraday mover-reversal options strategy on NSE F&O stocks, run by a team of age
   Policy Impact (`agents/policy.py`: regulator/government moves -> stocks hit/helped, POLICY events;
   `policy-impact` skill), Sector Results (`agents/sector_results.py`: seasonality, YoY vs QoQ, sector KPIs;
   results filings read by 10 parallel workers)
-  and NSE holidays (`agents/holidays.py`).
+  Candlestick Patterns (`agents/candles.py`, observe mode: 19 patterns, no edge found on 60 days of data;
+  `candlestick-patterns` skill) and NSE holidays (`agents/holidays.py`).
 - Information agents write to one log (`agents/intel.py`, `journal/intel/<date>.jsonl`): NSE filings,
   Concalls (`agents/concalls.py`), News (`agents/newsfeed.py`: ET, Mint, BS, CNBC-TV18, Google News).
   The Data Analyzer (`agents/analyzer.py`) turns it into a forecast per stock + market mood.

@@ -167,6 +167,7 @@ For Claude Code: open the folder and say "start the trading desk".
 | News Guard (movers team) | `agents/news_guard.py` | Borrows the news team's knowledge: skips a stock with results, regulatory action, a policy hit or real news against the trade |
 | Shock-day guard (movers team) | `agents/shock.py` | Market-wide rally: no fading gainers; crash: no bounce trades; extreme: stand aside (SHOCK events) |
 | Results Reaction analyst | `agents/reaction.py` | 3 years of results reactions per stock: expected move size, gap-down pattern, Nifty open from US stocks and Brent |
+| Candlestick Patterns (observe) | `agents/candles.py` + `candlestick-patterns` skill | 19 classic patterns on the last 3 candles, shown on signals; no points until they prove an edge (none found on 60 days of data) |
 
 Trading day now: entries 09:15-15:15, square-off 15:20 (the teams decide when to trade within it).
 Extra skill: `analyzing-regulatory-event-impacts` (CaseMark, Apache-2.0).

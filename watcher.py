@@ -38,7 +38,7 @@ from agents.decision import decide
 from agents.forecast import reversal_target
 from agents.indicators import intraday_sigma_per_min
 from agents.market import context as market_context_view, headwind
-from agents import news_guard, shock
+from agents import candles, news_guard, shock
 from agents.momentum import read_trend
 from agents.indmoney import (IndMoney, LoginRequired, RateLimited, calls_last_hour, pick_option,
                              set_hourly_budget)
@@ -522,6 +522,7 @@ async def scan(im: IndMoney, trades: list[dict], now: datetime, cfg: dict, hold:
                                           m.get("52_week_high"), m.get("52_week_low"),
                                           m.get("circuit_upper_limit"), m.get("circuit_lower_limit"), cfg)
                 extras.append(crowd)
+                extras.append(candles.as_extra(intraday, side, cfg))  # observe mode until it proves itself
                 value = valuation.as_extra(valuation_view(m["symbol"]), side, cfg)
                 if news_votes:
                     extras.append(value)
