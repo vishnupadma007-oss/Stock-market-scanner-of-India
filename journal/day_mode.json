@@ -1,12 +1,13 @@
 {
-  "date": "2026-10-21",
+  "date": "2026-10-22",
   "mode": "careful",
   "notes": [
-    "First session after Dussehra; Nifty fell 1.1% Monday (banks), market news mood negative",
-    "Expected Nifty open about +0.2% (likely -0.3% to +0.7%): S&P 500 +0.7%, Brent +0.6% since Monday's close",
-    "Brent near $110 on fresh West Asia attacks",
-    "Bajaj Finance reacts to Monday-evening results (profit +29%); ETERNAL reports today",
-    "Results days move about 2x normal; gap-downs of 2%+ kept falling 69% of the time, so the movers team skips results stocks today"
+    "Nifty fell for a second session on Wednesday as surging crude dented sentiment",
+    "Expected Nifty open about +0.2% (likely -0.3% to +0.7%): S&P 500 +0.6% since Wednesday's close",
+    "RBI's 25 bp repo hike to 5.50% (calibrated tightening) weighs on NBFCs, realty and autos; RBI rejected T-bill bids as short yields jumped",
+    "IRDAI commission caps back in focus: NBFCs earn up to 38% of profit from insurance distribution; PolicyBazaar most exposed",
+    "Rupee at a 6-week high on Jio IPO inflows and India-US trade-deal hopes; FIIs and DIIs net buyers",
+    "No F&O results today; tomorrow: Infosys, Coforge, Dr Reddy's, IndusInd Bank, BPCL, JSW Steel, Shriram Finance"
   ],
-  "avoid": ["BAJFINANCE", "ETERNAL"]
+  "avoid": []
 }

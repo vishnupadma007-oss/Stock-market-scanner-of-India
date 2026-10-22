@@ -120,30 +120,6 @@
   "revenue_surprise": null
  },
  {
-  "seq_id": "106531239",
-  "filed": "2026-02-12 10:39:59",
-  "pdf": "https://nsearchives.nseindia.com/corporate/HINDUNILVR_12022026103618_SEIntimationOutcome12022026signed.pdf",
-  "figures": {},
-  "view": "unread",
-  "reaction": {
-   "reaction_day": "2026-02-12",
-   "when": "during market",
-   "gap_pct": 0.49,
-   "close_pct": -2.16,
-   "high_pct": 0.68,
-   "low_pct": -4.58,
-   "nifty_gap_pct": -0.18,
-   "nifty_close_pct": -0.57,
-   "runup_20d": 2.44,
-   "excess_close_pct": -1.59,
-   "excess_gap_pct": null
-  },
-  "profit_yoy": null,
-  "profit_surprise": null,
-  "revenue_yoy": null,
-  "revenue_surprise": null
- },
- {
   "seq_id": "106605053",
   "filed": "2026-04-30 10:28:34",
   "pdf": "https://nsearchives.nseindia.com/corporate/HINDUNILVR_30042026102743_OutcomeofBoardMeeting30042026signed.pdf",
