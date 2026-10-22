@@ -51,11 +51,11 @@
     "yoy_pct": 25.4
    },
    "profit": {
-    "quarter": 593.35,
-    "prev_quarter": 536.55,
-    "year_ago": 352.75,
-    "qoq_pct": 10.6,
-    "yoy_pct": 68.2
+    "quarter": 509.61,
+    "prev_quarter": 415.93,
+    "year_ago": 303.64,
+    "qoq_pct": 22.5,
+    "yoy_pct": 67.8
    }
   },
   "view": "strong",
@@ -72,8 +72,8 @@
    "excess_close_pct": -2.52,
    "excess_gap_pct": 2.7
   },
-  "profit_yoy": 68.2,
-  "profit_surprise": 36.5,
+  "profit_yoy": 67.8,
+  "profit_surprise": 36.1,
   "revenue_yoy": 25.4,
   "revenue_surprise": 12.6
  },
@@ -112,7 +112,7 @@
    "excess_gap_pct": 1.71
   },
   "profit_yoy": 18.3,
-  "profit_surprise": -31.7,
+  "profit_surprise": -31.4,
   "revenue_yoy": 23.7,
   "revenue_surprise": 4.6
  },
