@@ -128,3 +128,30 @@ def test_contract_expiry_from_name():
     assert contract_expiry("CRUDEOIL 19 Oct Fut", today) == date(2026, 10, 19)  # expired yesterday
     assert contract_expiry("CRUDEOIL 18 Nov Fut", today) == date(2026, 11, 18)
     assert contract_expiry("GOLD 05 Feb Fut", date(2026, 12, 20)) == date(2027, 2, 5)
+
+
+def test_board_meeting_outcome_is_opened_for_results(monkeypatch, tmp_path, capsys):
+    # ETERNAL, 21 Oct 15:22: results filed only as "Outcome of board meeting dated ...".
+    row = filing("ETERNAL", "Outcome of Board Meeting", "Outcome of board meeting dated October 21, 2026.",
+                 seq="42", t="2026-10-21 15:22:31", pdf="https://nse/e.pdf")
+    assert announcements.classify(row) == "BOARD"
+    monkeypatch.setattr(watcher.announcements, "fetch_feed", lambda **kw: [row])
+    monkeypatch.setattr(watcher.announcements, "results_summary",
+                        lambda url: {"figures": {}, "highlights": ["B2C NOV grew 54% YoY"], "is_results": True})
+    monkeypatch.setattr(watcher, "check_expectations", lambda s, now, view=None: {})
+    watcher._daily.clear()
+    watcher.poll_filings(CFG, datetime(2026, 10, 21, 15, 23, tzinfo=IST))
+    out = capsys.readouterr().out
+    assert out.startswith("RESULT ") and '"ETERNAL"' in out
+
+
+def test_restart_does_not_report_old_filings_again(monkeypatch, tmp_path, capsys):
+    rows = [filing("PNB", "Action(s) taken or orders passed", "penalty imposed by RBI", seq="7", t="2026-10-21 10:10:00")]
+    monkeypatch.setattr(watcher.announcements, "fetch_feed", lambda **kw: rows)
+    now = datetime(2026, 10, 21, 10, 31, tzinfo=IST)
+    for _ in range(2):  # two watcher runs on the same day
+        watcher._daily.clear()
+        watcher.poll_filings(CFG, now)
+    assert capsys.readouterr().out.count("NEWS") == 1
+    assert watcher.FILINGS_LOG.read_text().count("\n") == 2  # header + one row
+    assert announcements.classify(filing("ETERNAL", "General Updates", "copy of shareholders letter")) == "GUIDANCE"

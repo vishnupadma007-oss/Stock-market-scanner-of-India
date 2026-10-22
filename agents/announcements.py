@@ -52,7 +52,7 @@ CATEGORIES = [
     ("REGULATORY", r"action\(s\) (taken|initiated)|order(s)? passed|penalty|show cause|"
                    r"search|raid|litigation|dispute|insolvency"),
     ("MANAGEMENT", r"resignation|cessation|appointment of (md|ceo|managing|chief)"),
-    ("GUIDANCE", r"press release|investor presentation|business update|operational update"),
+    ("GUIDANCE", r"press release|investor presentation|business update|operational update|shareholders?'? letter"),
 ]
 ROUTINE = r"newspaper|trading window|loss of share|duplicate share|certificate under|" \
           r"closure of trading|shareholders meeting|record date|analysts/institutional"
@@ -62,6 +62,10 @@ def classify(row: dict) -> str | None:
     text = f"{row.get('desc', '')} {row.get('attchmntText', '')}".lower()
     if re.search(r"outcome of board meeting", text) and "financial result" in text:
         return "RESULTS"
+    if re.search(r"outcome of board meeting", text):
+        # Some companies title results only "Outcome of board meeting dated ..." (ETERNAL, 21 Oct):
+        # the watcher opens the PDF to see whether it holds results.
+        return "BOARD"
     if re.search(ROUTINE, text):
         return None
     for name, pattern in CATEGORIES:
@@ -185,9 +189,13 @@ def pdf_text(url: str) -> str:
             return "\n".join(p.extract_text() or "" for p in pypdf.PdfReader(io.BytesIO(resp.content)).pages)
 
 
+RESULTS_TEXT = r"financial results|revenue from operations|statement of profit and loss"
+
+
 def results_summary(url: str) -> dict:
     text = pdf_text(url)
-    return {"figures": figures_from_text(text), "highlights": highlights(text)}
+    return {"figures": figures_from_text(text), "highlights": highlights(text),
+            "is_results": bool(re.search(RESULTS_TEXT, text, re.I))}
 
 
 def score_results(figures: dict) -> dict:

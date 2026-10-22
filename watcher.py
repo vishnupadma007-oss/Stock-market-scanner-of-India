@@ -87,7 +87,9 @@ def usdinr_change() -> float | None:
 def reset_daily(today: str) -> None:
     if _daily.get("date") != today:
         _daily.clear()
-        _daily.update(date=today, filings={}, seen_filings=set(), shocks_sent=set(), forecasts={},
+        # Filings already in the log were reported before (a restart must not report them again).
+        seen = {r["seq_id"] for r in csv.DictReader(open(FILINGS_LOG))} if FILINGS_LOG.exists() else set()
+        _daily.update(date=today, filings={}, seen_filings=seen, shocks_sent=set(), forecasts={},
                       expectations={}, intel_seen={i["id"] for i in intel.load(today)})
 
 
@@ -230,14 +232,21 @@ def poll_filings(cfg: dict, now: datetime) -> None:
         if item["seq_id"] in _daily["seen_filings"]:
             continue
         _daily["seen_filings"].add(item["seq_id"])
-        _daily["filings"].setdefault(item["symbol"], []).append(item)
-        log_filing(item)
-        if item["category"] == "RESULTS" and item["pdf"].endswith(".pdf"):
+        if item["category"] in ("RESULTS", "BOARD") and item["pdf"].endswith(".pdf"):
             try:
                 summary = announcements.results_summary(item["pdf"])
                 item = {**item, **summary, "read": announcements.score_results(summary["figures"])}
+                if item["category"] == "BOARD":
+                    item["category"] = "RESULTS" if summary["is_results"] or summary["figures"] else "BOARD"
             except Exception as e:
                 item = {**item, "read": {"view": "unread", "notes": [f"PDF not read: {type(e).__name__}"]}}
+                if item["category"] == "BOARD":
+                    item["category"] = "RESULTS"  # cannot tell: report it so Claude reads it
+        if item["category"] == "BOARD":  # a board meeting without results (dividend, fund-raising...)
+            item["category"] = "GUIDANCE"
+        _daily["filings"].setdefault(item["symbol"], []).append(item)
+        log_filing(item)
+        if item["category"] == "RESULTS":
             view = item["read"]["view"]
             item["expectations"] = check_expectations(item["symbol"], now,
                                                       view if view in ("strong", "good", "weak") else None)
