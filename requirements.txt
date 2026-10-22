@@ -10,3 +10,4 @@ mcp>=2.2
 requests>=2.31
 pypdf>=4.0
 pytest>=8.0
+pytesseract>=0.3  # plus the tesseract-ocr system package (apt install tesseract-ocr)

@@ -64,7 +64,9 @@ One short research pass that sets the day's mode. Keep it to a handful of search
    Add `python -m agents.expectations SYMBOL` for each (3-4 INDmoney calls): is a good result
    already priced in (run-up vs Nifty, pre-results hype, price vs analyst target), and so what
    bar the numbers must clear to move the stock (valuation vs peers counts towards it).
-   Finally `python -m agents.analyzer`: the Data Analyzer's market mood and strongest stock
+   Then `python -m agents.market`: why the market is where it is (geopolitics, policy, domestic
+   economy, global markets, commodities, FII/DII flows) with the top headlines for each; lead the
+   brief with it. Finally `python -m agents.analyzer`: the Data Analyzer's market mood and strongest stock
    forecasts from the overnight intelligence log (filings, concalls, news). Mention the top ones.
    `python -c "from agents.news import results_calendar as r; import json; from datetime import date; print(json.dumps({s: [str(d) for d in v] for s, v in r().items() if date.today() in v}))"`
    lists companies with results today (the News agent already skips those stocks).
@@ -95,7 +97,9 @@ One short research pass that sets the day's mode. Keep it to a handful of search
 
 ## On a SIGNAL line
 
-A **news-team** signal (`team: news`) has passed the Trend Checker (`trend_score` 60+ and
+A **news-team** signal (`team: news`) has passed the Market Context check (`market`: Nifty's
+move, the news mood and its drivers by theme; no CALL into a market down 0.8%+ on bad news, no
+PUT into such a rally) and the Trend Checker (`trend_score` 60+ and
 `trend_signals`: the chart backs the news's direction) and carries `source` (results / intel), `reason`,
 `confidence`, `priced_in` and `valuation`. Check that the story is real (the reason, and one web
 search if thin) and that it is not already priced in, then give TRADE/SKIP in 2-3 lines. The
@@ -135,7 +139,10 @@ there are lost. The evening review merges this file to compare rules-only with y
 The Announcements agent already read the filing: `figures` (revenue and profit: this quarter,
 last quarter, year ago, QoQ/YoY %), `highlights` (growth lines from the press release) and
 `read` (strong / good / mixed / weak from the numbers alone). Machine reading can fail on
-scanned filings: if `figures` is empty or disagrees with `highlights`, trust the highlights.
+scanned filings: scanned PDFs are read with OCR (Tesseract) and figures that do not add up are
+rejected, but if `figures` is empty or disagrees with `highlights`, trust the highlights, and for a
+bank whose PDF is unreadable look for its same-day press release (`python -m agents.announcements
+recent SYMBOL`).
 
 1. Judge the quarter with the beat/miss checklist from the `earnings-analysis` skill (not its
    full report format): revenue, margins and profit versus the consensus estimate (one web

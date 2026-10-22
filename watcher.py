@@ -34,6 +34,7 @@ from agents.costs import round_trip_charges
 from agents.decision import decide
 from agents.forecast import reversal_target
 from agents.indicators import intraday_sigma_per_min
+from agents.market import context as market_context_view, headwind
 from agents.momentum import read_trend
 from agents.indmoney import (IndMoney, LoginRequired, RateLimited, calls_last_hour, pick_option,
                              set_hourly_budget)
@@ -510,6 +511,7 @@ NEWS_DEFAULTS = {
     "max_age_min": 120,     # ideas older than this are dropped
     "min_trend_score": 60,  # Trend Checker: the chart must back the news's direction
     "trend_recheck_min": 5,  # a stock whose chart failed is looked at again after this long
+    "market_headwind_pct": 0.8,  # no CALL when Nifty is down this much on bad news (no PUT into such a rally)
 }
 
 
@@ -529,7 +531,12 @@ async def news_team(im: IndMoney, trades: list[dict], now: datetime, cfg: dict) 
     for sym, _ in ideas:
         if sym not in _stock_keys:
             _stock_keys[sym] = await expectations.stock_key(im, sym)
-    quotes = await im.quotes([_stock_keys[sym] for sym, _ in ideas])
+    quotes = await im.quotes([_stock_keys[sym] for sym, _ in ideas] + [NIFTY_KEY, VIX_KEY])
+    # Market Context agent: how Nifty is moving and why (geopolitics, policy, economy, flows...).
+    n_stats = (quotes.get(NIFTY_KEY) or {}).get("entity_stats") or {}
+    v_stats = (quotes.get(VIX_KEY) or {}).get("entity_stats") or {}
+    mkt = market_context_view(analyzer.recent_items(now), now, n_stats.get("day_change_percentage"),
+                              v_stats.get("live_price"), v_stats.get("day_change_percentage"))
     trades_today = sum(t["date"] == today and team_of(t) == "news" for t in trades)
     for sym, idea in ideas:
         try:
@@ -551,6 +558,8 @@ async def news_team(im: IndMoney, trades: list[dict], now: datetime, cfg: dict) 
             if trend["score"] < c["min_trend_score"]:
                 _daily["trend_failed"][sym] = now
                 continue
+            if headwind(mkt, idea["direction"], c["market_headwind_pct"]):
+                continue  # the whole market is moving hard the other way on news
             side = "loser" if idea["direction"] == "up" else "gainer"  # loser -> CALL, gainer -> PUT
             option = pick_option(await im.option_chain(_stock_keys[sym]), side, cfg["strike_choice"])
             if option is None:
@@ -574,7 +583,9 @@ async def news_team(im: IndMoney, trades: list[dict], now: datetime, cfg: dict) 
                             "square_off": cfg["square_off_time"], "source": idea["source"],
                             "confidence": idea["confidence"], "priced_in": idea["priced_in"],
                             "reason": idea["reason"], "valuation": row["valuation"],
-                            "trend_score": trend["score"], "trend_signals": [t for t, _ in trend["signals"]]})
+                            "trend_score": trend["score"], "trend_signals": [t for t, _ in trend["signals"]],
+                            "market": {"notes": mkt["notes"], "drivers": {t: {"tone": d["tone"], "headlines": d["headlines"]}
+                                                                         for t, d in mkt["drivers"].items()}}})
             return  # one trade at a time
         except (LoginRequired, RateLimited):
             raise

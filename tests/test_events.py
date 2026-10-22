@@ -155,3 +155,13 @@ def test_restart_does_not_report_old_filings_again(monkeypatch, tmp_path, capsys
     assert capsys.readouterr().out.count("NEWS") == 1
     assert watcher.FILINGS_LOG.read_text().count("\n") == 2  # header + one row
     assert announcements.classify(filing("ETERNAL", "General Updates", "copy of shareholders letter")) == "GUIDANCE"
+
+
+def test_ocr_rows_are_cleaned_and_checked():
+    sbi = "12 [NET PROFIT/ (LOSS) FROM ORDINARY ACTIVITIES AFTER TAX(10}(71) | _24,124.22| _19,683.75| 19,160.44] [24,579.04"
+    f = announcements.figures_from_text(sbi)
+    assert f["profit"]["quarter"] == 24124.22 and f["profit"]["yoy_pct"] == 25.9
+    eternal = "I Revenue from operations 24, 138 20,21 1 13,590 44,349"
+    assert announcements.figures_from_text(eternal)["revenue"]["prev_quarter"] == 20211
+    assert announcements.figures_from_text("Revenue from operations 524551 524.493 385.93") == {}  # garbled: rejected
+    assert announcements.clean_ocr_numbers("Net profit 1o5 2,4l0") == "Net profit 105 2,410"

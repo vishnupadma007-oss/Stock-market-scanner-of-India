@@ -14,6 +14,7 @@ import re
 import subprocess
 import sys
 import tempfile
+from pathlib import Path
 from datetime import datetime, timedelta
 
 import requests
@@ -131,32 +132,74 @@ def _numbers(line: str) -> list[float]:
     return vals
 
 
+_LEAD = r"^\s*(\d+\s*[.)]?\s+|[a-z]\)\s*|\(?[ivxl]+\)?[.)]?\s+)?"  # serial: "1 ", "a)", "(iv)", "IX "
+# Companies name the same rows differently; the first match in the filing wins (usually the
+# first results table on the first pages).
 ROWS = {
-    "revenue": r"^\s*(\d+\s+|[a-z]\)\s*|\(?[ivx]+\)\s*)?(total )?revenue from operations|"
-               r"^\s*(\d+\s+)?interest earned",
-    "profit": r"^\s*(\d+\s+|[a-z]\)\s*|\(?[ivx]+\)\s*)?(net )?profit\s*/?\s*(\(loss\)\s*)?"
-              r"(after tax|for the (period|quarter))",
+    "revenue": _LEAD + r"((total )?revenue from operations|(total )?income from operations|"
+                       r"(net )?sales\s*/?\s*income from operations|net sales|interest earned)",
+    "profit": _LEAD + r"(net )?profit\s*/?\s*(\(?loss\)?\s*)?(from ordinary activities\s*)?(after (tax|taxation)|"
+                      r"for the (period|quarter|year)|attributable to (the )?(owners|equity))",
 }
 
 
+OCR_FIXES = str.maketrans({"o": "0", "O": "0", "D": "0", "l": "1", "I": "1", "|": "1", "i": "1",
+                           "S": "5", "s": "5", "B": "8", "g": "9", "Z": "2", "z": "2"})
+
+
+def clean_ocr_numbers(line: str) -> str:
+    """Fix typical OCR digit errors inside number-like tokens: '24, 138' -> '24,138', '1o5' -> '105'.
+    Only tokens that are mostly digits are touched, so labels stay as they are."""
+    line = re.sub(r"[\[\]|_{}‘’“”;•·*]", lambda m: ")" if m.group() == "}" else " ", line)  # table lines, bullets, OCR noise
+    line = re.sub(r"(?<=[A-Za-z])(\(\d{1,3}\)\)?)+", " ", line)  # row references glued to the label: "TAX(10)(71)"
+    line = re.sub(r"(\d),\s+(\d{3})\b", r"\1,\2", line)
+    line = re.sub(r"(\d,\d{2})\s(\d)\b(?![,.]\d)", r"\1\2", line)  # "20,21 1" -> "20,211"
+    line = re.sub(r"(\d,\d)\s(\d{2})\b(?![,.]\d)", r"\1\2", line)
+    out = []
+    for tok in line.split(" "):
+        core = tok.strip("()-")
+        if len(core) >= 2 and sum(ch.isdigit() for ch in core) >= 0.6 * len(core):
+            tok = tok.translate(OCR_FIXES)
+        out.append(tok)
+    return " ".join(out)
+
+
+def plausible(key: str, nums: list[float]) -> bool:
+    """Reject misread rows: a quarter's revenue is never 3x its neighbours; profit (same sign)
+    rarely 10x. Catches OCR errors like '24,138 / 2,021 / 1'."""
+    vals = [abs(n) for n in nums]
+    if min(vals) == 0:
+        return key == "profit"
+    if key == "revenue":
+        return max(vals) / min(vals) <= 3
+    same_sign = all(n > 0 for n in nums) or all(n < 0 for n in nums)
+    return not same_sign or max(vals) / min(vals) <= 10
+
+
+def _row(key: str, lines: list[str], start: int = 0) -> tuple[int, dict] | None:
+    for i in range(start, len(lines)):
+        if re.search(ROWS[key], lines[i], re.I):
+            nums = _numbers(lines[i])
+            if len(nums) >= 3 and plausible(key, nums[:3]):
+                cur, prev_q, prev_y = nums[:3]
+                return i, {"quarter": cur, "prev_quarter": prev_q, "year_ago": prev_y,
+                           "qoq_pct": round((cur / prev_q - 1.0) * 100.0, 1) if prev_q else None,
+                           "yoy_pct": round((cur / prev_y - 1.0) * 100.0, 1) if prev_y else None}
+    return None
+
+
 def figures_from_text(text: str) -> dict:
-    """First results table in the filing (usually consolidated): current quarter, previous
-    quarter and the same quarter last year, with QoQ and YoY growth."""
+    """First results table in the filing: current quarter, previous quarter and the same quarter
+    last year, with QoQ and YoY growth. Profit is read from the same table as revenue (the first
+    profit row after the revenue row), so a summary table elsewhere is not mixed in."""
+    lines = [clean_ocr_numbers(l) if re.search(r"\d", l) else l for l in text.splitlines()]
     out = {}
-    for key, pattern in ROWS.items():
-        for line in text.splitlines():
-            if re.search(pattern, line, re.I):
-                nums = _numbers(line)
-                if len(nums) >= 3:
-                    cur, prev_q, prev_y = nums[:3]
-                    out[key] = {
-                        "quarter": cur,
-                        "prev_quarter": prev_q,
-                        "year_ago": prev_y,
-                        "qoq_pct": round((cur / prev_q - 1.0) * 100.0, 1) if prev_q and prev_q != 0 else None,
-                        "yoy_pct": round((cur / prev_y - 1.0) * 100.0, 1) if prev_y and prev_y != 0 else None,
-                    }
-                    break
+    rev = _row("revenue", lines)
+    if rev:
+        out["revenue"] = rev[1]
+    prof = _row("profit", lines, rev[0] + 1 if rev else 0) or (_row("profit", lines) if rev else None)
+    if prof:
+        out["profit"] = prof[1]
     return out
 
 
@@ -174,19 +217,51 @@ def highlights(text: str, limit: int = 12) -> list[str]:
     return keep
 
 
-def pdf_text(url: str) -> str:
-    session = get_nse_session()
-    resp = session.get(url, timeout=90)
+def _download(url: str) -> bytes:
+    resp = get_nse_session().get(url, timeout=90)
     resp.raise_for_status()
+    return resp.content
+
+
+def _text_layer(pdf: bytes) -> str:
     with tempfile.NamedTemporaryFile(suffix=".pdf") as f:
-        f.write(resp.content)
+        f.write(pdf)
         f.flush()
         try:
             return subprocess.run(["pdftotext", "-layout", f.name, "-"], capture_output=True,
                                   text=True, timeout=120).stdout
         except FileNotFoundError:  # no poppler: fall back to pypdf
             import pypdf
-            return "\n".join(p.extract_text() or "" for p in pypdf.PdfReader(io.BytesIO(resp.content)).pages)
+            return "\n".join(p.extract_text() or "" for p in pypdf.PdfReader(io.BytesIO(pdf)).pages)
+
+
+def ocr_text(pdf: bytes, pages: int = 6, dpi: int = 300) -> str:
+    """Read scanned pages with Tesseract OCR (results tables are on the first few pages)."""
+    with tempfile.TemporaryDirectory() as d:
+        src = Path(d) / "in.pdf"
+        src.write_bytes(pdf)
+        subprocess.run(["pdftoppm", "-r", str(dpi), "-gray", "-f", "1", "-l", str(pages), str(src), str(Path(d) / "p")],
+                       check=True, timeout=300, capture_output=True)
+        texts = []
+        for img in sorted(Path(d).glob("p*.pgm")):
+            # psm 6: one uniform block, keeps table rows on one line; keep the spaces between columns
+            texts.append(subprocess.run(["tesseract", str(img), "-", "--psm", "6", "-c", "preserve_interword_spaces=1"],
+                                        capture_output=True, text=True, timeout=120).stdout)
+        return "\n".join(texts)
+
+
+def pdf_text(url: str, ocr: bool = True) -> str:
+    """Text of a filing. Scanned filings (no text layer, or a garbled one where the results rows
+    cannot be read) are read with OCR instead."""
+    pdf = _download(url)
+    text = _text_layer(pdf)
+    if not ocr or len(figures_from_text(text)) == 2:
+        return text
+    try:
+        scanned = ocr_text(pdf)
+    except (FileNotFoundError, subprocess.SubprocessError):
+        return text  # no OCR tools installed
+    return scanned if len(figures_from_text(scanned)) > len(figures_from_text(text)) else text + "\n" + scanned
 
 
 RESULTS_TEXT = r"financial results|revenue from operations|statement of profit and loss"

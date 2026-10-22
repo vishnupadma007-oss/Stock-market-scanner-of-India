@@ -12,3 +12,4 @@ def keep_journal_clean(monkeypatch, tmp_path):
     # No network in tests: the reaction analyst's price history comes from Yahoo.
     monkeypatch.setattr(watcher, "results_reaction", lambda item, now: {"notes": []})
     monkeypatch.setattr(watcher.reaction, "typical_move", lambda symbol: 1.8)
+    monkeypatch.setattr(watcher.intel, "DIR", tmp_path / "intel")  # never read the real news log

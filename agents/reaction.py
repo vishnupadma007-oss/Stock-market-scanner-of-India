@@ -404,7 +404,9 @@ def main(argv: list[str]) -> None:
         # Several stocks at once (plain Python threads, no AI). NSE blocks heavy traffic, so keep
         # it to a handful: python -m agents.reaction build --workers 5 [SYMBOLS...]
         args = argv[2:]
-        workers = 4
+        workers, refresh = 4, False
+        if args[:1] == ["--refresh"]:  # read every filing again (e.g. after OCR was added)
+            refresh, args = True, args[1:]
         if args[:1] == ["--workers"]:
             workers, args = int(args[1]), args[2:]
         universe = args or load_config()["universe"]
@@ -412,7 +414,7 @@ def main(argv: list[str]) -> None:
 
         def one(sym: str) -> str:
             try:
-                h = build_history(sym)
+                h = build_history(sym, refresh=refresh)
                 return f"{sym} {len(h)} quarters {sum(1 for q in h if q.get('figures'))} read"
             except Exception as e:
                 return f"{sym} failed: {type(e).__name__} {e}"
