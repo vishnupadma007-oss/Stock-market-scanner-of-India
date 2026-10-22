@@ -10,16 +10,9 @@
     "year_ago": 36237.0,
     "qoq_pct": 15.6,
     "yoy_pct": 6.4
-   },
-   "profit": {
-    "quarter": 22.0,
-    "prev_quarter": 3408.0,
-    "year_ago": 29.0,
-    "qoq_pct": -99.4,
-    "yoy_pct": -24.1
    }
   },
-  "view": "weak",
+  "view": "mixed",
   "reaction": {
    "reaction_day": "2023-11-06",
    "when": "after close",
@@ -33,7 +26,7 @@
    "excess_close_pct": -0.79,
    "excess_gap_pct": -0.6
   },
-  "profit_yoy": -24.1,
+  "profit_yoy": null,
   "profit_surprise": null,
   "revenue_yoy": 6.4,
   "revenue_surprise": null
@@ -43,22 +36,15 @@
   "filed": "2024-01-25 15:47:52",
   "pdf": "https://nsearchives.nseindia.com/corporate/SEIntimationOutcomeofBM25Jan2024FinancialResultsSIGNED1_25012024154752.pdf",
   "figures": {
-   "revenue": {
-    "quarter": 34968.0,
-    "prev_quarter": 38.546,
-    "year_ago": 33691.0,
-    "qoq_pct": 90617.6,
-    "yoy_pct": 3.8
-   },
    "profit": {
-    "quarter": 3084.0,
-    "prev_quarter": 22.0,
-    "year_ago": 4.684,
-    "qoq_pct": 13918.2,
-    "yoy_pct": 65741.2
+    "quarter": 2880.0,
+    "prev_quarter": 4251.0,
+    "year_ago": 4466.0,
+    "qoq_pct": -32.3,
+    "yoy_pct": -35.5
    }
   },
-  "view": "strong",
+  "view": "weak",
   "reaction": {
    "reaction_day": "2024-01-29",
    "when": "after close",
@@ -72,10 +58,10 @@
    "excess_close_pct": -0.21,
    "excess_gap_pct": -0.32
   },
-  "profit_yoy": 100.0,
-  "profit_surprise": 124.1,
-  "revenue_yoy": 3.8,
-  "revenue_surprise": -2.6
+  "profit_yoy": -35.5,
+  "profit_surprise": null,
+  "revenue_yoy": null,
+  "revenue_surprise": null
  },
  {
   "seq_id": "161150",
@@ -88,16 +74,9 @@
     "year_ago": 37225.0,
     "qoq_pct": -0.1,
     "yoy_pct": -6.1
-   },
-   "profit": {
-    "quarter": 765.0,
-    "prev_quarter": 2880.0,
-    "year_ago": 11205.0,
-    "qoq_pct": -73.4,
-    "yoy_pct": -93.2
    }
   },
-  "view": "weak",
+  "view": "mixed",
   "reaction": {
    "reaction_day": "2024-04-25",
    "when": "during market",
@@ -111,10 +90,10 @@
    "excess_close_pct": -1.38,
    "excess_gap_pct": null
   },
-  "profit_yoy": -93.2,
-  "profit_surprise": -131.2,
+  "profit_yoy": null,
+  "profit_surprise": null,
   "revenue_yoy": -6.1,
-  "revenue_surprise": -11.2
+  "revenue_surprise": -12.5
  },
  {
   "seq_id": "164335",
@@ -122,21 +101,21 @@
   "pdf": "https://nsearchives.nseindia.com/corporate/SEIntimationOutcomeofBM6Aug2024FinancialResultsfinalsigned_06082024135852.pdf",
   "figures": {
    "revenue": {
-    "quarter": 35239.0,
-    "prev_quarter": 34937.0,
-    "year_ago": 33.0,
-    "qoq_pct": 0.9,
-    "yoy_pct": 106684.8
+    "quarter": 16387.0,
+    "prev_quarter": 17461.0,
+    "year_ago": 15665.0,
+    "qoq_pct": -6.2,
+    "yoy_pct": 4.6
    },
    "profit": {
     "quarter": 4183.0,
-    "prev_quarter": 109.0,
-    "year_ago": 3408.0,
-    "qoq_pct": 3737.6,
-    "yoy_pct": 22.7
+    "prev_quarter": 765.0,
+    "year_ago": -301.0,
+    "qoq_pct": 446.8,
+    "yoy_pct": -1489.7
    }
   },
-  "view": "strong",
+  "view": "weak",
   "reaction": {
    "reaction_day": "2024-08-06",
    "when": "during market",
@@ -150,10 +129,10 @@
    "excess_close_pct": 0.42,
    "excess_gap_pct": null
   },
-  "profit_yoy": 22.7,
-  "profit_surprise": 46.8,
-  "revenue_yoy": 100.0,
-  "revenue_surprise": 96.2
+  "profit_yoy": -100.0,
+  "profit_surprise": -64.5,
+  "revenue_yoy": 4.6,
+  "revenue_surprise": 4.4
  },
  {
   "seq_id": "166705",
@@ -190,9 +169,9 @@
    "excess_gap_pct": null
   },
   "profit_yoy": 79.6,
-  "profit_surprise": 80.3,
+  "profit_surprise": 147.3,
   "revenue_yoy": -5.3,
-  "revenue_surprise": -10.4
+  "revenue_surprise": -9.9
  },
  {
   "seq_id": "168776",
@@ -229,9 +208,9 @@
    "excess_gap_pct": null
   },
   "profit_yoy": -38.1,
-  "profit_surprise": -89.2,
+  "profit_surprise": -2.6,
   "revenue_yoy": 10.2,
-  "revenue_surprise": 10.9
+  "revenue_surprise": 15.5
  },
  {
   "seq_id": "106319098",
@@ -246,14 +225,14 @@
     "yoy_pct": 5.8
    },
    "profit": {
-    "quarter": 4457.0,
-    "prev_quarter": 4961.0,
-    "year_ago": 5095.0,
-    "qoq_pct": -10.2,
-    "yoy_pct": -12.5
+    "quarter": 5742.0,
+    "prev_quarter": 1409.0,
+    "year_ago": 4183.0,
+    "qoq_pct": 307.5,
+    "yoy_pct": 37.3
    }
   },
-  "view": "weak",
+  "view": "strong",
   "reaction": {
    "reaction_day": "2025-07-31",
    "when": "during market",
@@ -267,10 +246,10 @@
    "excess_close_pct": -1.71,
    "excess_gap_pct": null
   },
-  "profit_yoy": -12.5,
-  "profit_surprise": -4.8,
+  "profit_yoy": 37.3,
+  "profit_surprise": 75.4,
   "revenue_yoy": 5.8,
-  "revenue_surprise": 3.4
+  "revenue_surprise": 6.2
  },
  {
   "seq_id": "106422276",
@@ -285,11 +264,11 @@
     "yoy_pct": 5.9
    },
    "profit": {
-    "quarter": 3479.0,
-    "prev_quarter": 4457.0,
-    "year_ago": 5603.0,
-    "qoq_pct": -21.9,
-    "yoy_pct": -37.9
+    "quarter": 2.195,
+    "prev_quarter": 5.742,
+    "year_ago": 10.553,
+    "qoq_pct": -61.8,
+    "yoy_pct": -79.2
    }
   },
   "view": "weak",
@@ -306,10 +285,10 @@
    "excess_close_pct": -2.04,
    "excess_gap_pct": null
   },
-  "profit_yoy": -37.9,
-  "profit_surprise": -43.0,
+  "profit_yoy": -79.2,
+  "profit_surprise": -78.8,
   "revenue_yoy": 5.9,
-  "revenue_surprise": -2.1
+  "revenue_surprise": 0.7
  },
  {
   "seq_id": "106511356",
@@ -317,21 +296,21 @@
   "pdf": "https://nsearchives.nseindia.com/corporate/VEDL_29012026155931_VEDLSEIntimationOutcomeofBM29January2026Financial_Resultssigned.pdf",
   "figures": {
    "revenue": {
-    "quarter": 46651.0,
-    "prev_quarter": 39868.0,
-    "year_ago": 39.0,
-    "qoq_pct": 17.0,
-    "yoy_pct": 119517.9
+    "quarter": 2366.0,
+    "prev_quarter": 2342.0,
+    "year_ago": 2638.0,
+    "qoq_pct": 1.0,
+    "yoy_pct": -10.3
    },
    "profit": {
-    "quarter": 2.0,
-    "prev_quarter": 881.0,
-    "year_ago": 2.0,
-    "qoq_pct": -99.8,
-    "yoy_pct": 0.0
+    "quarter": 2967.0,
+    "prev_quarter": 2195.0,
+    "year_ago": 1783.0,
+    "qoq_pct": 35.2,
+    "yoy_pct": 66.4
    }
   },
-  "view": "mixed",
+  "view": "good",
   "reaction": {
    "reaction_day": "2026-01-30",
    "when": "after close",
@@ -345,10 +324,10 @@
    "excess_close_pct": -10.68,
    "excess_gap_pct": -0.81
   },
-  "profit_yoy": 0.0,
-  "profit_surprise": 25.2,
-  "revenue_yoy": 100.0,
-  "revenue_surprise": 94.2
+  "profit_yoy": 66.4,
+  "profit_surprise": 66.8,
+  "revenue_yoy": -10.3,
+  "revenue_surprise": -16.1
  },
  {
   "seq_id": "106604015",
@@ -356,11 +335,11 @@
   "pdf": "https://nsearchives.nseindia.com/corporate/VEDL_29042026144158_1VEDSEIntimationOutcomeofBM29April2026FinancialResultssigned.pdf",
   "figures": {
    "revenue": {
-    "quarter": 52851.0,
-    "prev_quarter": 46.65,
-    "year_ago": 1.0,
-    "qoq_pct": 113192.6,
-    "yoy_pct": 5285000.0
+    "quarter": 2588.0,
+    "prev_quarter": 2366.0,
+    "year_ago": 2681.0,
+    "qoq_pct": 9.4,
+    "yoy_pct": -3.5
    },
    "profit": {
     "quarter": 4250.0,
@@ -370,7 +349,7 @@
     "yoy_pct": 67.5
    }
   },
-  "view": "strong",
+  "view": "good",
   "reaction": {
    "reaction_day": "2026-04-29",
    "when": "during market",
@@ -385,9 +364,9 @@
    "excess_gap_pct": null
   },
   "profit_yoy": 67.5,
-  "profit_surprise": 92.7,
-  "revenue_yoy": 100.0,
-  "revenue_surprise": 92.0
+  "profit_surprise": 67.9,
+  "revenue_yoy": -3.5,
+  "revenue_surprise": -9.3
  },
  {
   "seq_id": "106717121",
@@ -395,21 +374,21 @@
   "pdf": "https://nsearchives.nseindia.com/corporate/VEDL_30072026150844_VEDLSEIntimationOutcomeBMFSsigned.pdf",
   "figures": {
    "revenue": {
-    "quarter": 33515.0,
-    "prev_quarter": 52.0,
-    "year_ago": 851.0,
-    "qoq_pct": 64351.9,
-    "yoy_pct": 3838.3
+    "quarter": 6395.0,
+    "prev_quarter": 19106.0,
+    "year_ago": 14636.0,
+    "qoq_pct": -66.5,
+    "yoy_pct": -56.3
    },
    "profit": {
-    "quarter": 5294.0,
-    "prev_quarter": 4267.0,
-    "year_ago": 2102.0,
-    "qoq_pct": 24.1,
-    "yoy_pct": 151.9
+    "quarter": 4384.0,
+    "prev_quarter": 5437.0,
+    "year_ago": 3773.0,
+    "qoq_pct": -19.4,
+    "yoy_pct": 16.2
    }
   },
-  "view": "strong",
+  "view": "mixed",
   "reaction": {
    "reaction_day": "2026-07-30",
    "when": "during market",
@@ -423,9 +402,9 @@
    "excess_close_pct": 0.85,
    "excess_gap_pct": null
   },
-  "profit_yoy": 100.0,
-  "profit_surprise": 106.2,
-  "revenue_yoy": 100.0,
-  "revenue_surprise": 47.0
+  "profit_yoy": 16.2,
+  "profit_surprise": -35.7,
+  "revenue_yoy": -56.3,
+  "revenue_surprise": -57.4
  }
 ]

@@ -59,7 +59,8 @@ class FakeIndMoney:
         return {"crude oil": "CRUDE", "copper": "COPPER"}
 
     async def day_changes(self, keys):
-        return {k: (0.4 if k in ("CRUDE", "COPPER") else self.sector_chg) for k in keys}
+        calm = ("CRUDE", "COPPER", watcher.NIFTY_KEY, watcher.VIX_KEY)  # the market itself stays calm
+        return {k: (0.4 if k in calm else self.sector_chg) for k in keys}
 
     async def news(self, key):
         return self.headlines

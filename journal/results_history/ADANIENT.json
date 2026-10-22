@@ -29,11 +29,11 @@
   "pdf": "https://nsearchives.nseindia.com/corporate/OutcomeBM01022024_01022024140911.pdf",
   "figures": {
    "revenue": {
-    "quarter": 28336.38,
-    "prev_quarter": 2251733.0,
-    "year_ago": 26612.23,
-    "qoq_pct": -98.7,
-    "yoy_pct": 6.5
+    "quarter": 11246.93,
+    "prev_quarter": 9313.0,
+    "year_ago": 12142.15,
+    "qoq_pct": 20.8,
+    "yoy_pct": -7.4
    },
    "profit": {
     "quarter": 718.46,
@@ -43,7 +43,7 @@
     "yoy_pct": 166.4
    }
   },
-  "view": "good",
+  "view": "mixed",
   "reaction": {
    "reaction_day": "2024-02-01",
    "when": "during market",
@@ -59,7 +59,7 @@
   },
   "profit_yoy": 100.0,
   "profit_surprise": null,
-  "revenue_yoy": 6.5,
+  "revenue_yoy": -7.4,
   "revenue_surprise": null
  },
  {
@@ -99,7 +99,7 @@
   "profit_yoy": -55.8,
   "profit_surprise": -155.8,
   "revenue_yoy": 0.8,
-  "revenue_surprise": -5.7
+  "revenue_surprise": 8.2
  },
  {
   "seq_id": "164109",
@@ -162,7 +162,7 @@
   "profit_yoy": 100.0,
   "profit_surprise": 77.9,
   "revenue_yoy": 15.7,
-  "revenue_surprise": 12.0
+  "revenue_surprise": 19.0
  },
  {
   "seq_id": "168841",
@@ -201,22 +201,14 @@
   "profit_yoy": -100.0,
   "profit_surprise": -200.0,
   "revenue_yoy": -8.8,
-  "revenue_surprise": -15.3
+  "revenue_surprise": -9.6
  },
  {
   "seq_id": "106217527",
   "filed": "2025-05-01 14:55:17",
   "pdf": "https://nsearchives.nseindia.com/corporate/nishant_joshi_adani_com_01052025145459_AELsubmissionofMediaRelease01052025_1.pdf",
-  "figures": {
-   "profit": {
-    "quarter": 1.0,
-    "prev_quarter": 449.0,
-    "year_ago": 38452.0,
-    "qoq_pct": -99.8,
-    "yoy_pct": -100.0
-   }
-  },
-  "view": "weak",
+  "figures": {},
+  "view": "unread",
   "reaction": {
    "reaction_day": "2025-05-02",
    "when": "after close",
@@ -230,8 +222,8 @@
    "excess_close_pct": -0.15,
    "excess_gap_pct": 2.2
   },
-  "profit_yoy": -100.0,
-  "profit_surprise": -44.2,
+  "profit_yoy": null,
+  "profit_surprise": null,
   "revenue_yoy": null,
   "revenue_surprise": null
  },
@@ -248,11 +240,11 @@
     "yoy_pct": -24.7
    },
    "profit": {
-    "quarter": 976.48,
-    "prev_quarter": 4014.9,
-    "year_ago": 1776.02,
-    "qoq_pct": -75.7,
-    "yoy_pct": -45.0
+    "quarter": 504.04,
+    "prev_quarter": 4275.39,
+    "year_ago": 606.02,
+    "qoq_pct": -88.2,
+    "yoy_pct": -16.8
    }
   },
   "view": "weak",
@@ -269,8 +261,8 @@
    "excess_close_pct": -3.68,
    "excess_gap_pct": null
   },
-  "profit_yoy": -45.0,
-  "profit_surprise": 55.0,
+  "profit_yoy": -16.8,
+  "profit_surprise": -16.8,
   "revenue_yoy": -24.7,
   "revenue_surprise": -28.1
  },
@@ -278,16 +270,8 @@
   "seq_id": "106426258",
   "filed": "2025-11-04 14:56:50",
   "pdf": "https://nsearchives.nseindia.com/corporate/nishant_joshi_adani_com_04112025145642_AELsubmissionofMediaRelease04112025.pdf",
-  "figures": {
-   "profit": {
-    "quarter": 1.0,
-    "prev_quarter": 1742.0,
-    "year_ago": 3199.0,
-    "qoq_pct": -99.9,
-    "yoy_pct": -100.0
-   }
-  },
-  "view": "weak",
+  "figures": {},
+  "view": "unread",
   "reaction": {
    "reaction_day": "2025-11-04",
    "when": "during market",
@@ -301,8 +285,8 @@
    "excess_close_pct": -1.27,
    "excess_gap_pct": null
   },
-  "profit_yoy": -100.0,
-  "profit_surprise": -27.5,
+  "profit_yoy": null,
+  "profit_surprise": null,
   "revenue_yoy": null,
   "revenue_surprise": null
  },
@@ -319,11 +303,11 @@
     "yoy_pct": 8.6
    },
    "profit": {
-    "quarter": -3.66,
-    "prev_quarter": -12.96,
-    "year_ago": -12.96,
-    "qoq_pct": -71.8,
-    "yoy_pct": -71.8
+    "quarter": -5.0,
+    "prev_quarter": 6.0,
+    "year_ago": 6295.99,
+    "qoq_pct": -183.3,
+    "yoy_pct": -100.1
    }
   },
   "view": "weak",
@@ -340,8 +324,8 @@
    "excess_close_pct": 7.83,
    "excess_gap_pct": null
   },
-  "profit_yoy": -71.8,
-  "profit_surprise": 28.2,
+  "profit_yoy": -100.0,
+  "profit_surprise": -41.6,
   "revenue_yoy": 8.6,
   "revenue_surprise": 25.4
  },
@@ -397,7 +381,7 @@
    "excess_gap_pct": null
   },
   "profit_yoy": -100.0,
-  "profit_surprise": -28.2,
+  "profit_surprise": -41.6,
   "revenue_yoy": null,
   "revenue_surprise": null
  }

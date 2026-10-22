@@ -183,6 +183,13 @@ For a concall transcript, apply the `nlp-earnings-sentiment` ideas: management's
 hedging versus last quarter, and evasive answers in the Q&A; tone that diverges from the
 numbers is the signal.
 
+## On a SHOCK line (a market-wide rally or crash on big news)
+
+The movers team has limited itself: "rally" means no fading of gainers, "crash" means no bounce
+trades on losers, "extreme" means it stands aside. One web search for the cause (ceasefire, war,
+policy surprise), then tell the user in 2-3 lines: what happened, how far Nifty moved, what the
+movers team is doing, and which stocks the news team's Policy/Market agents see as hit or helped.
+
 ## On a POLICY line (a regulator or the government changed the rules)
 
 The Policy Impact rulebook (`agents/policy.py`) already tagged the stocks it hits or helps

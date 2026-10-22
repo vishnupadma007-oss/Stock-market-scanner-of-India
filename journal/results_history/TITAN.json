@@ -10,9 +10,16 @@
     "year_ago": 8730.0,
     "qoq_pct": 4.6,
     "yoy_pct": 33.6
+   },
+   "profit": {
+    "quarter": 940.0,
+    "prev_quarter": 777.0,
+    "year_ago": 857.0,
+    "qoq_pct": 21.0,
+    "yoy_pct": 9.7
    }
   },
-  "view": "good",
+  "view": "strong",
   "reaction": {
    "reaction_day": "2023-11-03",
    "when": "during market",
@@ -26,7 +33,7 @@
    "excess_close_pct": 1.77,
    "excess_gap_pct": null
   },
-  "profit_yoy": null,
+  "profit_yoy": 9.7,
   "profit_surprise": null,
   "revenue_yoy": 33.6,
   "revenue_surprise": null
@@ -59,7 +66,7 @@
    "excess_gap_pct": null
   },
   "profit_yoy": 9.4,
-  "profit_surprise": null,
+  "profit_surprise": -0.3,
   "revenue_yoy": null,
   "revenue_surprise": null
  },
@@ -123,7 +130,7 @@
    "excess_gap_pct": -2.43
   },
   "profit_yoy": -0.9,
-  "profit_surprise": -10.3,
+  "profit_surprise": -10.5,
   "revenue_yoy": null,
   "revenue_surprise": null
  },
@@ -140,11 +147,11 @@
     "yoy_pct": 13.3
    },
    "profit": {
-    "quarter": 940.0,
-    "prev_quarter": 705.0,
-    "year_ago": -25.0,
-    "qoq_pct": 33.3,
-    "yoy_pct": -3860.0
+    "quarter": 705.0,
+    "prev_quarter": 770.0,
+    "year_ago": 940.0,
+    "qoq_pct": -8.4,
+    "yoy_pct": -25.0
    }
   },
   "view": "weak",
@@ -161,8 +168,8 @@
    "excess_close_pct": -2.77,
    "excess_gap_pct": -3.03
   },
-  "profit_yoy": -100.0,
-  "profit_surprise": -104.2,
+  "profit_yoy": -25.0,
+  "profit_surprise": -34.4,
   "revenue_yoy": 13.3,
   "revenue_surprise": -11.5
  },
@@ -255,9 +262,16 @@
     "year_ago": 13215.0,
     "qoq_pct": 13.5,
     "yoy_pct": 25.1
+   },
+   "profit": {
+    "quarter": 1006.0,
+    "prev_quarter": 1030.0,
+    "year_ago": 705.0,
+    "qoq_pct": -2.3,
+    "yoy_pct": 42.7
    }
   },
-  "view": "good",
+  "view": "strong",
   "reaction": {
    "reaction_day": "2025-11-04",
    "when": "after close",
@@ -271,8 +285,8 @@
    "excess_close_pct": 3.03,
    "excess_gap_pct": 0.07
   },
-  "profit_yoy": null,
-  "profit_surprise": null,
+  "profit_yoy": 42.7,
+  "profit_surprise": 45.6,
   "revenue_yoy": 25.1,
   "revenue_surprise": 4.3
  },
@@ -289,11 +303,11 @@
     "yoy_pct": 39.9
    },
    "profit": {
-    "quarter": 1047.0,
-    "prev_quarter": 1684.0,
-    "year_ago": 61.0,
-    "qoq_pct": -37.8,
-    "yoy_pct": 1616.4
+    "quarter": 1470.0,
+    "prev_quarter": 1006.0,
+    "year_ago": 990.0,
+    "qoq_pct": 46.1,
+    "yoy_pct": 48.5
    }
   },
   "view": "strong",
@@ -310,8 +324,8 @@
    "excess_close_pct": -0.54,
    "excess_gap_pct": 1.66
   },
-  "profit_yoy": 100.0,
-  "profit_surprise": 104.8,
+  "profit_yoy": 48.5,
+  "profit_surprise": 34.0,
   "revenue_yoy": 39.9,
   "revenue_surprise": 17.8
  },
@@ -321,14 +335,14 @@
   "pdf": "https://nsearchives.nseindia.com/corporate/TITAN_08052026135234_SEoutcomeBMQ4202526.pdf",
   "figures": {
    "profit": {
-    "quarter": 11.0,
-    "prev_quarter": 24.0,
-    "year_ago": 1470.0,
-    "qoq_pct": -54.2,
-    "yoy_pct": -99.3
+    "quarter": 1124.0,
+    "prev_quarter": 1470.0,
+    "year_ago": 870.0,
+    "qoq_pct": -23.5,
+    "yoy_pct": 29.2
    }
   },
-  "view": "weak",
+  "view": "good",
   "reaction": {
    "reaction_day": "2026-05-08",
    "when": "during market",
@@ -342,8 +356,8 @@
    "excess_close_pct": 5.3,
    "excess_gap_pct": null
   },
-  "profit_yoy": -99.3,
-  "profit_surprise": -133.1,
+  "profit_yoy": 29.2,
+  "profit_surprise": -9.1,
   "revenue_yoy": null,
   "revenue_surprise": null
  },
@@ -382,7 +396,7 @@
    "excess_gap_pct": -0.22
   },
   "profit_yoy": 65.0,
-  "profit_surprise": 31.2,
+  "profit_surprise": 26.8,
   "revenue_yoy": 24.3,
   "revenue_surprise": -0.8
  }

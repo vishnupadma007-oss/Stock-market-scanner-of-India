@@ -8,6 +8,7 @@ look when there is a signal:
     RESULT {...}   a company in our list filed results on NSE (figures read, priced-in check done)
     NEWS {...}     a major NSE filing (regulatory action, etc.); other filings only feed the analyzer
     POLICY {...}   a regulator/government move that clearly hits or helps some of our stocks
+    SHOCK {...}    a market-wide rally or crash on big news: the movers team limits or stops reversals
     COMMODITY {...} a commodity moved sharply today (reported once per commodity per day)
     FORECAST {...} the Data Analyzer's outlook for a stock turned strong (new or changed), with priced-in check
     ERROR {...}    something needs attention (each distinct error at most once an hour)
@@ -37,7 +38,7 @@ from agents.decision import decide
 from agents.forecast import reversal_target
 from agents.indicators import intraday_sigma_per_min
 from agents.market import context as market_context_view, headwind
-from agents import news_guard
+from agents import news_guard, shock
 from agents.momentum import read_trend
 from agents.indmoney import (IndMoney, LoginRequired, RateLimited, calls_last_hour, pick_option,
                              set_hourly_budget)
@@ -108,7 +109,7 @@ async def market_context(im: IndMoney, now: datetime, cfg: dict | None = None) -
     # Sector and commodity moves: every 10 minutes is fresh enough, and each instrument costs
     # one INDmoney call (17 of them every 2-minute scan would use the whole hourly allowance).
     if clock.time() - _daily.get("changes_at", 0) >= (cfg or {}).get("market_context_min", 10) * 60:
-        _daily["changes"] = await im.day_changes([k for k, _ in SECTORS.values()] + list(ckeys.values()))
+        _daily["changes"] = await im.day_changes([k for k, _ in SECTORS.values()] + list(ckeys.values()) + [VIX_KEY])
         _daily["changes_at"] = clock.time()
     changes = _daily["changes"]
     moves = {name: changes.get(key) for name, key in ckeys.items()}
@@ -117,6 +118,7 @@ async def market_context(im: IndMoney, now: datetime, cfg: dict | None = None) -
             _daily["shocks_sent"].add(shock["commodity"])
             emit("COMMODITY", shock)
     return {"results": _daily["results"], "usdinr": usdinr_change(), "commodities": moves,
+            "vix_pct": changes.get(VIX_KEY),
             "sectors": {name: changes.get(k) for name, (k, _) in SECTORS.items()}}
 
 
@@ -462,8 +464,17 @@ async def scan(im: IndMoney, trades: list[dict], now: datetime, cfg: dict, hold:
     use_guard = not news_votes and team_cfg(cfg, "movers").get("news_guard", True)
     shared_news = analyzer.recent_items(now) if use_guard else []
 
-    for side, category, ok in (("gainer", "top-gainers", mkt["gainers_ok"]),
-                               ("loser", "top-losers", mkt["losers_ok"])):
+    # Shock-day guard: on a market-wide rally or crash driven by big news, reversals are a trap.
+    shock_view = shock.assess(ctx["sectors"].get("Market"), ctx.get("vix_pct"), ctx["sectors"],
+                              shared_news or analyzer.recent_items(now), now, cfg)
+    if shock_view["state"] != "normal":
+        if _daily.setdefault("shock_sent", set()).isdisjoint({shock_view["state"]}):
+            _daily["shock_sent"].add(shock_view["state"])
+            emit("SHOCK", {"state": shock_view["state"], "notes": shock_view["notes"]})
+        if shock_view["state"] == "extreme":
+            return
+    for side, category, ok in (("gainer", "top-gainers", mkt["gainers_ok"] and shock_view.get("gainers_ok", True)),
+                               ("loser", "top-losers", mkt["losers_ok"] and shock_view.get("losers_ok", True))):
         if not ok:
             continue
         movers = [m for m in await im.movers(category, 50)

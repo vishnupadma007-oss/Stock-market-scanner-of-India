@@ -219,3 +219,14 @@ universe:
   - NESTLEIND
   - BRITANNIA
   - GRASIM
+
+# Shock-day guard for the movers team (agents/shock.py): on a market-wide rally or crash driven by
+# big news (war, ceasefire, policy surprise), reversals are a trap. Needs Nifty +-move_pct plus a
+# confirmation (sector breadth, VIX jump/collapse, or several big macro headlines).
+shock:
+  move_pct: 1.5        # rally: no fading gainers (PUTs); crash: no bounce trades on losers (CALLs)
+  extreme_pct: 2.5     # or move_pct with VIX moving 2 x vix_jump_pct: the movers team stands aside
+  vix_jump_pct: 12.0
+  breadth_share: 0.8
+  news_hours: 3.0
+  news_count: 3

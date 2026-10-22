@@ -51,8 +51,16 @@
   "seq_id": "105854045",
   "filed": "2024-05-21 10:29:45",
   "pdf": "https://nsearchives.nseindia.com/corporate/PERSISTENT_21052024102945_PersistentSystemsClarificationLettertoNSEsigned.pdf",
-  "figures": {},
-  "view": "unread",
+  "figures": {
+   "revenue": {
+    "quarter": 25905.26,
+    "prev_quarter": 24982.16,
+    "year_ago": 22544.72,
+    "qoq_pct": 3.7,
+    "yoy_pct": 14.9
+   }
+  },
+  "view": "mixed",
   "reaction": {
    "reaction_day": "2024-05-21",
    "when": "during market",
@@ -68,7 +76,7 @@
   },
   "profit_yoy": null,
   "profit_surprise": null,
-  "revenue_yoy": null,
+  "revenue_yoy": 14.9,
   "revenue_surprise": null
  },
  {
@@ -156,7 +164,7 @@
   "profit_yoy": 30.4,
   "profit_surprise": null,
   "revenue_yoy": 22.6,
-  "revenue_surprise": null
+  "revenue_surprise": 7.7
  },
  {
   "seq_id": "106309148",
@@ -195,7 +203,7 @@
   "profit_yoy": 50.8,
   "profit_surprise": 20.4,
   "revenue_yoy": 21.8,
-  "revenue_surprise": -0.8
+  "revenue_surprise": 3.1
  },
  {
   "seq_id": "106407160",
@@ -288,14 +296,14 @@
     "yoy_pct": 25.1
    },
    "profit": {
-    "quarter": 5.0,
-    "prev_quarter": 292.6,
-    "year_ago": 4394.54,
-    "qoq_pct": -98.3,
-    "yoy_pct": -99.9
+    "quarter": 4203.94,
+    "prev_quarter": 3878.61,
+    "year_ago": 2810.14,
+    "qoq_pct": 8.4,
+    "yoy_pct": 49.6
    }
   },
-  "view": "weak",
+  "view": "strong",
   "reaction": {
    "reaction_day": "2026-04-22",
    "when": "after close",
@@ -309,8 +317,8 @@
    "excess_close_pct": -4.0,
    "excess_gap_pct": -1.67
   },
-  "profit_yoy": -99.9,
-  "profit_surprise": -137.7,
+  "profit_yoy": 49.6,
+  "profit_surprise": 11.9,
   "revenue_yoy": 25.1,
   "revenue_surprise": 2.1
  },
@@ -349,7 +357,7 @@
    "excess_gap_pct": -1.06
   },
   "profit_yoy": 9.5,
-  "profit_surprise": -22.5,
+  "profit_surprise": -37.9,
   "revenue_yoy": 26.4,
   "revenue_surprise": 2.9
  },
