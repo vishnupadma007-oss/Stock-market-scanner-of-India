@@ -6,3 +6,4 @@ date,symbol,contract,verdict,reason
 2026-10-21,TCS,TCS-27-OCT-2520-PUT,VOID,Opened in the same scan as WIPRO (bug); voided
 2026-10-21,TCS,TCS-27-OCT-2540-PUT,TRADE,Room to forecast level (54.11 vs 50.70); short covering; Nifty down; IT sector rally is the risk
 2026-10-22,HDFCBANK,HDFCBANK-27-OCT-710-PUT,TRADE,Real news (data-leak probe); falling with a sliding market; trend score only at the 60 minimum on few candles; some pessimism priced in
+2026-10-22,POLICYBZR,POLICYBZR-27-OCT-1020-PUT,TRADE,Price and sliding market agree (trend 65); IRDAI story a month old and today slightly hopeful; wide 2% spread
