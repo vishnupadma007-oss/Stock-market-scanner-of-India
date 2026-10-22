@@ -378,7 +378,19 @@
    }
   },
   "view": "strong",
-  "reaction": null,
+  "reaction": {
+   "reaction_day": "2026-10-21",
+   "when": "after close",
+   "gap_pct": 0.66,
+   "close_pct": -3.27,
+   "high_pct": 1.2,
+   "low_pct": -4.04,
+   "nifty_gap_pct": 0.56,
+   "nifty_close_pct": -0.34,
+   "runup_20d": -6.01,
+   "excess_close_pct": -2.93,
+   "excess_gap_pct": 0.1
+  },
   "profit_yoy": 28.7,
   "profit_surprise": 5.9,
   "revenue_yoy": 22.8,

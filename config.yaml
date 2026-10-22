@@ -72,6 +72,7 @@ news:
   block_results_day: true   # skip stocks with results today or yesterday evening
   fresh_news_points: -25    # fresh news that explains the move = real catalyst
   volume_spike_ratio: 3.0   # "sudden pressure": last 15 min volume vs normal
+  results_workers: 20       # results filings read at once (downloads overlap; OCR itself runs one per CPU core)
 
 # Crowd Psychology agent: futures OI build-up / short covering / long unwinding, 52-week
 # extremes, circuit frenzy. No OI history exists to backtest it, so it starts in "observe"

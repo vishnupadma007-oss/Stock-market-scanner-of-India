@@ -36,6 +36,13 @@
   "filed": "2024-02-09 18:01:30",
   "pdf": "https://nsearchives.nseindia.com/corporate/OutcomeBM09022024_09022024180130.pdf",
   "figures": {
+   "revenue": {
+    "quarter": 9723.73,
+    "prev_quarter": 9445.42,
+    "year_ago": 8030.98,
+    "qoq_pct": 2.9,
+    "yoy_pct": 21.1
+   },
    "profit": {
     "quarter": 1073.38,
     "prev_quarter": 1053.81,
@@ -60,7 +67,7 @@
   },
   "profit_yoy": 51.0,
   "profit_surprise": 3.8,
-  "revenue_yoy": null,
+  "revenue_yoy": 21.1,
   "revenue_surprise": null
  },
  {
@@ -76,7 +83,7 @@
     "yoy_pct": 18.3
    }
   },
-  "view": "good",
+  "view": "strong",
   "reaction": {
    "reaction_day": "2024-05-08",
    "when": "during market",

@@ -195,8 +195,16 @@
   "seq_id": "106310518",
   "filed": "2025-07-24 15:36:24",
   "pdf": "https://nsearchives.nseindia.com/corporate/RECLTD_24072025153603_DSC_outcome_of_board_meeting20250724_15162667.pdf",
-  "figures": {},
-  "view": "unread",
+  "figures": {
+   "profit": {
+    "quarter": 4451.02,
+    "prev_quarter": 4236.2,
+    "year_ago": 3442.45,
+    "qoq_pct": 5.1,
+    "yoy_pct": 29.3
+   }
+  },
+  "view": "strong",
   "reaction": {
    "reaction_day": "2025-07-25",
    "when": "after close",
@@ -210,7 +218,7 @@
    "excess_close_pct": -0.12,
    "excess_gap_pct": 0.98
   },
-  "profit_yoy": null,
+  "profit_yoy": 29.3,
   "profit_surprise": null,
   "revenue_yoy": null,
   "revenue_surprise": null
@@ -243,7 +251,7 @@
    "excess_gap_pct": 0.76
   },
   "profit_yoy": 10.5,
-  "profit_surprise": null,
+  "profit_surprise": -18.8,
   "revenue_yoy": null,
   "revenue_surprise": null
  },
@@ -275,7 +283,7 @@
    "excess_gap_pct": -0.06
   },
   "profit_yoy": 0.3,
-  "profit_surprise": -10.2,
+  "profit_surprise": -19.6,
   "revenue_yoy": null,
   "revenue_surprise": null
  },
@@ -307,7 +315,7 @@
    "excess_gap_pct": null
   },
   "profit_yoy": -20.6,
-  "profit_surprise": -26.0,
+  "profit_surprise": -31.1,
   "revenue_yoy": null,
   "revenue_surprise": null
  },
@@ -339,7 +347,7 @@
    "excess_gap_pct": -1.81
   },
   "profit_yoy": -6.8,
-  "profit_surprise": -7.1,
+  "profit_surprise": -12.2,
   "revenue_yoy": null,
   "revenue_surprise": null
  }

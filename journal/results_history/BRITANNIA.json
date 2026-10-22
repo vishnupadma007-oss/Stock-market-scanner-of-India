@@ -136,7 +136,7 @@
     "yoy_pct": 10.9
    }
   },
-  "view": "mixed",
+  "view": "good",
   "reaction": {
    "reaction_day": "2024-08-05",
    "when": "after close",
@@ -409,7 +409,7 @@
     "yoy_pct": 14.1
    }
   },
-  "view": "mixed",
+  "view": "good",
   "reaction": {
    "reaction_day": "2026-08-07",
    "when": "after close",

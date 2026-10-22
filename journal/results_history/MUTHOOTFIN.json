@@ -138,8 +138,16 @@
   "seq_id": "167701",
   "filed": "2024-11-14 15:58:36",
   "pdf": "https://nsearchives.nseindia.com/corporate/MFINBMOutcome14_NovSD_14112024155836.pdf",
-  "figures": {},
-  "view": "unread",
+  "figures": {
+   "profit": {
+    "quarter": 12511.42,
+    "prev_quarter": 10786.84,
+    "year_ago": 9909.99,
+    "qoq_pct": 16.0,
+    "yoy_pct": 26.3
+   }
+  },
+  "view": "strong",
   "reaction": {
    "reaction_day": "2024-11-18",
    "when": "after close",
@@ -153,8 +161,8 @@
    "excess_close_pct": 6.52,
    "excess_gap_pct": 4.77
   },
-  "profit_yoy": null,
-  "profit_surprise": null,
+  "profit_yoy": 26.3,
+  "profit_surprise": -15.6,
   "revenue_yoy": null,
   "revenue_surprise": null
  },
@@ -241,7 +249,7 @@
    "excess_gap_pct": 8.82
   },
   "profit_yoy": 89.7,
-  "profit_surprise": 79.1,
+  "profit_surprise": 71.2,
   "revenue_yoy": 54.0,
   "revenue_surprise": null
  },
@@ -258,11 +266,11 @@
     "yoy_pct": 56.2
    },
    "profit": {
-    "quarter": 43859.0,
-    "prev_quarter": 25169.0,
-    "year_ago": 74.0,
-    "qoq_pct": 74.3,
-    "yoy_pct": 59168.9
+    "quarter": 23451.7,
+    "prev_quarter": 20462.99,
+    "year_ago": 12511.42,
+    "qoq_pct": 14.6,
+    "yoy_pct": 87.4
    }
   },
   "view": "strong",
@@ -279,8 +287,8 @@
    "excess_close_pct": 9.68,
    "excess_gap_pct": 8.0
   },
-  "profit_yoy": 100.0,
-  "profit_surprise": 10.3,
+  "profit_yoy": 87.4,
+  "profit_surprise": 29.4,
   "revenue_yoy": 56.2,
   "revenue_surprise": 2.2
  },
@@ -290,14 +298,14 @@
   "pdf": "https://nsearchives.nseindia.com/corporate/MUTHOOTFIN_12022026153800_MFIN_BM_Outcome_SD.pdf",
   "figures": {
    "profit": {
-    "quarter": 28234.83,
-    "prev_quarter": 2411659.0,
-    "year_ago": 13915.45,
-    "qoq_pct": -98.8,
-    "yoy_pct": 102.9
+    "quarter": 26564.22,
+    "prev_quarter": 23451.7,
+    "year_ago": 13630.9,
+    "qoq_pct": 13.3,
+    "yoy_pct": 94.9
    }
   },
-  "view": "good",
+  "view": "strong",
   "reaction": {
    "reaction_day": "2026-02-13",
    "when": "after close",
@@ -311,8 +319,8 @@
    "excess_close_pct": -10.52,
    "excess_gap_pct": -3.93
   },
-  "profit_yoy": 100.0,
-  "profit_surprise": 5.2,
+  "profit_yoy": 94.9,
+  "profit_surprise": 6.3,
   "revenue_yoy": null,
   "revenue_surprise": null
  }

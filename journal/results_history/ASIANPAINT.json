@@ -6,10 +6,10 @@
   "figures": {
    "revenue": {
     "quarter": 7342.22,
-    "prev_quarter": 8.0,
-    "year_ago": 11.0,
-    "qoq_pct": 91677.8,
-    "yoy_pct": 66647.5
+    "prev_quarter": 8113.96,
+    "year_ago": 7344.34,
+    "qoq_pct": -9.5,
+    "yoy_pct": -0.0
    },
    "profit": {
     "quarter": 1160.25,
@@ -35,7 +35,7 @@
   },
   "profit_yoy": 52.0,
   "profit_surprise": null,
-  "revenue_yoy": 100.0,
+  "revenue_yoy": -0.0,
   "revenue_surprise": null
  },
  {
@@ -44,14 +44,14 @@
   "pdf": "https://nsearchives.nseindia.com/corporate/ASIANPAINT_17012024144441_finaloutcomeofBM17012024.pdf",
   "figures": {
    "revenue": {
-    "quarter": 9103.09,
-    "prev_quarter": 847.0,
-    "year_ago": 8.0,
-    "qoq_pct": 974.7,
-    "yoy_pct": 113688.6
+    "quarter": 7913.01,
+    "prev_quarter": 7342.22,
+    "year_ago": 7521.82,
+    "qoq_pct": 7.8,
+    "yoy_pct": 5.2
    }
   },
-  "view": "good",
+  "view": "mixed",
   "reaction": {
    "reaction_day": "2024-01-17",
    "when": "during market",
@@ -67,8 +67,8 @@
   },
   "profit_yoy": null,
   "profit_surprise": null,
-  "revenue_yoy": 100.0,
-  "revenue_surprise": 0.0
+  "revenue_yoy": 5.2,
+  "revenue_surprise": 5.2
  },
  {
   "seq_id": "105839913",
@@ -100,7 +100,7 @@
   "profit_yoy": null,
   "profit_surprise": null,
   "revenue_yoy": -1.9,
-  "revenue_surprise": -101.9
+  "revenue_surprise": -4.5
  },
  {
   "seq_id": "163529",
@@ -139,7 +139,7 @@
   "profit_yoy": -20.9,
   "profit_surprise": -72.9,
   "revenue_yoy": -2.9,
-  "revenue_surprise": -102.9
+  "revenue_surprise": -2.9
  },
  {
   "seq_id": "106052018",
@@ -178,7 +178,7 @@
   "profit_yoy": -48.1,
   "profit_surprise": -63.7,
   "revenue_yoy": -6.5,
-  "revenue_surprise": -55.5
+  "revenue_surprise": -5.5
  },
  {
   "seq_id": "106136034",
@@ -186,18 +186,18 @@
   "pdf": "https://nsearchives.nseindia.com/corporate/ASIANPAINT_04022025140453_OUTCOMEOFBM04022025.pdf",
   "figures": {
    "revenue": {
-    "quarter": 7.0,
-    "prev_quarter": 320.53,
-    "year_ago": 6868.0,
-    "qoq_pct": -97.8,
-    "yoy_pct": -99.9
+    "quarter": 7320.53,
+    "prev_quarter": 6868.37,
+    "year_ago": 7913.01,
+    "qoq_pct": 6.6,
+    "yoy_pct": -7.5
    },
    "profit": {
-    "quarter": 1.0,
-    "prev_quarter": 108.59,
-    "year_ago": 602.0,
-    "qoq_pct": -99.1,
-    "yoy_pct": -99.8
+    "quarter": 1108.59,
+    "prev_quarter": 602.31,
+    "year_ago": 1443.54,
+    "qoq_pct": 84.1,
+    "yoy_pct": -23.2
    }
   },
   "view": "weak",
@@ -214,25 +214,32 @@
    "excess_close_pct": 1.09,
    "excess_gap_pct": null
   },
-  "profit_yoy": -99.8,
-  "profit_surprise": -65.3,
-  "revenue_yoy": -99.9,
-  "revenue_surprise": -97.5
+  "profit_yoy": -23.2,
+  "profit_surprise": 11.3,
+  "revenue_yoy": -7.5,
+  "revenue_surprise": -5.1
  },
  {
   "seq_id": "106315572",
   "filed": "2025-07-29 14:11:31",
   "pdf": "https://nsearchives.nseindia.com/corporate/ASIANPAINT_29072025140836_StockexchangeintimationFRQ1FY26.pdf",
   "figures": {
+   "revenue": {
+    "quarter": 7868.45,
+    "prev_quarter": 7192.41,
+    "year_ago": 7975.63,
+    "qoq_pct": 9.4,
+    "yoy_pct": -1.3
+   },
    "profit": {
     "quarter": 1099.63,
     "prev_quarter": 694.28,
-    "year_ago": 1.0,
+    "year_ago": 1189.19,
     "qoq_pct": 58.4,
-    "yoy_pct": 109863.0
+    "yoy_pct": -7.5
    }
   },
-  "view": "strong",
+  "view": "weak",
   "reaction": {
    "reaction_day": "2025-07-29",
    "when": "during market",
@@ -246,10 +253,10 @@
    "excess_close_pct": 1.21,
    "excess_gap_pct": null
   },
-  "profit_yoy": 100.0,
-  "profit_surprise": 148.1,
-  "revenue_yoy": null,
-  "revenue_surprise": null
+  "profit_yoy": -7.5,
+  "profit_surprise": 15.7,
+  "revenue_yoy": -1.3,
+  "revenue_surprise": 3.4
  },
  {
   "seq_id": "106439267",
@@ -271,7 +278,7 @@
     "yoy_pct": 60.0
    }
   },
-  "view": "good",
+  "view": "strong",
   "reaction": {
    "reaction_day": "2025-11-12",
    "when": "during market",
@@ -286,9 +293,9 @@
    "excess_gap_pct": null
   },
   "profit_yoy": 60.0,
-  "profit_surprise": 94.5,
+  "profit_surprise": 82.0,
   "revenue_yoy": 5.6,
-  "revenue_surprise": 12.1
+  "revenue_surprise": 10.3
  },
  {
   "seq_id": "106508031",
@@ -305,12 +312,12 @@
    "profit": {
     "quarter": 1025.34,
     "prev_quarter": 955.56,
-    "year_ago": 1.0,
+    "year_ago": 1104.05,
     "qoq_pct": 7.3,
-    "yoy_pct": 102434.0
+    "yoy_pct": -7.1
    }
   },
-  "view": "strong",
+  "view": "mixed",
   "reaction": {
    "reaction_day": "2026-01-27",
    "when": "during market",
@@ -324,10 +331,10 @@
    "excess_close_pct": -3.5,
    "excess_gap_pct": null
   },
-  "profit_yoy": 100.0,
-  "profit_surprise": 94.0,
+  "profit_yoy": -7.1,
+  "profit_surprise": 8.2,
   "revenue_yoy": 3.7,
-  "revenue_surprise": 10.2
+  "revenue_surprise": 7.6
  },
  {
   "seq_id": "106646892",
@@ -342,14 +349,14 @@
     "yoy_pct": 10.1
    },
    "profit": {
-    "quarter": 1.0,
-    "prev_quarter": 185.49,
-    "year_ago": 1073.92,
-    "qoq_pct": -99.5,
-    "yoy_pct": -99.9
+    "quarter": 1160.74,
+    "prev_quarter": 1026.63,
+    "year_ago": 694.79,
+    "qoq_pct": 13.1,
+    "yoy_pct": 67.1
    }
   },
-  "view": "weak",
+  "view": "strong",
   "reaction": {
    "reaction_day": "2026-05-29",
    "when": "during market",
@@ -363,16 +370,23 @@
    "excess_close_pct": 1.49,
    "excess_gap_pct": null
   },
-  "profit_yoy": -99.9,
-  "profit_surprise": -179.9,
+  "profit_yoy": 67.1,
+  "profit_surprise": 74.4,
   "revenue_yoy": 10.1,
-  "revenue_surprise": 6.4
+  "revenue_surprise": 8.9
  },
  {
   "seq_id": "106715163",
   "filed": "2026-07-29 14:02:54",
   "pdf": "https://nsearchives.nseindia.com/corporate/ASIANPAINT_29072026140039_SEintimationJune26.pdf",
   "figures": {
+   "revenue": {
+    "quarter": 9183.44,
+    "prev_quarter": 7920.24,
+    "year_ago": 7868.45,
+    "qoq_pct": 15.9,
+    "yoy_pct": 16.7
+   },
    "profit": {
     "quarter": 1478.35,
     "prev_quarter": 1160.74,
@@ -396,8 +410,8 @@
    "excess_gap_pct": null
   },
   "profit_yoy": 34.3,
-  "profit_surprise": -45.7,
-  "revenue_yoy": null,
-  "revenue_surprise": null
+  "profit_surprise": 7.8,
+  "revenue_yoy": 16.7,
+  "revenue_surprise": 12.0
  }
 ]
