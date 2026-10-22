@@ -3,8 +3,16 @@
   "seq_id": "158155",
   "filed": "2023-11-09 14:33:40",
   "pdf": "https://nsearchives.nseindia.com/corporate/board_decisions_Nov2023_1_09112023143340.pdf",
-  "figures": {},
-  "view": "unread",
+  "figures": {
+   "profit": {
+    "quarter": -5.0,
+    "prev_quarter": -6.0,
+    "year_ago": 2948.0,
+    "qoq_pct": -16.7,
+    "yoy_pct": -100.2
+   }
+  },
+  "view": "weak",
   "reaction": {
    "reaction_day": "2023-11-09",
    "when": "during market",
@@ -18,7 +26,7 @@
    "excess_close_pct": 3.9,
    "excess_gap_pct": null
   },
-  "profit_yoy": null,
+  "profit_yoy": -100.0,
   "profit_surprise": null,
   "revenue_yoy": null,
   "revenue_surprise": null
@@ -195,8 +203,16 @@
   "seq_id": "106257313",
   "filed": "2025-05-30 18:15:37",
   "pdf": "https://nsearchives.nseindia.com/corporate/APOLLOHOSP_30052025181422_Board_Outcome_30052025.pdf",
-  "figures": {},
-  "view": "unread",
+  "figures": {
+   "profit": {
+    "quarter": -3.0,
+    "prev_quarter": -4.0,
+    "year_ago": 3.0,
+    "qoq_pct": -25.0,
+    "yoy_pct": -200.0
+   }
+  },
+  "view": "weak",
   "reaction": {
    "reaction_day": "2025-06-02",
    "when": "after close",
@@ -210,7 +226,7 @@
    "excess_close_pct": 0.65,
    "excess_gap_pct": 1.25
   },
-  "profit_yoy": null,
+  "profit_yoy": -100.0,
   "profit_surprise": null,
   "revenue_yoy": null,
   "revenue_surprise": null

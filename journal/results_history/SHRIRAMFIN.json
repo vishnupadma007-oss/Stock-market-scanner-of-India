@@ -4,13 +4,6 @@
   "filed": "2023-10-26 15:10:44",
   "pdf": "https://nsearchives.nseindia.com/corporate/NSEBSEOutcomeofBM26Oct23_26102023151044.pdf",
   "figures": {
-   "revenue": {
-    "quarter": 8883.76,
-    "prev_quarter": 8290.8,
-    "year_ago": 758190.0,
-    "qoq_pct": 7.2,
-    "yoy_pct": -98.8
-   },
    "profit": {
     "quarter": 1750.84,
     "prev_quarter": 1675.44,
@@ -19,7 +12,7 @@
     "yoy_pct": 12.6
    }
   },
-  "view": "mixed",
+  "view": "good",
   "reaction": {
    "reaction_day": "2023-10-26",
    "when": "during market",
@@ -35,7 +28,7 @@
   },
   "profit_yoy": 12.6,
   "profit_surprise": null,
-  "revenue_yoy": -98.8,
+  "revenue_yoy": null,
   "revenue_surprise": null
  },
  {
@@ -75,7 +68,7 @@
   "profit_yoy": 2.3,
   "profit_surprise": -10.3,
   "revenue_yoy": 17.3,
-  "revenue_surprise": 116.1
+  "revenue_surprise": null
  },
  {
   "seq_id": "161179",
@@ -114,7 +107,7 @@
   "profit_yoy": 48.7,
   "profit_surprise": 41.2,
   "revenue_yoy": 22.3,
-  "revenue_surprise": 63.0
+  "revenue_surprise": 5.0
  },
  {
   "seq_id": "163812",
@@ -129,11 +122,11 @@
     "yoy_pct": 20.0
    },
    "profit": {
-    "quarter": 1980.59,
-    "prev_quarter": 1945.87,
-    "year_ago": 1675.44,
-    "qoq_pct": 1.8,
-    "yoy_pct": 18.2
+    "quarter": 48.88,
+    "prev_quarter": 72.46,
+    "year_ago": 35.7,
+    "qoq_pct": -32.5,
+    "yoy_pct": 36.9
    }
   },
   "view": "strong",
@@ -150,10 +143,10 @@
    "excess_close_pct": 7.42,
    "excess_gap_pct": null
   },
-  "profit_yoy": 18.2,
-  "profit_surprise": 5.6,
+  "profit_yoy": 36.9,
+  "profit_surprise": 24.3,
   "revenue_yoy": 20.0,
-  "revenue_surprise": 2.7
+  "revenue_surprise": 0.2
  },
  {
   "seq_id": "166030",
@@ -190,9 +183,9 @@
    "excess_gap_pct": 2.02
   },
   "profit_yoy": 18.3,
-  "profit_surprise": 2.9,
+  "profit_surprise": -6.4,
   "revenue_yoy": 17.9,
-  "revenue_surprise": -0.8
+  "revenue_surprise": -2.1
  },
  {
   "seq_id": "168542",
@@ -229,7 +222,7 @@
    "excess_gap_pct": null
   },
   "profit_yoy": 96.3,
-  "profit_surprise": 78.0,
+  "profit_surprise": 68.7,
   "revenue_yoy": 19.9,
   "revenue_surprise": 0.9
  },
@@ -268,7 +261,7 @@
    "excess_gap_pct": -5.09
   },
   "profit_yoy": 9.9,
-  "profit_surprise": -23.6,
+  "profit_surprise": -32.9,
   "revenue_yoy": 20.8,
   "revenue_surprise": 0.9
  },
@@ -307,7 +300,7 @@
    "excess_gap_pct": null
   },
   "profit_yoy": 8.8,
-  "profit_surprise": -9.4,
+  "profit_surprise": -18.8,
   "revenue_yoy": 20.1,
   "revenue_surprise": 0.2
  },

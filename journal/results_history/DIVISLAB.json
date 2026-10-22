@@ -115,10 +115,10 @@
    },
    "profit": {
     "quarter": 430.0,
-    "prev_quarter": 531.0,
-    "year_ago": 345.0,
-    "qoq_pct": -19.0,
-    "yoy_pct": 24.6
+    "prev_quarter": 538.0,
+    "year_ago": 356.0,
+    "qoq_pct": -20.1,
+    "yoy_pct": 20.8
    }
   },
   "view": "good",
@@ -135,8 +135,8 @@
    "excess_close_pct": -0.61,
    "excess_gap_pct": 0.52
   },
-  "profit_yoy": 24.6,
-  "profit_surprise": -16.4,
+  "profit_yoy": 20.8,
+  "profit_surprise": -20.2,
   "revenue_yoy": 19.1,
   "revenue_surprise": 6.4
  },
@@ -175,7 +175,7 @@
    "excess_gap_pct": 3.7
   },
   "profit_yoy": 51.5,
-  "profit_surprise": 26.9,
+  "profit_surprise": 30.7,
   "revenue_yoy": 23.2,
   "revenue_surprise": 4.8
  },
@@ -214,7 +214,7 @@
    "excess_gap_pct": null
   },
   "profit_yoy": 65.9,
-  "profit_surprise": 27.9,
+  "profit_surprise": 29.8,
   "revenue_yoy": 27.0,
   "revenue_surprise": 8.2
  },

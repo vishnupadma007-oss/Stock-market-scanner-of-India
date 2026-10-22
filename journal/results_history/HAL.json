@@ -4,6 +4,13 @@
   "filed": "2023-11-10 13:52:18",
   "pdf": "https://nsearchives.nseindia.com/corporate/AuditedFinancialResults_Sept2023_S_10112023135218.pdf",
   "figures": {
+   "revenue": {
+    "quarter": 563581.0,
+    "prev_quarter": 514489.0,
+    "year_ago": 955115.0,
+    "qoq_pct": 9.5,
+    "yoy_pct": -41.0
+   },
    "profit": {
     "quarter": 165005.0,
     "prev_quarter": 161864.0,
@@ -28,7 +35,7 @@
   },
   "profit_yoy": -39.8,
   "profit_surprise": null,
-  "revenue_yoy": null,
+  "revenue_yoy": -41.0,
   "revenue_surprise": null
  },
  {
@@ -91,16 +98,8 @@
   "seq_id": "161857",
   "filed": "2024-05-16 14:16:21",
   "pdf": "https://nsearchives.nseindia.com/corporate/Auditedfinancialresults_March2024_16052024141621.pdf",
-  "figures": {
-   "profit": {
-    "quarter": 5.0,
-    "prev_quarter": 79500.0,
-    "year_ago": 284366.0,
-    "qoq_pct": -100.0,
-    "yoy_pct": -100.0
-   }
-  },
-  "view": "weak",
+  "figures": {},
+  "view": "unread",
   "reaction": {
    "reaction_day": "2024-05-16",
    "when": "during market",
@@ -114,8 +113,8 @@
    "excess_close_pct": 9.15,
    "excess_gap_pct": null
   },
-  "profit_yoy": -100.0,
-  "profit_surprise": -49.1,
+  "profit_yoy": null,
+  "profit_surprise": null,
   "revenue_yoy": null,
   "revenue_surprise": null
  },
@@ -284,6 +283,13 @@
   "filed": "2026-05-14 12:45:14",
   "pdf": "https://nsearchives.nseindia.com/corporate/HAL_14052026124453_financialresults_Mar26_.pdf",
   "figures": {
+   "revenue": {
+    "quarter": 1394332.0,
+    "prev_quarter": 1369987.0,
+    "year_ago": 3308979.0,
+    "qoq_pct": 1.8,
+    "yoy_pct": -57.9
+   },
    "profit": {
     "quarter": 557207.0,
     "prev_quarter": 520028.0,
@@ -308,7 +314,7 @@
   },
   "profit_yoy": -54.0,
   "profit_surprise": -0.2,
-  "revenue_yoy": null,
+  "revenue_yoy": -57.9,
   "revenue_surprise": null
  },
  {

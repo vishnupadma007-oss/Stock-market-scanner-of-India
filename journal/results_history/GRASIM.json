@@ -10,13 +10,6 @@
     "year_ago": 6745.24,
     "qoq_pct": 3.3,
     "yoy_pct": -4.5
-   },
-   "profit": {
-    "quarter": 2024.05,
-    "prev_quarter": 257635.0,
-    "year_ago": 1509.19,
-    "qoq_pct": -99.2,
-    "yoy_pct": 34.1
    }
   },
   "view": "mixed",
@@ -33,7 +26,7 @@
    "excess_close_pct": -0.41,
    "excess_gap_pct": -0.13
   },
-  "profit_yoy": 34.1,
+  "profit_yoy": null,
   "profit_surprise": null,
   "revenue_yoy": -4.5,
   "revenue_surprise": null
@@ -97,7 +90,7 @@
    "excess_gap_pct": 0.15
   },
   "profit_yoy": -100.0,
-  "profit_surprise": -134.1,
+  "profit_surprise": null,
   "revenue_yoy": 1.8,
   "revenue_surprise": 6.3
  },
@@ -136,7 +129,7 @@
    "excess_gap_pct": null
   },
   "profit_yoy": -12.0,
-  "profit_surprise": 21.0,
+  "profit_surprise": 88.0,
   "revenue_yoy": 10.5,
   "revenue_surprise": 11.8
  },
@@ -340,7 +333,7 @@
     "yoy_pct": 11.6
    }
   },
-  "view": "good",
+  "view": "strong",
   "reaction": {
    "reaction_day": "2025-11-06",
    "when": "after close",
@@ -379,7 +372,7 @@
     "yoy_pct": 3.4
    }
   },
-  "view": "mixed",
+  "view": "good",
   "reaction": {
    "reaction_day": "2026-02-11",
    "when": "after close",
@@ -418,7 +411,7 @@
     "yoy_pct": -43.2
    }
   },
-  "view": "weak",
+  "view": "mixed",
   "reaction": {
    "reaction_day": "2026-05-20",
    "when": "during market",
@@ -457,7 +450,7 @@
     "yoy_pct": -308.7
    }
   },
-  "view": "weak",
+  "view": "mixed",
   "reaction": {
    "reaction_day": "2026-08-12",
    "when": "during market",

@@ -28,12 +28,19 @@
   "filed": "2024-02-08 15:13:56",
   "pdf": "https://nsearchives.nseindia.com/corporate/OUTCOMEBM08022024SIGNED_08022024151356.pdf",
   "figures": {
+   "revenue": {
+    "quarter": 11852.5,
+    "prev_quarter": 11787.33,
+    "year_ago": 10355.23,
+    "qoq_pct": 0.6,
+    "yoy_pct": 14.5
+   },
    "profit": {
-    "quarter": 3847.43,
-    "prev_quarter": 3004.93,
-    "year_ago": 1023137.0,
-    "qoq_pct": 28.0,
-    "yoy_pct": -99.6
+    "quarter": 6628.17,
+    "prev_quarter": 5241.1,
+    "year_ago": 18904.75,
+    "qoq_pct": 26.5,
+    "yoy_pct": -64.9
    }
   },
   "view": "weak",
@@ -50,9 +57,9 @@
    "excess_close_pct": 0.87,
    "excess_gap_pct": null
   },
-  "profit_yoy": -99.6,
+  "profit_yoy": -64.9,
   "profit_surprise": null,
-  "revenue_yoy": null,
+  "revenue_yoy": 14.5,
   "revenue_surprise": null
  },
  {
@@ -132,6 +139,13 @@
   "filed": "2025-02-12 13:08:59",
   "pdf": "https://nsearchives.nseindia.com/corporate/OUTCOMEBM12022025SIGNED_12022025130859.pdf",
   "figures": {
+   "revenue": {
+    "quarter": 13043.69,
+    "prev_quarter": 13206.57,
+    "year_ago": 11852.5,
+    "qoq_pct": -1.2,
+    "yoy_pct": 10.1
+   },
    "profit": {
     "quarter": 4370.44,
     "prev_quarter": 3377.2,
@@ -155,9 +169,9 @@
    "excess_gap_pct": null
   },
   "profit_yoy": -64.3,
-  "profit_surprise": 35.3,
-  "revenue_yoy": null,
-  "revenue_surprise": null
+  "profit_surprise": 0.6,
+  "revenue_yoy": 10.1,
+  "revenue_surprise": -4.4
  },
  {
   "seq_id": "106241284",

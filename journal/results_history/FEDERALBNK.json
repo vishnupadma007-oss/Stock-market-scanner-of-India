@@ -3,8 +3,23 @@
   "seq_id": "158962",
   "filed": "2024-01-16 12:39:55",
   "pdf": "https://nsearchives.nseindia.com/corporate/ResultsQ3_16012024123955.pdf",
-  "figures": {},
-  "view": "unread",
+  "figures": {
+   "revenue": {
+    "quarter": 659266.0,
+    "prev_quarter": 618570.0,
+    "year_ago": 496725.0,
+    "qoq_pct": 6.6,
+    "yoy_pct": 32.7
+   },
+   "profit": {
+    "quarter": 106324.0,
+    "prev_quarter": 100016.0,
+    "year_ago": 85228.0,
+    "qoq_pct": 6.3,
+    "yoy_pct": 24.8
+   }
+  },
+  "view": "strong",
   "reaction": {
    "reaction_day": "2024-01-16",
    "when": "during market",
@@ -18,17 +33,32 @@
    "excess_close_pct": -1.83,
    "excess_gap_pct": null
   },
-  "profit_yoy": null,
+  "profit_yoy": 24.8,
   "profit_surprise": null,
-  "revenue_yoy": null,
+  "revenue_yoy": 32.7,
   "revenue_surprise": null
  },
  {
   "seq_id": "105831667",
   "filed": "2024-05-02 12:40:26",
   "pdf": "https://nsearchives.nseindia.com/corporate/FEDERALBNK_02052024124026_OutcomeFR.pdf",
-  "figures": {},
-  "view": "unread",
+  "figures": {
+   "revenue": {
+    "quarter": 673223.0,
+    "prev_quarter": 659266.0,
+    "year_ago": 545460.0,
+    "qoq_pct": 2.1,
+    "yoy_pct": 23.4
+   },
+   "profit": {
+    "quarter": 97239.0,
+    "prev_quarter": 106324.0,
+    "year_ago": 93957.0,
+    "qoq_pct": -8.5,
+    "yoy_pct": 3.5
+   }
+  },
+  "view": "mixed",
   "reaction": {
    "reaction_day": "2024-05-02",
    "when": "during market",
@@ -42,10 +72,10 @@
    "excess_close_pct": 3.13,
    "excess_gap_pct": null
   },
-  "profit_yoy": null,
-  "profit_surprise": null,
-  "revenue_yoy": null,
-  "revenue_surprise": null
+  "profit_yoy": 3.5,
+  "profit_surprise": -21.3,
+  "revenue_yoy": 23.4,
+  "revenue_surprise": -9.3
  },
  {
   "seq_id": "163702",
@@ -99,8 +129,23 @@
   "seq_id": "168651",
   "filed": "2025-01-27 20:42:31",
   "pdf": "https://nsearchives.nseindia.com/corporate/OutcomeofBM_27012025204231.pdf",
-  "figures": {},
-  "view": "unread",
+  "figures": {
+   "revenue": {
+    "quarter": 419602.0,
+    "prev_quarter": 801529.0,
+    "year_ago": 699355.0,
+    "qoq_pct": -47.6,
+    "yoy_pct": -40.0
+   },
+   "profit": {
+    "quarter": 94470.0,
+    "prev_quarter": 110445.0,
+    "year_ago": 106324.0,
+    "qoq_pct": -14.5,
+    "yoy_pct": -11.1
+   }
+  },
+  "view": "weak",
   "reaction": {
    "reaction_day": "2025-01-28",
    "when": "after close",
@@ -114,10 +159,10 @@
    "excess_close_pct": -4.24,
    "excess_gap_pct": -2.28
   },
-  "profit_yoy": null,
-  "profit_surprise": null,
-  "revenue_yoy": null,
-  "revenue_surprise": null
+  "profit_yoy": -11.1,
+  "profit_surprise": -25.2,
+  "revenue_yoy": -40.0,
+  "revenue_surprise": -68.0
  },
  {
   "seq_id": "106216963",
@@ -195,8 +240,16 @@
   "seq_id": "106498863",
   "filed": "2026-01-16 12:23:43",
   "pdf": "https://nsearchives.nseindia.com/corporate/FEDERALBNK_16012026122307_FBL_BM_Outcome_160126_FinResult_Signed.pdf",
-  "figures": {},
-  "view": "unread",
+  "figures": {
+   "profit": {
+    "quarter": 104121.0,
+    "prev_quarter": 95526.0,
+    "year_ago": 95544.0,
+    "qoq_pct": 9.0,
+    "yoy_pct": 9.0
+   }
+  },
+  "view": "good",
   "reaction": {
    "reaction_day": "2026-01-16",
    "when": "during market",
@@ -210,8 +263,8 @@
    "excess_close_pct": 9.37,
    "excess_gap_pct": null
   },
-  "profit_yoy": null,
-  "profit_surprise": null,
+  "profit_yoy": 9.0,
+  "profit_surprise": 20.1,
   "revenue_yoy": null,
   "revenue_surprise": null
  },
@@ -243,8 +296,16 @@
   "seq_id": "106701331",
   "filed": "2026-07-17 13:30:16",
   "pdf": "https://nsearchives.nseindia.com/corporate/FEDERALBNK_17072026132857_FBL_BM_Outcome_170726_Signed.pdf",
-  "figures": {},
-  "view": "unread",
+  "figures": {
+   "profit": {
+    "quarter": 17693.0,
+    "prev_quarter": 125910.0,
+    "year_ago": 86175.0,
+    "qoq_pct": -85.9,
+    "yoy_pct": -79.5
+   }
+  },
+  "view": "weak",
   "reaction": {
    "reaction_day": "2026-07-17",
    "when": "during market",
@@ -258,8 +319,8 @@
    "excess_close_pct": 5.77,
    "excess_gap_pct": null
   },
-  "profit_yoy": null,
-  "profit_surprise": null,
+  "profit_yoy": -79.5,
+  "profit_surprise": -88.5,
   "revenue_yoy": null,
   "revenue_surprise": null
  },

@@ -122,16 +122,8 @@
   "seq_id": "168386",
   "filed": "2025-01-20 10:33:33",
   "pdf": "https://nsearchives.nseindia.com/corporate/OutcomeofBM20012025_20012025103333.pdf",
-  "figures": {
-   "revenue": {
-    "quarter": 14916.0,
-    "prev_quarter": 12651.0,
-    "year_ago": 21.379,
-    "qoq_pct": 17.9,
-    "yoy_pct": 69669.4
-   }
-  },
-  "view": "good",
+  "figures": {},
+  "view": "unread",
   "reaction": {
    "reaction_day": "2025-01-20",
    "when": "during market",
@@ -147,8 +139,8 @@
   },
   "profit_yoy": null,
   "profit_surprise": null,
-  "revenue_yoy": 100.0,
-  "revenue_surprise": 118.5
+  "revenue_yoy": null,
+  "revenue_surprise": null
  },
  {
   "seq_id": "106221638",
@@ -180,7 +172,7 @@
   "profit_yoy": null,
   "profit_surprise": null,
   "revenue_yoy": -15.7,
-  "revenue_surprise": -12.8
+  "revenue_surprise": 2.8
  },
  {
   "seq_id": "106307616",
@@ -219,11 +211,11 @@
     "yoy_pct": 24.2
    },
    "profit": {
-    "quarter": 21.0,
-    "prev_quarter": 123.0,
-    "year_ago": 930.0,
-    "qoq_pct": -82.9,
-    "yoy_pct": -97.7
+    "quarter": -264.0,
+    "prev_quarter": 63.0,
+    "year_ago": 821.0,
+    "qoq_pct": -519.0,
+    "yoy_pct": -132.2
    }
   },
   "view": "weak",
@@ -240,10 +232,10 @@
    "excess_close_pct": 4.49,
    "excess_gap_pct": 3.33
   },
-  "profit_yoy": -97.7,
-  "profit_surprise": 2.3,
+  "profit_yoy": -100.0,
+  "profit_surprise": 0.0,
   "revenue_yoy": 24.2,
-  "revenue_surprise": 39.9
+  "revenue_surprise": 49.1
  },
  {
   "seq_id": "106511889",
@@ -280,9 +272,9 @@
    "excess_gap_pct": 0.4
   },
   "profit_yoy": -100.0,
-  "profit_surprise": -2.3,
+  "profit_surprise": 0.0,
   "revenue_yoy": 20.0,
-  "revenue_surprise": -4.2
+  "revenue_surprise": 15.8
  },
  {
   "seq_id": "106611811",
@@ -291,10 +283,10 @@
   "figures": {
    "revenue": {
     "quarter": 2264.0,
-    "prev_quarter": 2.0,
-    "year_ago": 194.0,
-    "qoq_pct": 113100.0,
-    "yoy_pct": 1067.0
+    "prev_quarter": 2194.0,
+    "year_ago": 1912.0,
+    "qoq_pct": 3.2,
+    "yoy_pct": 18.4
    },
    "profit": {
     "quarter": 119.0,
@@ -319,9 +311,9 @@
    "excess_gap_pct": 3.27
   },
   "profit_yoy": -100.0,
-  "profit_surprise": -1.2,
-  "revenue_yoy": 100.0,
-  "revenue_surprise": 80.0
+  "profit_surprise": 0.0,
+  "revenue_yoy": 18.4,
+  "revenue_surprise": -1.6
  },
  {
   "seq_id": "106704148",
@@ -360,6 +352,6 @@
   "profit_yoy": 78.9,
   "profit_surprise": 178.9,
   "revenue_yoy": 27.6,
-  "revenue_surprise": 3.4
+  "revenue_surprise": 7.6
  }
 ]

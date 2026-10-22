@@ -188,14 +188,14 @@
     "yoy_pct": 0.0
    },
    "profit": {
-    "quarter": -454.89,
-    "prev_quarter": 504.05,
-    "year_ago": -212.52,
-    "qoq_pct": -190.2,
-    "yoy_pct": 114.0
+    "quarter": -455.5,
+    "prev_quarter": 504.45,
+    "year_ago": -211.4,
+    "qoq_pct": -190.3,
+    "yoy_pct": 115.5
    }
   },
-  "view": "mixed",
+  "view": "strong",
   "reaction": {
    "reaction_day": "2025-08-07",
    "when": "after close",
@@ -283,11 +283,11 @@
     "yoy_pct": 36.9
    },
    "profit": {
-    "quarter": 1282.68,
-    "prev_quarter": 382.49,
-    "year_ago": 504.05,
-    "qoq_pct": 235.3,
-    "yoy_pct": 154.5
+    "quarter": 1290.47,
+    "prev_quarter": 390.4,
+    "year_ago": 504.45,
+    "qoq_pct": 230.6,
+    "yoy_pct": 155.8
    }
   },
   "view": "strong",
@@ -313,23 +313,8 @@
   "seq_id": "106700043",
   "filed": "2026-07-16 14:20:07",
   "pdf": "https://nsearchives.nseindia.com/corporate/BHEL_16072026141931_BHELQ1RESULTS.pdf",
-  "figures": {
-   "revenue": {
-    "quarter": 7697.72,
-    "prev_quarter": 12310.37,
-    "year_ago": 5486.91,
-    "qoq_pct": -37.5,
-    "yoy_pct": 40.3
-   },
-   "profit": {
-    "quarter": 381.91,
-    "prev_quarter": 1282.68,
-    "year_ago": -454.89,
-    "qoq_pct": -70.2,
-    "yoy_pct": -184.0
-   }
-  },
-  "view": "weak",
+  "figures": {},
+  "view": "unread",
   "reaction": {
    "reaction_day": "2026-07-16",
    "when": "during market",
@@ -343,10 +328,10 @@
    "excess_close_pct": 4.2,
    "excess_gap_pct": null
   },
-  "profit_yoy": -100.0,
-  "profit_surprise": -200.0,
-  "revenue_yoy": 40.3,
-  "revenue_surprise": 21.8
+  "profit_yoy": null,
+  "profit_surprise": null,
+  "revenue_yoy": null,
+  "revenue_surprise": null
  },
  {
   "seq_id": "106817112",
