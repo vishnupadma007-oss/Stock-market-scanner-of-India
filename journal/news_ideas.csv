@@ -15,3 +15,4 @@ date,time,symbol,direction,confidence,source,priced_in
 2026-10-22,08:53,HDFCBANK,down,86,intel,some pessimism priced in
 2026-10-22,08:53,INFY,up,55,intel,largely priced in
 2026-10-22,08:53,BAJFINANCE,down,100,intel,some pessimism priced in
+2026-10-22,08:53,TECHM,up,62,intel,largely priced in
