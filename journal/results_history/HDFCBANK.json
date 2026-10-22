@@ -123,8 +123,16 @@
   "seq_id": "106305281",
   "filed": "2025-07-19 14:51:02",
   "pdf": "https://nsearchives.nseindia.com/corporate/HDFCBANK_19072025144748_SEintimationBMFinancial_Results19jul2025_FINAL.pdf",
-  "figures": {},
-  "view": "unread",
+  "figures": {
+   "profit": {
+    "quarter": 17090.43,
+    "prev_quarter": 19284.57,
+    "year_ago": 17188.05,
+    "qoq_pct": -11.4,
+    "yoy_pct": -0.6
+   }
+  },
+  "view": "weak",
   "reaction": {
    "reaction_day": "2025-07-21",
    "when": "after close",
@@ -138,7 +146,7 @@
    "excess_close_pct": 1.71,
    "excess_gap_pct": 0.94
   },
-  "profit_yoy": null,
+  "profit_yoy": -0.6,
   "profit_surprise": null,
   "revenue_yoy": null,
   "revenue_surprise": null
@@ -171,8 +179,23 @@
   "seq_id": "106499882",
   "filed": "2026-01-17 14:41:09",
   "pdf": "https://nsearchives.nseindia.com/corporate/HDFCBANK_17012026143925_SEResultReg3017012026.pdf",
-  "figures": {},
-  "view": "unread",
+  "figures": {
+   "revenue": {
+    "quarter": 126927.27,
+    "prev_quarter": 118560.63,
+    "year_ago": 112193.94,
+    "qoq_pct": 7.1,
+    "yoy_pct": 13.1
+   },
+   "profit": {
+    "quarter": 20691.04,
+    "prev_quarter": 20363.77,
+    "year_ago": 18340.11,
+    "qoq_pct": 1.6,
+    "yoy_pct": 12.8
+   }
+  },
+  "view": "good",
   "reaction": {
    "reaction_day": "2026-01-19",
    "when": "after close",
@@ -186,9 +209,9 @@
    "excess_close_pct": 0.08,
    "excess_gap_pct": 0.68
   },
-  "profit_yoy": null,
-  "profit_surprise": null,
-  "revenue_yoy": null,
+  "profit_yoy": 12.8,
+  "profit_surprise": 13.4,
+  "revenue_yoy": 13.1,
   "revenue_surprise": null
  },
  {
@@ -243,8 +266,23 @@
   "seq_id": "106821066",
   "filed": "2026-10-17 13:56:22",
   "pdf": "https://nsearchives.nseindia.com/corporate/HDFCBANK_17102026135520_OutcomeofBMResults_17oct2026.pdf",
-  "figures": {},
-  "view": "unread",
+  "figures": {
+   "revenue": {
+    "quarter": 97267.62,
+    "prev_quarter": 92184.38,
+    "year_ago": 91040.72,
+    "qoq_pct": 5.5,
+    "yoy_pct": 6.8
+   },
+   "profit": {
+    "quarter": 38569.68,
+    "prev_quarter": 36796.49,
+    "year_ago": 74671.29,
+    "qoq_pct": 4.8,
+    "yoy_pct": -48.3
+   }
+  },
+  "view": "weak",
   "reaction": {
    "reaction_day": "2026-10-19",
    "when": "after close",
@@ -258,9 +296,9 @@
    "excess_close_pct": -1.2,
    "excess_gap_pct": 0.6
   },
-  "profit_yoy": null,
-  "profit_surprise": null,
-  "revenue_yoy": null,
-  "revenue_surprise": null
+  "profit_yoy": -48.3,
+  "profit_surprise": -61.1,
+  "revenue_yoy": 6.8,
+  "revenue_surprise": -6.3
  }
 ]

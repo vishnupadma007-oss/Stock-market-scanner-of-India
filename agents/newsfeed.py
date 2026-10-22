@@ -6,6 +6,7 @@ intelligence log for the Data Analyzer.
 """
 import hashlib
 import time
+from concurrent.futures import ThreadPoolExecutor
 import xml.etree.ElementTree as ET
 from datetime import datetime
 from email.utils import parsedate_to_datetime
@@ -56,27 +57,41 @@ MIN_GAP_SECONDS = {name: (120 if name.startswith("Google") else 0) for name in F
 _state: dict[str, dict] = {}  # per feed: last fetch time, ETag / Last-Modified for conditional GETs
 
 
+def _fetch_one(source: str, url: str, timeout: int) -> tuple[list[dict], bool]:
+    """One news reader: (items, failed). Unchanged feeds answer '304 Not Modified' and cost nothing."""
+    st = _state[source]
+    headers = {"User-Agent": "Mozilla/5.0"}
+    if st.get("etag"):
+        headers["If-None-Match"] = st["etag"]
+    if st.get("modified"):
+        headers["If-Modified-Since"] = st["modified"]
+    try:
+        resp = requests.get(url, headers=headers, timeout=timeout)
+        if resp.status_code == 304:
+            return [], False
+        resp.raise_for_status()
+        st["etag"], st["modified"] = resp.headers.get("ETag"), resp.headers.get("Last-Modified")
+        return parse(resp.text, source), False
+    except Exception:
+        return [], True
+
+
 def fetch_all(timeout: int = 15) -> tuple[list[dict], list[str]]:
-    """Read every feed that is due. Unchanged feeds answer '304 Not Modified' and cost nothing."""
-    items, failed = [], []
+    """Read every feed that is due, all at the same time (one reader per feed), so the slowest
+    site does not hold up the others."""
     now = time.monotonic()
+    due = []
     for source, url in FEEDS.items():
         st = _state.setdefault(source, {"at": -1e9})
-        if now - st["at"] < MIN_GAP_SECONDS[source]:
-            continue
-        st["at"] = now
-        headers = {"User-Agent": "Mozilla/5.0"}
-        if st.get("etag"):
-            headers["If-None-Match"] = st["etag"]
-        if st.get("modified"):
-            headers["If-Modified-Since"] = st["modified"]
-        try:
-            resp = requests.get(url, headers=headers, timeout=timeout)
-            if resp.status_code == 304:
-                continue
-            resp.raise_for_status()
-            st["etag"], st["modified"] = resp.headers.get("ETag"), resp.headers.get("Last-Modified")
-            items += parse(resp.text, source)
-        except Exception:
-            failed.append(source)
+        if now - st["at"] >= MIN_GAP_SECONDS[source]:
+            st["at"] = now
+            due.append((source, url))
+    items, failed = [], []
+    if not due:
+        return items, failed
+    with ThreadPoolExecutor(max_workers=len(due)) as pool:
+        for (source, _), (got, bad) in zip(due, pool.map(lambda d: _fetch_one(d[0], d[1], timeout), due)):
+            items += got
+            if bad:
+                failed.append(source)
     return items, failed

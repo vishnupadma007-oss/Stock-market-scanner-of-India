@@ -108,11 +108,11 @@
     "yoy_pct": 16.0
    },
    "profit": {
-    "quarter": 25176.0,
-    "prev_quarter": 24692.0,
-    "year_ago": 2.93,
-    "qoq_pct": 2.0,
-    "yoy_pct": 859149.1
+    "quarter": 47129.0,
+    "prev_quarter": 36549.0,
+    "year_ago": 37010.0,
+    "qoq_pct": 28.9,
+    "yoy_pct": 27.3
    }
   },
   "view": "strong",
@@ -129,7 +129,7 @@
    "excess_close_pct": -2.1,
    "excess_gap_pct": -0.73
   },
-  "profit_yoy": 100.0,
+  "profit_yoy": 27.3,
   "profit_surprise": null,
   "revenue_yoy": 16.0,
   "revenue_surprise": null
@@ -217,7 +217,7 @@
    "excess_gap_pct": -0.06
   },
   "profit_yoy": 57.3,
-  "profit_surprise": -42.7,
+  "profit_surprise": 30.0,
   "revenue_yoy": 28.5,
   "revenue_surprise": 12.5
  },
@@ -249,7 +249,7 @@
    "excess_gap_pct": 1.66
   },
   "profit_yoy": 100.0,
-  "profit_surprise": 21.3,
+  "profit_surprise": 57.7,
   "revenue_yoy": null,
   "revenue_surprise": null
  },
@@ -266,14 +266,14 @@
     "yoy_pct": 8.5
    },
    "profit": {
-    "quarter": 40907.0,
-    "prev_quarter": 45.0,
-    "year_ago": 448.0,
-    "qoq_pct": 90804.4,
-    "yoy_pct": 9031.0
+    "quarter": 74873.0,
+    "prev_quarter": 18779.0,
+    "year_ago": -5816.0,
+    "qoq_pct": 298.7,
+    "yoy_pct": -1387.4
    }
   },
-  "view": "strong",
+  "view": "weak",
   "reaction": {
    "reaction_day": "2026-02-06",
    "when": "after close",
@@ -287,8 +287,8 @@
    "excess_close_pct": 2.11,
    "excess_gap_pct": 0.22
   },
-  "profit_yoy": 100.0,
-  "profit_surprise": 21.3,
+  "profit_yoy": -100.0,
+  "profit_surprise": -178.7,
   "revenue_yoy": 8.5,
   "revenue_surprise": -20.0
  },
@@ -305,11 +305,11 @@
     "yoy_pct": 9.4
    },
    "profit": {
-    "quarter": 92474.0,
-    "prev_quarter": 85028.0,
-    "year_ago": 124758.0,
-    "qoq_pct": 8.8,
-    "yoy_pct": -25.9
+    "quarter": 281835.0,
+    "prev_quarter": 72006.0,
+    "year_ago": -13553.0,
+    "qoq_pct": 291.4,
+    "yoy_pct": -2179.5
    }
   },
   "view": "weak",
@@ -326,8 +326,8 @@
    "excess_close_pct": 4.09,
    "excess_gap_pct": 1.22
   },
-  "profit_yoy": -25.9,
-  "profit_surprise": -125.9,
+  "profit_yoy": -100.0,
+  "profit_surprise": -157.3,
   "revenue_yoy": 9.4,
   "revenue_surprise": -9.1
  },
@@ -366,7 +366,7 @@
    "excess_gap_pct": 2.31
   },
   "profit_yoy": 44.2,
-  "profit_surprise": -34.5,
+  "profit_surprise": 65.6,
   "revenue_yoy": 10.6,
   "revenue_surprise": 1.2
  }
