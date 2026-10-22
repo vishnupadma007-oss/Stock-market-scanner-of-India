@@ -49,8 +49,9 @@ def decide(side: str, regime: dict, chart: dict, risk: dict, ai: dict | None, cf
                 "reasons": [f"AI analyst vetoed: {ai.get('reason', '')}"],
                 "breakdown": {"chart": chart["score"], "extras": extra_points, "final": score},
             }
-        score = round(0.6 * chart["score"] + 0.4 * ai["confidence"])
-        reasons.append(f"Chart {chart['score']} + AI {ai['confidence']} -> combined {score}")
+        core = round(0.6 * chart["score"] + 0.4 * ai["confidence"])
+        score = core + extra_points
+        reasons.append(f"Chart {chart['score']} + AI {ai['confidence']} -> {core}, extras {extra_points:+} -> {score}")
 
     if score >= threshold and risk["allowed"]:
         verdict = "TRADE"

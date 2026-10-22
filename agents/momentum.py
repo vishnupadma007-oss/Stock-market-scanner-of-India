@@ -51,7 +51,7 @@ def read_trend(intraday: pd.DataFrame, profile: dict, direction: str) -> dict:
         add(up_vol > dn_vol, f"Volume heavier on {'red' if down else 'green'} candles: real {flow}", 10)
 
     day_extreme = float(today["High"].max())
-    bars_since = len(today) - 1 - int(today["High"].values.argmax())
+    bars_since = int(today["High"].values[::-1].argmax())  # from the latest touch of the extreme
     add(bars_since <= 3 and last["Close"] >= day_extreme - 0.005 * price,
         f"Near the day's {'low' if down else 'high'}, made recently: the move is still alive", 10)
     stretched = (last["Close"] - last["vwap"]) / price * 100

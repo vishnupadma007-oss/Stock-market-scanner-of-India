@@ -51,7 +51,8 @@ def read_chart(intraday: pd.DataFrame, profile: dict, side: str) -> dict:
     add(rsi_peak >= 70 and rsi_now <= rsi_peak - 15,
         f"RSI was extreme today and has cooled off (now {real_rsi:.0f})", 15)
 
-    bars_since_extreme = len(today) - 1 - int(today["High"].values.argmax())
+    # Counted from the latest touch of the extreme: a retest of the high is a fresh high.
+    bars_since_extreme = int(today["High"].values[::-1].argmax())
     day_extreme = today["High"].max()
     recent = today.tail(3)
     add(bars_since_extreme >= 3 and (recent["High"] < day_extreme - 0.003 * price).all(),
@@ -66,12 +67,13 @@ def read_chart(intraday: pd.DataFrame, profile: dict, side: str) -> dict:
     weak_vol = last6.loc[last6["Close"] < last6["Open"], "Volume"].sum()
     strong_vol = last6.loc[last6["Close"] >= last6["Open"], "Volume"].sum()
     add(weak_vol > strong_vol, f"Volume heavier on {weak_c} candles recently", 10)
+    add(len(last6) >= 4 and strong_vol > 2 * weak_vol, f"Volume still piling into {strong_c} candles", -15)
 
     sign = -1 if flip else 1
-    stretched = sign * profile["dist_sma20_atr"] >= 2 or sign * profile["chg_1w"] >= 8
+    stretched = sign * profile.get("dist_sma20_atr", 0.0) >= 2 or sign * profile.get("chg_1w", 0.0) >= 8
     add(stretched, "Stretched on the daily chart (far from 20-day average / big 1-week move)", 15)
 
-    add(bars_since_extreme <= 1, f"Still making new {extreme}s: momentum alive, too early", -30)
+    add(bars_since_extreme <= 1, f"Still making new {extreme}s: momentum alive, too early", -35)
     add(last["Close"] - last["vwap"] > 0.015 * price and last["ema9"] > last["ema21"],
         f"Trading well {strong_side} VWAP with rising EMAs: strong trend", -15)
 

@@ -11,7 +11,8 @@ def rsi(series: pd.Series, period: int = 14) -> pd.Series:
     gain = delta.clip(lower=0).ewm(alpha=1 / period, adjust=False).mean()
     loss = (-delta.clip(upper=0)).ewm(alpha=1 / period, adjust=False).mean()
     rs = gain / loss.replace(0, np.nan)
-    return (100 - 100 / (1 + rs)).fillna(50)
+    # Only gains so far: 100, not the neutral 50 used for flat or first bars.
+    return (100 - 100 / (1 + rs)).where(~((loss == 0) & (gain > 0)), 100.0).fillna(50)
 
 
 def atr(df: pd.DataFrame, period: int = 14) -> pd.Series:

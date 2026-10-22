@@ -118,3 +118,24 @@ def test_lot_too_big_for_10k_is_blocked():
     option = {"est_premium": 20.0, "lot_size": 750, "delta": -0.55}
     r = plan(option, 0, datetime(2026, 10, 16, 11, 0), {**CFG, "capital": 10000})
     assert not r["allowed"] and "One lot costs ₹15,000" in r["blocks"][0]
+
+
+def test_rsi_pure_gains_and_drops():
+    from agents.indicators import rsi
+    assert rsi(pd.Series(range(100, 111), dtype=float)).iloc[-1] == 100.0
+    assert rsi(pd.Series(range(110, 99, -1), dtype=float)).iloc[-1] == 0.0
+    assert rsi(pd.Series([100.0] * 10)).iloc[-1] == 50.0
+
+
+def test_decision_keeps_extras_with_ai():
+    risk = {"allowed": True, "blocks": []}
+    mkt = {"gainers_ok": True, "losers_ok": True, "threshold_adj": 0}
+    extras = [{"points": -15, "notes": ["sector moving against trade"]}]
+    dec = decide("gainer", mkt, {"score": 70}, risk, {"verdict": "TRADE", "confidence": 80}, CFG, extras)
+    assert dec["score"] == 59 and dec["verdict"] == "WATCH"  # 0.6*70 + 0.4*80 = 74, minus 15
+
+
+def test_chart_reader_retest_of_the_high_is_a_fresh_high():
+    path = np.r_[np.linspace(100, 110, 10), np.linspace(110, 105, 9), [110.0]]
+    chart = read_chart(intraday(path), PROFILE, "gainer")
+    assert any("Still making new highs" in s[0] for s in chart["signals"])

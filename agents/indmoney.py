@@ -316,7 +316,8 @@ def candles_frame(rows: list[dict]) -> pd.DataFrame:
     if not rows:
         return pd.DataFrame(columns=["Open", "High", "Low", "Close", "Volume"])
     df = pd.DataFrame(rows)
-    df.index = pd.to_datetime(df["datetime_ist"]).dt.tz_localize("Asia/Kolkata")
+    dt = pd.to_datetime(df["datetime_ist"])
+    df.index = dt.dt.tz_localize("Asia/Kolkata") if dt.dt.tz is None else dt.dt.tz_convert("Asia/Kolkata")
     df = df.rename(columns=str.capitalize)[["Open", "High", "Low", "Close", "Volume"]]
     return df.astype(float)
 
@@ -343,9 +344,9 @@ def pick_option(chain: dict, side: str, strike_choice: str) -> dict | None:
     i = min(atm_i + shift, len(strikes) - 1) if side == "gainer" else max(atm_i - shift, 0)
     row = next(r for r in rows if r["strike_price"] == strikes[i])
     leg = row.get("put_data" if side == "gainer" else "call_data") or {}
-    bid = leg.get("buy_price", leg.get("bp"))
-    ask = leg.get("sell_price", leg.get("sp"))
-    if not bid or not ask or not leg.get("derivative_id") or not leg.get("slug") \
+    bid = float(leg.get("buy_price", leg.get("bp")) or 0)
+    ask = float(leg.get("sell_price", leg.get("sp")) or 0)
+    if bid <= 0 or ask <= 0 or not leg.get("derivative_id") or not leg.get("slug") \
             or not chain.get("selected_expiry"):
         return None  # strike not quoted on this side, or an incomplete reply
     expiry = pd.to_datetime(chain["selected_expiry"]).date()
