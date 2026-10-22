@@ -25,6 +25,8 @@ FEEDS = {
     "Google: India markets": _G + "Nifty+OR+Sensex+OR+%22Indian+stocks%22+when:1d",
     "Google: global macro": _G + "crude+OR+OPEC+OR+%22Federal+Reserve%22+OR+sanctions+OR+tariffs+OR+war+when:1d",
     "Google: India macro": _G + "RBI+OR+rupee+OR+FII+OR+%22India+inflation%22+OR+SEBI+when:1d",
+    "Google: regulators & policy": _G + "RBI+OR+SEBI+OR+IRDAI+OR+TRAI+OR+%22GST+Council%22+OR+%22customs+duty%22+OR+"
+                                        "%22excise+duty%22+OR+%22Finance+Ministry%22+OR+DGCA+OR+CERC+when:1d",
     "Google: commodities": _G + "%22aluminium+prices%22+OR+%22copper+prices%22+OR+%22steel+prices%22+OR+%22gold+prices%22+when:1d",
 }
 

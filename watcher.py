@@ -7,6 +7,7 @@ look when there is a signal:
     EXIT {...}     paper trade closed (target reached, or square-off time)
     RESULT {...}   a company in our list filed results on NSE (figures read, priced-in check done)
     NEWS {...}     a major NSE filing (regulatory action, etc.); other filings only feed the analyzer
+    POLICY {...}   a regulator/government move that clearly hits or helps some of our stocks
     COMMODITY {...} a commodity moved sharply today (reported once per commodity per day)
     FORECAST {...} the Data Analyzer's outlook for a stock turned strong (new or changed), with priced-in check
     ERROR {...}    something needs attention (each distinct error at most once an hour)
@@ -22,12 +23,13 @@ import json
 import sys
 import threading
 import time as clock
+from concurrent.futures import ThreadPoolExecutor
 from datetime import datetime, time, timedelta
 from pathlib import Path
 from zoneinfo import ZoneInfo
 
 from agents import (analyzer, announcements, commodities, concalls, daymode, expectations, holidays, intel, macro,
-                    news, newsfeed, psychology, reaction, valuation)
+                    news, newsfeed, policy, psychology, reaction, valuation)
 from agents.chart_reader import read_chart
 from agents.config import load_config
 from agents.costs import round_trip_charges
@@ -211,6 +213,20 @@ def results_reaction(item: dict, now: datetime) -> dict:
         return {"error": f"{type(e).__name__}: {e}"[:200], "notes": []}
 
 
+def read_results(item: dict) -> dict:
+    """One results reader: figures, highlights, sector KPIs and a first read of the quarter."""
+    try:
+        summary = announcements.results_summary(item["pdf"], item["symbol"])
+        item = {**item, **summary, "read": announcements.score_results(summary["figures"], item["symbol"])}
+        if item["category"] == "BOARD":
+            item["category"] = "RESULTS" if summary["is_results"] or summary["figures"] else "BOARD"
+    except Exception as e:
+        item = {**item, "read": {"view": "unread", "notes": [f"PDF not read: {type(e).__name__}"]}}
+        if item["category"] == "BOARD":
+            item["category"] = "RESULTS"  # cannot tell: report it so Claude reads it
+    return item
+
+
 def poll_filings(cfg: dict, now: datetime) -> None:
     """Announcements + Concall agents: new material NSE filings for our stocks. Results filings
     are read straight away and reported as RESULT events; major filings (regulatory) as NEWS;
@@ -229,20 +245,21 @@ def poll_filings(cfg: dict, now: datetime) -> None:
     universe = set(cfg["universe"])
     meets = [r for r in rows if f"concall-{r.get('seq_id')}" not in _daily["intel_seen"]]
     intel.append(concalls.items_from_rows(meets, universe), _daily["intel_seen"])
-    for item in announcements.material(rows, universe, since=_daily["filings_since"]):
-        if item["seq_id"] in _daily["seen_filings"]:
-            continue
+    new = [i for i in announcements.material(rows, universe, since=_daily["filings_since"])
+           if i["seq_id"] not in _daily["seen_filings"]]
+    for item in new:
         _daily["seen_filings"].add(item["seq_id"])
-        if item["category"] in ("RESULTS", "BOARD") and item["pdf"].endswith(".pdf"):
-            try:
-                summary = announcements.results_summary(item["pdf"])
-                item = {**item, **summary, "read": announcements.score_results(summary["figures"])}
-                if item["category"] == "BOARD":
-                    item["category"] = "RESULTS" if summary["is_results"] or summary["figures"] else "BOARD"
-            except Exception as e:
-                item = {**item, "read": {"view": "unread", "notes": [f"PDF not read: {type(e).__name__}"]}}
-                if item["category"] == "BOARD":
-                    item["category"] = "RESULTS"  # cannot tell: report it so Claude reads it
+    # Results reading team: every results filing that arrived together is read at the same time
+    # (PDF download, text layer, OCR for scans), so the fifth result is not kept waiting.
+    to_read = [i for i in new if i["category"] in ("RESULTS", "BOARD") and i["pdf"].endswith(".pdf")]
+    read = {}
+    if to_read:
+        workers = min(len(to_read), (cfg.get("news") or {}).get("results_workers", 10))
+        with ThreadPoolExecutor(max_workers=workers) as pool:
+            read = dict(zip((i["seq_id"] for i in to_read), pool.map(read_results, to_read)))
+    for item in new:
+        if item["seq_id"] in read:
+            item = read[item["seq_id"]]
         if item["category"] == "BOARD":  # a board meeting without results (dividend, fund-raising...)
             item["category"] = "GUIDANCE"
         _daily["filings"].setdefault(item["symbol"], []).append(item)
@@ -276,7 +293,16 @@ def poll_news(cfg: dict, now: datetime) -> None:
     """News agent: Indian business and global/domestic macro headlines into the intelligence log."""
     reset_daily(now.date().isoformat())
     items, failed = newsfeed.fetch_all()
-    intel.append(items, _daily["intel_seen"])
+    new = intel.append(items, _daily["intel_seen"])
+    # Policy Impact analyst: which of our stocks a regulator's or the government's move hits or helps.
+    for item in new:
+        impacts = policy.assess(item["headline"])
+        if not impacts:
+            continue
+        intel.append(policy.to_intel(item, impacts), _daily["intel_seen"])
+        if max(i["strength"] for i in impacts) >= 2:
+            emit("POLICY", {"headline": item["headline"], "source": item["source"], "time": item["time"],
+                            "impacts": sorted(impacts, key=lambda i: -i["strength"])})
     if len(failed) == len(newsfeed.FEEDS):
         emit("ERROR", {"error": "all news feeds unreachable"})
 

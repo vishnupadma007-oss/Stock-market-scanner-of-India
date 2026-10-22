@@ -21,7 +21,7 @@ from .sectors import STOCK_SECTOR
 
 # Half-lives in MARKET hours (one session = 6.25 h): news fades within the session, filings
 # and concalls over about one session.
-HALF_LIFE_H = {"news": 3, "concall": 6.5, "filing": 6.5}
+HALF_LIFE_H = {"news": 3, "concall": 6.5, "filing": 6.5, "policy": 6.5}
 OPEN, CLOSE = time(9, 15), time(15, 30)
 SCOPE_WEIGHT = {"stock": 1.0, "sector": 0.5, "market": 0.3, "global": 0.3}
 DEFAULTS = {"forecast_score": 2.0, "min_sources": 2, "agree_points": 10, "against_points": -20}

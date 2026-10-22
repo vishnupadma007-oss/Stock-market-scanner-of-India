@@ -267,34 +267,20 @@ def pdf_text(url: str, ocr: bool = True) -> str:
 RESULTS_TEXT = r"financial results|revenue from operations|statement of profit and loss"
 
 
-def results_summary(url: str) -> dict:
+def results_summary(url: str, symbol: str | None = None) -> dict:
+    from .sector_results import kpi_lines
     text = pdf_text(url)
     return {"figures": figures_from_text(text), "highlights": highlights(text),
+            "kpis": kpi_lines(text, symbol) if symbol else [],
             "is_results": bool(re.search(RESULTS_TEXT, text, re.I))}
 
 
-def score_results(figures: dict) -> dict:
-    """Rough read of the numbers alone: +ve = strong quarter, -ve = weak. Markets react to results
-    versus expectations, so this is only a first read; Claude checks expectations and the price."""
-    rev, pat = figures.get("revenue", {}), figures.get("profit", {})
-    score, notes = 0, []
-    for name, row, weight in (("Profit", pat, 2), ("Revenue", rev, 1)):
-        yoy, qoq = row.get("yoy_pct"), row.get("qoq_pct")
-        if yoy is None:
-            continue
-        notes.append(f"{name} {yoy:+.1f}% YoY, {qoq:+.1f}% QoQ" if qoq is not None else f"{name} {yoy:+.1f}% YoY")
-        if yoy >= 15:
-            score += 2 * weight
-        elif yoy >= 5:
-            score += weight
-        elif yoy <= -10:
-            score -= 2 * weight
-        elif yoy < 0:
-            score -= weight
-        if qoq is not None and qoq < -5:
-            score -= weight
-    view = "strong" if score >= 4 else "good" if score >= 2 else "weak" if score <= -3 else "mixed"
-    return {"score": score, "view": view, "notes": notes}
+def score_results(figures: dict, symbol: str | None = None) -> dict:
+    """First read of the numbers, the way the company's sector is read (see sector_results):
+    +ve = strong quarter, -ve = weak. Markets react to results versus expectations, so this is
+    only a first read; Claude checks expectations, the sector KPIs and the price."""
+    from .sector_results import score
+    return score(figures, symbol)
 
 
 def to_intel(item: dict) -> dict:
@@ -339,8 +325,8 @@ def main(argv: list[str]) -> None:
         for item in material(fetch_feed(start=prev, end=today), universe, since=f"{prev} 15:30:00"):
             if item["category"] == "RESULTS" and item["pdf"].endswith(".pdf"):
                 try:
-                    figures = results_summary(item["pdf"])
-                    item.update(figures, read=score_results(figures["figures"]))
+                    figures = results_summary(item["pdf"], item["symbol"])
+                    item.update(figures, read=score_results(figures["figures"], item["symbol"]))
                 except Exception as e:
                     item["read"] = {"view": "unread", "notes": [type(e).__name__]}
             print(json.dumps(item))

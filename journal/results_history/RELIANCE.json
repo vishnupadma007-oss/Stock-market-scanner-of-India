@@ -82,13 +82,6 @@
   "filed": "2024-04-22 19:01:25",
   "pdf": "https://nsearchives.nseindia.com/corporate/SELETTER_22042024190125.pdf",
   "figures": {
-   "revenue": {
-    "quarter": 227970.0,
-    "prev_quarter": 216265.0,
-    "year_ago": 891311.0,
-    "qoq_pct": 5.4,
-    "yoy_pct": -74.4
-   },
    "profit": {
     "quarter": 19641.0,
     "prev_quarter": 21327.0,
@@ -113,23 +106,15 @@
   },
   "profit_yoy": -73.5,
   "profit_surprise": -92.7,
-  "revenue_yoy": -74.4,
-  "revenue_surprise": -76.8
+  "revenue_yoy": null,
+  "revenue_surprise": null
  },
  {
   "seq_id": "163612",
   "filed": "2024-07-19 19:16:04",
   "pdf": "https://nsearchives.nseindia.com/corporate/SEFR_19072024191604.pdf",
-  "figures": {
-   "profit": {
-    "quarter": 448.0,
-    "prev_quarter": 21143.0,
-    "year_ago": 18182.0,
-    "qoq_pct": -97.9,
-    "yoy_pct": -97.5
-   }
-  },
-  "view": "weak",
+  "figures": {},
+  "view": "unread",
   "reaction": {
    "reaction_day": "2024-07-22",
    "when": "after close",
@@ -143,8 +128,8 @@
    "excess_close_pct": -3.41,
    "excess_gap_pct": -0.8
   },
-  "profit_yoy": -97.5,
-  "profit_surprise": -107.8,
+  "profit_yoy": null,
+  "profit_surprise": null,
   "revenue_yoy": null,
   "revenue_surprise": null
  },
@@ -183,22 +168,15 @@
    "excess_gap_pct": -1.25
   },
   "profit_yoy": -3.6,
-  "profit_surprise": 28.0,
+  "profit_surprise": -13.9,
   "revenue_yoy": -4.6,
-  "revenue_surprise": -5.8
+  "revenue_surprise": -6.9
  },
  {
   "seq_id": "168342",
   "filed": "2025-01-16 19:25:42",
   "pdf": "https://nsearchives.nseindia.com/corporate/SE_Result_16012025192542.pdf",
   "figures": {
-   "revenue": {
-    "quarter": 134054.0,
-    "prev_quarter": 130579.0,
-    "year_ago": 396928.0,
-    "qoq_pct": 2.7,
-    "yoy_pct": -66.2
-   },
    "profit": {
     "quarter": 7713.0,
     "prev_quarter": 9924.0,
@@ -222,9 +200,9 @@
    "excess_gap_pct": 4.56
   },
   "profit_yoy": -74.9,
-  "profit_surprise": -36.4,
-  "revenue_yoy": -66.2,
-  "revenue_surprise": -61.6
+  "profit_surprise": -71.3,
+  "revenue_yoy": null,
+  "revenue_surprise": null
  },
  {
   "seq_id": "106212483",
@@ -261,9 +239,9 @@
    "excess_gap_pct": 2.92
   },
   "profit_yoy": -72.3,
-  "profit_surprise": 1.9,
+  "profit_surprise": 1.2,
   "revenue_yoy": -15.2,
-  "revenue_surprise": 51.0
+  "revenue_surprise": -10.6
  },
  {
   "seq_id": "106304771",
@@ -300,9 +278,9 @@
    "excess_gap_pct": -0.87
   },
   "profit_yoy": 75.8,
-  "profit_surprise": 149.4,
+  "profit_surprise": 148.1,
   "revenue_yoy": 5.3,
-  "revenue_surprise": 20.5
+  "revenue_surprise": 15.2
  },
  {
   "seq_id": "106411661",
@@ -341,7 +319,7 @@
   "profit_yoy": 15.9,
   "profit_surprise": 53.8,
   "revenue_yoy": 9.9,
-  "revenue_surprise": 19.8
+  "revenue_surprise": 14.5
  },
  {
   "seq_id": "106499452",
@@ -380,26 +358,19 @@
   "profit_yoy": -62.0,
   "profit_surprise": -33.8,
   "revenue_yoy": -63.8,
-  "revenue_surprise": -58.8
+  "revenue_surprise": -69.1
  },
  {
   "seq_id": "106599908",
   "filed": "2026-04-24 19:26:28",
   "pdf": "https://nsearchives.nseindia.com/corporate/kavinavora_24042026192614_SE_24042026_FR.pdf",
   "figures": {
-   "revenue": {
-    "quarter": 269496.0,
-    "prev_quarter": 264573.0,
-    "year_ago": 980136.0,
-    "qoq_pct": 1.9,
-    "yoy_pct": -72.5
-   },
    "profit": {
     "quarter": 22167.0,
     "prev_quarter": 22434.0,
-    "year_ago": 80787.0,
+    "year_ago": 95610.0,
     "qoq_pct": -1.2,
-    "yoy_pct": -72.6
+    "yoy_pct": -76.8
    }
   },
   "view": "weak",
@@ -416,10 +387,10 @@
    "excess_close_pct": 2.05,
    "excess_gap_pct": -1.31
   },
-  "profit_yoy": -72.6,
-  "profit_surprise": -49.5,
-  "revenue_yoy": -72.5,
-  "revenue_surprise": -67.5
+  "profit_yoy": -76.8,
+  "profit_surprise": -53.8,
+  "revenue_yoy": null,
+  "revenue_surprise": null
  },
  {
   "seq_id": "106701986",
@@ -427,11 +398,11 @@
   "pdf": "https://nsearchives.nseindia.com/corporate/kavinavora_17072026190726_SE_FR_1.pdf",
   "figures": {
    "revenue": {
-    "quarter": 166013.0,
-    "prev_quarter": 146385.0,
-    "year_ago": 121369.0,
-    "qoq_pct": 13.4,
-    "yoy_pct": 36.8
+    "quarter": 311850.0,
+    "prev_quarter": 298621.0,
+    "year_ago": 248660.0,
+    "qoq_pct": 4.4,
+    "yoy_pct": 25.4
    },
    "profit": {
     "quarter": 20616.0,
@@ -457,7 +428,7 @@
   },
   "profit_yoy": -78.4,
   "profit_surprise": -55.4,
-  "revenue_yoy": 36.8,
-  "revenue_surprise": 66.0
+  "revenue_yoy": 25.4,
+  "revenue_surprise": 20.1
  }
 ]

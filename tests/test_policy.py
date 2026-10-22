@@ -1,0 +1,41 @@
+from agents import policy
+
+
+def hits(headline):
+    return {i["symbol"]: (i["direction"], i["strength"]) for i in policy.assess(headline)}
+
+
+def test_irdai_commission_caps_hit_policybazaar_hardest():
+    h = hits("IRDAI proposes commission caps and clawback for mis-selling in 'Recalibrating Economics of Insurance Distribution'")
+    assert h["POLICYBZR"] == (-1, 3) and h["HDFCBANK"] == (-1, 1)
+
+
+def test_rbi_rate_cut_winners_and_losers():
+    h = hits("RBI cuts repo rate by 25 bps to 5.25%, monetary policy committee votes 5-1")
+    assert h["BAJFINANCE"] == (1, 2) and h["DLF"] == (1, 2) and h["MARUTI"] == (1, 1) and h["SBIN"] == (-1, 1)
+
+
+def test_other_policy_moves():
+    assert hits("US raises H-1B visa fee to $100,000")["INFY"] == (-1, 2)
+    assert hits("GST Council cuts GST on small cars and two-wheelers to 18%")["MARUTI"] == (1, 2)
+    assert hits("Government cuts customs duty on gold to 6%")["TITAN"] == (1, 1)
+    assert hits("Government hikes import duty on gold")["TITAN"] == (-1, 1)
+    assert hits("SEBI bars Paytm from onboarding new clients")["PAYTM"] == (-1, 3)
+    assert hits("USFDA issues warning letter to Sun Pharma's Halol plant")["SUNPHARMA"] == (-1, 3)
+    assert hits("Sensex rises 300 points led by Infosys") == {}
+
+
+def test_policy_items_feed_the_analyzer():
+    item = {"id": "n1", "time": "2026-10-21 10:00:00", "source": "ET", "headline": "RBI cuts repo rate by 25 bps", "url": ""}
+    out = policy.to_intel(item, policy.assess(item["headline"]))
+    baj = next(i for i in out if i["symbols"] == ["BAJFINANCE"])
+    assert baj["kind"] == "policy" and baj["sentiment"] == 0.67 and baj["impact"] == 2
+
+
+def test_negation_talk_and_false_alarms():
+    assert hits("Visa curbs not targeted at India, says Rubio")["INFY"] == (1, 1)  # relief, not a hit
+    assert hits("RBI may need to raise repo rate to 6.25%: SBI MF")["BAJFINANCE"] == (-1, 1)
+    assert hits("RBI hikes repo rate to 5.5%; rules out rate cuts in near term")["BAJFINANCE"] == (-1, 2)
+    assert "BHARTIARTL" not in hits("Hotel tariffs in Delhi top Rishikesh")
+    assert hits("Airtel, Jio raise mobile tariffs by 15%")["BHARTIARTL"] == (1, 2)
+    assert hits("Bajaj Finance launches term loans as RBI weighs revolving credit ban")["BAJFINANCE"] == (-1, 2)

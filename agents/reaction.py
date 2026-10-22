@@ -150,7 +150,7 @@ def build_history(symbol: str, years: int = 3, refresh: bool = False) -> list[di
                 q["figures"] = announcements.figures_from_text(announcements.pdf_text(f["pdf"]))
             except Exception as e:
                 q["figures"], q["error"] = {}, type(e).__name__
-            q["view"] = announcements.score_results(q["figures"])["view"] if q["figures"] else "unread"
+            q["view"] = announcements.score_results(q["figures"], symbol)["view"] if q["figures"] else "unread"
             q["reaction"] = measure(stock, nifty, f["filed"])
             clock.sleep(1)
         quarters.append(q)

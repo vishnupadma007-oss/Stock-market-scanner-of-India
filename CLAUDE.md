@@ -15,6 +15,9 @@ Intraday mover-reversal options strategy on NSE F&O stocks, run by a team of age
   brief's day mode (`agents/daymode.py`, `journal/day_mode.json`), NSE Announcements
   (`agents/announcements.py`: live filings, results figures, OCR for scanned PDFs via Tesseract),
   Market Context (`agents/market.py`: Nifty's move and why, by theme), Commodities (`agents/commodities.py`)
+  Policy Impact (`agents/policy.py`: regulator/government moves -> stocks hit/helped, POLICY events;
+  `policy-impact` skill), Sector Results (`agents/sector_results.py`: seasonality, YoY vs QoQ, sector KPIs;
+  results filings read by 10 parallel workers)
   and NSE holidays (`agents/holidays.py`).
 - Information agents write to one log (`agents/intel.py`, `journal/intel/<date>.jsonl`): NSE filings,
   Concalls (`agents/concalls.py`), News (`agents/newsfeed.py`: ET, Mint, BS, CNBC-TV18, Google News).

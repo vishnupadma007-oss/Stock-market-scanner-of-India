@@ -83,7 +83,7 @@ def test_poll_filings_emits_once(monkeypatch, tmp_path, capsys):
             filing("PNB", "Action(s) taken or orders passed", "penalty imposed by RBI", seq="7", t="2026-10-21 10:10:00")]
     monkeypatch.setattr(watcher.announcements, "fetch_feed", lambda **kw: rows)
     monkeypatch.setattr(watcher.announcements, "results_summary",
-                        lambda url: {"figures": announcements.figures_from_text(TECHM), "highlights": []})
+                        lambda url, symbol=None: {"figures": announcements.figures_from_text(TECHM), "highlights": []})
     monkeypatch.setattr(watcher, "check_expectations", lambda s, now, view=None: {"label": "partly priced in", "view": view})
     watcher._daily.clear()
     now = datetime(2026, 10, 21, 10, 31, tzinfo=IST)
@@ -137,7 +137,7 @@ def test_board_meeting_outcome_is_opened_for_results(monkeypatch, tmp_path, caps
     assert announcements.classify(row) == "BOARD"
     monkeypatch.setattr(watcher.announcements, "fetch_feed", lambda **kw: [row])
     monkeypatch.setattr(watcher.announcements, "results_summary",
-                        lambda url: {"figures": {}, "highlights": ["B2C NOV grew 54% YoY"], "is_results": True})
+                        lambda url, symbol=None: {"figures": {}, "highlights": ["B2C NOV grew 54% YoY"], "is_results": True})
     monkeypatch.setattr(watcher, "check_expectations", lambda s, now, view=None: {})
     watcher._daily.clear()
     watcher.poll_filings(CFG, datetime(2026, 10, 21, 15, 23, tzinfo=IST))

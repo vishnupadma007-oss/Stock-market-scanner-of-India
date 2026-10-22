@@ -31,3 +31,12 @@ himself65 `finance-sentiment` (paid key, US social-media sentiment), `timesfm-fo
 (large price-forecasting model; no evidence it helps intraday reversals, heavy to run), wshobson/agents `backtesting-frameworks` (generic; covered by the above).
 
 `trading-desk` is this project's own skill.
+
+## analyzing-regulatory-event-impacts (CaseMark/skills, Apache-2.0)
+
+Source: https://github.com/CaseMark/skills/tree/HEAD/skills/capital/analyzing-regulatory-event-impacts
+(installed 22 Oct 2026, unmodified, LICENSE included). Reviewed: instructions only, no scripts,
+downloads or file operations. Used from the `policy-impact` skill for pending decisions (drafts,
+consultation papers): outcome probabilities, expected value, market-implied vs own view.
+Not applicable here: its stop-loss / hedge-trigger and position-sizing advice (the user chose no
+stop-loss; sizing is fixed by `config.yaml`), and US agency base rates.

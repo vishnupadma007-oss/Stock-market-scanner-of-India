@@ -144,6 +144,13 @@ rejected, but if `figures` is empty or disagrees with `highlights`, trust the hi
 bank whose PDF is unreadable look for its same-day press release (`python -m agents.announcements
 recent SYMBOL`).
 
+0. The line's `read` says how the quarter was read for its sector (`how_read`: against last
+   year's same quarter for seasonal businesses such as cement, autos, power, retail; on the
+   sequential trend for IT and telecom) and `kpis` lists the sector's key lines (NIM and bad
+   loans for banks, constant-currency growth and deal wins for IT, EBITDA per tonne for cement
+   and steel, ARPU for telecom, volumes for autos, same-store growth for retail). Judge those
+   first: they move these stocks more than headline profit. Scanned filings were read with OCR;
+   check a surprising figure against `highlights`.
 1. Judge the quarter with the beat/miss checklist from the `earnings-analysis` skill (not its
    full report format): revenue, margins and profit versus the consensus estimate (one web
    search for a large company) and versus this morning's preview, guidance, one-offs. Markets
@@ -172,6 +179,14 @@ recent SYMBOL`).
 For a concall transcript, apply the `nlp-earnings-sentiment` ideas: management's tone and
 hedging versus last quarter, and evasive answers in the Q&A; tone that diverges from the
 numbers is the signal.
+
+## On a POLICY line (a regulator or the government changed the rules)
+
+The Policy Impact rulebook (`agents/policy.py`) already tagged the stocks it hits or helps
+(`impacts`: direction, strength 1-3, why); its impacts also feed the Data Analyzer. Use the
+`policy-impact` skill: what exactly changed (final rule, draft, or talk), first- and
+second-order winners and losers in our universe, likely size, and whether it is already priced.
+Tell the user in 4-6 lines. Fix the rulebook (with a test) if it mis-tagged the headline.
 
 ## On a NEWS line (a material NSE filing: rating, order, deal, regulatory, management, guidance)
 
