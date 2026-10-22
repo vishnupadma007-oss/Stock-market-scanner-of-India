@@ -170,6 +170,15 @@ def main() -> None:
                "news": int((ideas["date"] == args.date).sum()) if "date" in ideas.columns else 0}
     capitals = {team: (cfg.get("teams") or {}).get(team, {}).get("capital", cfg["capital"]) for team in ("movers", "news")}
     text = review(df, args.date, last_change_date(), capitals, chances)
+    guard_path = ROOT / "journal" / "news_guard.csv"
+    if guard_path.exists():
+        guard = pd.read_csv(guard_path, dtype=str)
+        guard = guard[guard["date"] == args.date]
+        if not guard.empty:
+            text += (f"\n## Movers setups stopped by the News Guard: {len(guard)}\n\n"
+                     + "\n".join(f"- {r.time} {r.symbol} ({r.side}, chart {r.chart_score}): {r.reason}"
+                                  for r in guard.itertuples())
+                     + "\n\nCheck how each stock moved afterwards: did the guard save a loss or cost a win?\n")
     if not held.empty:
         text += (f"\n## Setups held while a trade was open: {len(held)}\n\n"
                  + "\n".join(f"- {r.time} {r.symbol} {r.contract} (score {r.score})" for r in held.itertuples())

@@ -10,6 +10,8 @@ teams:
   movers:                  # top gainers/losers reversal: price, chart, options, sector moves only
     capital: 30000
     news_votes: false      # true = also let news/filings/forecast agents vote on its trades
+    news_guard: true       # borrow the news team's knowledge as a safety brake: skip a stock with results today,
+                           # regulatory action, a policy hit, or strong news against the trade
   news:                    # NSE filings, results, concalls, news -> Data Analyzer forecasts
     capital: 30000
     auto_trade: true       # opens trades by itself; Claude can also open them with paper_trade.py

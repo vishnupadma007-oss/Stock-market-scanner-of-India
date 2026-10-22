@@ -261,3 +261,18 @@ def test_details_calls_cost_one_per_instrument(tmp_path, monkeypatch):
     indmoney.record_call("get_indian_stocks_details", 17)
     indmoney.record_call("get_indian_stocks_movers")
     assert indmoney.calls_last_hour() == 19
+
+
+def test_movers_news_guard_skips_results_day(tmp_path, monkeypatch, capsys):
+    # News votes off (the movers team's normal setting), guard on: a results filing today stops the trade.
+    monkeypatch.setattr(watcher, "GUARD_LOG", tmp_path / "guard.csv")
+    cfg = {**CFG, "teams": {"movers": {"news_votes": False, "news_guard": True}}}
+    watcher._daily.update(date=NOW.date().isoformat(), filings={"TECHM": [
+        {"category": "RESULTS", "time": "2026-10-16 10:05:00", "text": "financial results"}]})
+    trades = []
+    asyncio.run(watcher.scan(FakeIndMoney(), trades, NOW, cfg))
+    assert trades == [] and "SIGNAL" not in capsys.readouterr().out
+    assert "Results out today" in (tmp_path / "guard.csv").read_text()
+    watcher._daily["filings"] = {}
+    asyncio.run(watcher.scan(FakeIndMoney(), trades, NOW, cfg))
+    assert len(trades) == 1  # without the news, the same chart trades

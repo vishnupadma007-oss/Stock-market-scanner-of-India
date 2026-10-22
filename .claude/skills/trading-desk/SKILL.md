@@ -17,7 +17,10 @@ These are **paper trades**. INDmoney access is read-only; never claim an order w
 (₹30,000 each) and its own one-trade-at-a-time rule, so the user can see which one finds more
 chances and makes more money:
 - **Movers team** (strategy `reversal`): the top gainers/losers reversal above, read from price,
-  charts, options and sector moves only (`news_votes: false`).
+  charts, options and sector moves (`news_votes: false`), with the **News Guard** as a safety
+  brake: a stock with results today, regulatory action, a policy hit or strong real news against
+  the trade is skipped (headlines that only describe the move do not count). Stopped setups are
+  in `journal/news_guard.csv` and the evening review.
 - **News team** (strategies `results`, `intel`): NSE filings, results, concalls and news, turned
   into forecasts by the Data Analyzer and checked by the Expectations agent (priced in?). The
   watcher opens its trades by itself when the price confirms the forecast's direction (moving

@@ -37,6 +37,7 @@ from agents.decision import decide
 from agents.forecast import reversal_target
 from agents.indicators import intraday_sigma_per_min
 from agents.market import context as market_context_view, headwind
+from agents import news_guard
 from agents.momentum import read_trend
 from agents.indmoney import (IndMoney, LoginRequired, RateLimited, calls_last_hour, pick_option,
                              set_hourly_budget)
@@ -399,6 +400,24 @@ async def manage_open_trades(im: IndMoney, trades: list[dict], now: datetime, cf
             emit("EXIT", {k: t[k] for k in ("symbol", "contract", "status", "entry_ask", "exit_bid", "qty", "net_pnl")})
 
 
+GUARD_LOG = Path(__file__).resolve().parent / "journal" / "news_guard.csv"
+
+
+def record_guard(now: datetime, symbol: str, side: str, chart_score: int, notes: list[str]) -> None:
+    """Setups the News Guard stopped (once per stock per day), for the evening review."""
+    key = (now.date().isoformat(), symbol, side)
+    blocked = _daily.setdefault("guarded", set())
+    if key in blocked:
+        return
+    blocked.add(key)
+    new = not GUARD_LOG.exists()
+    with open(GUARD_LOG, "a", newline="") as f:
+        w = csv.writer(f)
+        if new:
+            w.writerow(["date", "time", "symbol", "side", "chart_score", "reason"])
+        w.writerow([key[0], now.strftime("%H:%M"), symbol, side, chart_score, " | ".join(notes)])
+
+
 def record_held(now: datetime, symbol: str, contract: str, score: int, ask: float) -> None:
     """A setup that passed every agent while a trade was already open (not traded)."""
     seen = set()
@@ -436,8 +455,12 @@ async def scan(im: IndMoney, trades: list[dict], now: datetime, cfg: dict, hold:
     today = now.date().isoformat()
     taken = {t["contract"] for t in trades if t["date"] == today}
     trades_today = sum(t["date"] == today and team_of(t) == "movers" for t in trades)
-    # The movers team reads price only; news, filings and forecasts are the news team's job.
+    # The movers team picks trades from price only; news, filings and forecasts are the news team's
+    # job. It borrows that knowledge as a safety brake (News Guard): serious news against a trade
+    # makes it skip the stock (e.g. IRDAI's commission caps: PB Fintech -36% in a day).
     news_votes = team_cfg(cfg, "movers").get("news_votes", False)
+    use_guard = not news_votes and team_cfg(cfg, "movers").get("news_guard", True)
+    shared_news = analyzer.recent_items(now) if use_guard else []
 
     for side, category, ok in (("gainer", "top-gainers", mkt["gainers_ok"]),
                                ("loser", "top-losers", mkt["losers_ok"])):
@@ -455,6 +478,12 @@ async def scan(im: IndMoney, trades: list[dict], now: datetime, cfg: dict, hold:
                 chart = read_chart(intraday, profile, side)
                 if chart["score"] < cfg["min_chart_score"] + mkt["threshold_adj"]:
                     continue  # skip the option-chain call for weak charts
+                if use_guard:
+                    guard = news_guard.check(m["symbol"], side, shared_news,
+                                             _daily.get("filings", {}).get(m["symbol"], []), now, cfg)
+                    if guard["block"]:
+                        record_guard(now, m["symbol"], side, chart["score"], guard["notes"])
+                        continue  # serious news against the trade: move on to the next stock
 
                 option = pick_option(await im.option_chain(m["ind_key"]), side, cfg["strike_choice"])
                 if option is None or option["contract"] in taken:
