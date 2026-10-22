@@ -99,7 +99,9 @@ def stock_view(symbol: str, items: list[dict], now: datetime, cfg: dict | None =
     sector_tone = _mean_tone([i for i in items if sector and sector in i["sectors"] and symbol not in i["symbols"]], now)
     market_tone = _mean_tone([i for i in items if i["scope"] in ("market", "global")], now)
     score = own_score + SCOPE_WEIGHT["sector"] * 2.0 * sector_tone + SCOPE_WEIGHT["market"] * 2.0 * market_tone
-    sources = {i["source"] for i in own if abs(i["sentiment"]) > 0}
+    # The policy rulebook is one source, however many feeds carried the story it read.
+    sources = {"Policy rules" if i["source"].startswith("Policy rules") else i["source"]
+               for i in own if abs(i["sentiment"]) > 0}
     direction = "up" if score >= 1.0 else "down" if score <= -1.0 else "neutral"
     confidence = min(100, round(100.0 * (1.0 - math.exp(-abs(score) / 2.0)) + 5.0 * max(len(sources) - 1, 0)))
     major = any(i["impact"] >= 3 and i["sentiment"] for i in own)

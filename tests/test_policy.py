@@ -46,3 +46,15 @@ def test_delay_or_softening_is_mild_relief():
     assert h["POLICYBZR"] == (1, 1)
     assert hits("FIDC to represent NBFCs' case to IRDAI for gradual reset of insurance commissions")["POLICYBZR"] == (1, 1)
     assert hits("IRDAI proposes commission caps on insurance distribution")["POLICYBZR"] == (-1, 3)  # the original blow
+
+
+def test_one_policy_story_from_two_feeds_is_one_source():
+    from datetime import datetime
+    from agents import analyzer
+    out = []
+    for feed in ("Google: India macro", "Google: regulators & policy"):
+        item = {"id": f"n-{feed}", "time": "2026-10-22 11:53:25", "source": feed,
+                "headline": "RBI hikes repo rate by 25 bps", "url": ""}
+        out += policy.to_intel(item, policy.assess(item["headline"]))
+    v = analyzer.stock_view("BAJAJFINSV", out, datetime(2026, 10, 22, 12, 0))
+    assert v["sources"] == ["Policy rules"] and not v["strong"]

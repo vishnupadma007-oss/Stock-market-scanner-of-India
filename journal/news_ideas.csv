@@ -19,3 +19,4 @@ date,time,symbol,direction,confidence,source,priced_in
 2026-10-22,08:53,IOC,down,79,intel,some pessimism priced in
 2026-10-22,08:59,ETERNAL,up,85,intel,partly priced in
 2026-10-22,08:59,POLICYBZR,down,80,intel,some pessimism priced in
+2026-10-22,11:55,BAJAJFINSV,down,81,intel,some pessimism priced in
