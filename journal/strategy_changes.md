@@ -32,3 +32,11 @@ latest date here before it allows a new proposal.
 | 2026-10-22 | Entry window opens at 09:15 instead of 09:45 (closes 14:30 as before). In practice the charts need a few candles: the news team's Trend Checker can act from ~09:35, the movers team's Chart Reader from ~09:45 | User decision: start trading from the open | User |
 | 2026-10-22 | Trading day 09:15-15:15 for entries, square-off 15:20 (was 14:30 / 15:15). Each team decides when to trade: late entries still need the Risk agent's 60%+ chance of reaching the target before square-off; the news team's Trend Checker can act from two candles (~09:25) so overnight news can be traded early | User decision: let the teams trade the whole session and decide themselves | User |
 | 2026-10-22 | Movers team: shock-day guard (agents/shock.py). Nifty 1.5%+ with confirmation (80% of sectors same way, VIX jump/collapse 12%+, or 3+ big macro headlines): rally = no PUTs on gainers, crash = no CALLs on losers; 2.5%+ (or VIX 24%+) = stand aside. SHOCK event to Claude | User: war/ceasefire news makes market-wide moves where reversals get trapped. 6-month backtest: ordinary +-1% days were fine for reversals (13 trades), so thresholds target genuine shocks only | User |
+
+## 2026-10-22 (evening, approved by the user)
+- News team: no options under ₹5, and one trade uses at most half the team's free money
+  (the day's two big losses, PNB ₹2.06 and IOC ₹1.85, were tiny premiums in huge quantities).
+- Both teams: expiry-week fallback. Within 7 days of this month's expiry, when this month's option is
+  under ₹5 or its bid-ask gap is over 2%, take next month's contract. Backtest on rolling early:
+  neutral (−1.55% vs −1.61% per trade); real near-expiry gaps are wider (IOC 6.3% vs 2.8%).
+- Candlestick Patterns agent added in observe mode (no edge on 60 days of data).
