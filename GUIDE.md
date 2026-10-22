@@ -154,3 +154,20 @@ streamlit run App.py                     # optional phone app (Yahoo data, estim
 ```
 Settings: `config.yaml` (capital, teams, targets, timings, call budget, agent weights, universe).
 For Claude Code: open the folder and say "start the trading desk".
+
+## 10. Added on 21-22 Oct 2026
+
+| Agent | File | Job |
+|---|---|---|
+| Trend Checker (news team) | `agents/momentum.py` | The chart must back the news before a news trade (score 60+) |
+| Market Context (news team) | `agents/market.py` | Nifty's move and why: geopolitics, policy, economy, global markets, commodities, flows; no CALL into a sliding market on bad news |
+| Policy Impact | `agents/policy.py` + `policy-impact` skill | RBI / SEBI / IRDAI / TRAI / GST / duties / visas / tariffs -> stocks hit or helped (POLICY events) |
+| Sector Results | `agents/sector_results.py` | Seasonal sectors read on YoY, IT/telecom on QoQ, sector KPIs (NIM, NPA, constant currency, EBITDA/t, ARPU...) |
+| OCR results reading | `agents/announcements.py` | Scanned results PDFs read with Tesseract OCR; 10 parallel readers |
+| News Guard (movers team) | `agents/news_guard.py` | Borrows the news team's knowledge: skips a stock with results, regulatory action, a policy hit or real news against the trade |
+| Shock-day guard (movers team) | `agents/shock.py` | Market-wide rally: no fading gainers; crash: no bounce trades; extreme: stand aside (SHOCK events) |
+| Results Reaction analyst | `agents/reaction.py` | 3 years of results reactions per stock: expected move size, gap-down pattern, Nifty open from US stocks and Brent |
+
+Trading day now: entries 09:15-15:15, square-off 15:20 (the teams decide when to trade within it).
+Extra skill: `analyzing-regulatory-event-impacts` (CaseMark, Apache-2.0).
+Setup addition: `apt install tesseract-ocr` for OCR.
