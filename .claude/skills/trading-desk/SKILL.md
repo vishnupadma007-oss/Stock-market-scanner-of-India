@@ -51,7 +51,7 @@ One short research pass that sets the day's mode. Keep it to a handful of search
    NSE filing for our stocks since the last session's close (results with revenue/profit growth
    already read, ratings, orders, deals, regulatory actions, management exits). For each
    result, judge the likely opening reaction (see "On a RESULT line") and put strong ones in
-   `notes` as a watchlist with the expected direction; after 09:45, if the price confirms that
+   `notes` as a watchlist with the expected direction; after 09:15, if the price confirms that
    direction, open a results trade with `paper_trade.py` (one trade at a time).
    Then today's events: RBI policy, Budget, F&O expiry (last Tuesday of the month), big results.
    For F&O companies reporting today or tomorrow (results calendar), use the `earnings-preview`
@@ -173,7 +173,7 @@ recent SYMBOL`).
    say how and why you adjusted. Always give the user a % estimate with a range.
 5. The news team already has this as a trade idea and will open it by itself once the price
    confirms (watch for its SIGNAL). Only if your read clearly differs from the machine's (e.g. it
-   says "strong" but the quarter missed consensus), and it is 09:45-14:30 with no news-team trade
+   says "strong" but the quarter missed consensus), and it is 09:15-14:30 with no news-team trade
    open, open the trade yourself: `python paper_trade.py open --symbol X --direction up|down
    --strategy results --reason "<one line>"` (same rules: lot must fit, 1% net target, no
    stop-loss; the watcher manages the exit). Otherwise note it for the next morning.

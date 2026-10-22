@@ -106,7 +106,8 @@ def test_paper_trade_rules():
     open_row = [{"status": "OPEN", "strategy": "results"}]
     at = lambda h, m, d=21: datetime(2026, 10, d, h, m, tzinfo=IST)
     assert "closed" in paper_trade.check_rules([], at(11, 0, 20), CFG)  # Dussehra
-    assert "window" in paper_trade.check_rules([], at(9, 30), CFG)
+    assert "window" in paper_trade.check_rules([], at(9, 10), CFG)  # before the 09:15 open
+    assert paper_trade.check_rules([], at(9, 20), CFG) is None
     assert "already open" in paper_trade.check_rules(open_row, at(11, 0), CFG)
     assert paper_trade.check_rules([], at(11, 0), CFG) is None
     # A movers-team trade does not block the news team: the two teams trade side by side.

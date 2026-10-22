@@ -39,7 +39,7 @@ hold_scan_min: 10
 
 # Exits. No stop-loss: a trade exits at the target or at square-off time.
 square_off_time: "15:15"   # always exit intraday positions by this time (IST)
-entry_start: "09:45"       # let the opening range form before trading
+entry_start: "09:15"      # user decision 22 Oct: trade from the open (charts still need a few candles)
 entry_end: "14:30"         # no fresh entries after this
 
 # Scanner

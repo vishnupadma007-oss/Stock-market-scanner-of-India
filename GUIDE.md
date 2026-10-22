@@ -128,7 +128,7 @@ Licences and review notes: `.claude/skills/THIRD_PARTY.md`.
    (`python -m agents.announcements overnight`); `python -m agents.valuation`; companies reporting
    today (`python -m agents.expectations SYMBOL`, earnings-preview); `python -m agents.analyzer`;
    global markets and commodities; write `journal/day_mode.json`.
-2. **09:15-15:30**: `python3 -u watcher.py` runs both teams. Entries 09:45-14:30, square-off 15:15.
+2. **09:15-15:30**: `python3 -u watcher.py` runs both teams. Entries 09:15-14:30, square-off 15:15.
 3. **After 15:30**: `python review.py` -> `journal/reviews/<date>.md`; commit `journal/`.
 4. Strategy changes: only after 30+ trades, tested in a backtest (`backtest_reversal.py`) and on
    paper, and only with the user's approval; logged in `journal/strategy_changes.md`.
