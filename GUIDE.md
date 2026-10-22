@@ -9,12 +9,12 @@ competing teams, the skills, the daily routine, and how to set it up again from 
 
 ## 1. The user's rules (never change without the user's OK)
 
-- Intraday only. Every trade is closed by 15:15 IST at the latest.
+- Intraday only. Every trade is closed by 15:20 IST at the latest.
 - Buy options only: a PUT on a top gainer that is fading, a CALL on a top loser that is bouncing
   (news team: CALL when the forecast is up, PUT when it is down).
 - Target: at least 1% net profit per trade after all charges (brokerage, STT, exchange fees,
   GST, stamp duty, the bid-ask gap).
-- **No stop-loss.** Exits are the target or the 15:15 square-off only.
+- **No stop-loss.** Exits are the target or the 15:20 square-off only.
 - Capital: ₹30,000 per team, one trade at a time per team; setups found while busy are only recorded.
 
 ## 2. The two teams (from 21 Oct 2026)
@@ -77,7 +77,7 @@ TRADING TRACK (every ~2 min)
   Holidays -> Regime -> Scanner -> Chart Reader -> Options -> Forecast -> Risk
      -> Macro + Crowd Psychology (observe) -> Decision -> MOVERS team paper trade -> SIGNAL
   News team: idea + price confirms (0.5-4% move its way) -> Options -> Risk -> paper trade -> SIGNAL
-  Exits (every 15 s): target reached, or square-off at 15:15. No stop-loss.
+  Exits (every 15 s): target reached, or square-off at 15:20. No stop-loss.
 
 DAY
   Morning brief -> watcher all day -> evening review -> proposals (applied only with the user's OK)
@@ -128,7 +128,7 @@ Licences and review notes: `.claude/skills/THIRD_PARTY.md`.
    (`python -m agents.announcements overnight`); `python -m agents.valuation`; companies reporting
    today (`python -m agents.expectations SYMBOL`, earnings-preview); `python -m agents.analyzer`;
    global markets and commodities; write `journal/day_mode.json`.
-2. **09:15-15:30**: `python3 -u watcher.py` runs both teams. Entries 09:15-14:30, square-off 15:15.
+2. **09:15-15:30**: `python3 -u watcher.py` runs both teams. Entries 09:15-15:15, square-off 15:20.
 3. **After 15:30**: `python review.py` -> `journal/reviews/<date>.md`; commit `journal/`.
 4. Strategy changes: only after 30+ trades, tested in a backtest (`backtest_reversal.py`) and on
    paper, and only with the user's approval; logged in `journal/strategy_changes.md`.

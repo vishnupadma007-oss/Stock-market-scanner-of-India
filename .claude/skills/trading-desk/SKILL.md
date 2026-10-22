@@ -173,7 +173,7 @@ recent SYMBOL`).
    say how and why you adjusted. Always give the user a % estimate with a range.
 5. The news team already has this as a trade idea and will open it by itself once the price
    confirms (watch for its SIGNAL). Only if your read clearly differs from the machine's (e.g. it
-   says "strong" but the quarter missed consensus), and it is 09:15-14:30 with no news-team trade
+   says "strong" but the quarter missed consensus), and it is 09:15-15:15 with no news-team trade
    open, open the trade yourself: `python paper_trade.py open --symbol X --direction up|down
    --strategy results --reason "<one line>"` (same rules: lot must fit, 1% net target, no
    stop-loss; the watcher manages the exit). Otherwise note it for the next morning.

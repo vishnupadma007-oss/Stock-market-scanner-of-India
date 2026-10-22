@@ -74,7 +74,7 @@ def test_regime_uptrend_blocks_shorting_gainers():
     assert high_vix["no_trade"]
 
 
-@pytest.mark.parametrize("hour,minute,allowed", [(9, 10, False), (9, 20, True), (11, 40, True), (14, 40, False)])
+@pytest.mark.parametrize("hour,minute,allowed", [(9, 10, False), (9, 20, True), (11, 40, True), (15, 16, False)])
 def test_risk_entry_window(hour, minute, allowed):
     option = {"est_premium": 20.0, "lot_size": 750, "delta": -0.55}
     r = plan(option, 0, datetime(2026, 10, 16, hour, minute), {**CFG, "capital": 100000})

@@ -246,11 +246,11 @@
     "yoy_pct": 14.8
    },
    "profit": {
-    "quarter": 1237.98,
-    "prev_quarter": 2220.91,
-    "year_ago": 707.96,
-    "qoq_pct": -44.3,
-    "yoy_pct": 74.9
+    "quarter": 1063.85,
+    "prev_quarter": 2231.79,
+    "year_ago": 679.64,
+    "qoq_pct": -52.3,
+    "yoy_pct": 56.5
    }
   },
   "view": "good",
@@ -267,8 +267,8 @@
    "excess_close_pct": -0.71,
    "excess_gap_pct": -0.05
   },
-  "profit_yoy": 74.9,
-  "profit_surprise": 83.2,
+  "profit_yoy": 56.5,
+  "profit_surprise": 64.8,
   "revenue_yoy": 14.8,
   "revenue_surprise": 12.5
  },
@@ -278,11 +278,11 @@
   "pdf": "https://nsearchives.nseindia.com/corporate/ULTRACEMCO1_24012026131728_Outcome_of_BM.pdf",
   "figures": {
    "revenue": {
-    "quarter": 21829.68,
-    "prev_quarter": 1.0,
-    "year_ago": 19606.93,
-    "qoq_pct": 2182868.0,
-    "yoy_pct": 11.3
+    "quarter": 20087.87,
+    "prev_quarter": 17864.43,
+    "year_ago": 16913.94,
+    "qoq_pct": 12.4,
+    "yoy_pct": 18.8
    },
    "profit": {
     "quarter": 1510.97,
@@ -292,7 +292,7 @@
     "yoy_pct": 14.1
    }
   },
-  "view": "good",
+  "view": "strong",
   "reaction": {
    "reaction_day": "2026-01-27",
    "when": "after close",
@@ -308,8 +308,8 @@
   },
   "profit_yoy": 14.1,
   "profit_surprise": -1.8,
-  "revenue_yoy": 11.3,
-  "revenue_surprise": 3.4
+  "revenue_yoy": 18.8,
+  "revenue_surprise": 10.9
  },
  {
   "seq_id": "106601038",
@@ -317,14 +317,14 @@
   "pdf": "https://nsearchives.nseindia.com/corporate/ULTRACEMCO1_27042026142549_Outcome_of_BM_Results.pdf",
   "figures": {
    "profit": {
-    "quarter": 2598.64,
-    "prev_quarter": 1510.97,
-    "year_ago": 2682.14,
-    "qoq_pct": 72.0,
-    "yoy_pct": -3.1
+    "quarter": -8.0,
+    "prev_quarter": 9.0,
+    "year_ago": 3000.02,
+    "qoq_pct": -188.9,
+    "yoy_pct": -100.3
    }
   },
-  "view": "mixed",
+  "view": "weak",
   "reaction": {
    "reaction_day": "2026-04-27",
    "when": "during market",
@@ -338,8 +338,8 @@
    "excess_close_pct": -0.71,
    "excess_gap_pct": null
   },
-  "profit_yoy": -3.1,
-  "profit_surprise": -34.5,
+  "profit_yoy": -100.0,
+  "profit_surprise": -131.4,
   "revenue_yoy": null,
   "revenue_surprise": null
  },
@@ -356,14 +356,14 @@
     "yoy_pct": 15.9
    },
    "profit": {
-    "quarter": 2397.12,
-    "prev_quarter": 2598.64,
-    "year_ago": 2231.0,
-    "qoq_pct": -7.8,
-    "yoy_pct": 7.4
+    "quarter": 2599.28,
+    "prev_quarter": 2982.76,
+    "year_ago": 2225.9,
+    "qoq_pct": -12.9,
+    "yoy_pct": 16.8
    }
   },
-  "view": "good",
+  "view": "strong",
   "reaction": {
    "reaction_day": "2026-07-20",
    "when": "during market",
@@ -377,10 +377,10 @@
    "excess_close_pct": 1.89,
    "excess_gap_pct": null
   },
-  "profit_yoy": 7.4,
-  "profit_surprise": -24.0,
+  "profit_yoy": 16.8,
+  "profit_surprise": -14.6,
   "revenue_yoy": 15.9,
-  "revenue_surprise": 2.8
+  "revenue_surprise": 1.1
  },
  {
   "seq_id": "106821830",

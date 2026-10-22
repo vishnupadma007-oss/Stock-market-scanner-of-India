@@ -38,9 +38,9 @@ one_trade_at_a_time: true
 hold_scan_min: 10
 
 # Exits. No stop-loss: a trade exits at the target or at square-off time.
-square_off_time: "15:15"   # always exit intraday positions by this time (IST)
+square_off_time: "15:20"   # always exit intraday positions by this time (IST); NSE closes 15:30
 entry_start: "09:15"      # user decision 22 Oct: trade from the open (charts still need a few candles)
-entry_end: "14:30"         # no fresh entries after this
+entry_end: "15:15"         # last fresh entry; late entries pass only if the Risk agent still sees a 60%+ chance of the target before square-off
 
 # Scanner
 top_n: 5                   # how many gainers and losers to send to the chart reader

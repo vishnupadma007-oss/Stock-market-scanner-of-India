@@ -16,7 +16,9 @@ from .indicators import ema, rsi, vwap
 
 def read_trend(intraday: pd.DataFrame, profile: dict, direction: str) -> dict:
     """direction "up" (buying a CALL) or "down" (buying a PUT)."""
-    if intraday.empty or len(_today(intraday)) < 4:
+    # Two 5-minute candles (09:25) are enough to act on overnight news: averages and RSI also use
+    # the previous sessions, and the 6-candle checks simply wait until those candles exist.
+    if intraday.empty or len(_today(intraday)) < 2:
         return {"score": 0, "signals": [("Not enough candles yet today", 0)]}
     down = direction == "down"
     df = _mirror(intraday) if down else intraday
