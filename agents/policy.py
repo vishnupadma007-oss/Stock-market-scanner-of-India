@@ -126,7 +126,7 @@ SOFTENING = r"\b(extend\w*|more time|deadline extended)\b.{0,30}\b(feedback|cons
             r"reconsider\w*|relief|dilut\w*|rollback|roll back)\b"
 # Talk, not action: "RBI may need to raise rates", "RBI weighs a ban". (Formal proposals and
 # draft rules keep full weight: IRDAI's consultation paper alone cut PolicyBazaar by a third.)
-TALK = r"\b(may|might|could|weighs?|mulls?|consider(s|ing)?|need to|expected to|likely|unlikely|seeks? to calm|explain|what does)\b"
+TALK = r"\b(may|might|could|weighs?|mulls?|consider(s|ing)?|need to|expect(s|ed|ing)?|forecasts?|economists?|likely|unlikely|seeks? to calm|explain|what does)\b"
 
 
 def assess(headline: str) -> list[dict]:

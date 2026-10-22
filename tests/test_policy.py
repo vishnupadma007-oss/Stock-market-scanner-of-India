@@ -58,3 +58,7 @@ def test_one_policy_story_from_two_feeds_is_one_source():
         out += policy.to_intel(item, policy.assess(item["headline"]))
     v = analyzer.stock_view("BAJAJFINSV", out, datetime(2026, 10, 22, 12, 0))
     assert v["sources"] == ["Policy rules"] and not v["strong"]
+
+
+def test_economists_expectations_are_talk():
+    assert hits("RBI MPC minutes: Economists expect repo rate hike in December")["BAJFINANCE"] == (-1, 1)
