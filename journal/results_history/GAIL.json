@@ -3,16 +3,8 @@
   "seq_id": "157104",
   "filed": "2023-10-31 14:10:19",
   "pdf": "https://nsearchives.nseindia.com/corporate/RESULT1_31102023141019.pdf",
-  "figures": {
-   "revenue": {
-    "quarter": 3182262.0,
-    "prev_quarter": 32227.47,
-    "year_ago": 3849089.0,
-    "qoq_pct": 9774.4,
-    "yoy_pct": -17.3
-   }
-  },
-  "view": "mixed",
+  "figures": {},
+  "view": "unread",
   "reaction": {
    "reaction_day": "2023-10-31",
    "when": "during market",
@@ -28,7 +20,7 @@
   },
   "profit_yoy": null,
   "profit_surprise": null,
-  "revenue_yoy": -17.3,
+  "revenue_yoy": null,
   "revenue_surprise": null
  },
  {
@@ -42,16 +34,9 @@
     "year_ago": 35380.38,
     "qoq_pct": 7.6,
     "yoy_pct": -3.2
-   },
-   "profit": {
-    "quarter": 2842.62,
-    "prev_quarter": 2404.89,
-    "year_ago": 245.73,
-    "qoq_pct": 18.2,
-    "yoy_pct": 1056.8
    }
   },
-  "view": "good",
+  "view": "mixed",
   "reaction": {
    "reaction_day": "2024-01-29",
    "when": "during market",
@@ -65,25 +50,17 @@
    "excess_close_pct": 2.04,
    "excess_gap_pct": null
   },
-  "profit_yoy": 100.0,
+  "profit_yoy": null,
   "profit_surprise": null,
   "revenue_yoy": -3.2,
-  "revenue_surprise": 14.1
+  "revenue_surprise": null
  },
  {
   "seq_id": "161859",
   "filed": "2024-05-16 14:35:53",
   "pdf": "https://nsearchives.nseindia.com/corporate/afr_16052024143553.pdf",
-  "figures": {
-   "profit": {
-    "quarter": 2176.97,
-    "prev_quarter": 2.0,
-    "year_ago": 842.62,
-    "qoq_pct": 108748.5,
-    "yoy_pct": 158.4
-   }
-  },
-  "view": "strong",
+  "figures": {},
+  "view": "unread",
   "reaction": {
    "reaction_day": "2024-05-16",
    "when": "during market",
@@ -97,8 +74,8 @@
    "excess_close_pct": -3.56,
    "excess_gap_pct": null
   },
-  "profit_yoy": 100.0,
-  "profit_surprise": 0.0,
+  "profit_yoy": null,
+  "profit_surprise": null,
   "revenue_yoy": null,
   "revenue_surprise": null
  },
@@ -130,7 +107,7 @@
    "excess_gap_pct": 2.98
   },
   "profit_yoy": 92.9,
-  "profit_surprise": -7.1,
+  "profit_surprise": null,
   "revenue_yoy": null,
   "revenue_surprise": null
  },
@@ -138,16 +115,8 @@
   "seq_id": "166500",
   "filed": "2024-11-05 18:06:43",
   "pdf": "https://nsearchives.nseindia.com/corporate/UFR_Signed_05112024180643.pdf",
-  "figures": {
-   "revenue": {
-    "quarter": 32930.72,
-    "prev_quarter": 3369.0,
-    "year_ago": 1.63,
-    "qoq_pct": 877.5,
-    "yoy_pct": 2020189.6
-   }
-  },
-  "view": "good",
+  "figures": {},
+  "view": "unread",
   "reaction": {
    "reaction_day": "2024-11-06",
    "when": "after close",
@@ -163,8 +132,8 @@
   },
   "profit_yoy": null,
   "profit_surprise": null,
-  "revenue_yoy": 100.0,
-  "revenue_surprise": 110.2
+  "revenue_yoy": null,
+  "revenue_surprise": null
  },
  {
   "seq_id": "168845",
@@ -172,14 +141,14 @@
   "pdf": "https://nsearchives.nseindia.com/corporate/UFRDECSIGN_30012025142240.pdf",
   "figures": {
    "profit": {
-    "quarter": 4.0,
-    "prev_quarter": 84.24,
-    "year_ago": 2.0,
-    "qoq_pct": -95.3,
-    "yoy_pct": 100.0
+    "quarter": 4084.24,
+    "prev_quarter": 2689.67,
+    "year_ago": 3193.34,
+    "qoq_pct": 51.8,
+    "yoy_pct": 27.9
    }
   },
-  "view": "good",
+  "view": "strong",
   "reaction": {
    "reaction_day": "2025-01-30",
    "when": "during market",
@@ -193,8 +162,8 @@
    "excess_close_pct": 0.77,
    "excess_gap_pct": null
   },
-  "profit_yoy": 100.0,
-  "profit_surprise": 0.0,
+  "profit_yoy": 27.9,
+  "profit_surprise": -65.0,
   "revenue_yoy": null,
   "revenue_surprise": null
  },
@@ -203,13 +172,6 @@
   "filed": "2025-07-28 18:22:09",
   "pdf": "https://nsearchives.nseindia.com/corporate/DEVIKA_28072025181859_BM.pdf",
   "figures": {
-   "revenue": {
-    "quarter": 347.0,
-    "prev_quarter": 92.4,
-    "year_ago": 5.0,
-    "qoq_pct": 275.5,
-    "yoy_pct": 6840.0
-   },
    "profit": {
     "quarter": 2382.24,
     "prev_quarter": 2505.61,
@@ -218,7 +180,7 @@
     "yoy_pct": -25.2
    }
   },
-  "view": "mixed",
+  "view": "weak",
   "reaction": {
    "reaction_day": "2025-07-29",
    "when": "after close",
@@ -233,9 +195,9 @@
    "excess_gap_pct": -0.45
   },
   "profit_yoy": -25.2,
-  "profit_surprise": -125.2,
-  "revenue_yoy": 100.0,
-  "revenue_surprise": 0.0
+  "profit_surprise": -85.6,
+  "revenue_yoy": null,
+  "revenue_surprise": null
  },
  {
   "seq_id": "106422249",
@@ -296,9 +258,9 @@
    "excess_gap_pct": -0.68
   },
   "profit_yoy": -58.6,
-  "profit_surprise": -96.0,
+  "profit_surprise": -60.0,
   "revenue_yoy": -2.5,
-  "revenue_surprise": -102.5
+  "revenue_surprise": null
  },
  {
   "seq_id": "106634349",
@@ -337,11 +299,11 @@
     "yoy_pct": 12.0
    },
    "profit": {
-    "quarter": 4292.33,
-    "prev_quarter": 12.0,
-    "year_ago": 62.18,
-    "qoq_pct": 35669.4,
-    "yoy_pct": 6803.1
+    "quarter": 4670.99,
+    "prev_quarter": 1481.46,
+    "year_ago": 2382.24,
+    "qoq_pct": 215.3,
+    "yoy_pct": 96.1
    }
   },
   "view": "strong",
@@ -358,9 +320,9 @@
    "excess_close_pct": 4.22,
    "excess_gap_pct": null
   },
-  "profit_yoy": 100.0,
-  "profit_surprise": 141.9,
+  "profit_yoy": 96.1,
+  "profit_surprise": 138.0,
   "revenue_yoy": 12.0,
-  "revenue_surprise": -36.8
+  "revenue_surprise": 14.5
  }
 ]

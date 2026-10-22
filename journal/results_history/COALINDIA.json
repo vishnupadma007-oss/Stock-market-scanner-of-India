@@ -138,8 +138,16 @@
   "seq_id": "164050",
   "filed": "2024-07-31 16:53:51",
   "pdf": "https://nsearchives.nseindia.com/corporate/accstfhinal_31072024165351.pdf",
-  "figures": {},
-  "view": "unread",
+  "figures": {
+   "profit": {
+    "quarter": 10943.55,
+    "prev_quarter": 4640.45,
+    "year_ago": 10498.39,
+    "qoq_pct": 135.8,
+    "yoy_pct": 4.2
+   }
+  },
+  "view": "mixed",
   "reaction": {
    "reaction_day": "2024-08-01",
    "when": "after close",
@@ -153,8 +161,8 @@
    "excess_close_pct": 3.25,
    "excess_gap_pct": 2.13
   },
-  "profit_yoy": null,
-  "profit_surprise": null,
+  "profit_yoy": 4.2,
+  "profit_surprise": -2.1,
   "revenue_yoy": null,
   "revenue_surprise": null
  },
@@ -217,7 +225,7 @@
    "excess_gap_pct": -0.51
   },
   "profit_yoy": 3.5,
-  "profit_surprise": -2.8,
+  "profit_surprise": -1.8,
   "revenue_yoy": 4.4,
   "revenue_surprise": 8.5
  },
@@ -321,8 +329,16 @@
   "seq_id": "106601694",
   "filed": "2026-04-27 20:31:07",
   "pdf": "https://nsearchives.nseindia.com/corporate/COALINDIA_27042026202823_result_final.pdf",
-  "figures": {},
-  "view": "unread",
+  "figures": {
+   "profit": {
+    "quarter": 5533.67,
+    "prev_quarter": 4872.17,
+    "year_ago": 3148.87,
+    "qoq_pct": 13.6,
+    "yoy_pct": 75.7
+   }
+  },
+  "view": "strong",
   "reaction": {
    "reaction_day": "2026-04-28",
    "when": "after close",
@@ -336,7 +352,7 @@
    "excess_close_pct": 3.6,
    "excess_gap_pct": 1.0
   },
-  "profit_yoy": null,
+  "profit_yoy": 75.7,
   "profit_surprise": null,
   "revenue_yoy": null,
   "revenue_surprise": null

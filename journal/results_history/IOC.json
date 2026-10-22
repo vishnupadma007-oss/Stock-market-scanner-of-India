@@ -3,8 +3,23 @@
   "seq_id": "157103",
   "filed": "2023-10-31 13:57:10",
   "pdf": "https://nsearchives.nseindia.com/corporate/IOC_ResultsQ2_final_S_31102023135710.pdf",
-  "figures": {},
-  "view": "unread",
+  "figures": {
+   "revenue": {
+    "quarter": 202312.04,
+    "prev_quarter": 221145.42,
+    "year_ago": 228362.79,
+    "qoq_pct": -8.5,
+    "yoy_pct": -11.4
+   },
+   "profit": {
+    "quarter": 13713.08,
+    "prev_quarter": 14735.3,
+    "year_ago": -910.21,
+    "qoq_pct": -6.9,
+    "yoy_pct": -1606.6
+   }
+  },
+  "view": "weak",
   "reaction": {
    "reaction_day": "2023-10-31",
    "when": "during market",
@@ -18,17 +33,25 @@
    "excess_close_pct": 1.96,
    "excess_gap_pct": null
   },
-  "profit_yoy": null,
+  "profit_yoy": -100.0,
   "profit_surprise": null,
-  "revenue_yoy": null,
+  "revenue_yoy": -11.4,
   "revenue_surprise": null
  },
  {
   "seq_id": "159179",
   "filed": "2024-01-24 14:26:40",
   "pdf": "https://nsearchives.nseindia.com/corporate/IOC_Results_Q3_23_24_S_24012024142640.pdf",
-  "figures": {},
-  "view": "unread",
+  "figures": {
+   "revenue": {
+    "quarter": 226892.08,
+    "prev_quarter": 205283.03,
+    "year_ago": 232303.2,
+    "qoq_pct": 10.5,
+    "yoy_pct": -2.3
+   }
+  },
+  "view": "mixed",
   "reaction": {
    "reaction_day": "2024-01-24",
    "when": "during market",
@@ -44,15 +67,30 @@
   },
   "profit_yoy": null,
   "profit_surprise": null,
-  "revenue_yoy": null,
-  "revenue_surprise": null
+  "revenue_yoy": -2.3,
+  "revenue_surprise": 9.1
  },
  {
   "seq_id": "105829582",
   "filed": "2024-04-30 14:46:33",
   "pdf": "https://nsearchives.nseindia.com/corporate/IOC_30042024144633_IOC_Results_Q42324_S.pdf",
-  "figures": {},
-  "view": "unread",
+  "figures": {
+   "revenue": {
+    "quarter": 223649.85,
+    "prev_quarter": 226892.08,
+    "year_ago": 230711.56,
+    "qoq_pct": -1.4,
+    "yoy_pct": -3.1
+   },
+   "profit": {
+    "quarter": 4837.69,
+    "prev_quarter": 8063.39,
+    "year_ago": 10058.0,
+    "qoq_pct": -40.0,
+    "yoy_pct": -51.9
+   }
+  },
+  "view": "weak",
   "reaction": {
    "reaction_day": "2024-04-30",
    "when": "during market",
@@ -66,17 +104,32 @@
    "excess_close_pct": -4.3,
    "excess_gap_pct": null
   },
-  "profit_yoy": null,
-  "profit_surprise": null,
-  "revenue_yoy": null,
-  "revenue_surprise": null
+  "profit_yoy": -51.9,
+  "profit_surprise": 48.1,
+  "revenue_yoy": -3.1,
+  "revenue_surprise": 3.7
  },
  {
   "seq_id": "163957",
   "filed": "2024-07-30 14:57:15",
   "pdf": "https://nsearchives.nseindia.com/corporate/IOC_Results_Q1_24_25_S_30072024145715.pdf",
-  "figures": {},
-  "view": "unread",
+  "figures": {
+   "revenue": {
+    "quarter": 215988.76,
+    "prev_quarter": 219875.55,
+    "year_ago": 221145.42,
+    "qoq_pct": -1.8,
+    "yoy_pct": -2.3
+   },
+   "profit": {
+    "quarter": 372263.0,
+    "prev_quarter": 548792.0,
+    "year_ago": 1473530.0,
+    "qoq_pct": -32.2,
+    "yoy_pct": -74.7
+   }
+  },
+  "view": "weak",
   "reaction": {
    "reaction_day": "2024-07-30",
    "when": "during market",
@@ -90,25 +143,17 @@
    "excess_close_pct": 1.33,
    "excess_gap_pct": null
   },
-  "profit_yoy": null,
-  "profit_surprise": null,
-  "revenue_yoy": null,
-  "revenue_surprise": null
+  "profit_yoy": -74.7,
+  "profit_surprise": 1.2,
+  "revenue_yoy": -2.3,
+  "revenue_surprise": 0.8
  },
  {
   "seq_id": "166189",
   "filed": "2024-10-28 15:24:03",
   "pdf": "https://nsearchives.nseindia.com/corporate/IOC_Results_Q2_2024_25_S_28102024152403.pdf",
-  "figures": {
-   "revenue": {
-    "quarter": 5.0,
-    "prev_quarter": 19514894.0,
-    "year_ago": 21598876.0,
-    "qoq_pct": -100.0,
-    "yoy_pct": -100.0
-   }
-  },
-  "view": "weak",
+  "figures": {},
+  "view": "unread",
   "reaction": {
    "reaction_day": "2024-10-28",
    "when": "during market",
@@ -124,15 +169,23 @@
   },
   "profit_yoy": null,
   "profit_surprise": null,
-  "revenue_yoy": -100.0,
+  "revenue_yoy": null,
   "revenue_surprise": null
  },
  {
   "seq_id": "168620",
   "filed": "2025-01-27 14:42:50",
   "pdf": "https://nsearchives.nseindia.com/corporate/IOC_Results_Q3_24_25_S_27012025144250.pdf",
-  "figures": {},
-  "view": "unread",
+  "figures": {
+   "revenue": {
+    "quarter": 216649.47,
+    "prev_quarter": 195148.94,
+    "year_ago": 223012.37,
+    "qoq_pct": 11.0,
+    "yoy_pct": -2.9
+   }
+  },
+  "view": "mixed",
   "reaction": {
    "reaction_day": "2025-01-27",
    "when": "during market",
@@ -148,8 +201,8 @@
   },
   "profit_yoy": null,
   "profit_surprise": null,
-  "revenue_yoy": null,
-  "revenue_surprise": null
+  "revenue_yoy": -2.9,
+  "revenue_surprise": -0.6
  },
  {
   "seq_id": "106341327",
@@ -186,16 +239,24 @@
    "excess_gap_pct": null
   },
   "profit_yoy": 82.9,
-  "profit_surprise": null,
+  "profit_surprise": 146.2,
   "revenue_yoy": 1.2,
-  "revenue_surprise": 101.2
+  "revenue_surprise": 4.1
  },
  {
   "seq_id": "106416775",
   "filed": "2025-10-27 16:11:56",
   "pdf": "https://nsearchives.nseindia.com/corporate/IOC_27102025161054_Results_Q2_2025_26_OCR_S.pdf",
-  "figures": {},
-  "view": "unread",
+  "figures": {
+   "profit": {
+    "quarter": 8190.86,
+    "prev_quarter": 6808.12,
+    "year_ago": -448.78,
+    "qoq_pct": 20.3,
+    "yoy_pct": -1925.1
+   }
+  },
+  "view": "weak",
   "reaction": {
    "reaction_day": "2025-10-28",
    "when": "after close",
@@ -209,8 +270,8 @@
    "excess_close_pct": -0.33,
    "excess_gap_pct": 0.87
   },
-  "profit_yoy": null,
-  "profit_surprise": null,
+  "profit_yoy": -100.0,
+  "profit_surprise": -104.1,
   "revenue_yoy": null,
   "revenue_surprise": null
  },
@@ -218,8 +279,23 @@
   "seq_id": "106521245",
   "filed": "2026-02-05 13:30:46",
   "pdf": "https://nsearchives.nseindia.com/corporate/IOC_05022026132943_2026-02-05_Reg_30_-_Integrated_filing_financial_Q3-25-26_S.pdf",
-  "figures": {},
-  "view": "unread",
+  "figures": {
+   "revenue": {
+    "quarter": 231769.04,
+    "prev_quarter": 202992.34,
+    "year_ago": 216649.47,
+    "qoq_pct": 14.2,
+    "yoy_pct": 7.0
+   },
+   "profit": {
+    "quarter": 13502.26,
+    "prev_quarter": 8190.86,
+    "year_ago": 2147.35,
+    "qoq_pct": 64.8,
+    "yoy_pct": 528.8
+   }
+  },
+  "view": "strong",
   "reaction": {
    "reaction_day": "2026-02-05",
    "when": "during market",
@@ -233,10 +309,10 @@
    "excess_close_pct": 2.25,
    "excess_gap_pct": null
   },
-  "profit_yoy": null,
-  "profit_surprise": null,
-  "revenue_yoy": null,
-  "revenue_surprise": null
+  "profit_yoy": 100.0,
+  "profit_surprise": 108.5,
+  "revenue_yoy": 7.0,
+  "revenue_surprise": 7.8
  },
  {
   "seq_id": "106628425",
@@ -249,9 +325,16 @@
     "year_ago": 217725.44,
     "qoq_pct": 0.5,
     "yoy_pct": 6.9
+   },
+   "profit": {
+    "quarter": 14458.08,
+    "prev_quarter": 13006.92,
+    "year_ago": 8123.64,
+    "qoq_pct": 11.2,
+    "yoy_pct": 78.0
    }
   },
-  "view": "mixed",
+  "view": "strong",
   "reaction": {
    "reaction_day": "2026-05-19",
    "when": "after close",
@@ -265,8 +348,8 @@
    "excess_close_pct": 2.56,
    "excess_gap_pct": 1.63
   },
-  "profit_yoy": null,
-  "profit_surprise": null,
+  "profit_yoy": 78.0,
+  "profit_surprise": -4.9,
   "revenue_yoy": 6.9,
   "revenue_surprise": 5.7
  },
@@ -274,8 +357,23 @@
   "seq_id": "106719552",
   "filed": "2026-07-31 17:43:03",
   "pdf": "https://nsearchives.nseindia.com/corporate/IOC_31072026174223_2026_07_31_Financial_Results_Q1_2026_27_S.pdf",
-  "figures": {},
-  "view": "unread",
+  "figures": {
+   "revenue": {
+    "quarter": 281933.07,
+    "prev_quarter": 236899.33,
+    "year_ago": 221849.02,
+    "qoq_pct": 19.0,
+    "yoy_pct": 27.1
+   },
+   "profit": {
+    "quarter": -2662.37,
+    "prev_quarter": 11377.51,
+    "year_ago": 5688.6,
+    "qoq_pct": -123.4,
+    "yoy_pct": -146.8
+   }
+  },
+  "view": "weak",
   "reaction": {
    "reaction_day": "2026-08-03",
    "when": "after close",
@@ -289,9 +387,9 @@
    "excess_close_pct": 0.92,
    "excess_gap_pct": 0.9
   },
-  "profit_yoy": null,
-  "profit_surprise": null,
-  "revenue_yoy": null,
-  "revenue_surprise": null
+  "profit_yoy": -100.0,
+  "profit_surprise": -180.4,
+  "revenue_yoy": 27.1,
+  "revenue_surprise": 20.2
  }
 ]

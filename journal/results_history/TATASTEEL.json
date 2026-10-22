@@ -69,11 +69,11 @@
   "pdf": "https://nsearchives.nseindia.com/corporate/OUTCOME_29052024184710.pdf",
   "figures": {
    "profit": {
-    "quarter": 1.0,
-    "prev_quarter": 6.0,
-    "year_ago": 13.0,
-    "qoq_pct": -83.3,
-    "yoy_pct": -92.3
+    "quarter": 554.56,
+    "prev_quarter": 522.14,
+    "year_ago": 1566.24,
+    "qoq_pct": 6.2,
+    "yoy_pct": -64.6
    }
   },
   "view": "weak",
@@ -90,8 +90,8 @@
    "excess_close_pct": -4.85,
    "excess_gap_pct": -0.91
   },
-  "profit_yoy": -92.3,
-  "profit_surprise": 7.7,
+  "profit_yoy": -64.6,
+  "profit_surprise": 35.4,
   "revenue_yoy": null,
   "revenue_surprise": null
  },
@@ -155,7 +155,7 @@
    "excess_gap_pct": 1.6
   },
   "profit_yoy": -100.0,
-  "profit_surprise": -3.8,
+  "profit_surprise": -17.7,
   "revenue_yoy": null,
   "revenue_surprise": null
  },
@@ -187,7 +187,7 @@
    "excess_gap_pct": -0.58
   },
   "profit_yoy": -43.4,
-  "profit_surprise": 52.8,
+  "profit_surprise": 38.9,
   "revenue_yoy": null,
   "revenue_surprise": null
  },
@@ -219,7 +219,7 @@
    "excess_gap_pct": 0.64
   },
   "profit_yoy": 100.0,
-  "profit_surprise": 167.8,
+  "profit_surprise": 154.0,
   "revenue_yoy": null,
   "revenue_surprise": null
  },
@@ -259,16 +259,8 @@
   "seq_id": "106523761",
   "filed": "2026-02-06 16:36:12",
   "pdf": "https://nsearchives.nseindia.com/corporate/NIDHIFADNAVIS_06022026163325_BSENSESIGNEDOUTCOME.pdf",
-  "figures": {
-   "profit": {
-    "quarter": 2730.37,
-    "prev_quarter": 3183.09,
-    "year_ago": 29549.0,
-    "qoq_pct": -14.2,
-    "yoy_pct": -90.8
-   }
-  },
-  "view": "weak",
+  "figures": {},
+  "view": "unread",
   "reaction": {
    "reaction_day": "2026-02-09",
    "when": "after close",
@@ -282,8 +274,8 @@
    "excess_close_pct": 1.83,
    "excess_gap_pct": 1.75
   },
-  "profit_yoy": -90.8,
-  "profit_surprise": -119.1,
+  "profit_yoy": null,
+  "profit_surprise": null,
   "revenue_yoy": null,
   "revenue_surprise": null
  },
@@ -292,6 +284,13 @@
   "filed": "2026-05-15 17:44:51",
   "pdf": "https://nsearchives.nseindia.com/corporate/NIDHIFADNAVIS_15052026174218_BSENSESIGNED.pdf",
   "figures": {
+   "revenue": {
+    "quarter": 3.0,
+    "prev_quarter": 7.0,
+    "year_ago": 9.0,
+    "qoq_pct": -57.1,
+    "yoy_pct": -66.7
+   },
    "profit": {
     "quarter": 2965.0,
     "prev_quarter": 2730.37,
@@ -300,7 +299,7 @@
     "yoy_pct": 146.9
    }
   },
-  "view": "strong",
+  "view": "mixed",
   "reaction": {
    "reaction_day": "2026-05-18",
    "when": "after close",
@@ -315,16 +314,24 @@
    "excess_gap_pct": -2.01
   },
   "profit_yoy": 100.0,
-  "profit_surprise": 71.7,
-  "revenue_yoy": null,
+  "profit_surprise": 0.0,
+  "revenue_yoy": -66.7,
   "revenue_surprise": null
  },
  {
   "seq_id": "106717820",
   "filed": "2026-07-30 18:49:55",
   "pdf": "https://nsearchives.nseindia.com/corporate/NIDHIFADNAVIS_30072026184647_BSENSEOutcome.pdf",
-  "figures": {},
-  "view": "unread",
+  "figures": {
+   "revenue": {
+    "quarter": 36452.27,
+    "prev_quarter": 37916.21,
+    "year_ago": 30599.1,
+    "qoq_pct": -3.9,
+    "yoy_pct": 19.1
+   }
+  },
+  "view": "good",
   "reaction": {
    "reaction_day": "2026-07-31",
    "when": "after close",
@@ -340,7 +347,7 @@
   },
   "profit_yoy": null,
   "profit_surprise": null,
-  "revenue_yoy": null,
-  "revenue_surprise": null
+  "revenue_yoy": 19.1,
+  "revenue_surprise": 85.8
  }
 ]
