@@ -142,3 +142,16 @@ def test_news_team_skips_when_the_chart_disagrees():
     trades = []
     asyncio.run(watcher.news_team(Fading(move=1.2), trades, NOW, {**CFG, "capital": 200000}))
     assert trades == [] and "TECHM" in watcher._daily["trend_failed"]
+
+
+def test_news_team_uses_half_its_money_and_skips_cheap_options(monkeypatch):
+    idea("up")
+    trades = []
+    asyncio.run(watcher.news_team(FakeIndMoney(move=1.2), trades, NOW, {**CFG, "capital": 200000}))
+    assert float(trades[0]["entry_ask"]) * int(trades[0]["qty"]) <= 100000
+    idea("up")
+    real = watcher.pick_option
+    monkeypatch.setattr(watcher, "pick_option", lambda *a: {**real(*a), "ask": 1.85, "est_premium": 1.85})
+    trades = []
+    asyncio.run(watcher.news_team(FakeIndMoney(move=1.2), trades, NOW, {**CFG, "capital": 200000}))
+    assert trades == []

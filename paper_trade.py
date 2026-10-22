@@ -18,7 +18,7 @@ from agents import holidays
 from agents.config import load_config
 from agents.indmoney import IndMoney, pick_option
 from agents.risk import plan
-from watcher import FIELDS, IST, TEAMS, _t, account, has_open, load_trades, save_trades
+from watcher import FIELDS, IST, NEWS_DEFAULTS, TEAMS, _t, account, has_open, load_trades, save_trades, team_cfg
 
 
 async def find_key(im: IndMoney, symbol: str) -> str | None:
@@ -59,8 +59,12 @@ async def open_trade(symbol: str, direction: str, strategy: str, reason: str) ->
 
     if option is None:
         return {"opened": False, "reason": "no quoted option contract"}
+    news_cfg = {**NEWS_DEFAULTS, **team_cfg(cfg, "news")}
+    if option["ask"] < news_cfg["min_premium"]:
+        return {"opened": False, "reason": f"option premium ₹{option['ask']} is under the ₹{news_cfg['min_premium']} minimum"}
 
-    risk = plan(option, 0, now, {**cfg, "capital": free}, spread_pct=option["spread_pct"])
+    risk = plan(option, 0, now, {**cfg, "capital": free, "max_capital_per_trade": news_cfg["max_capital_per_trade"]},
+                spread_pct=option["spread_pct"])
     if not risk["allowed"]:
         return {"opened": False, "reason": "; ".join(risk["blocks"])}
 

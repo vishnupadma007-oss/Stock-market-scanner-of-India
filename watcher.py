@@ -579,6 +579,8 @@ NEWS_DEFAULTS = {
     "min_trend_score": 60,  # Trend Checker: the chart must back the news's direction
     "trend_recheck_min": 5,  # a stock whose chart failed is looked at again after this long
     "market_headwind_pct": 0.8,  # no CALL when Nifty is down this much on bad news (no PUT into such a rally)
+    "min_premium": 5.0,     # no options cheaper than this: tiny premiums need huge quantities and wide spreads
+    "max_capital_per_trade": 0.5,  # share of the team's free money one trade may use (no stop-loss, so size is the brake)
 }
 
 
@@ -629,9 +631,10 @@ async def news_team(im: IndMoney, trades: list[dict], now: datetime, cfg: dict) 
                 continue  # the whole market is moving hard the other way on news
             side = "loser" if idea["direction"] == "up" else "gainer"  # loser -> CALL, gainer -> PUT
             option = pick_option(await im.option_chain(_stock_keys[sym]), side, cfg["strike_choice"])
-            if option is None:
+            if option is None or option["ask"] < c["min_premium"]:
                 continue
-            risk = plan(option, trades_today, now, cfg, spread_pct=option["spread_pct"])
+            risk = plan(option, trades_today, now, {**cfg, "max_capital_per_trade": c["max_capital_per_trade"]},
+                        spread_pct=option["spread_pct"])
             if not risk["allowed"]:
                 continue
             row = {f: "" for f in FIELDS}

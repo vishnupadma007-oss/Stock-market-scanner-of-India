@@ -10,9 +10,16 @@
     "year_ago": 28289.6,
     "qoq_pct": 4.7,
     "yoy_pct": 29.3
+   },
+   "profit": {
+    "quarter": 5486.1,
+    "prev_quarter": 4769.6,
+    "year_ago": 1486.2,
+    "qoq_pct": 15.0,
+    "yoy_pct": 269.1
    }
   },
-  "view": "good",
+  "view": "strong",
   "reaction": {
    "reaction_day": "2023-11-09",
    "when": "after close",
@@ -26,7 +33,7 @@
    "excess_close_pct": -0.29,
    "excess_gap_pct": 0.83
   },
-  "profit_yoy": null,
+  "profit_yoy": 100.0,
   "profit_surprise": null,
   "revenue_yoy": 29.3,
   "revenue_surprise": null
@@ -37,14 +44,14 @@
   "pdf": "https://nsearchives.nseindia.com/corporate/NSELetter_QuickResult_Q3_FY24_07022024194012.pdf",
   "figures": {
    "revenue": {
-    "quarter": 41.0,
-    "prev_quarter": 157.5,
-    "year_ago": 36592.3,
-    "qoq_pct": -74.0,
-    "yoy_pct": -99.9
+    "quarter": 41157.5,
+    "prev_quarter": 36592.3,
+    "year_ago": 28611.1,
+    "qoq_pct": 12.5,
+    "yoy_pct": 43.9
    }
   },
-  "view": "weak",
+  "view": "good",
   "reaction": {
    "reaction_day": "2024-02-08",
    "when": "after close",
@@ -60,8 +67,8 @@
   },
   "profit_yoy": null,
   "profit_surprise": null,
-  "revenue_yoy": -99.9,
-  "revenue_surprise": -129.2
+  "revenue_yoy": 43.9,
+  "revenue_surprise": 14.6
  },
  {
   "seq_id": "161429",
@@ -98,9 +105,9 @@
    "excess_gap_pct": 0.05
   },
   "profit_yoy": 100.0,
-  "profit_surprise": null,
+  "profit_surprise": 0.0,
   "revenue_yoy": 19.7,
-  "revenue_surprise": 55.0
+  "revenue_surprise": -16.9
  },
  {
   "seq_id": "164393",
@@ -139,7 +146,7 @@
   "profit_yoy": 86.4,
   "profit_surprise": -13.6,
   "revenue_yoy": 19.2,
-  "revenue_surprise": -0.5
+  "revenue_surprise": -10.1
  },
  {
   "seq_id": "166654",
@@ -154,14 +161,14 @@
     "yoy_pct": 0.0
    },
    "profit": {
-    "quarter": 8077.6,
-    "prev_quarter": 8891.8,
-    "year_ago": 5486.1,
-    "qoq_pct": -9.2,
-    "yoy_pct": 47.2
+    "quarter": 8594.8,
+    "prev_quarter": 8055.4,
+    "year_ago": 4953.2,
+    "qoq_pct": 6.7,
+    "yoy_pct": 73.5
    }
   },
-  "view": "mixed",
+  "view": "good",
   "reaction": {
    "reaction_day": "2024-11-08",
    "when": "after close",
@@ -175,10 +182,10 @@
    "excess_close_pct": -0.12,
    "excess_gap_pct": 1.55
   },
-  "profit_yoy": 47.2,
-  "profit_surprise": -46.0,
+  "profit_yoy": 73.5,
+  "profit_surprise": -26.5,
   "revenue_yoy": 0.0,
-  "revenue_surprise": -19.4
+  "revenue_surprise": -24.5
  },
  {
   "seq_id": "169805",
@@ -215,9 +222,16 @@
     "year_ago": 41676.3,
     "qoq_pct": 27.3,
     "yoy_pct": 37.0
+   },
+   "profit": {
+    "quarter": 21280.7,
+    "prev_quarter": 12913.5,
+    "year_ago": 8891.8,
+    "qoq_pct": 64.8,
+    "yoy_pct": 139.3
    }
   },
-  "view": "good",
+  "view": "strong",
   "reaction": {
    "reaction_day": "2025-08-06",
    "when": "after close",
@@ -231,8 +245,8 @@
    "excess_close_pct": -0.37,
    "excess_gap_pct": 2.36
   },
-  "profit_yoy": null,
-  "profit_surprise": null,
+  "profit_yoy": 100.0,
+  "profit_surprise": 13.6,
   "revenue_yoy": 37.0,
   "revenue_surprise": 17.8
  },
@@ -240,8 +254,16 @@
   "seq_id": "106430397",
   "filed": "2025-11-06 18:34:48",
   "pdf": "https://nsearchives.nseindia.com/corporate/Lupin2_06112025183331_OutcomeUFRintimation.pdf",
-  "figures": {},
-  "view": "unread",
+  "figures": {
+   "revenue": {
+    "quarter": 68314.3,
+    "prev_quarter": 61637.5,
+    "year_ago": 54970.1,
+    "qoq_pct": 10.8,
+    "yoy_pct": 24.3
+   }
+  },
+  "view": "good",
   "reaction": {
    "reaction_day": "2025-11-07",
    "when": "after close",
@@ -257,8 +279,8 @@
   },
   "profit_yoy": null,
   "profit_surprise": null,
-  "revenue_yoy": null,
-  "revenue_surprise": null
+  "revenue_yoy": 24.3,
+  "revenue_surprise": 5.1
  },
  {
   "seq_id": "106532754",
@@ -290,7 +312,7 @@
   "profit_yoy": null,
   "profit_surprise": null,
   "revenue_yoy": 9.3,
-  "revenue_surprise": -9.2
+  "revenue_surprise": -15.0
  },
  {
   "seq_id": "106613593",
@@ -298,18 +320,18 @@
   "pdf": "https://nsearchives.nseindia.com/corporate/Lupin2_07052026205438_Outcome-UFR_intimation.pdf",
   "figures": {
    "revenue": {
-    "quarter": 52346.0,
-    "prev_quarter": 45011.9,
-    "year_ago": 44856.7,
-    "qoq_pct": 16.3,
-    "yoy_pct": 16.7
+    "quarter": 51522.6,
+    "prev_quarter": 44339.6,
+    "year_ago": 43826.9,
+    "qoq_pct": 16.2,
+    "yoy_pct": 17.6
    },
    "profit": {
-    "quarter": 14686.7,
-    "prev_quarter": 11805.1,
-    "year_ago": 7823.8,
-    "qoq_pct": 24.4,
-    "yoy_pct": 87.7
+    "quarter": 21636.9,
+    "prev_quarter": 7174.5,
+    "year_ago": 12913.5,
+    "qoq_pct": 201.6,
+    "yoy_pct": 67.6
    }
   },
   "view": "strong",
@@ -326,10 +348,10 @@
    "excess_close_pct": -2.66,
    "excess_gap_pct": -1.05
   },
-  "profit_yoy": 87.7,
-  "profit_surprise": null,
-  "revenue_yoy": 16.7,
-  "revenue_surprise": -6.4
+  "profit_yoy": 67.6,
+  "profit_surprise": -32.4,
+  "revenue_yoy": 17.6,
+  "revenue_surprise": -6.7
  },
  {
   "seq_id": "106729934",
@@ -337,11 +359,11 @@
   "pdf": "https://nsearchives.nseindia.com/corporate/Lupin2_06082026215040_SE_Outcome_UFR_intimation.pdf",
   "figures": {
    "revenue": {
-    "quarter": 82768.9,
-    "prev_quarter": 74746.6,
-    "year_ago": 62683.4,
-    "qoq_pct": 10.7,
-    "yoy_pct": 32.0
+    "quarter": 82172.3,
+    "prev_quarter": 73919.1,
+    "year_ago": 61637.5,
+    "qoq_pct": 11.2,
+    "yoy_pct": 33.3
    },
    "profit": {
     "quarter": 14169.8,
@@ -366,8 +388,8 @@
    "excess_gap_pct": 1.44
   },
   "profit_yoy": 16.0,
-  "profit_surprise": -71.7,
-  "revenue_yoy": 32.0,
-  "revenue_surprise": 15.3
+  "profit_surprise": -67.8,
+  "revenue_yoy": 33.3,
+  "revenue_surprise": 12.3
  }
 ]

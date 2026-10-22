@@ -10,10 +10,13 @@ company news. It is read from NSE directly (not INDmoney), about once a minute.
     python -m agents.announcements overnight           # F&O filings since the last session's close
 """
 import io
+import os
 import re
 import subprocess
 import sys
 import tempfile
+import threading
+from concurrent.futures import ThreadPoolExecutor
 from pathlib import Path
 from datetime import datetime, timedelta
 
@@ -242,12 +245,23 @@ def ocr_text(pdf: bytes, pages: int = 6, dpi: int = 300) -> str:
         src.write_bytes(pdf)
         subprocess.run(["pdftoppm", "-r", str(dpi), "-gray", "-f", "1", "-l", str(pages), str(src), str(Path(d) / "p")],
                        check=True, timeout=300, capture_output=True)
-        texts = []
-        for img in sorted(Path(d).glob("p*.pgm")):
-            # psm 6: one uniform block, keeps table rows on one line; keep the spaces between columns
-            texts.append(subprocess.run(["tesseract", str(img), "-", "--psm", "6", "-c", "preserve_interword_spaces=1"],
-                                        capture_output=True, text=True, timeout=120).stdout)
-        return "\n".join(texts)
+        # All pages at once; the shared slots keep the whole program to one OCR per CPU core.
+        with ThreadPoolExecutor(max_workers=pages) as pool:
+            return "\n".join(pool.map(_ocr_page, sorted(Path(d).glob("p*.pgm"))))
+
+
+# Tesseract is CPU-bound: one single-threaded OCR per core, shared by every reader thread
+# (the watcher's 10 results readers, the history rebuild's workers), so more pages queue instead
+# of slowing each other down. A bigger machine gets more slots automatically.
+OCR_SLOTS = threading.BoundedSemaphore(max(2, os.cpu_count() or 4))
+
+
+def _ocr_page(img: Path) -> str:
+    with OCR_SLOTS:
+        # psm 6: one uniform block, keeps table rows on one line; keep the spaces between columns
+        return subprocess.run(["tesseract", str(img), "-", "--psm", "6", "-c", "preserve_interword_spaces=1"],
+                              capture_output=True, text=True, timeout=120,
+                              env={**os.environ, "OMP_THREAD_LIMIT": "1"}).stdout
 
 
 def pdf_text(url: str, ocr: bool = True) -> str:
