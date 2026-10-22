@@ -120,6 +120,10 @@ UPGRADE = r"\b(rbi|sebi|irdai|usfda)\b.*(lifts?|removes?|eases?|withdraws?) (cur
 
 # Right after the measure, in the same clause: "visa curbs NOT TARGETED at India" reverses it.
 REVERSED = r"^[^;,.:|]{0,25}\b(not targeted|rules? out|no plans?|den(y|ies|ied)|scrapp|withdraw|roll(s|ed)? back|put on hold)"
+# Delay or softening of a measure already known: mild relief for those it hits, not a new blow.
+SOFTENING = r"\b(extend\w*|more time|deadline extended)\b.{0,30}\b(feedback|consultation|comment|deadline|period)|" \
+            r"\b(defer\w*|delay\w*|postpon\w*|put on hold|phased|gradual (reset|implementation|rollout)|soften\w*|" \
+            r"reconsider\w*|relief|dilut\w*|rollback|roll back)\b"
 # Talk, not action: "RBI may need to raise rates", "RBI weighs a ban". (Formal proposals and
 # draft rules keep full weight: IRDAI's consultation paper alone cut PolicyBazaar by a third.)
 TALK = r"\b(may|might|could|weighs?|mulls?|consider(s|ing)?|need to|expected to|likely|unlikely|seeks? to calm|explain|what does)\b"
@@ -129,6 +133,7 @@ def assess(headline: str) -> list[dict]:
     """Impacts of one headline on our stocks: [{symbol, direction, strength, why, rule}]."""
     impacts = {}
     talk = bool(re.search(TALK, headline, re.I))
+    softening = bool(re.search(SOFTENING, headline, re.I))
     for name, pattern, effects in RULES:
         m = re.search(pattern, headline, re.I)
         if m:
@@ -136,8 +141,9 @@ def assess(headline: str) -> list[dict]:
             for sym, (direction, strength, why) in effects.items():
                 if direction == 0:  # the headline says which way: cut helps, hike hurts
                     direction = 1 if re.search(r"\b(cut|reduc|lower|eas)", headline, re.I) else -1
-                if reversed_:
-                    direction, strength, why = -direction, 1, f"reversed or denied: {why}"
+                if reversed_ or softening:
+                    direction, strength = -direction, 1
+                    why = f"{'reversed or denied' if reversed_ else 'delayed or softened'}: {why}"
                 elif talk:
                     strength, why = max(1, strength - 1), f"talk, not yet action: {why}"
                 prev = impacts.get(sym)

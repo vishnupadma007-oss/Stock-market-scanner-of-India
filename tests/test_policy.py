@@ -39,3 +39,10 @@ def test_negation_talk_and_false_alarms():
     assert "BHARTIARTL" not in hits("Hotel tariffs in Delhi top Rishikesh")
     assert hits("Airtel, Jio raise mobile tariffs by 15%")["BHARTIARTL"] == (1, 2)
     assert hits("Bajaj Finance launches term loans as RBI weighs revolving credit ban")["BAJFINANCE"] == (-1, 2)
+
+
+def test_delay_or_softening_is_mild_relief():
+    h = hits("PB Fintech: IRDAI Open To Extending Feedback Period On Distribution Reforms Paper")
+    assert h["POLICYBZR"] == (1, 1)
+    assert hits("FIDC to represent NBFCs' case to IRDAI for gradual reset of insurance commissions")["POLICYBZR"] == (1, 1)
+    assert hits("IRDAI proposes commission caps on insurance distribution")["POLICYBZR"] == (-1, 3)  # the original blow
