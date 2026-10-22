@@ -21,6 +21,8 @@ CFG = {**load_config(), "strike_choice": "ITM1",
 
 
 class FakeIndMoney:
+    pick_contract = watcher.IndMoney.pick_contract
+
     def __init__(self, move):
         self.move = move
 
@@ -150,8 +152,9 @@ def test_news_team_uses_half_its_money_and_skips_cheap_options(monkeypatch):
     asyncio.run(watcher.news_team(FakeIndMoney(move=1.2), trades, NOW, {**CFG, "capital": 200000}))
     assert float(trades[0]["entry_ask"]) * int(trades[0]["qty"]) <= 100000
     idea("up")
-    real = watcher.pick_option
-    monkeypatch.setattr(watcher, "pick_option", lambda *a: {**real(*a), "ask": 1.85, "est_premium": 1.85})
+    from agents import indmoney
+    real = indmoney.pick_option
+    monkeypatch.setattr(indmoney, "pick_option", lambda *a: {**real(*a), "ask": 1.85, "est_premium": 1.85})
     trades = []
     asyncio.run(watcher.news_team(FakeIndMoney(move=1.2), trades, NOW, {**CFG, "capital": 200000}))
     assert trades == []

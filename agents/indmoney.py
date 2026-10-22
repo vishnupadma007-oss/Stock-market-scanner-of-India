@@ -252,9 +252,32 @@ class IndMoney:
                                 interval=interval, lookback=lookback)).get("candles", [])
         return candles_frame(rows)
 
-    async def option_chain(self, ind_key: str, strikes_around_atm: int = 4) -> dict:
+    async def option_chain(self, ind_key: str, strikes_around_atm: int = 4, expiry: str | None = None) -> dict:
+        """Nearest expiry, or `expiry` (one of the chain's expiry_list values, e.g. "20261123")."""
+        if expiry:
+            return await self.call("get_indian_stocks_option_chain", ind_key=ind_key, use_expiry_date=True,
+                                   expiry_date=expiry, strikes_around_atm=strikes_around_atm)
         return await self.call("get_indian_stocks_option_chain", ind_key=ind_key,
                                use_expiry_date=False, strikes_around_atm=strikes_around_atm)
+
+    async def pick_contract(self, ind_key: str, side: str, cfg: dict, today) -> dict | None:
+        """This month's contract; in expiry week, next month's when this month's fails the checks
+        (too cheap or too wide a bid-ask gap). One extra chain call, only in that case."""
+        chain = await self.option_chain(ind_key)
+        option = pick_option(chain, side, cfg["strike_choice"])
+        fb = cfg.get("expiry_fallback") or {}
+        if not needs_next_month(option, chain, today, fb):
+            return option
+        later = sorted(e for e in chain.get("expiry_list") or [] if e > str(chain.get("selected_expiry")))
+        if not later:
+            return option
+        nxt = pick_option(await self.option_chain(ind_key, expiry=later[0]), side, cfg["strike_choice"])
+        # Both months unusable: keep the narrower bid-ask gap (the team's own checks decide after that).
+        if nxt is None or (option is not None and _fails(nxt, fb)
+                           and (not _fails(option, fb) or option["spread_pct"] <= nxt["spread_pct"])):
+            return option
+        nxt["rolled_from"] = option["contract"] if option else str(chain.get("selected_expiry"))
+        return nxt
 
     async def quotes(self, ind_keys: list[str], segments: list[str] | None = None) -> dict:
         args = {"ind_keys": ind_keys} | ({"segments": segments} if segments else {})
@@ -357,6 +380,19 @@ def pick_option(chain: dict, side: str, strike_choice: str) -> dict | None:
         "spread_pct": (ask - bid) / ask * 100, "delta": leg.get("delta") or (-0.5 if side == "gainer" else 0.5),
         "lot_size": leg.get("lot_size"), "oi_tag": row.get("oi_trend_tag"), "spot": spot,
     }
+
+
+def _fails(option: dict, fb: dict) -> bool:
+    return option["ask"] < fb.get("min_premium", 5.0) or option["spread_pct"] > fb.get("max_spread_pct", 2.0)
+
+
+def needs_next_month(option: dict | None, chain: dict, today, fb: dict) -> bool:
+    """Expiry week (within `days` of this month's expiry) and this month's option is unusable:
+    not quoted, cheaper than `min_premium`, or a bid-ask gap wider than `max_spread_pct`."""
+    if not fb.get("enabled", True) or not chain.get("selected_expiry"):
+        return False
+    days_left = (pd.to_datetime(str(chain["selected_expiry"])).date() - today).days
+    return days_left <= fb.get("days", 7) and (option is None or _fails(option, fb))
 
 
 def main(argv: list[str]) -> None:

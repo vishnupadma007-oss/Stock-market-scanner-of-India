@@ -49,6 +49,8 @@ def test_candles_frame():
 
 
 class FakeIndMoney:
+    pick_contract = watcher.IndMoney.pick_contract
+
     def __init__(self, put_bid=49.6, headlines=(), sector_chg=0.3):
         self.put_bid, self.headlines, self.sector_chg = put_bid, list(headlines), sector_chg
 
@@ -277,3 +279,39 @@ def test_movers_news_guard_skips_results_day(tmp_path, monkeypatch, capsys):
     watcher._daily["filings"] = {}
     asyncio.run(watcher.scan(FakeIndMoney(), trades, NOW, cfg))
     assert len(trades) == 1  # without the news, the same chart trades
+
+
+def test_expiry_week_falls_back_to_next_month():
+    from datetime import date
+    from agents.indmoney import needs_next_month
+    fb = {"days": 7, "min_premium": 5.0, "max_spread_pct": 2.0}
+    near = {**chain(), "expiry_list": ["20261027", "20261123"]}
+    good = pick_option(near, "gainer", "ITM1")
+    assert not needs_next_month(good, near, date(2026, 10, 22), fb)          # fine contract: keep it
+    cheap = {**good, "ask": 1.85}
+    assert needs_next_month(cheap, near, date(2026, 10, 22), fb)             # expiry week + too cheap
+    assert not needs_next_month(cheap, near, date(2026, 10, 12), fb)         # not expiry week yet
+    assert needs_next_month({**good, "spread_pct": 6.3}, near, date(2026, 10, 22), fb)  # gap too wide
+    assert not needs_next_month(cheap, near, date(2026, 10, 22), {**fb, "enabled": False})
+
+    class TwoMonths(FakeIndMoney):
+        calls = []
+
+        async def option_chain(self, key, strikes_around_atm=4, expiry=None):
+            self.calls.append(expiry)
+            if expiry == "20261123":
+                c = chain()
+                for row in c["option_chain_data"]:
+                    row["put_data"]["slug"] = row["put_data"]["slug"].replace("27-oct", "23-nov")
+                return {**c, "selected_expiry": "20261123", "expiry_list": ["20261027", "20261123"]}
+            c = chain(put_bid=40.0, put_ask=50.1)  # this month: 20% gap
+            return {**c, "expiry_list": ["20261027", "20261123"]}
+
+    im = TwoMonths()
+    opt = asyncio.run(im.pick_contract("K", "gainer", {**CFG, "expiry_fallback": fb}, date(2026, 10, 22)))
+    assert opt["contract"].startswith("TECHM-23-NOV") and opt["rolled_from"].startswith("TECHM-27-OCT")
+    assert im.calls == [None, "20261123"]
+    # Two weeks before expiry the same wide gap is left to the usual checks: no extra call.
+    im.calls.clear()
+    opt = asyncio.run(im.pick_contract("K", "gainer", {**CFG, "expiry_fallback": fb}, date(2026, 10, 12)))
+    assert opt["contract"].startswith("TECHM-27-OCT") and im.calls == [None]

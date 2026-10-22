@@ -40,7 +40,7 @@ from agents.indicators import intraday_sigma_per_min
 from agents.market import context as market_context_view, headwind
 from agents import candles, news_guard, shock
 from agents.momentum import read_trend
-from agents.indmoney import (IndMoney, LoginRequired, RateLimited, calls_last_hour, pick_option,
+from agents.indmoney import (IndMoney, LoginRequired, RateLimited, calls_last_hour,
                              set_hourly_budget)
 from agents.regime import assess
 from agents.risk import plan
@@ -496,7 +496,7 @@ async def scan(im: IndMoney, trades: list[dict], now: datetime, cfg: dict, hold:
                         record_guard(now, m["symbol"], side, chart["score"], guard["notes"])
                         continue  # serious news against the trade: move on to the next stock
 
-                option = pick_option(await im.option_chain(m["ind_key"]), side, cfg["strike_choice"])
+                option = await im.pick_contract(m["ind_key"], side, cfg, now.date())
                 if option is None or option["contract"] in taken:
                     continue
                 prev_close = m.get("previous_close") or m["price"] / (1 + m["change_pct"] / 100)
@@ -540,7 +540,7 @@ async def scan(im: IndMoney, trades: list[dict], now: datetime, cfg: dict, hold:
                            target_bid=risk["target_premium"], spread_pct=round(option["spread_pct"], 2),
                            hit_probability=round(risk["hit_probability"]), chart_score=chart["score"],
                            oi_type=crowd["oi_type"], strategy="reversal", valuation=value["label"],
-                           status="OPEN")
+                           status="OPEN", notes=rolled_note(option))
                 trades.append(row)
                 taken.add(option["contract"])
                 trades_today += 1
@@ -559,7 +559,7 @@ async def scan(im: IndMoney, trades: list[dict], now: datetime, cfg: dict, hold:
                     "forecast": {"level": forecast.get("level") and round(forecast["level"], 2),
                                  "basis": forecast["basis"],
                                  "option_price_there": risk["forecast_premium"] and round(risk["forecast_premium"], 2)},
-                    "day_mode": day["mode"],
+                    "day_mode": day["mode"], "rolled_from": option.get("rolled_from"),
                     "valuation": {"label": value["label"], "would_score": value["would_score"]},
                     "crowd": {"oi_type": crowd["oi_type"], "would_score": crowd["would_score"],
                               "would_block": crowd["would_block"]},
@@ -568,6 +568,10 @@ async def scan(im: IndMoney, trades: list[dict], now: datetime, cfg: dict, hold:
                 raise
             except Exception as e:  # one bad reply must not stop the other stocks
                 emit("ERROR", {"error": f"{m['symbol']}: {type(e).__name__}: {e}"})
+
+
+def rolled_note(option: dict) -> str:
+    return f"Expiry week: next month's contract instead of {option['rolled_from']}" if option.get("rolled_from") else ""
 
 
 NEWS_DEFAULTS = {
@@ -630,7 +634,7 @@ async def news_team(im: IndMoney, trades: list[dict], now: datetime, cfg: dict) 
             if headwind(mkt, idea["direction"], c["market_headwind_pct"]):
                 continue  # the whole market is moving hard the other way on news
             side = "loser" if idea["direction"] == "up" else "gainer"  # loser -> CALL, gainer -> PUT
-            option = pick_option(await im.option_chain(_stock_keys[sym]), side, cfg["strike_choice"])
+            option = await im.pick_contract(_stock_keys[sym], side, cfg, now.date())
             if option is None or option["ask"] < c["min_premium"]:
                 continue
             risk = plan(option, trades_today, now, {**cfg, "max_capital_per_trade": c["max_capital_per_trade"]},
@@ -642,7 +646,7 @@ async def news_team(im: IndMoney, trades: list[dict], now: datetime, cfg: dict) 
                        contract=option["contract"], underlying_key=_stock_keys[sym],
                        derivative_id=option["derivative_id"], qty=risk["qty"], entry_ask=option["ask"],
                        target_bid=risk["target_premium"], spread_pct=round(option["spread_pct"], 2),
-                       chart_score=trend["score"], status="OPEN", notes=idea["reason"], strategy=idea["source"],
+                       chart_score=trend["score"], status="OPEN", notes="; ".join(filter(None, [rolled_note(option), idea["reason"]])), strategy=idea["source"],
                        valuation=valuation_view(sym).get("label", ""))
             trades.append(row)
             emit("SIGNAL", {"team": "news", "symbol": sym, "direction": idea["direction"],
@@ -652,7 +656,7 @@ async def news_team(im: IndMoney, trades: list[dict], now: datetime, cfg: dict) 
                             "lot_size": option["lot_size"], "net_profit_at_target": round(risk["net_profit"]),
                             "square_off": cfg["square_off_time"], "source": idea["source"],
                             "confidence": idea["confidence"], "priced_in": idea["priced_in"],
-                            "reason": idea["reason"], "valuation": row["valuation"],
+                            "reason": idea["reason"], "valuation": row["valuation"], "rolled_from": option.get("rolled_from"),
                             "trend_score": trend["score"], "trend_signals": [t for t, _ in trend["signals"]],
                             "market": {"notes": mkt["notes"], "drivers": {t: {"tone": d["tone"], "headlines": d["headlines"]}
                                                                          for t, d in mkt["drivers"].items()}}})

@@ -130,6 +130,15 @@ assumed_spread_pct: 0.8    # bid-ask gap of the option, % of premium (real value
 # Options
 strike_choice: "ITM1"       # "ATM" or "ITM1". ITM1: smaller worst loss in the backtest; all lots fit ₹30,000 (survey 2026-10-19)
 min_days_to_expiry: 3      # roll to next month's expiry when closer than this
+# Live contracts (both teams): this month's expiry, except in expiry week, where next month's is
+# used when this month's option is unusable. Backtest (60 days) was neutral on rolling early; real
+# near-expiry options are often cheap with wide gaps (IOC 27-Oct 130 PE: Rs 1.40, 6.3% gap vs
+# 23-Nov: Rs 3.85, 2.8%), so this only rescues setups that would otherwise be skipped or badly priced.
+expiry_fallback:
+  enabled: true
+  days: 7                  # within this many calendar days of this month's expiry...
+  min_premium: 5.0         # ...switch when this month's option is cheaper than this
+  max_spread_pct: 2.0      # ...or its bid-ask gap is wider than this (% of the ask)
 risk_free_rate: 0.065
 
 # Charges (verify with your broker's calculator)

@@ -16,9 +16,10 @@ from datetime import datetime
 
 from agents import holidays
 from agents.config import load_config
-from agents.indmoney import IndMoney, pick_option
+from agents.indmoney import IndMoney
 from agents.risk import plan
-from watcher import FIELDS, IST, NEWS_DEFAULTS, TEAMS, _t, account, has_open, load_trades, save_trades, team_cfg
+from watcher import (FIELDS, IST, NEWS_DEFAULTS, TEAMS, _t, account, has_open, load_trades, rolled_note,
+                     save_trades, team_cfg)
 
 
 async def find_key(im: IndMoney, symbol: str) -> str | None:
@@ -55,7 +56,7 @@ async def open_trade(symbol: str, direction: str, strategy: str, reason: str) ->
         key = await find_key(im, symbol)
         if not key:
             return {"opened": False, "reason": f"{symbol} not found on INDmoney"}
-        option = pick_option(await im.option_chain(key), side, cfg["strike_choice"])
+        option = await im.pick_contract(key, side, cfg, now.date())
 
     if option is None:
         return {"opened": False, "reason": "no quoted option contract"}
@@ -73,7 +74,8 @@ async def open_trade(symbol: str, direction: str, strategy: str, reason: str) ->
                side=side, contract=option["contract"], underlying_key=key,
                derivative_id=option["derivative_id"], qty=risk["qty"], entry_ask=option["ask"],
                target_bid=risk["target_premium"], spread_pct=round(option["spread_pct"], 2),
-               status="OPEN", claude_verdict="TRADE", notes=reason, strategy=strategy)
+               status="OPEN", claude_verdict="TRADE",
+               notes="; ".join(filter(None, [rolled_note(option), reason])), strategy=strategy)
     trades.append(row)
     save_trades(trades)
 
