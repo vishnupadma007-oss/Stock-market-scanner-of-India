@@ -750,7 +750,8 @@ def main() -> None:
                     help="minutes between entry scans")
     args = ap.parse_args()
     exit_every = cfg.get("exit_check_seconds", 15)
-    set_hourly_budget(cfg.get("indmoney_hourly_budget", 450))
+    # Pace a little under the budget, so the budget guard below is a safety net, not a routine pause.
+    set_hourly_budget(int(cfg.get("indmoney_hourly_budget", 450) * 0.95))
 
     closed = holidays.holiday_name(datetime.now(IST).date())
     if closed and not args.once:
