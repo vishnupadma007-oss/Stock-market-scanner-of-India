@@ -82,6 +82,19 @@ def _top(items: list[dict], now: datetime, n: int) -> list[str]:
     return [i["headline"] for i in ranked[:n] if i["sentiment"]]
 
 
+def _one_per_story(items: list[dict]) -> list[dict]:
+    """The policy rulebook reads the same headline from several feeds: count each story once."""
+    seen, out = set(), []
+    for i in items:
+        if i.get("kind") == "policy":
+            key = (tuple(i["symbols"]), i["headline"].split(" | ", 1)[-1].split(" - ")[0].strip().lower())
+            if key in seen:
+                continue
+            seen.add(key)
+        out.append(i)
+    return out
+
+
 def market_mood(items: list[dict], now: datetime) -> dict:
     rel = [i for i in items if i["scope"] in ("market", "global")]
     tone = _mean_tone(rel, now)
@@ -93,7 +106,7 @@ def stock_view(symbol: str, items: list[dict], now: datetime, cfg: dict | None =
     """score = own news (capped at +/-3) + sector tone (+/-1) + market tone (+/-0.6)."""
     c = {**DEFAULTS, **((cfg or {}).get("analyzer") or {})}
     sector = STOCK_SECTOR.get(symbol)
-    own = [i for i in items if symbol in i["symbols"]]
+    own = _one_per_story([i for i in items if symbol in i["symbols"]])
     own_raw = sum(i["sentiment"] * i["impact"] * _weight(i, now) for i in own)
     own_score = 3.0 * math.tanh(own_raw / 3.0)
     sector_tone = _mean_tone([i for i in items if sector and sector in i["sectors"] and symbol not in i["symbols"]], now)

@@ -62,3 +62,16 @@ def test_one_policy_story_from_two_feeds_is_one_source():
 
 def test_economists_expectations_are_talk():
     assert hits("RBI MPC minutes: Economists expect repo rate hike in December")["BAJFINANCE"] == (-1, 1)
+
+
+def test_one_policy_story_from_two_feeds_counts_once_in_the_score():
+    from datetime import datetime
+    from agents import analyzer
+    out = []
+    for feed in ("Google: India macro", "Google: regulators & policy"):
+        item = {"id": f"n-{feed}", "time": "2026-10-22 20:55:25", "source": feed,
+                "headline": "Hawkish Turn: RBI raises rates as crude, yields and outflows hit rupee - Forbes India", "url": ""}
+        out += policy.to_intel(item, policy.assess(item["headline"]))
+    once = [i for i in out if i["source"].endswith("India macro)")]
+    now = datetime(2026, 10, 23, 9, 0)
+    assert analyzer.stock_view("BAJFINANCE", out, now)["score"] == analyzer.stock_view("BAJFINANCE", once, now)["score"]
