@@ -20,6 +20,10 @@ teams:
     max_move_pct: 4.0      # ...but not more (move used up)
     max_age_min: 120       # forget ideas older than this
     min_trend_score: 60    # Trend Checker (agents/momentum.py): the chart must back the news (0-100)
+    early_entry: true      # user, 23 Oct: don't always wait for 0.5%. From a 0.2% move the news's way, enter when the
+    early_pct: 0.2         # latest 5-min candle has 1.5x the usual volume (same time of day) closing the news's way AND the
+    early_volume_x: 1.5    # NSE order book holds 1.5x more buyers than sellers (reverse for "down"). Replaces the Trend
+    early_book_x: 1.5      # Checker for those entries. Untestable on history (no NSE order-book data): judged on paper.
     min_premium: 5.0       # no options under ₹5 (22 Oct: PNB ₹2.06 and IOC ₹1.85 were the two big losses)
     max_capital_per_trade: 0.5  # one trade uses at most half the team's free money (no stop-loss: size is the brake)
 max_capital_per_trade: 1.0   # share of available money one trade may use (1.0 = all of it)

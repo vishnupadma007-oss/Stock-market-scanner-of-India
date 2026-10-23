@@ -64,3 +64,36 @@ def read_trend(intraday: pd.DataFrame, profile: dict, direction: str) -> dict:
 
     score = max(0, min(100, sum(p for _, p in signals)))
     return {"score": score, "signals": signals}
+
+
+def early_signals(intraday: pd.DataFrame, depth: dict, direction: str,
+                  volume_x: float = 1.5, book_x: float = 1.5) -> dict:
+    """Early entry for the news team (before the stock has moved the full confirmation %):
+    the latest 5-minute candle trades `volume_x` times the usual volume and closes the news's way,
+    and the NSE order book holds `book_x` times more buyers than sellers (for "up"; the reverse
+    for "down"). Order-book imbalance leads price over seconds to minutes; volume shows real
+    buying or selling. No history of NSE order books exists, so this rule is judged on paper."""
+    up = direction == "up"
+    notes, ok = [], True
+    if intraday.empty or len(intraday) < 13:
+        return {"ok": False, "volume_x": None, "book_x": None, "notes": ["Not enough candles for an early entry"]}
+    last = intraday.iloc[-1]
+    # Usual volume at this time of day on earlier days (opening candles are always heavy),
+    # or the last hour's candles when there is no such history.
+    t, d = intraday.index[-1].time(), intraday.index[-1].date()
+    same_time = intraday[(intraday.index.time == t) & (intraday.index.date < d)]["Volume"]
+    usual = float(same_time.mean() if len(same_time) >= 2 else intraday["Volume"].iloc[-13:-1].mean()) or 1.0
+    vx = float(last["Volume"]) / usual
+    with_news = (last["Close"] > last["Open"]) if up else (last["Close"] < last["Open"])
+    if vx < volume_x or not with_news:
+        ok = False
+    notes.append(f"Volume {vx:.1f}x usual on a {'green' if last['Close'] > last['Open'] else 'red'} candle")
+    nse = (depth or {}).get("NSE") or {}
+    bid, ask = float(nse.get("total_bid_qty") or 0), float(nse.get("total_ask_qty") or 0)
+    if bid <= 0 or ask <= 0:
+        return {"ok": False, "volume_x": round(vx, 2), "book_x": None, "notes": notes + ["NSE order book empty"]}
+    bx = bid / ask if up else ask / bid
+    if bx < book_x:
+        ok = False
+    notes.append(f"Order book: {'buyers' if up else 'sellers'} {bx:.1f}x {'sellers' if up else 'buyers'}")
+    return {"ok": ok, "volume_x": round(vx, 2), "book_x": round(bx, 2), "notes": notes}

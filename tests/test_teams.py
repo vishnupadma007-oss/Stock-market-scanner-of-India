@@ -158,3 +158,52 @@ def test_news_team_uses_half_its_money_and_skips_cheap_options(monkeypatch):
     trades = []
     asyncio.run(watcher.news_team(FakeIndMoney(move=1.2), trades, NOW, {**CFG, "capital": 200000}))
     assert trades == []
+
+
+def _candles(last_vol, green=True, days=3):
+    """Three days of 5-min candles; the last candle today carries `last_vol`."""
+    frames = []
+    for d in range(days, -1, -1):
+        idx = pd.date_range(f"2026-10-{21 - d} 09:15", periods=12, freq="5min", tz="Asia/Kolkata")
+        frames.append(pd.DataFrame({"Open": 100.0, "High": 101.0, "Low": 99.0, "Close": 100.0, "Volume": 1000.0}, index=idx))
+    df = pd.concat(frames)
+    df.iloc[-1, df.columns.get_loc("Volume")] = last_vol
+    df.iloc[-1, df.columns.get_loc("Close")] = 100.5 if green else 99.5
+    return df
+
+
+def test_early_signals_need_volume_and_the_order_book():
+    book = lambda bid, ask: {"NSE": {"total_bid_qty": bid, "total_ask_qty": ask}}
+    assert momentum.early_signals(_candles(2500), book(30000, 10000), "up")["ok"]
+    assert not momentum.early_signals(_candles(1200), book(30000, 10000), "up")["ok"]          # no volume surge
+    assert not momentum.early_signals(_candles(2500), book(10000, 12000), "up")["ok"]          # sellers dominate
+    assert not momentum.early_signals(_candles(2500, green=False), book(30000, 10000), "up")["ok"]  # red candle
+    assert momentum.early_signals(_candles(2500, green=False), book(10000, 30000), "down")["ok"]
+    assert not momentum.early_signals(_candles(2500), {"NSE": {}}, "up")["ok"]                 # empty book
+
+
+def test_news_team_enters_early_on_volume_and_order_book():
+    class Early(FakeIndMoney):
+        async def candles(self, key, interval, lookback):
+            if interval == "1day":
+                return await super().candles(key, interval, lookback)
+            return _candles(2500)
+
+        async def quotes(self, keys, segments=None):
+            q = await super().quotes(keys, segments)
+            if segments == ["depth"]:
+                q["INDS01469"]["market_depth"] = {"NSE": {"total_bid_qty": 30000, "total_ask_qty": 10000}}
+            return q
+
+    cfg = {**CFG, "capital": 200000, "teams": {**CFG["teams"], "news": {**CFG["teams"]["news"], "early_entry": True,
+                                                                         "early_pct": 0.2, "early_volume_x": 1.5,
+                                                                         "early_book_x": 1.5}}}
+    idea("up")
+    trades = []
+    asyncio.run(watcher.news_team(Early(move=0.3), trades, NOW, cfg))  # 0.3%: under the 0.5% confirmation
+    assert len(trades) == 1 and trades[0]["notes"].startswith("Early entry")
+    idea("up")
+    trades = []
+    off = {**cfg, "teams": {**cfg["teams"], "news": {**cfg["teams"]["news"], "early_entry": False}}}
+    asyncio.run(watcher.news_team(Early(move=0.3), trades, NOW, off))
+    assert trades == []  # without the early rule, 0.3% still waits
