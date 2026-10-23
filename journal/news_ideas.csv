@@ -33,3 +33,4 @@ date,time,symbol,direction,confidence,source,priced_in
 2026-10-23,12:55,VEDL,down,87,intel,some pessimism priced in
 2026-10-23,13:43,TECHM,up,57,intel,largely priced in
 2026-10-23,13:50,NATIONALUM,down,56,intel,pessimism priced in
+2026-10-23,14:55,JSWSTEEL,up,67,intel,some pessimism priced in
