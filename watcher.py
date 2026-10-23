@@ -197,6 +197,21 @@ def add_idea(symbol: str, direction: str, confidence: int, source: str, reason: 
     _daily.setdefault("ideas", {})[symbol] = {
         "direction": direction, "confidence": adjusted["confidence"], "source": source, "reason": reason[:300],
         "priced_in": expect.get("label"), "at": now}
+    news_pending.set()  # the news team looks at it before the movers' next stock
+
+
+# Set by a new news idea: the movers scan stops between stocks so the news team can act on it
+# within a few INDmoney calls (each call is paced ~8 s apart), not after a whole scan.
+news_pending = threading.Event()
+
+
+def lag_seconds(item: dict, now: datetime) -> int | None:
+    """Seconds from NSE publishing a filing to the watcher reporting it."""
+    try:
+        published = datetime.strptime(str(item["time"])[:19], "%Y-%m-%d %H:%M:%S").replace(tzinfo=IST)
+    except (KeyError, ValueError):
+        return None
+    return round((now - published).total_seconds())
 
 
 def results_reaction(item: dict, now: datetime) -> dict:
@@ -245,6 +260,7 @@ def poll_filings(cfg: dict, now: datetime) -> None:
     except Exception as e:
         emit("ERROR", {"error": f"NSE announcements feed: {type(e).__name__}"})
         return
+    _daily["filings_from"] = now.date()  # overnight filings are in; from now on today's feed only (faster)
     universe = set(cfg["universe"])
     meets = [r for r in rows if f"concall-{r.get('seq_id')}" not in _daily["intel_seen"]]
     intel.append(concalls.items_from_rows(meets, universe), _daily["intel_seen"])
@@ -285,11 +301,11 @@ def poll_filings(cfg: dict, now: datetime) -> None:
                 confidence = {"strong": 80, "good": 65, "weak": 70}[view]
                 add_idea(item["symbol"], "up" if view != "weak" else "down", confidence, "results",
                          f"Results {view}: " + "; ".join(item["read"]["notes"]), item["expectations"], now)
-            emit("RESULT", item)
+            emit("RESULT", {**item, "lag_sec": lag_seconds(item, datetime.now(IST))})
         intel_item = announcements.to_intel(item)
         intel.append([intel_item], _daily["intel_seen"])
         if item["category"] != "RESULTS" and intel_item["impact"] >= 3:
-            emit("NEWS", item)
+            emit("NEWS", {**item, "lag_sec": lag_seconds(item, datetime.now(IST))})
 
 
 def poll_news(cfg: dict, now: datetime) -> None:
@@ -344,15 +360,31 @@ def emit(kind: str, payload: dict) -> None:
         print(f"{kind} {json.dumps(payload, default=str)}", flush=True)
 
 
+def filings_track(cfg: dict) -> None:
+    """NSE filings watcher on its own thread: one feed call (about 1 s) covers every listed company,
+    every `filings_poll_seconds`. Results are read at once, so news, the analyzer or a long
+    market scan never delay a filing."""
+    every = cfg.get("filings_poll_seconds", 10)
+    while True:
+        started = clock.time()
+        now = datetime.now(IST)
+        if holidays.is_trading_day(now.date()):
+            try:
+                poll_filings(cfg, now)
+            except Exception as e:
+                emit("ERROR", {"error": f"poll_filings: {type(e).__name__}: {e}"})
+        clock.sleep(max(1.0, every - (clock.time() - started)))
+
+
 def information_track(cfg: dict) -> None:
-    """Runs beside the scanner: NSE filings + concalls, news and the Data Analyzer every
-    `info_poll_seconds`, so a long market scan never delays them."""
+    """Runs beside the scanner: valuations, news and the Data Analyzer every `info_poll_seconds`
+    (NSE filings have their own faster thread, `filings_track`)."""
     every = cfg.get("info_poll_seconds", 30)
     while True:
         started = clock.time()
         now = datetime.now(IST)
         if holidays.is_trading_day(now.date()):
-            for step in (valuations, poll_filings, poll_news, run_analyzer):
+            for step in (valuations, poll_news, run_analyzer):
                 try:
                     step(cfg, now)
                 except Exception as e:  # one failing source must not stop the others
@@ -437,8 +469,10 @@ def record_held(now: datetime, symbol: str, contract: str, score: int, ask: floa
         w.writerow([now.date().isoformat(), now.strftime("%H:%M"), symbol, contract, score, ask])
 
 
-async def scan(im: IndMoney, trades: list[dict], now: datetime, cfg: dict, hold: bool = False) -> None:
-    """hold=True: a trade is already open, so only record qualifying setups, do not open them."""
+async def scan(im: IndMoney, trades: list[dict], now: datetime, cfg: dict, hold: bool = False,
+               yield_to_news: bool = False) -> None:
+    """hold=True: a trade is already open, so only record qualifying setups, do not open them.
+    yield_to_news=True: stop between stocks when a new news idea arrives (the next cycle resumes)."""
     day = daymode.load(now.date())
     if day["mode"] == "no_trade":
         return
@@ -480,6 +514,8 @@ async def scan(im: IndMoney, trades: list[dict], now: datetime, cfg: dict, hold:
         movers = [m for m in await im.movers(category, 50)
                   if m["symbol"] in universe and abs(m["change_pct"]) >= cfg["min_move_pct"]][:cfg["top_n"]]
         for m in movers:
+            if yield_to_news and news_pending.is_set():
+                return  # a fresh news idea: let the news team act first
             try:
                 daily = await daily_candles(im, m["ind_key"], now.date())
                 intraday = await im.candles(m["ind_key"], "5minute", "7d")
@@ -707,19 +743,31 @@ async def cycle(cfg: dict) -> None:
         async with IndMoney() as im:
             await manage_open_trades(im, trades, now, cfg)
             if _t(cfg["entry_start"]) <= now.time() <= _t(cfg["entry_end"]):
+                # News first: results and news move a stock within minutes, so the news team acts
+                # before the movers' scan, and the scan stops for any idea that arrives meanwhile.
+                news_free = team_cfg(cfg, "news").get("auto_trade", True) \
+                    and not (has_open(trades, "news") and one_at_a_time)
+                news_free = news_free and account(trades, cfg, "news")[1] > 0
+
+                async def run_news():
+                    news_pending.clear()
+                    await news_team(im, trades, now, {**cfg, "capital": account(trades, cfg, "news")[1]})
+
+                if news_free:
+                    await run_news()
+                else:
+                    news_pending.clear()  # busy: ideas wait in the list, the movers need not stop
                 if has_open(trades, "movers") and one_at_a_time:
                     # Busy: note setups we would have taken (every few minutes), but open nothing.
                     if clock.time() - _hold_scan.get("at", 0) >= cfg.get("hold_scan_min", 10) * 60:
                         _hold_scan["at"] = clock.time()
-                        await scan(im, trades, now, cfg, hold=True)
+                        await scan(im, trades, now, cfg, hold=True, yield_to_news=news_free)
                 else:
                     _, free = account(trades, cfg, "movers")
                     if free > 0:  # size new trades from the money that is actually free right now
-                        await scan(im, trades, now, {**cfg, "capital": free})
-                if team_cfg(cfg, "news").get("auto_trade", True) and not (has_open(trades, "news") and one_at_a_time):
-                    _, free = account(trades, cfg, "news")
-                    if free > 0:
-                        await news_team(im, trades, now, {**cfg, "capital": free})
+                        await scan(im, trades, now, {**cfg, "capital": free}, yield_to_news=news_free)
+                if news_free and news_pending.is_set() and not (has_open(trades, "news") and one_at_a_time):
+                    await run_news()  # an idea arrived during the scan
     finally:
         save_trades(trades)
 
@@ -769,6 +817,7 @@ def main() -> None:
                     "time": datetime.now(IST)})
     if not args.once:  # NSE, news and analyzer: their own track, independent of the scan timing
         threading.Thread(target=information_track, args=(cfg,), daemon=True).start()
+        threading.Thread(target=filings_track, args=(cfg,), daemon=True).start()
     last_scan = 0.0
     while True:
         now = datetime.now(IST)

@@ -315,3 +315,17 @@ def test_expiry_week_falls_back_to_next_month():
     im.calls.clear()
     opt = asyncio.run(im.pick_contract("K", "gainer", {**CFG, "expiry_fallback": fb}, date(2026, 10, 12)))
     assert opt["contract"].startswith("TECHM-27-OCT") and im.calls == [None]
+
+
+def test_movers_scan_stops_for_a_fresh_news_idea():
+    watcher.news_pending.set()
+    trades = []
+    asyncio.run(watcher.scan(FakeIndMoney(), trades, NOW, CFG, yield_to_news=True))
+    assert trades == []  # stopped before the first stock: the news team goes first
+    watcher.news_pending.clear()
+    assert len(signals(FakeIndMoney())) == 1  # same market without a pending idea: trades as usual
+
+
+def test_lag_seconds():
+    assert watcher.lag_seconds({"time": "2026-10-23 10:00:00"}, datetime(2026, 10, 23, 10, 0, 25, tzinfo=IST)) == 25
+    assert watcher.lag_seconds({}, NOW) is None

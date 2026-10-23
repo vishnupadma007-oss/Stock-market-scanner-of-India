@@ -17,7 +17,8 @@ Intraday mover-reversal options strategy on NSE F&O stocks, run by a team of age
   Market Context (`agents/market.py`: Nifty's move and why, by theme), Commodities (`agents/commodities.py`)
   Policy Impact (`agents/policy.py`: regulator/government moves -> stocks hit/helped, POLICY events;
   `policy-impact` skill), Sector Results (`agents/sector_results.py`: seasonality, YoY vs QoQ, sector KPIs;
-  results filings read by 10 parallel workers)
+  results filings read by 20 parallel workers; NSE filings checked every 10 s on their own thread, and
+  a new news idea jumps ahead of the movers scan)
   Candlestick Patterns (`agents/candles.py`, observe mode: 19 patterns, no edge found on 60 days of data;
   `candlestick-patterns` skill) and NSE holidays (`agents/holidays.py`).
 - Information agents write to one log (`agents/intel.py`, `journal/intel/<date>.jsonl`): NSE filings,

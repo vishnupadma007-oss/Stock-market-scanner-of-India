@@ -11,6 +11,7 @@ The analyzer only acts on agreement between several items or on one major item, 
 reviews strong forecasts before any trade.
 """
 import json
+import threading
 import re
 from datetime import datetime
 from pathlib import Path
@@ -158,16 +159,20 @@ def path_for(day: str) -> Path:
     return DIR / f"{day}.jsonl"
 
 
+_append_lock = threading.Lock()  # the filings watcher and the news/analyzer thread both write the log
+
+
 def append(items: list[dict], seen: set[str]) -> list[dict]:
     """Add new items (skipping ids already seen and items about nothing we track)."""
-    new = [i for i in items if i["id"] not in seen and i["scope"]]
-    if new:
-        DIR.mkdir(parents=True, exist_ok=True)
-        with open(path_for(datetime.now().date().isoformat()), "a", encoding="utf-8") as f:
-            for item in new:
-                seen.add(item["id"])
-                f.write(json.dumps(item) + "\n")
-    return new
+    with _append_lock:
+        new = [i for i in items if i["id"] not in seen and i["scope"]]
+        if new:
+            DIR.mkdir(parents=True, exist_ok=True)
+            with open(path_for(datetime.now().date().isoformat()), "a", encoding="utf-8") as f:
+                for item in new:
+                    seen.add(item["id"])
+                    f.write(json.dumps(item) + "\n")
+        return new
 
 
 def load(*days: str) -> list[dict]:

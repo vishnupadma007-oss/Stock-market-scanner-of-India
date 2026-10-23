@@ -98,7 +98,8 @@ candles:
 # Announcements agent: NSE's live corporate-filings feed (results, ratings, orders, deals,
 # regulatory actions), read every 30 s while the watcher runs. Results filings are parsed for
 # revenue/profit growth and reported as RESULT events; major filings as NEWS.
-info_poll_seconds: 30   # NSE filings, concalls, news and analyzer run on their own track this often
+info_poll_seconds: 30   # news feeds, valuations and the Data Analyzer run on their own track this often
+filings_poll_seconds: 10  # NSE filings (results, orders, regulatory) have their own faster thread: one call covers all companies
 
 # News agent (RSS: ET, Mint, Business Standard, CNBC-TV18, Google News for global/India macro)
 # and Data Analyzer (combines filings, concalls and news into a forecast per stock).

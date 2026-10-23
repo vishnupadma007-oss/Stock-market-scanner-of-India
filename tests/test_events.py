@@ -94,6 +94,8 @@ def test_poll_filings_emits_once(monkeypatch, tmp_path, capsys):
     result = json.loads(lines[1].split(" ", 1)[1])
     assert result["read"]["view"] == "strong"
     assert result["expectations"] == {"label": "partly priced in", "view": "strong"}
+    assert result["lag_sec"] > 0  # seconds from NSE publishing it to the watcher reporting it
+    assert watcher._daily["filings_from"] == now.date()  # later polls fetch today's feed only
     logged = [json.loads(l) for l in (tmp_path / "intel").glob("*.jsonl").__next__().read_text().splitlines()]
     assert {i["category"] for i in logged} == {"REGULATORY", "RATING", "RESULTS"}
     watcher.poll_filings(CFG, now)
