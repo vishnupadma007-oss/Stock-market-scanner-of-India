@@ -20,11 +20,14 @@ REGULATORY = ("REGULATORY",)
 
 
 def check(symbol: str, side: str, items: list[dict], filings: list[dict], now: datetime,
-          cfg: dict | None = None) -> dict:
-    """{"block": bool, "points": 0, "notes": [...]} as a decision extra."""
+          cfg: dict | None = None, results_dates: list | None = None) -> dict:
+    """{"block": bool, "points": 0, "notes": [...]} as a decision extra. `results_dates`: the
+    company's results board-meeting dates from NSE's calendar."""
     against = "down" if side == "loser" else "up"  # news direction that fights the reversal
     today = now.strftime("%Y-%m-%d")
     reasons = []
+    if any(str(d) == today for d in results_dates or []):
+        reasons.append("Results due today: stocks run up or sell off into results, and the reaction is a coin flip")
 
     for f in filings:
         if not str(f.get("time", "")).startswith(today):

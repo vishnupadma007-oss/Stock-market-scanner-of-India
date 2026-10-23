@@ -527,7 +527,8 @@ async def scan(im: IndMoney, trades: list[dict], now: datetime, cfg: dict, hold:
                     continue  # skip the option-chain call for weak charts
                 if use_guard:
                     guard = news_guard.check(m["symbol"], side, shared_news,
-                                             _daily.get("filings", {}).get(m["symbol"], []), now, cfg)
+                                             _daily.get("filings", {}).get(m["symbol"], []), now, cfg,
+                                             results_dates=(ctx.get("results") or {}).get(m["symbol"]))
                     if guard["block"]:
                         record_guard(now, m["symbol"], side, chart["score"], guard["notes"])
                         continue  # serious news against the trade: move on to the next stock

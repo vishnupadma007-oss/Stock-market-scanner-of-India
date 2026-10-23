@@ -43,3 +43,13 @@ def test_headlines_describing_the_move_do_not_block():
     fraud = hype + [intel.make_item(id="f", time="2026-09-24 10:30:00", source="ET", kind="news",
                                     headline="Infosys faces fraud probe in US, shares plunge")]
     assert news_guard.check("INFY", "loser", fraud, [], NOW)["block"]  # a real cause against a CALL
+
+
+def test_results_due_today_blocks_both_sides():
+    from datetime import date, datetime
+    from agents import news_guard
+    now = datetime(2026, 10, 23, 10, 0)
+    for side in ("gainer", "loser"):
+        g = news_guard.check("INFY", side, [], [], now, results_dates=[date(2026, 10, 23)])
+        assert g["block"] and "Results due today" in g["notes"][0]
+    assert not news_guard.check("INFY", "gainer", [], [], now, results_dates=[date(2026, 10, 27)])["block"]

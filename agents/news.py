@@ -55,8 +55,12 @@ def next_session(day: date) -> date:
 def results_calendar() -> dict[str, list[date]]:
     """Upcoming board meetings for financial results, from NSE's public event calendar.
     Returns {} if NSE is unreachable (the agent then says results were not checked)."""
+    # Without dates NSE lists only future days: today's companies were missing (23 Oct: Infosys,
+    # Dr Reddy's, IndusInd... all reporting that day). Ask from yesterday to six weeks ahead.
+    start, end = date.today() - timedelta(days=1), date.today() + timedelta(days=42)
     try:
         resp = requests.get("https://www.nseindia.com/api/event-calendar", timeout=15,
+                            params={"index": "equities", "from_date": f"{start:%d-%m-%Y}", "to_date": f"{end:%d-%m-%Y}"},
                             headers={"User-Agent": "Mozilla/5.0", "Referer": "https://www.nseindia.com/"})
         resp.raise_for_status()
         rows = resp.json()
