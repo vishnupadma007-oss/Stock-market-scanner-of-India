@@ -133,6 +133,9 @@ def sectors_in(text: str) -> list[str]:
     return sorted(s for s, pattern in SECTOR_WORDS.items() if re.search(pattern, text, re.I))
 
 
+# Results previews state what analysts expect, the bar the results must clear, not news about the company.
+PREVIEW = r"\b(results?|earnings|q[1-4]) preview\b|preview:|\bwhat to expect\b|\bmay (post|report|rise|fall|see)\b|" \
+          r"\bexpected to (post|report)\b"
 ROUNDUP = r"\blive\b|stocks? to (watch|buy)|top (gainers|losers)|gainers and losers|buzzing stocks|" \
           r"stocks? in (news|focus)|market highlights|closing bell|opening bell|report today|results today"
 
@@ -152,7 +155,8 @@ def make_item(*, id: str, time: str, source: str, kind: str, headline: str, url:
     if sentiment is None:
         # Round-ups mix many companies: "LIVE: L&T Tech surges 12%; Eternal reports today" says
         # nothing good or bad about Eternal, so their tone is not given to the stocks named.
-        sentiment = 0.0 if symbols and re.search(ROUNDUP, headline, re.I) else tone(headline)
+        sentiment = 0.0 if symbols and re.search(ROUNDUP, headline, re.I) or re.search(PREVIEW, headline, re.I) \
+            else tone(headline)
     return {"id": id, "time": time, "source": source, "kind": kind, "scope": scope, "symbols": symbols,
             "sectors": sectors, "category": category, "headline": headline[:300],
             "sentiment": sentiment, "impact": impact, "url": url}

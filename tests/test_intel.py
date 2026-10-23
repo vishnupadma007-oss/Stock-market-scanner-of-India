@@ -130,3 +130,12 @@ def test_gst_input_tax_credit_is_not_itc_ltd():
     assert intel.symbols_in("GST Council bets on tech to curb fake invoices, ITC fraud: CBIC member") == []
     assert intel.symbols_in("CBIC tightens input tax credit (ITC) claims") == []
     assert intel.symbols_in("ITC shares rise after hotel demerger") == ["ITC"]
+
+
+def test_results_previews_are_neutral():
+    from agents import intel
+    for h in ("Kotak Mahindra Bank Q2 results preview: PAT may rise up to 32% YoY; margins, loan growth in focus",
+              "Infosys Q2 earnings: what to expect from the IT major"):
+        assert intel.make_item(id="p", time="2026-10-23 09:00:00", source="ET", kind="news", headline=h)["sentiment"] == 0.0
+    assert intel.make_item(id="r", time="2026-10-23 09:00:00", source="ET", kind="news",
+                           headline="Kotak Mahindra Bank Q2 profit jumps 32%, beats estimates")["sentiment"] > 0
