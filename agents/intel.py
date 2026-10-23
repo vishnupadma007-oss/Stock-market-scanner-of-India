@@ -118,12 +118,15 @@ def tone(text: str) -> float:
 
 # Other listed companies whose names contain one of ours ("L&T Tech" is not L&T).
 NOT_OURS = r"l&(amp;)?t (tech\w*|technology services|finance|foods)|\bltts\b|lt foods|tata (motors|consumer|chemicals|elxsi|communications)"
+# In GST news "ITC" is input tax credit, not ITC Ltd.
+TAX_ITC = r"input tax credit|\bgst\b|\bcbic\b|fake invoic|\bitc (fraud|claims?|mismatch|refunds?|reversal|availment)"
 
 
 def symbols_in(text: str) -> list[str]:
     t = f" {re.sub(NOT_OURS, ' ', text.lower())} "
-    return sorted(s for s, names in ALIASES.items()
-                  if any(re.search(rf"(?<![a-z0-9]){re.escape(n)}(?![a-z0-9])", t) for n in names))
+    found = sorted(s for s, names in ALIASES.items()
+                   if any(re.search(rf"(?<![a-z0-9]){re.escape(n)}(?![a-z0-9])", t) for n in names))
+    return [s for s in found if not (s == "ITC" and re.search(TAX_ITC, t))]
 
 
 def sectors_in(text: str) -> list[str]:

@@ -123,3 +123,10 @@ def test_war_only_counts_for_real_conflicts():
     assert intel.make_item(id="w2", time="2026-10-22 09:00:00", source="X", kind="news",
                            headline="Markets fall as US-Iran war escalates")["impact"] == 3
     assert intel.tone("Telecom price war hits margins") <= 0  # 'hits' is not in the lists; no war bonus either
+
+
+def test_gst_input_tax_credit_is_not_itc_ltd():
+    from agents import intel
+    assert intel.symbols_in("GST Council bets on tech to curb fake invoices, ITC fraud: CBIC member") == []
+    assert intel.symbols_in("CBIC tightens input tax credit (ITC) claims") == []
+    assert intel.symbols_in("ITC shares rise after hotel demerger") == ["ITC"]
