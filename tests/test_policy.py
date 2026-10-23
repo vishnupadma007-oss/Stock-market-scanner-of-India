@@ -75,3 +75,18 @@ def test_one_policy_story_from_two_feeds_counts_once_in_the_score():
     once = [i for i in out if i["source"].endswith("India macro)")]
     now = datetime(2026, 10, 23, 9, 0)
     assert analyzer.stock_view("BAJFINANCE", out, now)["score"] == analyzer.stock_view("BAJFINANCE", once, now)["score"]
+
+
+def test_many_articles_about_one_policy_event_count_once():
+    from datetime import datetime
+    from agents import analyzer
+    heads = ["RBI raises repo rate by 25 basis points to 5.50%", "Hawkish Turn: RBI raises rates as crude hits rupee",
+             "RBI Repo Rate Hike Puts India's Housing Recovery Under Pressure"]
+    out = []
+    for n, h in enumerate(heads):
+        item = {"id": f"n{n}", "time": f"2026-10-2{1 + n} 10:00:00", "source": "Google: India macro", "headline": h, "url": ""}
+        out += policy.to_intel(item, policy.assess(h))
+    dlf = [i for i in out if i["symbols"] == ["DLF"]]
+    assert len(dlf) == 3
+    kept = analyzer._one_per_story(dlf)
+    assert len(kept) == 1 and kept[0]["time"].startswith("2026-10-23")  # the latest of the strongest

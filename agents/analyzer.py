@@ -83,16 +83,16 @@ def _top(items: list[dict], now: datetime, n: int) -> list[str]:
 
 
 def _one_per_story(items: list[dict]) -> list[dict]:
-    """The policy rulebook reads the same headline from several feeds: count each story once."""
-    seen, out = set(), []
+    """One policy event counts once per stock. The rulebook tags every article about it (the RBI's
+    hike on 21 Oct produced nine over three days, from two feeds), and each would otherwise add
+    fresh weight to an old event. Keep its strongest reading, the latest among equals."""
+    best = {}
     for i in items:
         if i.get("kind") == "policy":
-            key = (tuple(i["symbols"]), i["headline"].split(" | ", 1)[-1].split(" - ")[0].strip().lower())
-            if key in seen:
-                continue
-            seen.add(key)
-        out.append(i)
-    return out
+            key = (tuple(i["symbols"]), i.get("category") or i["headline"].split(":")[0])
+            if key not in best or (i["impact"], i["time"]) > (best[key]["impact"], best[key]["time"]):
+                best[key] = i
+    return [i for i in items if i.get("kind") != "policy"] + list(best.values())
 
 
 def market_mood(items: list[dict], now: datetime) -> dict:
