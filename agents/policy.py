@@ -132,7 +132,7 @@ TALK = r"\b(may|might|could|weighs?|mulls?|consider(s|ing)?|need to|expect(s|ed|
 def assess(headline: str) -> list[dict]:
     """Impacts of one headline on our stocks: [{symbol, direction, strength, why, rule}]."""
     impacts = {}
-    talk = bool(re.search(TALK, headline, re.I))
+    talk = bool(re.search(TALK, headline, re.I)) or "?" in headline  # a question is speculation, not a decision
     softening = bool(re.search(SOFTENING, headline, re.I))
     for name, pattern, effects in RULES:
         m = re.search(pattern, headline, re.I)

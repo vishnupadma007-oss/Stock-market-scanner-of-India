@@ -90,3 +90,7 @@ def test_many_articles_about_one_policy_event_count_once():
     assert len(dlf) == 3
     kept = analyzer._one_per_story(dlf)
     assert len(kept) == 1 and kept[0]["time"].startswith("2026-10-23")  # the latest of the strongest
+
+
+def test_question_headlines_are_talk():
+    assert hits("RBI MPC Minutes: More Repo Rate Hikes Coming? Governor reveals next moves")["BAJFINANCE"] == (-1, 1)
