@@ -1,13 +1,12 @@
 {
-  "date": "2026-10-22",
+  "date": "2026-10-23",
   "mode": "careful",
   "notes": [
-    "Nifty fell for a second session on Wednesday as surging crude dented sentiment",
-    "Expected Nifty open about +0.2% (likely -0.3% to +0.7%): S&P 500 +0.6% since Wednesday's close",
-    "RBI's 25 bp repo hike to 5.50% (calibrated tightening) weighs on NBFCs, realty and autos; RBI rejected T-bill bids as short yields jumped",
-    "IRDAI commission caps back in focus: NBFCs earn up to 38% of profit from insurance distribution; PolicyBazaar most exposed",
-    "Rupee at a 6-week high on Jio IPO inflows and India-US trade-deal hopes; FIIs and DIIs net buyers",
-    "No F&O results today; tomorrow: Infosys, Coforge, Dr Reddy's, IndusInd Bank, BPCL, JSW Steel, Shriram Finance"
+    "Brent +4.3% since Thursday's India close on US-Iran escalation fears; S&P 500 -1.2%; GIFT Nifty points to a weak open",
+    "Expected Nifty open about -0.4% (likely -0.9% to +0.1%) from US stocks and Brent",
+    "Oil-sensitive stocks (OMCs, paints) can trend all day with crude: no reversal trades in them",
+    "No F&O company reports results today on NSE's calendar (next: Kotak 24 Oct, L&T and Maruti 27 Oct)",
+    "Analyzer: NBFCs/lenders down on RBI hike + IRDAI caps (Policy rules only, 65%); HDFC Bank down 93% (data-leak probe); TechM up 63%"
   ],
-  "avoid": []
+  "avoid": ["IOC", "BPCL", "HINDPETRO", "ASIANPAINT", "ONGC"]
 }
