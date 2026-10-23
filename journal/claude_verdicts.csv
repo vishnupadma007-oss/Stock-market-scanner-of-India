@@ -9,3 +9,4 @@ date,symbol,contract,verdict,reason
 2026-10-22,POLICYBZR,POLICYBZR-27-OCT-1020-PUT,TRADE,Price and sliding market agree (trend 65); IRDAI story a month old and today slightly hopeful; wide 2% spread
 2026-10-22,IOC,IOC-27-OCT-129-PUT,TRADE,Strong falling chart (trend 90) with a sliding market; high crude hurts OMCs; the headline itself was unclear; wide 2.7% spread on a Rs 1.85 option
 2026-10-23,TCS,TCS-27-OCT-2580-PUT,TRADE,"Fade of the IT rally already under way (TCS -1.2% from 09:50, below VWAP, high not retested 17 candles, heavier red volume); target needs only a ~0.1% further dip. Risks: futures long build-up, weaker rupee helps IT, Infosys results today could reignite IT"
+2026-10-23,TCS,TCS-27-OCT-2560-PUT,SKIP,"Second bite at the same TCS fade minutes after the first hit target: reversal mostly done (past VWAP and the 38% retracement), price 0.4% above the day low (support), inverted-hammer candle against, futures long build-up and a weaker rupee behind IT"
