@@ -89,8 +89,11 @@ One short research pass that sets the day's mode. Keep it to a handful of search
    ask them to paste back the `localhost` address their browser ends on, then run
    `python -m agents.indmoney finish "<address>"` and test again.
 2. Start the watcher in the background: `python watcher.py` (Bash, `run_in_background: true`,
-   timeout 7200000). Then wait for its output with Monitor, waking only on lines that start
-   with `SIGNAL`, `EXIT`, `RESULT`, `NEWS`, `FORECAST`, `COMMODITY`, `ERROR` or `STATUS`. Waiting costs
+   timeout 7200000). Then wait for its output with Monitor, waking only on lines that need action
+   (filter: `^(SIGNAL|EXIT|RESULT|SHOCK) |^STATUS.*"watching": false|^ERROR.*(login|Login|limit|budget|Stale)|Traceback`).
+   FORECAST, POLICY, COMMODITY and NEWS lines are still written to the log and acted on by the
+   news team automatically; summarise them in the evening review instead of reacting one by one
+   (user decision 24 Oct: saves Claude credits; yesterday 66 of 72 alerts needed no action). Waiting costs
    nothing; do not poll.
 3. Background commands stop after 2 hours: when it ends before 15:30 IST on a weekday,
    start it again. Open trades are kept in `journal/paper_trades.csv`, so nothing is lost.
@@ -267,7 +270,10 @@ Run it when the watcher prints `STATUS ... market closed`, or whenever the user 
 5. For companies that reported today: `python -m agents.reaction build SYM1 SYM2 ...` adds their
    new quarter and refits the model (`journal/reaction_model.json`); mention if its direction
    hit rate changed.
-6. Commit and push `journal/` (trades and the review) so it survives the session.
+6. Commit and push `journal/` (trades and the review) so it survives the session. The live logs
+   `journal/intel/` and `journal/valuations/` are git-ignored during the day (no commit per turn),
+   so force-add them here: `git add -f journal/intel journal/valuations && git add journal`.
+   Also list the day's FORECAST / POLICY / COMMODITY / NEWS highlights from the watcher log in 3-6 lines.
 
 ## Backtesting
 
