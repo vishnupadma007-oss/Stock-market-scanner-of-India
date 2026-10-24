@@ -68,3 +68,23 @@ this strategy work: winners take a median of 10 minutes, and waiting for more le
 
 Same trades and hit rate. ATM options move more in % terms both ways: slightly bigger wins,
 bigger misses. Switched to ATM anyway because with a ₹10,000 account most ITM lots do not fit.
+
+## Order-flow / early-movement detectors (user's whitepaper), 24 Oct 2026
+
+`python backtest_orderflow.py` on ~60 days x 76 stocks, 5-min candles, same option model, charges and
+exits as the reversal backtest (ITM1, 1% net target, square-off 15:20, no stop-loss). Control: the same
+entries traded in the opposite direction.
+
+| Detector | Trades | Hit % | Avg per trade | Opposite direction (control) |
+|---|---|---|---|---|
+| Squeeze breakout (BB inside Keltner, RVOL >= 2x, VWAP side) | 751 | 79% | -1.83% | -1.40% |
+| Wyckoff spring / upthrust | 3,947 | 81% | -1.53% | -1.38% |
+| VWAP reclaim / loss (RVOL >= 1.8x) | 2,975 | 84% | -2.00% | -1.94% |
+| CVD absorption (candle-estimated delta) | 4,472 | 84% | -1.73% | -1.40% |
+
+No detector beat its mirror image: no directional information after costs. PUTs did better than CALLs
+for every detector, which is the falling market of these 60 days, not the signals.
+Also: random-looking entries reach the 1% target 80-85% of the time, about the reversal strategy's 83%,
+so the high hit rate comes from the small target, not from skill; the loss per trade (-1.4 to -2%)
+comes from the misses held to 15:20 without a stop-loss.
+Not backtestable (no history): intraday option-OI velocity, gamma exposure, order book.
