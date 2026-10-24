@@ -1,0 +1,12 @@
+date,symbol,contract,verdict,reason
+2026-10-21,RELIANCE,RELIANCE-27-OCT-1220-CALL,TRADE,Jio IPO opens today; price confirms; small target
+2026-10-21,PNB,PNB-27-OCT-122-CALL,SKIP,Largely priced in; priced-in check failed (rate limit) so confidence was not cut
+2026-10-21,INFY,INFY-27-OCT-1180-PUT,SKIP,Forecast level short of target; sector-wide IT rally; long build-up; results Friday
+2026-10-21,WIPRO,WIPRO-27-OCT-190-PUT,TRADE,Room to forecast level (3.82 vs 3.15 target); no OI build-up; Nifty turned down; IT sector rally is the risk
+2026-10-21,TCS,TCS-27-OCT-2520-PUT,VOID,Opened in the same scan as WIPRO (bug); voided
+2026-10-21,TCS,TCS-27-OCT-2540-PUT,TRADE,Room to forecast level (54.11 vs 50.70); short covering; Nifty down; IT sector rally is the risk
+2026-10-22,HDFCBANK,HDFCBANK-27-OCT-710-PUT,TRADE,Real news (data-leak probe); falling with a sliding market; trend score only at the 60 minimum on few candles; some pessimism priced in
+2026-10-22,POLICYBZR,POLICYBZR-27-OCT-1020-PUT,TRADE,Price and sliding market agree (trend 65); IRDAI story a month old and today slightly hopeful; wide 2% spread
+2026-10-22,IOC,IOC-27-OCT-129-PUT,TRADE,Strong falling chart (trend 90) with a sliding market; high crude hurts OMCs; the headline itself was unclear; wide 2.7% spread on a Rs 1.85 option
+2026-10-23,TCS,TCS-27-OCT-2580-PUT,TRADE,"Fade of the IT rally already under way (TCS -1.2% from 09:50, below VWAP, high not retested 17 candles, heavier red volume); target needs only a ~0.1% further dip. Risks: futures long build-up, weaker rupee helps IT, Infosys results today could reignite IT"
+2026-10-23,TCS,TCS-27-OCT-2560-PUT,SKIP,"Second bite at the same TCS fade minutes after the first hit target: reversal mostly done (past VWAP and the 38% retracement), price 0.4% above the day low (support), inverted-hammer candle against, futures long build-up and a weaker rupee behind IT"

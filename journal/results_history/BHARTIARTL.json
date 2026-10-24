@@ -1,0 +1,373 @@
+[
+ {
+  "seq_id": "105659165",
+  "filed": "2023-10-31 16:47:23",
+  "pdf": "https://nsearchives.nseindia.com/corporate/BHARTIARTL_31102023164723_PR.pdf",
+  "figures": {},
+  "view": "unread",
+  "reaction": {
+   "reaction_day": "2023-11-01",
+   "when": "after close",
+   "gap_pct": -1.25,
+   "close_pct": -0.1,
+   "high_pct": 0.02,
+   "low_pct": -2.07,
+   "nifty_gap_pct": -0.08,
+   "nifty_close_pct": -0.47,
+   "runup_20d": 1.55,
+   "excess_close_pct": 0.37,
+   "excess_gap_pct": -1.17
+  },
+  "profit_yoy": null,
+  "profit_surprise": null,
+  "revenue_yoy": null,
+  "revenue_surprise": null
+ },
+ {
+  "seq_id": "105747021",
+  "filed": "2024-02-05 15:56:40",
+  "pdf": "https://nsearchives.nseindia.com/corporate/BHARTIARTL_05022024155640_PR.pdf",
+  "figures": {},
+  "view": "unread",
+  "reaction": {
+   "reaction_day": "2024-02-06",
+   "when": "after close",
+   "gap_pct": 1.03,
+   "close_pct": 1.84,
+   "high_pct": 3.82,
+   "low_pct": 0.85,
+   "nifty_gap_pct": 0.25,
+   "nifty_close_pct": 0.72,
+   "runup_20d": 5.74,
+   "excess_close_pct": 1.12,
+   "excess_gap_pct": 0.78
+  },
+  "profit_yoy": null,
+  "profit_surprise": null,
+  "revenue_yoy": null,
+  "revenue_surprise": null
+ },
+ {
+  "seq_id": "105845604",
+  "filed": "2024-05-14 16:22:36",
+  "pdf": "https://nsearchives.nseindia.com/corporate/BHARTIARTL_14052024162236_PR.pdf",
+  "figures": {},
+  "view": "unread",
+  "reaction": {
+   "reaction_day": "2024-05-15",
+   "when": "after close",
+   "gap_pct": -0.21,
+   "close_pct": 1.99,
+   "high_pct": 2.64,
+   "low_pct": -0.3,
+   "nifty_gap_pct": 0.17,
+   "nifty_close_pct": -0.08,
+   "runup_20d": 6.13,
+   "excess_close_pct": 2.07,
+   "excess_gap_pct": -0.38
+  },
+  "profit_yoy": null,
+  "profit_surprise": null,
+  "revenue_yoy": null,
+  "revenue_surprise": null
+ },
+ {
+  "seq_id": "105939488",
+  "filed": "2024-08-05 16:50:43",
+  "pdf": "https://nsearchives.nseindia.com/corporate/BHARTIARTL_05082024165043_PR.pdf",
+  "figures": {},
+  "view": "unread",
+  "reaction": {
+   "reaction_day": "2024-08-06",
+   "when": "after close",
+   "gap_pct": 1.19,
+   "close_pct": -1.51,
+   "high_pct": 1.86,
+   "low_pct": -2.36,
+   "nifty_gap_pct": 0.56,
+   "nifty_close_pct": -0.26,
+   "runup_20d": 3.62,
+   "excess_close_pct": -1.25,
+   "excess_gap_pct": 0.63
+  },
+  "profit_yoy": null,
+  "profit_surprise": null,
+  "revenue_yoy": null,
+  "revenue_surprise": null
+ },
+ {
+  "seq_id": "166207",
+  "filed": "2024-10-28 16:15:34",
+  "pdf": "https://nsearchives.nseindia.com/corporate/FR_28102024161534.pdf",
+  "figures": {
+   "revenue": {
+    "quarter": 269845.0,
+    "prev_quarter": 249171.0,
+    "year_ago": 232577.0,
+    "qoq_pct": 8.3,
+    "yoy_pct": 16.0
+   },
+   "profit": {
+    "quarter": 47129.0,
+    "prev_quarter": 36549.0,
+    "year_ago": 37010.0,
+    "qoq_pct": 28.9,
+    "yoy_pct": 27.3
+   }
+  },
+  "view": "strong",
+  "reaction": {
+   "reaction_day": "2024-10-29",
+   "when": "after close",
+   "gap_pct": -0.77,
+   "close_pct": -1.58,
+   "high_pct": 0.28,
+   "low_pct": -3.21,
+   "nifty_gap_pct": -0.04,
+   "nifty_close_pct": 0.52,
+   "runup_20d": 2.92,
+   "excess_close_pct": -2.1,
+   "excess_gap_pct": -0.73
+  },
+  "profit_yoy": 27.3,
+  "profit_surprise": null,
+  "revenue_yoy": 16.0,
+  "revenue_surprise": null
+ },
+ {
+  "seq_id": "106139941",
+  "filed": "2025-02-06 16:38:50",
+  "pdf": "https://nsearchives.nseindia.com/corporate/BHARTIARTL_06022025163814_PR.pdf",
+  "figures": {},
+  "view": "unread",
+  "reaction": {
+   "reaction_day": "2025-02-07",
+   "when": "after close",
+   "gap_pct": 0.94,
+   "close_pct": 3.52,
+   "high_pct": 5.42,
+   "low_pct": 0.94,
+   "nifty_gap_pct": 0.2,
+   "nifty_close_pct": -0.18,
+   "runup_20d": -0.5,
+   "excess_close_pct": 3.7,
+   "excess_gap_pct": 0.74
+  },
+  "profit_yoy": null,
+  "profit_surprise": null,
+  "revenue_yoy": null,
+  "revenue_surprise": null
+ },
+ {
+  "seq_id": "106229804",
+  "filed": "2025-05-13 17:32:55",
+  "pdf": "https://nsearchives.nseindia.com/corporate/BHARTIARTL_13052025173213_PR.pdf",
+  "figures": {},
+  "view": "unread",
+  "reaction": {
+   "reaction_day": "2025-05-14",
+   "when": "after close",
+   "gap_pct": 0.52,
+   "close_pct": 0.75,
+   "high_pct": 2.75,
+   "low_pct": -0.02,
+   "nifty_gap_pct": 0.14,
+   "nifty_close_pct": 0.36,
+   "runup_20d": -3.61,
+   "excess_close_pct": 0.39,
+   "excess_gap_pct": 0.38
+  },
+  "profit_yoy": null,
+  "profit_surprise": null,
+  "revenue_yoy": null,
+  "revenue_surprise": null
+ },
+ {
+  "seq_id": "106325854",
+  "filed": "2025-08-05 16:59:21",
+  "pdf": "https://nsearchives.nseindia.com/corporate/BHARTIARTL_05082025165817_FR.pdf",
+  "figures": {
+   "revenue": {
+    "quarter": 494626.0,
+    "prev_quarter": 478762.0,
+    "year_ago": 385064.0,
+    "qoq_pct": 3.3,
+    "yoy_pct": 28.5
+   },
+   "profit": {
+    "quarter": 74218.0,
+    "prev_quarter": 124758.0,
+    "year_ago": 47175.0,
+    "qoq_pct": -40.5,
+    "yoy_pct": 57.3
+   }
+  },
+  "view": "strong",
+  "reaction": {
+   "reaction_day": "2025-08-06",
+   "when": "after close",
+   "gap_pct": -0.09,
+   "close_pct": -0.11,
+   "high_pct": 1.71,
+   "low_pct": -0.53,
+   "nifty_gap_pct": -0.03,
+   "nifty_close_pct": -0.31,
+   "runup_20d": -1.42,
+   "excess_close_pct": 0.2,
+   "excess_gap_pct": -0.06
+  },
+  "profit_yoy": 57.3,
+  "profit_surprise": 30.0,
+  "revenue_yoy": 28.5,
+  "revenue_surprise": 12.5
+ },
+ {
+  "seq_id": "106424753",
+  "filed": "2025-11-03 16:33:29",
+  "pdf": "https://nsearchives.nseindia.com/corporate/BHARTIARTL_03112025163224_FR.pdf",
+  "figures": {
+   "profit": {
+    "quarter": 86508.0,
+    "prev_quarter": 74218.0,
+    "year_ago": 41534.0,
+    "qoq_pct": 16.6,
+    "yoy_pct": 108.3
+   }
+  },
+  "view": "strong",
+  "reaction": {
+   "reaction_day": "2025-11-04",
+   "when": "after close",
+   "gap_pct": 1.59,
+   "close_pct": 1.89,
+   "high_pct": 2.97,
+   "low_pct": 1.42,
+   "nifty_gap_pct": -0.07,
+   "nifty_close_pct": -0.64,
+   "runup_20d": 5.86,
+   "excess_close_pct": 2.53,
+   "excess_gap_pct": 1.66
+  },
+  "profit_yoy": 100.0,
+  "profit_surprise": 57.7,
+  "revenue_yoy": null,
+  "revenue_surprise": null
+ },
+ {
+  "seq_id": "106521694",
+  "filed": "2026-02-05 16:16:36",
+  "pdf": "https://nsearchives.nseindia.com/corporate/BHARTIARTL_05022026161519_FR.pdf",
+  "figures": {
+   "revenue": {
+    "quarter": 308548.0,
+    "prev_quarter": 300923.0,
+    "year_ago": 284340.0,
+    "qoq_pct": 2.5,
+    "yoy_pct": 8.5
+   },
+   "profit": {
+    "quarter": 74873.0,
+    "prev_quarter": 18779.0,
+    "year_ago": -5816.0,
+    "qoq_pct": 298.7,
+    "yoy_pct": -1387.4
+   }
+  },
+  "view": "weak",
+  "reaction": {
+   "reaction_day": "2026-02-06",
+   "when": "after close",
+   "gap_pct": 0.08,
+   "close_pct": 2.31,
+   "high_pct": 2.88,
+   "low_pct": -0.2,
+   "nifty_gap_pct": -0.14,
+   "nifty_close_pct": 0.2,
+   "runup_20d": -2.36,
+   "excess_close_pct": 2.11,
+   "excess_gap_pct": 0.22
+  },
+  "profit_yoy": -100.0,
+  "profit_surprise": -178.7,
+  "revenue_yoy": 8.5,
+  "revenue_surprise": -20.0
+ },
+ {
+  "seq_id": "106620633",
+  "filed": "2026-05-13 16:44:51",
+  "pdf": "https://nsearchives.nseindia.com/corporate/BHARTIARTL_13052026163920_FR_Final.pdf",
+  "figures": {
+   "revenue": {
+    "quarter": 312964.0,
+    "prev_quarter": 308548.0,
+    "year_ago": 286083.0,
+    "qoq_pct": 1.4,
+    "yoy_pct": 9.4
+   },
+   "profit": {
+    "quarter": 281835.0,
+    "prev_quarter": 72006.0,
+    "year_ago": -13553.0,
+    "qoq_pct": 291.4,
+    "yoy_pct": -2179.5
+   }
+  },
+  "view": "weak",
+  "reaction": {
+   "reaction_day": "2026-05-14",
+   "when": "after close",
+   "gap_pct": 1.72,
+   "close_pct": 5.27,
+   "high_pct": 5.59,
+   "low_pct": 0.45,
+   "nifty_gap_pct": 0.5,
+   "nifty_close_pct": 1.18,
+   "runup_20d": -2.56,
+   "excess_close_pct": 4.09,
+   "excess_gap_pct": 1.22
+  },
+  "profit_yoy": -100.0,
+  "profit_surprise": -157.3,
+  "revenue_yoy": 9.4,
+  "revenue_surprise": -9.1
+ },
+ {
+  "seq_id": "106724165",
+  "filed": "2026-08-04 16:22:36",
+  "pdf": "https://nsearchives.nseindia.com/corporate/BHARTIARTL_04082026162200_FR.pdf",
+  "figures": {
+   "revenue": {
+    "quarter": 323566.0,
+    "prev_quarter": 312964.0,
+    "year_ago": 292492.0,
+    "qoq_pct": 3.4,
+    "yoy_pct": 10.6
+   },
+   "profit": {
+    "quarter": 54275.0,
+    "prev_quarter": 13445.0,
+    "year_ago": 37645.0,
+    "qoq_pct": 303.7,
+    "yoy_pct": 44.2
+   }
+  },
+  "view": "strong",
+  "reaction": {
+   "reaction_day": "2026-08-05",
+   "when": "after close",
+   "gap_pct": 2.53,
+   "close_pct": 0.4,
+   "high_pct": 3.09,
+   "low_pct": -0.93,
+   "nifty_gap_pct": 0.22,
+   "nifty_close_pct": 0.04,
+   "runup_20d": 1.41,
+   "excess_close_pct": 0.36,
+   "excess_gap_pct": 2.31
+  },
+  "profit_yoy": 44.2,
+  "profit_surprise": 65.6,
+  "revenue_yoy": 10.6,
+  "revenue_surprise": 1.2
+ }
+]

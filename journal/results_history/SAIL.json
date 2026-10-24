@@ -1,0 +1,448 @@
+[
+ {
+  "seq_id": "158493",
+  "filed": "2023-11-10 15:49:52",
+  "pdf": "https://nsearchives.nseindia.com/corporate/SAILUFR_092023_10112023154952.pdf",
+  "figures": {
+   "revenue": {
+    "quarter": 29713.64,
+    "prev_quarter": 24357.58,
+    "year_ago": 26246.31,
+    "qoq_pct": 22.0,
+    "yoy_pct": 13.2
+   },
+   "profit": {
+    "quarter": 2111.16,
+    "prev_quarter": 202.15,
+    "year_ago": -515.59,
+    "qoq_pct": 944.4,
+    "yoy_pct": -509.5
+   }
+  },
+  "view": "weak",
+  "reaction": {
+   "reaction_day": "2023-11-13",
+   "when": "after close",
+   "gap_pct": 1.36,
+   "close_pct": 0.11,
+   "high_pct": 1.76,
+   "low_pct": -0.62,
+   "nifty_gap_pct": 0.32,
+   "nifty_close_pct": 0.09,
+   "runup_20d": 0.46,
+   "excess_close_pct": 0.02,
+   "excess_gap_pct": 1.04
+  },
+  "profit_yoy": -100.0,
+  "profit_surprise": null,
+  "revenue_yoy": 13.2,
+  "revenue_surprise": null
+ },
+ {
+  "seq_id": "160502",
+  "filed": "2024-02-12 19:15:10",
+  "pdf": "https://nsearchives.nseindia.com/corporate/SAILUFR_DEC2023_12022024191510.pdf",
+  "figures": {
+   "revenue": {
+    "quarter": 23348.64,
+    "prev_quarter": 29712.07,
+    "year_ago": 25042.1,
+    "qoq_pct": -21.4,
+    "yoy_pct": -6.8
+   },
+   "profit": {
+    "quarter": 562.66,
+    "prev_quarter": 1769.78,
+    "year_ago": 725.91,
+    "qoq_pct": -68.2,
+    "yoy_pct": -22.5
+   }
+  },
+  "view": "weak",
+  "reaction": {
+   "reaction_day": "2024-02-13",
+   "when": "after close",
+   "gap_pct": -2.2,
+   "close_pct": -3.99,
+   "high_pct": -0.9,
+   "low_pct": -5.25,
+   "nifty_gap_pct": 0.22,
+   "nifty_close_pct": 0.59,
+   "runup_20d": 8.29,
+   "excess_close_pct": -4.58,
+   "excess_gap_pct": -2.42
+  },
+  "profit_yoy": -22.5,
+  "profit_surprise": 77.5,
+  "revenue_yoy": -6.8,
+  "revenue_surprise": -20.0
+ },
+ {
+  "seq_id": "162067",
+  "filed": "2024-05-20 19:47:54",
+  "pdf": "https://nsearchives.nseindia.com/corporate/FinRes_March2024_SAIL_20052024194754.pdf",
+  "figures": {
+   "revenue": {
+    "quarter": 29131.0,
+    "prev_quarter": 23345.0,
+    "year_ago": 27958.0,
+    "qoq_pct": 24.8,
+    "yoy_pct": 4.2
+   },
+   "profit": {
+    "quarter": 1049.0,
+    "prev_quarter": 331.0,
+    "year_ago": 1011.0,
+    "qoq_pct": 216.9,
+    "yoy_pct": 3.8
+   }
+  },
+  "view": "mixed",
+  "reaction": {
+   "reaction_day": "2024-05-21",
+   "when": "after close",
+   "gap_pct": 1.95,
+   "close_pct": 4.46,
+   "high_pct": 4.91,
+   "low_pct": -0.27,
+   "nifty_gap_pct": -0.27,
+   "nifty_close_pct": 0.28,
+   "runup_20d": 13.12,
+   "excess_close_pct": 4.18,
+   "excess_gap_pct": 2.22
+  },
+  "profit_yoy": 3.8,
+  "profit_surprise": 65.0,
+  "revenue_yoy": 4.2,
+  "revenue_surprise": 1.0
+ },
+ {
+  "seq_id": "164607",
+  "filed": "2024-08-08 18:54:03",
+  "pdf": "https://nsearchives.nseindia.com/corporate/fin_res_june2024_08082024185403.pdf",
+  "figures": {},
+  "view": "unread",
+  "reaction": {
+   "reaction_day": "2024-08-09",
+   "when": "after close",
+   "gap_pct": -1.05,
+   "close_pct": -5.89,
+   "high_pct": -0.21,
+   "low_pct": -6.23,
+   "nifty_gap_pct": 1.12,
+   "nifty_close_pct": 1.04,
+   "runup_20d": -8.04,
+   "excess_close_pct": -6.93,
+   "excess_gap_pct": -2.17
+  },
+  "profit_yoy": null,
+  "profit_surprise": null,
+  "revenue_yoy": null,
+  "revenue_surprise": null
+ },
+ {
+  "seq_id": "166659",
+  "filed": "2024-11-07 18:48:06",
+  "pdf": "https://nsearchives.nseindia.com/corporate/Ufr_sail_30092024_07112024184806.pdf",
+  "figures": {
+   "revenue": {
+    "quarter": 29714.0,
+    "prev_quarter": 23998.0,
+    "year_ago": 24675.0,
+    "qoq_pct": 23.8,
+    "yoy_pct": 20.4
+   },
+   "profit": {
+    "quarter": 1112.55,
+    "prev_quarter": 326.02,
+    "year_ago": 2111.16,
+    "qoq_pct": 241.3,
+    "yoy_pct": -47.3
+   }
+  },
+  "view": "mixed",
+  "reaction": {
+   "reaction_day": "2024-11-08",
+   "when": "after close",
+   "gap_pct": -2.32,
+   "close_pct": -4.17,
+   "high_pct": -1.9,
+   "low_pct": -6.87,
+   "nifty_gap_pct": 0.03,
+   "nifty_close_pct": -0.21,
+   "runup_20d": -1.89,
+   "excess_close_pct": -3.96,
+   "excess_gap_pct": -2.35
+  },
+  "profit_yoy": -47.3,
+  "profit_surprise": -24.8,
+  "revenue_yoy": 20.4,
+  "revenue_surprise": 16.2
+ },
+ {
+  "seq_id": "169800",
+  "filed": "2025-02-11 20:48:56",
+  "pdf": "https://nsearchives.nseindia.com/corporate/res_dec2024_11022025204856.pdf",
+  "figures": {
+   "revenue": {
+    "quarter": 24489.63,
+    "prev_quarter": 24674.7,
+    "year_ago": 23345.48,
+    "qoq_pct": -0.8,
+    "yoy_pct": 4.9
+   },
+   "profit": {
+    "quarter": 269.5,
+    "prev_quarter": 1112.55,
+    "year_ago": 384.29,
+    "qoq_pct": -75.8,
+    "yoy_pct": -29.9
+   }
+  },
+  "view": "weak",
+  "reaction": {
+   "reaction_day": "2025-02-12",
+   "when": "after close",
+   "gap_pct": 0.08,
+   "close_pct": 5.73,
+   "high_pct": 6.05,
+   "low_pct": -0.87,
+   "nifty_gap_pct": -0.09,
+   "nifty_close_pct": -0.12,
+   "runup_20d": -4.32,
+   "excess_close_pct": 5.85,
+   "excess_gap_pct": 0.17
+  },
+  "profit_yoy": -29.9,
+  "profit_surprise": -7.4,
+  "revenue_yoy": 4.9,
+  "revenue_surprise": 0.7
+ },
+ {
+  "seq_id": "106253061",
+  "filed": "2025-05-28 20:24:34",
+  "pdf": "https://nsearchives.nseindia.com/corporate/SAIL_28052025201904_SAILRESULTS_032025.pdf",
+  "figures": {
+   "revenue": {
+    "quarter": 29316.08,
+    "prev_quarter": 24489.63,
+    "year_ago": 27957.99,
+    "qoq_pct": 19.7,
+    "yoy_pct": 4.9
+   },
+   "profit": {
+    "quarter": 1593.39,
+    "prev_quarter": 289.5,
+    "year_ago": 1830.91,
+    "qoq_pct": 450.4,
+    "yoy_pct": -13.0
+   }
+  },
+  "view": "weak",
+  "reaction": {
+   "reaction_day": "2025-05-29",
+   "when": "after close",
+   "gap_pct": 2.16,
+   "close_pct": 0.78,
+   "high_pct": 2.2,
+   "low_pct": -0.12,
+   "nifty_gap_pct": 0.29,
+   "nifty_close_pct": 0.33,
+   "runup_20d": 10.16,
+   "excess_close_pct": 0.45,
+   "excess_gap_pct": 1.87
+  },
+  "profit_yoy": -13.0,
+  "profit_surprise": 16.9,
+  "revenue_yoy": 4.9,
+  "revenue_surprise": 0.0
+ },
+ {
+  "seq_id": "106312653",
+  "filed": "2025-07-25 20:12:40",
+  "pdf": "https://nsearchives.nseindia.com/corporate/SAIL_25072025201226_sail_res.pdf",
+  "figures": {
+   "revenue": {
+    "quarter": 23998.0,
+    "prev_quarter": 29316.0,
+    "year_ago": 25921.0,
+    "qoq_pct": -18.1,
+    "yoy_pct": -7.4
+   },
+   "profit": {
+    "quarter": 889.76,
+    "prev_quarter": 1593.39,
+    "year_ago": 326.02,
+    "qoq_pct": -44.2,
+    "yoy_pct": 172.9
+   }
+  },
+  "view": "mixed",
+  "reaction": {
+   "reaction_day": "2025-07-28",
+   "when": "after close",
+   "gap_pct": -1.58,
+   "close_pct": -3.89,
+   "high_pct": -1.58,
+   "low_pct": -5.0,
+   "nifty_gap_pct": -0.22,
+   "nifty_close_pct": -0.63,
+   "runup_20d": 2.34,
+   "excess_close_pct": -3.26,
+   "excess_gap_pct": -1.36
+  },
+  "profit_yoy": 100.0,
+  "profit_surprise": 129.9,
+  "revenue_yoy": -7.4,
+  "revenue_surprise": -12.3
+ },
+ {
+  "seq_id": "106419794",
+  "filed": "2025-10-29 19:02:49",
+  "pdf": "https://nsearchives.nseindia.com/corporate/SAIL_29102025190237_finres_sep2025_sail.pdf",
+  "figures": {
+   "revenue": {
+    "quarter": 26704.17,
+    "prev_quarter": 25921.76,
+    "year_ago": 24675.2,
+    "qoq_pct": 3.0,
+    "yoy_pct": 8.2
+   },
+   "profit": {
+    "quarter": 894.58,
+    "prev_quarter": 967.81,
+    "year_ago": 1173.34,
+    "qoq_pct": -7.6,
+    "yoy_pct": -23.8
+   }
+  },
+  "view": "weak",
+  "reaction": {
+   "reaction_day": "2025-10-30",
+   "when": "after close",
+   "gap_pct": -1.32,
+   "close_pct": -2.49,
+   "high_pct": -0.6,
+   "low_pct": -3.59,
+   "nifty_gap_pct": -0.27,
+   "nifty_close_pct": -0.68,
+   "runup_20d": 0.95,
+   "excess_close_pct": -1.81,
+   "excess_gap_pct": -1.05
+  },
+  "profit_yoy": -23.8,
+  "profit_surprise": -2.4,
+  "revenue_yoy": 8.2,
+  "revenue_surprise": 3.3
+ },
+ {
+  "seq_id": "106513845",
+  "filed": "2026-01-30 19:45:49",
+  "pdf": "https://nsearchives.nseindia.com/corporate/SAIL_30012026194537_RESULTS.pdf",
+  "figures": {
+   "revenue": {
+    "quarter": 27371.39,
+    "prev_quarter": 26703.94,
+    "year_ago": 24489.63,
+    "qoq_pct": 2.5,
+    "yoy_pct": 11.8
+   },
+   "profit": {
+    "quarter": 567.63,
+    "prev_quarter": 891.33,
+    "year_ago": 289.5,
+    "qoq_pct": -36.3,
+    "yoy_pct": 96.1
+   }
+  },
+  "view": "good",
+  "reaction": {
+   "reaction_day": "2026-02-02",
+   "when": "after close",
+   "gap_pct": -2.0,
+   "close_pct": -1.63,
+   "high_pct": -0.81,
+   "low_pct": -6.5,
+   "nifty_gap_pct": -2.07,
+   "nifty_close_pct": -0.92,
+   "runup_20d": 4.9,
+   "excess_close_pct": -0.71,
+   "excess_gap_pct": 0.07
+  },
+  "profit_yoy": 96.1,
+  "profit_surprise": 114.5,
+  "revenue_yoy": 11.8,
+  "revenue_surprise": 6.9
+ },
+ {
+  "seq_id": "106625575",
+  "filed": "2026-05-15 19:56:49",
+  "pdf": "https://nsearchives.nseindia.com/corporate/SAIL_15052026195446_fin_res_may2026.pdf",
+  "figures": {
+   "profit": {
+    "quarter": 1679.51,
+    "prev_quarter": 441.7,
+    "year_ago": 1177.96,
+    "qoq_pct": 280.2,
+    "yoy_pct": 42.6
+   }
+  },
+  "view": "strong",
+  "reaction": {
+   "reaction_day": "2026-05-18",
+   "when": "after close",
+   "gap_pct": -0.21,
+   "close_pct": 0.17,
+   "high_pct": 1.35,
+   "low_pct": -2.18,
+   "nifty_gap_pct": -0.68,
+   "nifty_close_pct": 0.03,
+   "runup_20d": 14.59,
+   "excess_close_pct": 0.14,
+   "excess_gap_pct": 0.47
+  },
+  "profit_yoy": 42.6,
+  "profit_surprise": 1.1,
+  "revenue_yoy": null,
+  "revenue_surprise": null
+ },
+ {
+  "seq_id": "106710276",
+  "filed": "2026-07-24 18:46:32",
+  "pdf": "https://nsearchives.nseindia.com/corporate/SAIL_24072026184459_finres_q1202627.pdf",
+  "figures": {
+   "revenue": {
+    "quarter": 25921.0,
+    "prev_quarter": 30813.0,
+    "year_ago": 26246.0,
+    "qoq_pct": -15.9,
+    "yoy_pct": -1.2
+   },
+   "profit": {
+    "quarter": 685.0,
+    "prev_quarter": 1680.0,
+    "year_ago": 1636.0,
+    "qoq_pct": -59.2,
+    "yoy_pct": -58.1
+   }
+  },
+  "view": "weak",
+  "reaction": {
+   "reaction_day": "2026-07-27",
+   "when": "after close",
+   "gap_pct": 0.9,
+   "close_pct": 0.72,
+   "high_pct": 3.13,
+   "low_pct": 0.4,
+   "nifty_gap_pct": 0.68,
+   "nifty_close_pct": 0.96,
+   "runup_20d": -4.27,
+   "excess_close_pct": -0.24,
+   "excess_gap_pct": 0.22
+  },
+  "profit_yoy": -58.1,
+  "profit_surprise": -127.4,
+  "revenue_yoy": -1.2,
+  "revenue_surprise": -9.4
+ }
+]

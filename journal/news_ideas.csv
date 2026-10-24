@@ -1,0 +1,36 @@
+date,time,symbol,direction,confidence,source,priced_in
+2026-10-21,08:53,RELIANCE,up,87,intel,partly priced in
+2026-10-21,08:53,ICICIBANK,up,77,intel,partly priced in
+2026-10-21,08:53,SBIN,down,69,intel,some pessimism priced in
+2026-10-21,08:56,AXISBANK,down,87,intel,some pessimism priced in
+2026-10-21,08:56,PNB,up,60,intel,largely priced in
+2026-10-21,08:56,PAYTM,up,58,intel,partly priced in
+2026-10-21,09:48,LT,up,71,intel,not priced in
+2026-10-21,10:08,INFY,up,72,intel,partly priced in
+2026-10-21,10:08,TCS,up,46,intel,largely priced in
+2026-10-21,10:51,ETERNAL,up,75,intel,partly priced in
+2026-10-21,10:52,VEDL,up,71,intel,not priced in
+2026-10-21,14:06,IOC,down,66,intel,not priced in
+2026-10-22,08:53,RELIANCE,up,96,intel,partly priced in
+2026-10-22,08:53,HDFCBANK,down,86,intel,some pessimism priced in
+2026-10-22,08:53,INFY,up,55,intel,largely priced in
+2026-10-22,08:53,BAJFINANCE,down,100,intel,some pessimism priced in
+2026-10-22,08:53,TECHM,up,62,intel,largely priced in
+2026-10-22,08:53,IOC,down,79,intel,some pessimism priced in
+2026-10-22,08:59,ETERNAL,up,85,intel,partly priced in
+2026-10-22,08:59,POLICYBZR,down,80,intel,some pessimism priced in
+2026-10-22,11:55,BAJAJFINSV,down,81,intel,some pessimism priced in
+2026-10-22,11:57,DLF,down,81,intel,not priced in
+2026-10-23,08:33,RELIANCE,up,85,intel,partly priced in
+2026-10-23,08:33,HDFCBANK,down,94,intel,some pessimism priced in
+2026-10-23,08:33,ITC,down,79,intel,some pessimism priced in
+2026-10-23,08:37,BAJFINANCE,down,91,intel,not priced in
+2026-10-23,08:39,DLF,down,86,intel,not priced in
+2026-10-23,08:42,ETERNAL,up,88,intel,not priced in
+2026-10-23,09:55,INFY,up,54,intel,largely priced in
+2026-10-23,10:03,TCS,up,47,intel,largely priced in
+2026-10-23,10:05,KOTAKBANK,up,60,intel,partly priced in
+2026-10-23,12:55,VEDL,down,87,intel,some pessimism priced in
+2026-10-23,13:43,TECHM,up,57,intel,largely priced in
+2026-10-23,13:50,NATIONALUM,down,56,intel,pessimism priced in
+2026-10-23,14:55,JSWSTEEL,up,67,intel,some pessimism priced in

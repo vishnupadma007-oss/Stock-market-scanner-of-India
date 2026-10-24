@@ -1,0 +1,448 @@
+[
+ {
+  "seq_id": "158431",
+  "filed": "2023-11-10 13:57:59",
+  "pdf": "https://nsearchives.nseindia.com/corporate/Outcome_Cover_Letter_Signed_10112023135759.pdf",
+  "figures": {
+   "revenue": {
+    "quarter": 54169.0,
+    "prev_quarter": 52991.0,
+    "year_ago": 56176.0,
+    "qoq_pct": 2.2,
+    "yoy_pct": -3.6
+   },
+   "profit": {
+    "quarter": 2196.0,
+    "prev_quarter": 2454.0,
+    "year_ago": 2205.0,
+    "qoq_pct": -10.5,
+    "yoy_pct": -0.4
+   }
+  },
+  "view": "weak",
+  "reaction": {
+   "reaction_day": "2023-11-10",
+   "when": "during market",
+   "gap_pct": -0.5,
+   "close_pct": -0.65,
+   "high_pct": 0.78,
+   "low_pct": -1.01,
+   "nifty_gap_pct": -0.22,
+   "nifty_close_pct": 0.15,
+   "runup_20d": 2.21,
+   "excess_close_pct": -0.8,
+   "excess_gap_pct": null
+  },
+  "profit_yoy": -0.4,
+  "profit_surprise": null,
+  "revenue_yoy": -3.6,
+  "revenue_surprise": null
+ },
+ {
+  "seq_id": "160546",
+  "filed": "2024-02-13 13:48:51",
+  "pdf": "https://nsearchives.nseindia.com/corporate/Outcome_Signed_Q3_FY24_13022024134851.pdf",
+  "figures": {
+   "revenue": {
+    "quarter": 52808.0,
+    "prev_quarter": 54169.0,
+    "year_ago": 53151.0,
+    "qoq_pct": -2.5,
+    "yoy_pct": -0.6
+   },
+   "profit": {
+    "quarter": 2331.0,
+    "prev_quarter": 2196.0,
+    "year_ago": 1362.0,
+    "qoq_pct": 6.1,
+    "yoy_pct": 71.1
+   }
+  },
+  "view": "good",
+  "reaction": {
+   "reaction_day": "2024-02-13",
+   "when": "during market",
+   "gap_pct": -7.46,
+   "close_pct": -12.42,
+   "high_pct": -7.29,
+   "low_pct": -14.78,
+   "nifty_gap_pct": 0.22,
+   "nifty_close_pct": 0.59,
+   "runup_20d": 1.1,
+   "excess_close_pct": -13.01,
+   "excess_gap_pct": null
+  },
+  "profit_yoy": 71.1,
+  "profit_surprise": 71.5,
+  "revenue_yoy": -0.6,
+  "revenue_surprise": 3.0
+ },
+ {
+  "seq_id": "105860071",
+  "filed": "2024-05-24 14:03:15",
+  "pdf": "https://nsearchives.nseindia.com/corporate/HINDALCO_24052024140315_Outcome_240524_Final_signed.pdf",
+  "figures": {},
+  "view": "unread",
+  "reaction": {
+   "reaction_day": "2024-05-24",
+   "when": "during market",
+   "gap_pct": 0.36,
+   "close_pct": -0.52,
+   "high_pct": 2.02,
+   "low_pct": -0.85,
+   "nifty_gap_pct": -0.16,
+   "nifty_close_pct": -0.05,
+   "runup_20d": 7.94,
+   "excess_close_pct": -0.47,
+   "excess_gap_pct": null
+  },
+  "profit_yoy": null,
+  "profit_surprise": null,
+  "revenue_yoy": null,
+  "revenue_surprise": null
+ },
+ {
+  "seq_id": "165074",
+  "filed": "2024-08-13 14:05:49",
+  "pdf": "https://nsearchives.nseindia.com/corporate/Outcome_BM_Final_130824_13082024140549.pdf",
+  "figures": {
+   "revenue": {
+    "quarter": 22155.0,
+    "prev_quarter": 22140.0,
+    "year_ago": 19904.0,
+    "qoq_pct": 0.1,
+    "yoy_pct": 11.3
+   },
+   "profit": {
+    "quarter": 3074.0,
+    "prev_quarter": 3174.0,
+    "year_ago": 2454.0,
+    "qoq_pct": -3.2,
+    "yoy_pct": 25.3
+   }
+  },
+  "view": "strong",
+  "reaction": {
+   "reaction_day": "2024-08-13",
+   "when": "during market",
+   "gap_pct": 0.8,
+   "close_pct": -1.26,
+   "high_pct": 0.8,
+   "low_pct": -1.61,
+   "nifty_gap_pct": -0.02,
+   "nifty_close_pct": -0.85,
+   "runup_20d": -8.43,
+   "excess_close_pct": -0.41,
+   "excess_gap_pct": null
+  },
+  "profit_yoy": 25.3,
+  "profit_surprise": -10.0,
+  "revenue_yoy": 11.3,
+  "revenue_surprise": 13.4
+ },
+ {
+  "seq_id": "167012",
+  "filed": "2024-11-11 18:54:08",
+  "pdf": "https://nsearchives.nseindia.com/corporate/OutcomeBM_111124_650_signed_11112024185408.pdf",
+  "figures": {
+   "revenue": {
+    "quarter": 58203.0,
+    "prev_quarter": 57013.0,
+    "year_ago": 54169.0,
+    "qoq_pct": 2.1,
+    "yoy_pct": 7.4
+   },
+   "profit": {
+    "quarter": 3909.0,
+    "prev_quarter": 3074.0,
+    "year_ago": 2196.0,
+    "qoq_pct": 27.2,
+    "yoy_pct": 78.0
+   }
+  },
+  "view": "strong",
+  "reaction": {
+   "reaction_day": "2024-11-12",
+   "when": "after close",
+   "gap_pct": 1.93,
+   "close_pct": -0.56,
+   "high_pct": 2.77,
+   "low_pct": -1.1,
+   "nifty_gap_pct": 0.35,
+   "nifty_close_pct": -1.07,
+   "runup_20d": -7.87,
+   "excess_close_pct": 0.51,
+   "excess_gap_pct": 1.58
+  },
+  "profit_yoy": 78.0,
+  "profit_surprise": 52.7,
+  "revenue_yoy": 7.4,
+  "revenue_surprise": 8.0
+ },
+ {
+  "seq_id": "170164",
+  "filed": "2025-02-13 18:46:44",
+  "pdf": "https://nsearchives.nseindia.com/corporate/compressed_13022025184644.pdf",
+  "figures": {
+   "revenue": {
+    "quarter": 58390.0,
+    "prev_quarter": 58203.0,
+    "year_ago": 52808.0,
+    "qoq_pct": 0.3,
+    "yoy_pct": 10.6
+   },
+   "profit": {
+    "quarter": 3735.0,
+    "prev_quarter": 3909.0,
+    "year_ago": 2331.0,
+    "qoq_pct": -4.5,
+    "yoy_pct": 60.2
+   }
+  },
+  "view": "strong",
+  "reaction": {
+   "reaction_day": "2025-02-14",
+   "when": "after close",
+   "gap_pct": 1.08,
+   "close_pct": 0.61,
+   "high_pct": 2.24,
+   "low_pct": -1.24,
+   "nifty_gap_pct": 0.28,
+   "nifty_close_pct": -0.44,
+   "runup_20d": -1.61,
+   "excess_close_pct": 1.05,
+   "excess_gap_pct": 0.8
+  },
+  "profit_yoy": 60.2,
+  "profit_surprise": -10.9,
+  "revenue_yoy": 10.6,
+  "revenue_surprise": 3.2
+ },
+ {
+  "seq_id": "106239463",
+  "filed": "2025-05-20 14:17:51",
+  "pdf": "https://nsearchives.nseindia.com/corporate/HINDALCOIND_20052025141419_BM_Outcome_200525_Final_signed.pdf",
+  "figures": {
+   "revenue": {
+    "quarter": 64890.0,
+    "prev_quarter": 58390.0,
+    "year_ago": 55994.0,
+    "qoq_pct": 11.1,
+    "yoy_pct": 15.9
+   },
+   "profit": {
+    "quarter": 5284.0,
+    "prev_quarter": 3735.0,
+    "year_ago": 3174.0,
+    "qoq_pct": 41.5,
+    "yoy_pct": 66.5
+   }
+  },
+  "view": "strong",
+  "reaction": {
+   "reaction_day": "2025-05-20",
+   "when": "during market",
+   "gap_pct": 1.47,
+   "close_pct": 0.67,
+   "high_pct": 1.92,
+   "low_pct": -0.43,
+   "nifty_gap_pct": 0.2,
+   "nifty_close_pct": -1.05,
+   "runup_20d": 3.43,
+   "excess_close_pct": 1.72,
+   "excess_gap_pct": null
+  },
+  "profit_yoy": 66.5,
+  "profit_surprise": 6.3,
+  "revenue_yoy": 15.9,
+  "revenue_surprise": 5.3
+ },
+ {
+  "seq_id": "106336350",
+  "filed": "2025-08-12 14:46:19",
+  "pdf": "https://nsearchives.nseindia.com/corporate/HINDALCOIND_12082025144456_BM_Outcome_1208025_Final_signed.pdf",
+  "figures": {
+   "revenue": {
+    "quarter": 24264.0,
+    "prev_quarter": 25116.0,
+    "year_ago": 22155.0,
+    "qoq_pct": -3.4,
+    "yoy_pct": 9.5
+   },
+   "profit": {
+    "quarter": 1862.0,
+    "prev_quarter": 1561.0,
+    "year_ago": 1471.0,
+    "qoq_pct": 19.3,
+    "yoy_pct": 26.6
+   }
+  },
+  "view": "strong",
+  "reaction": {
+   "reaction_day": "2025-08-12",
+   "when": "during market",
+   "gap_pct": -2.21,
+   "close_pct": -0.86,
+   "high_pct": 0.73,
+   "low_pct": -2.28,
+   "nifty_gap_pct": -0.09,
+   "nifty_close_pct": -0.4,
+   "runup_20d": 2.94,
+   "excess_close_pct": -0.46,
+   "excess_gap_pct": null
+  },
+  "profit_yoy": 26.6,
+  "profit_surprise": -36.8,
+  "revenue_yoy": 9.5,
+  "revenue_surprise": -1.4
+ },
+ {
+  "seq_id": "106431622",
+  "filed": "2025-11-07 13:42:08",
+  "pdf": "https://nsearchives.nseindia.com/corporate/HINDALCOIND_07112025134111_BM_Outcome_Nov7_Signed.pdf",
+  "figures": {
+   "revenue": {
+    "quarter": 24780.0,
+    "prev_quarter": 24264.0,
+    "year_ago": 22262.0,
+    "qoq_pct": 2.1,
+    "yoy_pct": 11.3
+   },
+   "profit": {
+    "quarter": 2266.0,
+    "prev_quarter": 1862.0,
+    "year_ago": 1891.0,
+    "qoq_pct": 21.7,
+    "yoy_pct": 19.8
+   }
+  },
+  "view": "strong",
+  "reaction": {
+   "reaction_day": "2025-11-07",
+   "when": "during market",
+   "gap_pct": 0.01,
+   "close_pct": 0.25,
+   "high_pct": 1.8,
+   "low_pct": -0.68,
+   "nifty_gap_pct": -0.3,
+   "nifty_close_pct": -0.07,
+   "runup_20d": 1.08,
+   "excess_close_pct": 0.32,
+   "excess_gap_pct": null
+  },
+  "profit_yoy": 19.8,
+  "profit_surprise": -43.5,
+  "revenue_yoy": 11.3,
+  "revenue_surprise": 1.2
+ },
+ {
+  "seq_id": "106532060",
+  "filed": "2026-02-12 17:06:59",
+  "pdf": "https://nsearchives.nseindia.com/corporate/HINDALCOIND_12022026165950_BM_Outcome_12022026_merged_signed.pdf",
+  "figures": {
+   "profit": {
+    "quarter": 3017.0,
+    "prev_quarter": 2266.0,
+    "year_ago": 1463.0,
+    "qoq_pct": 33.1,
+    "yoy_pct": 106.2
+   }
+  },
+  "view": "strong",
+  "reaction": {
+   "reaction_day": "2026-02-13",
+   "when": "after close",
+   "gap_pct": -4.24,
+   "close_pct": -5.74,
+   "high_pct": -3.29,
+   "low_pct": -6.57,
+   "nifty_gap_pct": -0.91,
+   "nifty_close_pct": -1.3,
+   "runup_20d": 0.66,
+   "excess_close_pct": -4.44,
+   "excess_gap_pct": -3.33
+  },
+  "profit_yoy": 100.0,
+  "profit_surprise": 56.6,
+  "revenue_yoy": null,
+  "revenue_surprise": null
+ },
+ {
+  "seq_id": "106636433",
+  "filed": "2026-05-22 17:22:17",
+  "pdf": "https://nsearchives.nseindia.com/corporate/HINDALCOIND_22052026171757_BM_Outcome_2205_final_signed.pdf",
+  "figures": {
+   "revenue": {
+    "quarter": 34244.0,
+    "prev_quarter": 29264.0,
+    "year_ago": 25116.0,
+    "qoq_pct": 17.0,
+    "yoy_pct": 36.3
+   },
+   "profit": {
+    "quarter": 2934.0,
+    "prev_quarter": 3017.0,
+    "year_ago": 1561.0,
+    "qoq_pct": -2.8,
+    "yoy_pct": 88.0
+   }
+  },
+  "view": "strong",
+  "reaction": {
+   "reaction_day": "2026-05-25",
+   "when": "after close",
+   "gap_pct": 0.07,
+   "close_pct": -0.87,
+   "high_pct": 0.96,
+   "low_pct": -2.52,
+   "nifty_gap_pct": 0.93,
+   "nifty_close_pct": 1.32,
+   "runup_20d": 8.39,
+   "excess_close_pct": -2.19,
+   "excess_gap_pct": -0.86
+  },
+  "profit_yoy": 88.0,
+  "profit_surprise": 41.5,
+  "revenue_yoy": 36.3,
+  "revenue_surprise": 25.0
+ },
+ {
+  "seq_id": "106730993",
+  "filed": "2026-08-07 14:40:26",
+  "pdf": "https://nsearchives.nseindia.com/corporate/HINDALCOIND_07082026143809_BM_Outcome_final_signed.pdf",
+  "figures": {
+   "revenue": {
+    "quarter": 30515.0,
+    "prev_quarter": 34244.0,
+    "year_ago": 24264.0,
+    "qoq_pct": -10.9,
+    "yoy_pct": 25.8
+   },
+   "profit": {
+    "quarter": 4784.0,
+    "prev_quarter": 2934.0,
+    "year_ago": 1862.0,
+    "qoq_pct": 63.1,
+    "yoy_pct": 156.9
+   }
+  },
+  "view": "strong",
+  "reaction": {
+   "reaction_day": "2026-08-07",
+   "when": "during market",
+   "gap_pct": -0.97,
+   "close_pct": 3.17,
+   "high_pct": 3.17,
+   "low_pct": -0.97,
+   "nifty_gap_pct": -0.39,
+   "nifty_close_pct": -0.27,
+   "runup_20d": 3.79,
+   "excess_close_pct": 3.44,
+   "excess_gap_pct": null
+  },
+  "profit_yoy": 100.0,
+  "profit_surprise": 42.7,
+  "revenue_yoy": 25.8,
+  "revenue_surprise": 14.5
+ }
+]
