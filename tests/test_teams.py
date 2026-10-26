@@ -218,3 +218,9 @@ def test_one_lot_allowed_when_half_the_money_is_less_than_a_lot():
     from agents.risk import plan
     r = plan({**big_lot, "est_premium": 30.0, "delta": 0.55}, 0, NOW, {**CFG, "capital": 16696, "max_capital_per_trade": 1.0})
     assert r["qty"] == 400  # exactly one lot
+
+
+def test_top_up_adds_paper_money_but_not_profit():
+    rows = [{"status": "SQUARED_OFF", "strategy": "intel", "entry_ask": "2", "qty": "100", "net_pnl": "-13304"}]
+    cfg = {**CFG, "teams": {**CFG["teams"], "news": {"capital": 30000, "top_up": 13304}}}
+    assert watcher.account(rows, cfg, "news") == (30000, 30000)

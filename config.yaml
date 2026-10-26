@@ -14,6 +14,8 @@ teams:
                            # regulatory action, a policy hit, or strong news against the trade
   news:                    # NSE filings, results, concalls, news -> Data Analyzer forecasts
     capital: 30000
+    top_up: 13304          # 26 Oct: paper top-up back to Rs 30,000 after the PNB/IOC losses (user gave free hands);
+                           # one F&O lot often costs more than the Rs 16,696 left. Not profit: the scoreboard keeps -Rs 13,304
     auto_trade: true       # opens trades by itself; Claude can also open them with paper_trade.py
     min_confidence: 60     # forecast confidence needed, after the priced-in cut
     confirm_pct: 0.5       # the stock must already move the forecast's way by this much today

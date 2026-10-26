@@ -764,7 +764,9 @@ def account(trades: list[dict], cfg: dict, team: str | None = None) -> tuple[flo
         cfg = team_cfg(cfg, team)
     realised = sum(float(t["net_pnl"] or 0) for t in trades if t["status"] in ("TARGET", "SQUARED_OFF"))
     tied_up = sum(float(t["entry_ask"]) * int(t["qty"]) for t in trades if t["status"] == "OPEN")
-    value = cfg["capital"] + realised
+    # top_up: paper money added later (e.g. to restore a team to its starting capital after
+    # losses); it is not profit, so the scoreboard keeps the team's real record.
+    value = cfg["capital"] + float(cfg.get("top_up", 0)) + realised
     return value, max(value - tied_up, 0.0)
 
 
