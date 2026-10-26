@@ -38,3 +38,4 @@ date,time,symbol,direction,confidence,source,priced_in
 2026-10-26,08:41,HDFCBANK,down,97,intel,some pessimism priced in
 2026-10-26,08:41,TCS,up,56,intel,largely priced in
 2026-10-26,08:41,KOTAKBANK,up,78,intel,partly priced in
+2026-10-26,08:41,BAJFINANCE,down,100,intel,some pessimism priced in
