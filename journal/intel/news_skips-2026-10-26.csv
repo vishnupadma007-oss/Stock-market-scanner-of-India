@@ -1,0 +1,55 @@
+time,symbol,direction,confidence,move_pct,reason
+11:01,INFY,down,100,-1.07,Trend Checker 30 < 60
+11:06,INFY,down,100,-1.14,Trend Checker 30 < 60
+11:06,KOTAKBANK,up,94,2.02,"risk: One lot costs ₹30,400, above the ₹16,696 per-trade budget."
+11:06,BAJFINANCE,down,100,-0.94,Trend Checker 55 < 60
+11:06,KOTAKBANK,up,94,2.01,Trend Checker 45 < 60
+11:06,JSWSTEEL,up,82,2.66,Trend Checker 50 < 60
+11:06,VEDL,down,63,-0.35,early entry: Volume 0.5x usual on a red candle; Order book: sellers 1.1x buyers
+11:13,INFY,down,100,-0.76,Trend Checker 0 < 60
+11:13,BAJFINANCE,down,100,-0.95,Trend Checker 40 < 60
+11:13,KOTAKBANK,up,94,1.94,Trend Checker 45 < 60
+11:13,JSWSTEEL,up,82,2.64,Trend Checker 50 < 60
+11:13,VEDL,down,63,-0.44,early entry: Volume 0.2x usual on a red candle; Order book: sellers 1.1x buyers
+12:15,INFY,down,100,-1.11,Trend Checker 40 < 60
+12:21,INFY,down,100,-1.1,Trend Checker 40 < 60
+12:21,KOTAKBANK,up,95,2.13,Trend Checker 40 < 60
+12:21,BAJFINANCE,down,95,-1.13,Trend Checker 30 < 60
+12:21,JSWSTEEL,up,79,2.17,Trend Checker 20 < 60
+12:27,INFY,down,100,-0.91,Trend Checker 15 < 60
+12:27,KOTAKBANK,up,95,1.97,Trend Checker 40 < 60
+12:27,BAJFINANCE,down,95,-1.15,Trend Checker 30 < 60
+12:27,JSWSTEEL,up,79,2.2,Trend Checker 20 < 60
+12:33,INFY,down,100,-0.94,Trend Checker 0 < 60
+12:33,KOTAKBANK,up,95,2.11,"risk: One lot costs ₹30,400, above the ₹30,000 per-trade budget."
+12:33,BAJFINANCE,down,95,-1.05,Trend Checker 15 < 60
+12:33,JSWSTEEL,up,79,2.35,Trend Checker 30 < 60
+12:37,KOTAKBANK,up,95,2.13,"risk: One lot costs ₹30,200, above the ₹30,000 per-trade budget."
+12:39,INFY,down,100,-1.15,Trend Checker 15 < 60
+12:39,KOTAKBANK,up,95,2.14,Trend Checker 45 < 60
+12:39,BAJFINANCE,down,95,-1.05,Trend Checker 30 < 60
+12:39,JSWSTEEL,up,79,2.19,Trend Checker 35 < 60
+12:47,INFY,down,100,-1.16,Trend Checker 15 < 60
+12:47,KOTAKBANK,up,95,2.04,Trend Checker 45 < 60
+12:52,INFY,down,100,-1.21,Trend Checker 30 < 60
+12:52,KOTAKBANK,up,95,1.96,Trend Checker 30 < 60
+12:52,JSWSTEEL,up,79,2.02,Trend Checker 20 < 60
+13:00,INFY,down,100,-0.89,Trend Checker 0 < 60
+13:00,KOTAKBANK,up,95,1.9,Trend Checker 15 < 60
+13:00,JSWSTEEL,up,79,2.16,Trend Checker 35 < 60
+13:06,INFY,down,100,-0.8,Trend Checker 0 < 60
+13:06,KOTAKBANK,up,95,2.1,Trend Checker 55 < 60
+13:06,JSWSTEEL,up,79,2.28,Trend Checker 45 < 60
+13:14,INFY,down,100,-0.93,Trend Checker 15 < 60
+13:28,INFY,down,99,-0.89,Trend Checker 25 < 60
+13:48,INFY,down,99,-0.52,Trend Checker 10 < 60
+13:54,INFY,down,99,-0.62,Trend Checker 15 < 60
+13:59,INFY,down,99,-0.68,Trend Checker 25 < 60
+14:05,INFY,down,99,-0.52,Trend Checker 10 < 60
+14:11,INFY,down,99,-0.22,early entry: Volume 0.6x usual on a red candle; Order book: sellers 0.8x buyers
+14:17,INFY,down,99,-0.33,early entry: Volume 0.5x usual on a red candle; Order book: sellers 0.8x buyers
+14:24,INFY,down,99,-0.2,early entry: Volume 0.1x usual on a red candle; Order book: sellers 0.8x buyers
+14:31,INFY,down,99,-0.27,early entry: Volume 0.6x usual on a green candle; Order book: sellers 0.8x buyers
+14:37,INFY,down,99,-0.22,early entry: Volume 0.7x usual on a red candle; Order book: sellers 0.8x buyers
+15:01,VEDL,down,64,-0.24,early entry: Volume 0.4x usual on a red candle; Order book: sellers 1.2x buyers
+15:07,VEDL,down,64,-0.22,early entry: Volume 0.4x usual on a green candle; Order book: sellers 1.1x buyers
