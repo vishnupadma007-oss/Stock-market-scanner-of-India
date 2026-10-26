@@ -392,6 +392,8 @@ def needs_next_month(option: dict | None, chain: dict, today, fb: dict) -> bool:
     if not fb.get("enabled", True) or not chain.get("selected_expiry"):
         return False
     days_left = (pd.to_datetime(str(chain["selected_expiry"])).date() - today).days
+    if days_left <= fb.get("always_days", 2):
+        return True  # expiry today or tomorrow: time decay eats an intraday target, always next month
     return days_left <= fb.get("days", 7) and (option is None or _fails(option, fb))
 
 

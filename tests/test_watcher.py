@@ -329,3 +329,13 @@ def test_movers_scan_stops_for_a_fresh_news_idea():
 def test_lag_seconds():
     assert watcher.lag_seconds({"time": "2026-10-23 10:00:00"}, datetime(2026, 10, 23, 10, 0, 25, tzinfo=IST)) == 25
     assert watcher.lag_seconds({}, NOW) is None
+
+
+def test_day_before_expiry_always_rolls():
+    from datetime import date
+    from agents.indmoney import needs_next_month
+    near = {**chain(), "expiry_list": ["20261027", "20261123"]}
+    good = pick_option(near, "gainer", "ITM1")
+    fb = {"days": 7, "min_premium": 5.0, "max_spread_pct": 2.0, "always_days": 2}
+    assert needs_next_month(good, near, date(2026, 10, 26), fb)        # expiry tomorrow: roll even a fine contract
+    assert not needs_next_month(good, near, date(2026, 10, 22), fb)    # 5 days left and fine: keep it

@@ -143,6 +143,7 @@ min_days_to_expiry: 3      # roll to next month's expiry when closer than this
 # 23-Nov: Rs 3.85, 2.8%), so this only rescues setups that would otherwise be skipped or badly priced.
 expiry_fallback:
   enabled: true
+  always_days: 2           # this close to expiry (expiry day or the day before): always next month's contract
   days: 7                  # within this many calendar days of this month's expiry...
   min_premium: 5.0         # ...switch when this month's option is cheaper than this
   max_spread_pct: 2.0      # ...or its bid-ask gap is wider than this (% of the ask)
