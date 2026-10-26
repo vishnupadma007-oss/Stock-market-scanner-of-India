@@ -139,3 +139,10 @@ def test_results_previews_are_neutral():
         assert intel.make_item(id="p", time="2026-10-23 09:00:00", source="ET", kind="news", headline=h)["sentiment"] == 0.0
     assert intel.make_item(id="r", time="2026-10-23 09:00:00", source="ET", kind="news",
                            headline="Kotak Mahindra Bank Q2 profit jumps 32%, beats estimates")["sentiment"] > 0
+
+
+def test_weekly_mcap_roundups_carry_no_stock_tone():
+    from agents import intel
+    i = intel.make_item(id="m", time="2026-10-26 09:00:00", source="BS", kind="news",
+                        headline="Top 10 firms lose ₹1.55 trillion in mcap as HDFC Bank, Bajaj Finance fall")
+    assert i["sentiment"] == 0.0
