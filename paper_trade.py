@@ -18,7 +18,7 @@ from agents import holidays
 from agents.config import load_config
 from agents.indmoney import IndMoney
 from agents.risk import plan
-from watcher import (FIELDS, IST, NEWS_DEFAULTS, TEAMS, _t, account, has_open, load_trades, rolled_note,
+from watcher import (FIELDS, IST, NEWS_DEFAULTS, TEAMS, _t, account, capital_share, has_open, load_trades, rolled_note,
                      save_trades, team_cfg)
 
 
@@ -64,7 +64,8 @@ async def open_trade(symbol: str, direction: str, strategy: str, reason: str) ->
     if option["ask"] < news_cfg["min_premium"]:
         return {"opened": False, "reason": f"option premium ₹{option['ask']} is under the ₹{news_cfg['min_premium']} minimum"}
 
-    risk = plan(option, 0, now, {**cfg, "capital": free, "max_capital_per_trade": news_cfg["max_capital_per_trade"]},
+    risk = plan(option, 0, now, {**cfg, "capital": free,
+                                 "max_capital_per_trade": capital_share(option, {**cfg, "capital": free}, news_cfg)},
                 spread_pct=option["spread_pct"])
     if not risk["allowed"]:
         return {"opened": False, "reason": "; ".join(risk["blocks"])}

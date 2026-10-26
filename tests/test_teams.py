@@ -207,3 +207,14 @@ def test_news_team_enters_early_on_volume_and_order_book():
     off = {**cfg, "teams": {**cfg["teams"], "news": {**cfg["teams"]["news"], "early_entry": False}}}
     asyncio.run(watcher.news_team(Early(move=0.3), trades, NOW, off))
     assert trades == []  # without the early rule, 0.3% still waits
+
+
+def test_one_lot_allowed_when_half_the_money_is_less_than_a_lot():
+    c = {"max_capital_per_trade": 0.5}
+    cheap_lot = {"ask": 10.0, "lot_size": 500}     # Rs 5,000: fits in half of Rs 16,696
+    big_lot = {"ask": 30.0, "lot_size": 400}       # Rs 12,000: more than half, less than all
+    assert watcher.capital_share(cheap_lot, {"capital": 16696}, c) == 0.5
+    assert watcher.capital_share(big_lot, {"capital": 16696}, c) == 1.0
+    from agents.risk import plan
+    r = plan({**big_lot, "est_premium": 30.0, "delta": 0.55}, 0, NOW, {**CFG, "capital": 16696, "max_capital_per_trade": 1.0})
+    assert r["qty"] == 400  # exactly one lot

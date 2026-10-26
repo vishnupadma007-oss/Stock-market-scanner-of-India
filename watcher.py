@@ -607,6 +607,33 @@ async def scan(im: IndMoney, trades: list[dict], now: datetime, cfg: dict, hold:
                 emit("ERROR", {"error": f"{m['symbol']}: {type(e).__name__}: {e}"})
 
 
+def capital_share(option: dict, cfg: dict, c: dict) -> float:
+    """News team's share of its free money for one trade: at most `max_capital_per_trade`
+    (half), except that one single lot may use more when one lot alone costs more than that
+    (it then buys exactly one lot: two would not fit). Without this, after a few losses
+    the half-share was smaller than any normal lot and the team could not trade at all."""
+    share = c["max_capital_per_trade"]
+    lot_cost = float(option.get("ask") or 0) * float(option.get("lot_size") or 1)
+    if cfg["capital"] > 0 and lot_cost > cfg["capital"] * share:
+        return 1.0
+    return share
+
+
+SKIPS_DIR = Path(__file__).parent / "journal" / "intel"  # git-ignored by day, committed each evening
+
+
+def log_skip(now: datetime, sym: str, idea: dict, move: float, reason: str) -> None:
+    """News-team ideas whose price already confirmed but which were not traded, with the reason."""
+    path = SKIPS_DIR / f"news_skips-{now.date().isoformat()}.csv"
+    path.parent.mkdir(parents=True, exist_ok=True)
+    new = not path.exists()
+    with open(path, "a", newline="") as f:
+        w = csv.writer(f)
+        if new:
+            w.writerow(["time", "symbol", "direction", "confidence", "move_pct", "reason"])
+        w.writerow([now.strftime("%H:%M"), sym, idea["direction"], idea["confidence"], round(move, 2), reason])
+
+
 def rolled_note(option: dict) -> str:
     return f"Expiry week: next month's contract instead of {option['rolled_from']}" if option.get("rolled_from") else ""
 
@@ -678,6 +705,7 @@ async def news_team(im: IndMoney, trades: list[dict], now: datetime, cfg: dict) 
                                     idea["direction"], c["early_volume_x"], c["early_book_x"])
                 if not sig["ok"]:
                     _daily["trend_failed"][sym] = now
+                    log_skip(now, sym, idea, move, "early entry: " + "; ".join(sig["notes"]))
                     continue
                 trend = {"score": None, "signals": [(f"Early entry: price {move:+.2f}%", 0)] +
                          [(n, 0) for n in sig["notes"]]}
@@ -685,16 +713,20 @@ async def news_team(im: IndMoney, trades: list[dict], now: datetime, cfg: dict) 
                 trend = read_trend(intraday, stock_profile(daily) if len(daily) >= 25 else {}, idea["direction"])
                 if trend["score"] < c["min_trend_score"]:
                     _daily["trend_failed"][sym] = now
+                    log_skip(now, sym, idea, move, f"Trend Checker {trend['score']} < {c['min_trend_score']}")
                     continue
             if headwind(mkt, idea["direction"], c["market_headwind_pct"]):
+                log_skip(now, sym, idea, move, "market headwind: " + "; ".join(mkt.get("notes", [])[:1]))
                 continue  # the whole market is moving hard the other way on news
             side = "loser" if idea["direction"] == "up" else "gainer"  # loser -> CALL, gainer -> PUT
             option = await im.pick_contract(_stock_keys[sym], side, cfg, now.date())
             if option is None or option["ask"] < c["min_premium"]:
+                log_skip(now, sym, idea, move, "no option" if option is None else f"premium Rs {option['ask']} under Rs {c['min_premium']}")
                 continue
-            risk = plan(option, trades_today, now, {**cfg, "max_capital_per_trade": c["max_capital_per_trade"]},
+            risk = plan(option, trades_today, now, {**cfg, "max_capital_per_trade": capital_share(option, cfg, c)},
                         spread_pct=option["spread_pct"])
             if not risk["allowed"]:
+                log_skip(now, sym, idea, move, "risk: " + "; ".join(risk["blocks"])[:150])
                 continue
             row = {f: "" for f in FIELDS}
             row.update(date=today, opened=now.strftime("%H:%M"), symbol=sym, side=side,
