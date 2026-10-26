@@ -40,3 +40,5 @@ date,time,symbol,direction,confidence,source,priced_in
 2026-10-26,08:41,KOTAKBANK,up,78,intel,partly priced in
 2026-10-26,08:41,BAJFINANCE,down,100,intel,some pessimism priced in
 2026-10-26,08:41,JSWSTEEL,up,84,intel,some pessimism priced in
+2026-10-26,08:41,VEDL,down,66,intel,pessimism priced in
+2026-10-26,08:41,NATIONALUM,down,51,intel,pessimism priced in
