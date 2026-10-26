@@ -19,6 +19,8 @@ Intraday mover-reversal options strategy on NSE F&O stocks, run by a team of age
   `policy-impact` skill), Sector Results (`agents/sector_results.py`: seasonality, YoY vs QoQ, sector KPIs;
   results filings read by 20 parallel workers; NSE filings checked every 10 s on their own thread, and
   a new news idea jumps ahead of the movers scan)
+  Results-gap follower (`agents/gapfollow.py`: news team trades WITH a results-day opening gap from 09:30)
+  and the morning Mover Forecast (`agents/mover_forecast.py`: likely top gainers/losers and why)
   Candlestick Patterns (`agents/candles.py`, observe mode: 19 patterns, no edge found on 60 days of data;
   `candlestick-patterns` skill) and NSE holidays (`agents/holidays.py`).
 - Information agents write to one log (`agents/intel.py`, `journal/intel/<date>.jsonl`): NSE filings,

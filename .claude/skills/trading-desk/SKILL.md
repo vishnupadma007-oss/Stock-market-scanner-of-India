@@ -67,6 +67,11 @@ One short research pass that sets the day's mode. Keep it to a handful of search
    Add `python -m agents.expectations SYMBOL` for each (3-4 INDmoney calls): is a good result
    already priced in (run-up vs Nifty, pre-results hype, price vs analyst target), and so what
    bar the numbers must clear to move the stock (valuation vs peers counts towards it).
+   Run `python -m agents.mover_forecast`: the stocks likely to be today's top gainers/losers (results
+   since the last session first, with their usual results-day move; then strong news views). For
+   results stocks the direction is NOT forecast from the figures (a coin flip): the news team's
+   results-gap rule (agents/gapfollow.py) trades the opening gap's direction from 09:30 when the
+   first 15 minutes extend it. Give the user the list.
    Then `python -m agents.market`: why the market is where it is (geopolitics, policy, domestic
    economy, global markets, commodities, FII/DII flows) with the top headlines for each; lead the
    brief with it. Finally `python -m agents.analyzer`: the Data Analyzer's market mood and strongest stock

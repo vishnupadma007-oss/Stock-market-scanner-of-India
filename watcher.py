@@ -38,7 +38,7 @@ from agents.decision import decide
 from agents.forecast import reversal_target
 from agents.indicators import intraday_sigma_per_min
 from agents.market import context as market_context_view, headwind
-from agents import candles, news_guard, shock
+from agents import candles, gapfollow, news_guard, shock
 from agents.momentum import early_signals, read_trend
 from agents.indmoney import (IndMoney, LoginRequired, RateLimited, calls_last_hour,
                              set_hourly_budget)
@@ -180,6 +180,8 @@ def add_idea(symbol: str, direction: str, confidence: int, source: str, reason: 
         return
     adjusted = expectations.adjust_forecast({"direction": direction, "confidence": confidence}, expect)
     prev = (_daily.get("ideas") or {}).get(symbol)
+    if prev and prev.get("source") == "results-gap" and source != "results-gap":
+        return  # the market's own reaction to the results outranks a headline reading
     if "ideas_logged" not in _daily:  # what is already in today's log (a restart must not log it again)
         rows = csv.reader(open(IDEAS)) if IDEAS.exists() else []
         _daily["ideas_logged"] = {(r[0], r[2], r[3]) for r in rows if len(r) > 3}
@@ -607,6 +609,36 @@ async def scan(im: IndMoney, trades: list[dict], now: datetime, cfg: dict, hold:
                 emit("ERROR", {"error": f"{m['symbol']}: {type(e).__name__}: {e}"})
 
 
+async def results_gap_ideas(im: IndMoney, now: datetime, c: dict, done: set) -> None:
+    """Results-gap follower (agents/gapfollow.py): stocks whose results came out after the last
+    session (before today's open) and opened with a gap of `gap_min_pct`+ vs Nifty become ideas in
+    the gap's direction once the first minutes extend it. One quotes call for all of them."""
+    open_time = datetime.combine(now.date(), time(9, 15))
+    syms = [s for s, items in (_daily.get("filings") or {}).items()
+            if s not in done and s not in _daily.setdefault("gap_done", set())
+            and any(i.get("category") == "RESULTS" and str(i.get("time", "")) < open_time.strftime("%Y-%m-%d %H:%M:%S")
+                    for i in items)]
+    if not syms:
+        return
+    for sym in syms:
+        if sym not in _stock_keys:
+            _stock_keys[sym] = await expectations.stock_key(im, sym)
+    quotes = await im.quotes([_stock_keys[s] for s in syms] + [NIFTY_KEY])
+    nifty = (quotes.get(NIFTY_KEY) or {}).get("entity_stats")
+    for sym in syms:
+        g = gapfollow.assess((quotes.get(_stock_keys[sym]) or {}).get("entity_stats") or {}, nifty, c["gap_min_pct"])
+        if g is None:
+            _daily["gap_done"].add(sym)  # no gap worth following today
+            continue
+        if not g["confirmed"]:
+            continue  # look again on the next pass, until gap_until
+        _daily["gap_done"].add(sym)
+        add_idea(sym, g["direction"], c["gap_confidence"], "results-gap",
+                 f"Results gap {g['gap_pct']:+.1f}% vs Nifty, {g['since_open_pct']:+.1f}% since the open: "
+                 f"results-day gaps carry on (61-75% in our data)", {"label": "results gap rule"}, now)
+        _daily["ideas"][sym]["max_move"] = c["gap_max_move_pct"]
+
+
 def capital_share(option: dict, cfg: dict, c: dict) -> float:
     """News team's share of its free money for one trade: at most `max_capital_per_trade`
     (half), except that one single lot may use more when one lot alone costs more than that
@@ -646,6 +678,8 @@ NEWS_DEFAULTS = {
     "max_age_min": 120,     # ideas older than this are dropped
     "min_trend_score": 60,  # Trend Checker: the chart must back the news's direction
     "trend_recheck_min": 5,  # a stock whose chart failed is looked at again after this long
+    "gap_rule": False,      # results-gap follower (agents/gapfollow.py)
+    "gap_from": "09:30", "gap_until": "10:30", "gap_min_pct": 1.0, "gap_confidence": 75, "gap_max_move_pct": 8.0,
     "early_entry": False,   # enter before confirm_pct on volume + order book (agents/momentum.early_signals)
     "early_pct": 0.2,       # ...once the stock has moved at least this much the news's way
     "early_volume_x": 1.5,  # ...latest 5-min candle volume vs usual at that time of day
@@ -662,6 +696,8 @@ async def news_team(im: IndMoney, trades: list[dict], now: datetime, cfg: dict) 
     c = {**NEWS_DEFAULTS, **team_cfg(cfg, "news")}
     today = now.date().isoformat()
     done = {t["symbol"] for t in trades if t["date"] == today and team_of(t) == "news"}
+    if c.get("gap_rule") and _t(c["gap_from"]) <= now.time() <= _t(c["gap_until"]):
+        await results_gap_ideas(im, now, c, done)
     # An idea whose priced-in check failed is not traded: unchecked is not "not priced in".
     ideas = sorted(((sym, i) for sym, i in (_daily.get("ideas") or {}).items()
                     if sym not in done and i["confidence"] >= c["min_confidence"] and i.get("priced_in")
@@ -686,9 +722,9 @@ async def news_team(im: IndMoney, trades: list[dict], now: datetime, cfg: dict) 
             if move is None:
                 continue
             sign = 1 if idea["direction"] == "up" else -1
-            if c["confirm_pct"] <= sign * move <= c["max_move_pct"]:
+            if c["confirm_pct"] <= sign * move <= idea.get("max_move", c["max_move_pct"]):
                 early = False  # the price has confirmed the news
-            elif c.get("early_entry") and c["early_pct"] <= sign * move < c["confirm_pct"]:
+            elif c.get("early_entry") and idea.get("source") != "results-gap" and c["early_pct"] <= sign * move < c["confirm_pct"]:
                 early = True   # moving the news's way, not yet the full confirmation: volume + order book decide
             else:
                 continue  # price not moving the news's way yet, or already moved too far
