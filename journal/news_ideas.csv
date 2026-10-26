@@ -42,3 +42,8 @@ date,time,symbol,direction,confidence,source,priced_in
 2026-10-26,08:41,JSWSTEEL,up,84,intel,some pessimism priced in
 2026-10-26,08:41,VEDL,down,66,intel,pessimism priced in
 2026-10-26,08:41,NATIONALUM,down,51,intel,pessimism priced in
+2026-10-26,08:41,DLF,down,82,intel,not priced in
+2026-10-26,08:41,AUBANK,up,59,intel,some pessimism priced in
+2026-10-26,08:41,ETERNAL,up,80,intel,partly priced in
+2026-10-26,08:53,INFY,up,64,intel,largely priced in
+2026-10-26,08:53,BPCL,down,59,intel,pessimism priced in
