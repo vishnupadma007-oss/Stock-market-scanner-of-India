@@ -25,7 +25,7 @@ teams:
     early_volume_x: 1.5    # NSE order book holds 1.5x more buyers than sellers (reverse for "down"). Replaces the Trend
     early_book_x: 1.5      # Checker for those entries. Untestable on history (no NSE order-book data): judged on paper.
     min_premium: 5.0       # no options under ₹5 (22 Oct: PNB ₹2.06 and IOC ₹1.85 were the two big losses)
-    max_capital_per_trade: 0.5  # one trade uses at most half the team's free money (no stop-loss: size is the brake)
+    max_capital_per_trade: 1.0  # user, 26 Oct: no per-trade limit; a trade may use all the free money (was 0.5)
 max_capital_per_trade: 1.0   # share of available money one trade may use (1.0 = all of it)
 max_trades_per_day: 50     # effectively no cap: trade every setup that passes the agents
 net_target_pct: 1.0        # target profit per trade, % of premium paid, AFTER all charges
