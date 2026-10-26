@@ -88,3 +88,13 @@ Also: random-looking entries reach the 1% target 80-85% of the time, about the r
 so the high hit rate comes from the small target, not from skill; the loss per trade (-1.4 to -2%)
 comes from the misses held to 15:20 without a stop-loss.
 Not backtestable (no history): intraday option-OI velocity, gamma exposure, order book.
+
+## Gap-recovery idea and results-gap, 26 Oct 2026
+
+Buying the recovery of a 1.5%+ opening gap at 09:20 (CALL after a gap-down, PUT after a gap-up), 60 days:
+ordinary days 147 trades, 89% / 84% / 78% at a 1% / 3% / 5% target, average -2.5% / -1.7% / -1.2%,
+worst -100%; following the gap did worse (-3.4% / -2.4% / -2.3%). Results days (13): both lose.
+Fading beats following on ordinary days (the reversal effect), but the misses held to 15:20 without
+a stop-loss make it lose overall. Not added as a strategy.
+Daily data, 1 year x 76 stocks: results-day gaps carry on 61-75%; ordinary-day gaps of 2%+ reverse 55-58%.
+NSE pre-open, 26 Oct: of 13 F&O stocks with a 1%+ pre-open gap only 23% kept going after the open.

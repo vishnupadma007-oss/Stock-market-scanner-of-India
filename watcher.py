@@ -38,7 +38,7 @@ from agents.decision import decide
 from agents.forecast import reversal_target
 from agents.indicators import intraday_sigma_per_min
 from agents.market import context as market_context_view, headwind
-from agents import candles, gapfollow, news_guard, shock
+from agents import candles, gapfollow, news_guard, preopen, shock
 from agents.momentum import early_signals, read_trend
 from agents.indmoney import (IndMoney, LoginRequired, RateLimited, calls_last_hour,
                              set_hourly_budget)
@@ -378,6 +378,21 @@ def filings_track(cfg: dict) -> None:
         clock.sleep(max(1.0, every - (clock.time() - started)))
 
 
+def poll_exchange(cfg: dict, now: datetime) -> None:
+    """NSE pre-open (saved once, from 09:08) and volume spurts (every 5 minutes in market hours),
+    for the mover forecast and the evening review. Free NSE pages: no INDmoney calls."""
+    reset_daily(now.date().isoformat())
+    if now.time() >= time(9, 8) and preopen.load("preopen", now.date()) is None:
+        preopen.save("preopen", now.date(), preopen.fetch_preopen(cfg["universe"]))
+    if market_open(now) and clock.time() - _daily.get("spurts_at", 0) >= 300:
+        _daily["spurts_at"] = clock.time()
+        spurts = preopen.fetch_spurts(cfg["universe"])
+        seen = preopen.load("spurts", now.date()) or {}
+        for sp in spurts:  # keep the first sighting of each stock, with the time
+            seen.setdefault(sp["symbol"], {**sp, "time": now.strftime("%H:%M")})
+        preopen.save("spurts", now.date(), seen)
+
+
 def information_track(cfg: dict) -> None:
     """Runs beside the scanner: valuations, news and the Data Analyzer every `info_poll_seconds`
     (NSE filings have their own faster thread, `filings_track`)."""
@@ -386,7 +401,7 @@ def information_track(cfg: dict) -> None:
         started = clock.time()
         now = datetime.now(IST)
         if holidays.is_trading_day(now.date()):
-            for step in (valuations, poll_news, run_analyzer):
+            for step in (valuations, poll_news, run_analyzer, poll_exchange):
                 try:
                     step(cfg, now)
                 except Exception as e:  # one failing source must not stop the others

@@ -13,7 +13,7 @@ other driver: the Data Analyzer's strong views. So:
     python -m agents.mover_forecast        # ranked list for the morning brief
 """
 import json
-from datetime import datetime, timedelta
+from datetime import datetime, time, timedelta
 from pathlib import Path
 
 from . import analyzer, holidays
@@ -44,22 +44,42 @@ def results_since_last_close(now: datetime) -> set[str]:
             if r.get("category") == "RESULTS" and r.get("time", "") >= since}
 
 
+def preopen_gaps(now: datetime) -> dict:
+    """Today's NSE pre-open (saved by the watcher at 09:08, or fetched now), {} before 09:08."""
+    from . import preopen
+    data = preopen.load("preopen", now.date())
+    if data is None and now.time() >= time(9, 8) and holidays.is_trading_day(now.date()):
+        try:
+            data = preopen.fetch_preopen(load_config()["universe"])
+            preopen.save("preopen", now.date(), data)
+        except Exception:
+            data = None
+    return data or {}
+
+
 def forecast(now: datetime | None = None, top: int = 12) -> list[dict]:
     now = now or datetime.now()
     universe = load_config()["universe"]
     items = analyzer.recent_items(now)
     reported = results_since_last_close(now) & set(universe)
+    pre = preopen_gaps(now)
     rows = []
     for sym in universe:
         view = analyzer.stock_view(sym, items, now)
+        gap = (pre.get(sym) or {}).get("gap_pct")
         if sym in reported:
             rows.append({"symbol": sym, "why": "results since last session", "expected_move_pct": results_move(sym),
-                         "direction": "set by the open (results-gap rule)", "news_view": f"{view['direction']} {view['confidence']}%"})
+                         "direction": "follow the gap if the first 15 min agree (results-gap rule)",
+                         "news_view": f"{view['direction']} {view['confidence']}%", "preopen_gap": gap})
+        elif gap is not None and abs(gap) >= 2:
+            rows.append({"symbol": sym, "why": f"pre-open gap {gap:+.1f}%, no results: ordinary-day gaps tend to reverse",
+                         "expected_move_pct": abs(gap), "direction": "fade candidate (movers team)", "news_view": "",
+                         "preopen_gap": gap})
         elif view["strong"]:
             from .reaction import typical_move
             rows.append({"symbol": sym, "why": "strong news: " + "; ".join(view["reasons"][:1])[:90],
                          "expected_move_pct": typical_move(sym) or 1.0,
-                         "direction": f"{view['direction']} ({view['confidence']}%)", "news_view": ""})
+                         "direction": f"{view['direction']} ({view['confidence']}%)", "news_view": "", "preopen_gap": gap})
     # Results first (the strongest driver), then by expected size.
     rows.sort(key=lambda r: (r["why"] != "results since last session", -r["expected_move_pct"]))
     return rows[:top]
@@ -67,7 +87,8 @@ def forecast(now: datetime | None = None, top: int = 12) -> list[dict]:
 
 def main() -> None:
     for r in forecast():
-        print(f"{r['symbol']:11} ~{r['expected_move_pct']:.1f}%  {r['direction']:36} {r['why'][:70]}"
+        pre = f"pre-open {r['preopen_gap']:+.1f}%  " if r.get("preopen_gap") is not None else ""
+        print(f"{r['symbol']:11} ~{r['expected_move_pct']:.1f}%  {pre}{r['direction']:44} {r['why'][:70]}"
               + (f"  [news reads {r['news_view']}]" if r["news_view"] else ""))
 
 

@@ -48,6 +48,33 @@ def test_mover_forecast_lists_results_stocks_first(monkeypatch, tmp_path):
                    "2026-10-22 10:00:00,TCS,RESULTS,x,x,x,3\n")
     monkeypatch.setattr(mover_forecast, "ANNOUNCEMENTS", ann)
     monkeypatch.setattr(mover_forecast.analyzer, "recent_items", lambda now: [])
+    monkeypatch.setattr(mover_forecast, "preopen_gaps", lambda now: {})
     rows = mover_forecast.forecast(datetime(2026, 10, 26, 9, 0))
     assert {r["symbol"] for r in rows} == {"JSWSTEEL", "AUBANK"}  # TCS reported before the last session
-    assert all("open" in r["direction"] for r in rows)
+    assert all("gap" in r["direction"] for r in rows)
+
+
+def test_preopen_and_spurt_parsing():
+    from agents import preopen
+    payload = {"data": [
+        {"metadata": {"symbol": "DRREDDY", "lastPrice": 1260, "pChange": 2.48, "previousClose": 1229.5},
+         "detail": {"preOpenMarket": {"totalBuyQuantity": 28041, "totalSellQuantity": 32807, "finalQuantity": 142491,
+                                      "lastUpdateTime": "26-Oct-2026 09:09:18"}}},
+        {"metadata": {"symbol": "NOTOURS", "lastPrice": 10, "pChange": 5, "previousClose": 9.5}, "detail": {}}]}
+    p = preopen.parse_preopen(payload, {"DRREDDY"})
+    assert list(p) == ["DRREDDY"] and p["DRREDDY"]["gap_pct"] == 2.48 and p["DRREDDY"]["buy_sell_ratio"] == 0.85
+    spurts = preopen.parse_spurts({"data": [{"symbol": "PNB", "volume": 4000, "week1AvgVolume": 1000, "pChange": 3.1},
+                                            {"symbol": "TCS", "volume": 1500, "week1AvgVolume": 1000, "pChange": 1}]}, {"PNB", "TCS"})
+    assert spurts == [{"symbol": "PNB", "volume_x": 4.0, "change_pct": 3.1}]
+
+
+def test_mover_forecast_adds_preopen_gap_fade_candidates(monkeypatch, tmp_path):
+    from agents import mover_forecast
+    ann = tmp_path / "ann.csv"
+    ann.write_text("time,symbol,category,subject,text,pdf,seq_id\n2026-10-24 15:26:10,AUBANK,RESULTS,x,x,x,2\n")
+    monkeypatch.setattr(mover_forecast, "ANNOUNCEMENTS", ann)
+    monkeypatch.setattr(mover_forecast.analyzer, "recent_items", lambda now: [])
+    monkeypatch.setattr(mover_forecast, "preopen_gaps", lambda now: {"AUBANK": {"gap_pct": -5.2}, "WIPRO": {"gap_pct": -2.3}})
+    rows = {r["symbol"]: r for r in mover_forecast.forecast(datetime(2026, 10, 26, 9, 10))}
+    assert rows["AUBANK"]["preopen_gap"] == -5.2 and "results" in rows["AUBANK"]["why"]
+    assert "fade" in rows["WIPRO"]["direction"]

@@ -15,3 +15,4 @@ def keep_journal_clean(monkeypatch, tmp_path):
     monkeypatch.setattr(watcher.intel, "DIR", tmp_path / "intel")  # never read the real news log
     monkeypatch.setattr(watcher, "GUARD_LOG", tmp_path / "news_guard.csv")
     monkeypatch.setattr(watcher, "SKIPS_DIR", tmp_path / "skips")
+    monkeypatch.setattr(watcher.preopen, "DIR", tmp_path / "exchange")
