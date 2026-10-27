@@ -98,3 +98,8 @@ Fading beats following on ordinary days (the reversal effect), but the misses he
 a stop-loss make it lose overall. Not added as a strategy.
 Daily data, 1 year x 76 stocks: results-day gaps carry on 61-75%; ordinary-day gaps of 2%+ reverse 55-58%.
 NSE pre-open, 26 Oct: of 13 F&O stocks with a 1%+ pre-open gap only 23% kept going after the open.
+
+## Enhancement pack chart signals (27 Oct 2026), same 60-day data
+Reversal backtest with the new Chart Reader (climax-volume absorption, RSI divergence, loss cooldown):
+132 trades, 85% at target, average -0.84% per trade (was -1.55%), misses -12% (was -15%),
+worst -43% (was -86%), total -Rs 33,086 (was -Rs 56,168). Better, still negative overall.
