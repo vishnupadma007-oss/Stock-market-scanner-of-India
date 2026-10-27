@@ -49,6 +49,9 @@ def read_trend(intraday: pd.DataFrame, profile: dict, direction: str) -> dict:
         up_vol = float(last6.loc[last6["Close"] >= last6["Open"], "Volume"].sum())
         dn_vol = float(last6.loc[last6["Close"] < last6["Open"], "Volume"].sum())
         add(up_vol > dn_vol, f"Volume heavier on {'red' if down else 'green'} candles: real {flow}", 10)
+        # Post-news fade / distribution guard: last 3 candles all below 9-EMA with counter-trend volume dominating
+        add((last6["Close"].tail(3) < last6["ema9"].tail(3)).all() and dn_vol > 1.2 * up_vol,
+            f"Last 3 candles broke { 'above' if down else 'below' } 9-EMA on counter-trend volume: news move fading", -15)
 
     day_extreme = float(today["High"].max())
     bars_since = int(today["High"].values[::-1].argmax())  # from the latest touch of the extreme
@@ -69,10 +72,11 @@ def read_trend(intraday: pd.DataFrame, profile: dict, direction: str) -> dict:
 def early_signals(intraday: pd.DataFrame, depth: dict, direction: str,
                   volume_x: float = 1.5, book_x: float = 1.5) -> dict:
     """Early entry for the news team (before the stock has moved the full confirmation %):
-    the latest 5-minute candle trades `volume_x` times the usual volume and closes the news's way,
-    and the NSE order book holds `book_x` times more buyers than sellers (for "up"; the reverse
-    for "down"). Order-book imbalance leads price over seconds to minutes; volume shows real
-    buying or selling. No history of NSE order books exists, so this rule is judged on paper."""
+    the latest 5-minute candle trades `volume_x` times the usual volume, closes the news's way
+    without an adverse rejection wick (closes in the top half of its range for 'up', bottom half
+    for 'down'), and the NSE order book holds `book_x` times more buyers than sellers (for "up";
+    the reverse for "down"). Order-book imbalance leads price over seconds to minutes; volume shows
+    real buying or selling. No history of NSE order books exists, so this rule is judged on paper."""
     up = direction == "up"
     notes, ok = [], True
     if intraday.empty or len(intraday) < 13:
@@ -84,7 +88,10 @@ def early_signals(intraday: pd.DataFrame, depth: dict, direction: str,
     same_time = intraday[(intraday.index.time == t) & (intraday.index.date < d)]["Volume"]
     usual = float(same_time.mean() if len(same_time) >= 2 else intraday["Volume"].iloc[-13:-1].mean()) or 1.0
     vx = float(last["Volume"]) / usual
-    with_news = (last["Close"] > last["Open"]) if up else (last["Close"] < last["Open"])
+    rng = float(last["High"] - last["Low"])
+    strong_close = ((float(last["Close"] - last["Low"]) >= 0.4 * rng) if up
+                    else (float(last["High"] - last["Close"]) >= 0.4 * rng)) if rng > 0 else True
+    with_news = ((last["Close"] > last["Open"]) if up else (last["Close"] < last["Open"])) and strong_close
     if vx < volume_x or not with_news:
         ok = False
     notes.append(f"Volume {vx:.1f}x usual on a {'green' if last['Close'] > last['Open'] else 'red'} candle")

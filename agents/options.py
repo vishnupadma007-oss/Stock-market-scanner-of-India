@@ -1,7 +1,8 @@
 """Options agent: picks the contract (CE for losers, PE for gainers) and calculates Greeks.
 
 Premiums are calculated using an exact Black-Scholes model with Greeks (Delta, Gamma,
-Theta per day, Vega) from historical or implied volatility.
+Theta per day, Vega) from historical or implied volatility, plus a fast hybrid
+Newton-Raphson / bisection Implied Volatility (IV) solver for live option chain quotes.
 
 NSE Stock options specifications:
 - Expiry: Last Tuesday of the contract month (moved to previous trading day if holiday).
@@ -88,6 +89,41 @@ def black_scholes(spot: float, strike: float, years: float, rate: float, vol: fl
 
     theta_day = theta_annual / 365.0
     return BSResult(max(price, 0.0), delta, gamma=gamma, theta=theta_day, vega=vega)
+
+
+def implied_volatility(market_price: float, spot: float, strike: float, years: float,
+                       rate: float = 0.065, is_call: bool = True) -> float:
+    """Inverts Black-Scholes to find Implied Volatility (IV) from a live option market price.
+    Uses bounded Newton-Raphson with bisection fallback for guaranteed convergence.
+    """
+    if market_price <= 0 or spot <= 0 or strike <= 0:
+        return 0.30
+    years = max(years, 1.0 / 365.0)
+    df = math.exp(-rate * years)
+    intrinsic = max(0.0, (spot - strike * df) if is_call else (strike * df - spot))
+    if market_price <= intrinsic + 1e-4:
+        return 0.05
+
+    lo, hi = 0.01, 3.00
+    # Brenner-Subrahmanyam initial guess
+    vol = min(max(math.sqrt(2.0 * math.pi / years) * (market_price / spot), 0.10), 1.50)
+
+    for _ in range(25):
+        bs = black_scholes(spot, strike, years, rate, vol, is_call)
+        diff = bs.price - market_price
+        if abs(diff) < 1e-4:
+            return round(vol, 4)
+        if diff > 0:
+            hi = vol
+        else:
+            lo = vol
+        vega_raw = bs.vega * 100.0  # dPrice / dVol
+        if vega_raw > 1e-5:
+            nxt = vol - diff / vega_raw
+            vol = nxt if lo < nxt < hi else 0.5 * (lo + hi)
+        else:
+            vol = 0.5 * (lo + hi)
+    return round(vol, 4)
 
 
 def suggest_contract(symbol: str, spot: float, side: str, hist_vol: float, lot: int | None,

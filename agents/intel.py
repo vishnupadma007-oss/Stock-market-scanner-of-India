@@ -11,8 +11,8 @@ The analyzer only acts on agreement between several items or on one major item, 
 reviews strong forecasts before any trade.
 """
 import json
-import threading
 import re
+import threading
 from datetime import datetime
 from pathlib import Path
 
@@ -136,7 +136,7 @@ def sectors_in(text: str) -> list[str]:
 # Results previews state what analysts expect, the bar the results must clear, not news about the company.
 PREVIEW = r"\b(results?|earnings|q[1-4]) preview\b|preview:|\bwhat to expect\b|\bmay (post|report|rise|fall|see)\b|" \
           r"\bexpected to (post|report)\b"
-ROUNDUP = r"\blive\b|stocks? to (watch|buy)|top (gainers|losers)|gainers and losers|buzzing stocks|" \
+ROUNDUP = r"\blive\b|stocks? to (watch|buy)|top (\w+ )?(gainers|losers)|gainers and losers|buzzing stocks|" \
           r"stocks? in (news|focus)|market highlights|closing bell|opening bell|report today|results today|" \
           r"top (10|ten) (most valued )?(firms|companies)|m-?cap of top|lose .{0,20} in (m-?cap|market (value|valuation))"
 

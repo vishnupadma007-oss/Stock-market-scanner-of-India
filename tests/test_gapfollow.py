@@ -78,3 +78,33 @@ def test_mover_forecast_adds_preopen_gap_fade_candidates(monkeypatch, tmp_path):
     rows = {r["symbol"]: r for r in mover_forecast.forecast(datetime(2026, 10, 26, 9, 10))}
     assert rows["AUBANK"]["preopen_gap"] == -5.2 and "results" in rows["AUBANK"]["why"]
     assert "fade" in rows["WIPRO"]["direction"]
+
+
+def test_preopen_idea_needs_the_move_to_continue_after_the_open(monkeypatch, tmp_path):
+    import watcher
+    from tests.test_teams import FakeIndMoney, CFG
+    monkeypatch.setattr(watcher, "IDEAS", tmp_path / "ideas.csv")
+    reached = []  # ideas that got past the pre-open gate (traded, or stopped by a later check)
+    monkeypatch.setattr(watcher, "log_skip", lambda *a: reached.append("skip"))
+
+    class Gapped(FakeIndMoney):
+        def __init__(self, live):
+            super().__init__(move=-1.5)
+            self.live = live
+
+        async def quotes(self, keys, segments=None):
+            return {"INDS01469": {"entity_stats": {"live_price": self.live, "day_open": 1760.0,
+                                                   "day_change_percentage": -1.5}}}
+
+    cfg = {**CFG, "capital": 200000}
+    for t, live, passes in ((datetime(2026, 10, 21, 9, 20, tzinfo=IST), 1750.0, False),   # before 09:30
+                            (datetime(2026, 10, 21, 9, 40, tzinfo=IST), 1770.0, False),   # recovering above the open
+                            (datetime(2026, 10, 21, 9, 40, tzinfo=IST), 1750.0, True)):   # still falling
+        reached.clear()
+        watcher._daily.clear()
+        watcher.reset_daily(t.date().isoformat())
+        watcher._daily["ideas"] = {"TECHM": {"direction": "down", "confidence": 80, "source": "preopen",
+                                             "reason": "pre-open", "priced_in": "x", "at": t}}
+        trades = []
+        asyncio.run(watcher.news_team(Gapped(live), trades, t, cfg))
+        assert bool(trades or reached) == passes

@@ -28,6 +28,19 @@ def hit_probability(move: float, sigma_per_min: float, minutes_left: float) -> f
     return max(0.0, min(1.0, prob))
 
 
+def _gamma_adjusted_move(premium_move: float, abs_delta: float, gamma: float) -> float | None:
+    """Second-order Taylor approximation solving:
+    0.5 * gamma * dS^2 + abs_delta * dS - premium_move = 0
+    for a long option (gamma > 0), falling back to linear dS = premium_move / abs_delta.
+    """
+    if abs_delta <= 0:
+        return None
+    if gamma <= 1e-8 or premium_move <= 0:
+        return premium_move / abs_delta
+    disc = abs_delta * abs_delta + 2.0 * gamma * premium_move
+    return (-abs_delta + math.sqrt(max(0.0, disc))) / gamma
+
+
 def plan(option: dict, trades_today: int, now: datetime, cfg: dict,
          sigma_per_min: float = 0.0, spread_pct: float | None = None,
          forecast: dict | None = None) -> dict:
@@ -38,6 +51,9 @@ def plan(option: dict, trades_today: int, now: datetime, cfg: dict,
         blocks.append(f"Outside entry window {cfg['entry_start']}-{cfg['entry_end']} IST.")
 
     premium, lot = float(option["est_premium"]), option["lot_size"]
+    if cfg.get("min_premium") and premium < float(cfg["min_premium"]):
+        blocks.append(f"Option premium ₹{premium:.2f} is below the ₹{float(cfg['min_premium']):.2f} minimum.")
+
     budget = cfg["capital"] * cfg["max_capital_per_trade"]
     if lot:
         lots = int(budget // (premium * lot))
@@ -51,15 +67,20 @@ def plan(option: dict, trades_today: int, now: datetime, cfg: dict,
     target = exit_for_net_target(premium, qty, cfg["net_target_pct"], cfg["charges"])
     # You buy at the ask and sell at the bid, so the option's price must also cover the spread.
     spread_pct = cfg["assumed_spread_pct"] if spread_pct is None else spread_pct
+    if cfg.get("max_spread_pct") and spread_pct > float(cfg["max_spread_pct"]):
+        blocks.append(f"Bid-ask spread {spread_pct:.2f}% exceeds the {float(cfg['max_spread_pct']):.2f}% limit.")
+
     spread_cost = premium * spread_pct / 100.0
 
     # Forecast: option price if the stock reaches the forecast reversal level.
     forecast_premium = None
     delta = float(option.get("delta") or 0.0)  # no delta quoted: no move or chance estimate
     abs_delta = abs(delta)
+    gamma = max(0.0, float(option.get("gamma") or 0.0))
 
     if forecast and forecast.get("level") is not None and abs_delta > 0:
-        forecast_premium = premium + abs_delta * forecast["move"] - spread_cost
+        f_move = float(forecast["move"])
+        forecast_premium = premium + abs_delta * f_move + 0.5 * gamma * (f_move ** 2) - spread_cost
         if cfg.get("target_mode") == "forecast":
             # Aim for part of the forecast move, never below the minimum net target.
             aim = round(premium + cfg.get("forecast_capture", 0.7) * (forecast_premium - premium), 1)
@@ -72,11 +93,13 @@ def plan(option: dict, trades_today: int, now: datetime, cfg: dict,
                     "gross_move_pct": round((aim / premium - 1.0) * 100.0, 2),
                     "charges": charges,
                     "net_profit": round((aim - premium) * qty - charges["total"], 2),
+                    "break_even_premium": target.get("break_even_premium", premium),
                 }
 
     premium_move = target["exit_premium"] - premium + spread_cost
     # Underlying move needed for the option to reach the target premium (delta approximation).
     underlying_move = premium_move / abs_delta if abs_delta > 0 else None
+    gamma_adj_move = _gamma_adjusted_move(premium_move, abs_delta, gamma)
 
     square_off = datetime.combine(now.date(), _t(cfg["square_off_time"]), now.tzinfo)
     minutes_left = max(0.0, (square_off - now).total_seconds() / 60.0)
@@ -96,6 +119,12 @@ def plan(option: dict, trades_today: int, now: datetime, cfg: dict,
     # Estimate theta decay over the remaining holding window (375 min session)
     theta_day = float(option.get("theta_day") or 0.0)
     expected_theta_decay = abs(theta_day) * (minutes_left / 375.0)
+    # Expected time to target (~15 min typical win) theta drag
+    theta_15m = abs(theta_day) * (min(minutes_left, 15.0) / 375.0)
+    theta_adjusted_move = ((premium_move + theta_15m) / abs_delta) if abs_delta > 0 else None
+
+    total_friction = target["charges"]["total"] + spread_cost * qty
+    reward_to_cost = round(target["net_profit"] / total_friction, 2) if total_friction > 0 else 0.0
 
     return {
         "allowed": not blocks,
@@ -106,11 +135,15 @@ def plan(option: dict, trades_today: int, now: datetime, cfg: dict,
         "qty": qty,
         "capital_used": round(premium * qty, 2),
         "entry_premium": premium,
+        "break_even_premium": target.get("break_even_premium", premium),
         "target_premium": target["exit_premium"],
         "gross_move_pct": target["gross_move_pct"],
         "charges": target["charges"],
         "net_profit": target["net_profit"],
+        "reward_to_cost_ratio": reward_to_cost,
         "underlying_move": round(underlying_move, 2) if underlying_move else None,
+        "gamma_adjusted_move": round(gamma_adj_move, 2) if gamma_adj_move else None,
+        "theta_adjusted_move": round(theta_adjusted_move, 2) if theta_adjusted_move else None,
         "spread_pct": spread_pct,
         "hit_probability": prob,
         "minutes_left": minutes_left,

@@ -17,11 +17,11 @@ import sys
 import tempfile
 import threading
 from concurrent.futures import ThreadPoolExecutor
-from pathlib import Path
 from datetime import datetime, timedelta
+from pathlib import Path
+from urllib.parse import quote
 
 import requests
-from urllib.parse import quote
 
 FEED = "https://www.nseindia.com/api/corporate-announcements?index=equities"
 HEADERS = {
@@ -142,7 +142,7 @@ ROWS = {
     "revenue": _LEAD + r"((total )?revenue from operations|(total )?income from operations|"
                        r"(net )?sales\s*/?\s*income from operations|net sales|interest earned)",
     "profit": _LEAD + r"(net )?profit\s*/?\s*(\(?loss\)?\s*)?(from ordinary activities\s*)?(after (tax|taxation)|"
-                      r"for the (period|quarter|year)|attributable to (the )?(owners|equity))",
+                      r"for the (period|quarter|year)|attributable to (the )?(owners|equity|shareholders))",
 }
 
 
@@ -191,19 +191,32 @@ def _row(key: str, lines: list[str], start: int = 0) -> tuple[int, dict] | None:
     return None
 
 
-def figures_from_text(text: str) -> dict:
-    """First results table in the filing: current quarter, previous quarter and the same quarter
-    last year, with QoQ and YoY growth. Profit is read from the same table as revenue (the first
-    profit row after the revenue row), so a summary table elsewhere is not mixed in."""
-    lines = [clean_ocr_numbers(l) if re.search(r"\d", l) else l for l in text.splitlines()]
+def _extract_table(lines: list[str], start: int = 0) -> dict:
     out = {}
-    rev = _row("revenue", lines)
+    rev = _row("revenue", lines, start)
     if rev:
         out["revenue"] = rev[1]
-    prof = _row("profit", lines, rev[0] + 1 if rev else 0) or (_row("profit", lines) if rev else None)
+    prof = _row("profit", lines, rev[0] + 1 if rev else start) or (_row("profit", lines, start) if rev else None)
     if prof:
         out["profit"] = prof[1]
     return out
+
+
+def figures_from_text(text: str) -> dict:
+    """First results table in the filing (preferring Consolidated over Standalone when both
+    exist and Consolidated has complete revenue + profit): current quarter, previous quarter
+    and the same quarter last year, with QoQ and YoY growth. Profit is read from the same table
+    as revenue (the first profit row after the revenue row), so a summary table elsewhere is
+    not mixed in."""
+    lines = [clean_ocr_numbers(l) if re.search(r"\d", l) else l for l in text.splitlines()]
+    # Prefer Consolidated financial results when a filing contains Standalone first and Consolidated second
+    for idx, line in enumerate(lines):
+        if re.search(r"\bconsolidated\b.*(financial results|statement of)", line, re.I):
+            cons = _extract_table(lines, idx)
+            if "revenue" in cons and "profit" in cons:
+                return cons
+            break
+    return _extract_table(lines, 0)
 
 
 def highlights(text: str, limit: int = 12) -> list[str]:

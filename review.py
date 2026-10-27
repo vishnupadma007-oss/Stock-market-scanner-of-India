@@ -62,6 +62,27 @@ def _stats(g: pd.DataFrame) -> str:
             f"avg {g['net_pct'].mean():+.2f}% of premium, net ₹{g['net_pnl'].sum():,.0f}")
 
 
+def _risk_summary(df: pd.DataFrame) -> str:
+    """Institutional risk & payoff asymmetry metrics: Profit Factor, Win/Loss Payoff,
+    Required Breakeven Hit Rate, and Max Drawdown."""
+    if df.empty:
+        return ""
+    pnl = df["net_pnl"].fillna(0.0)
+    wins = pnl[pnl > 0]
+    losses = pnl[pnl < 0]
+    gross_win = float(wins.sum()) if len(wins) else 0.0
+    gross_loss = abs(float(losses.sum())) if len(losses) else 0.0
+    pf = f"{gross_win / gross_loss:.2f}" if gross_loss > 0 else "∞"
+    avg_win = float(wins.mean()) if len(wins) else 0.0
+    avg_loss = abs(float(losses.mean())) if len(losses) else 0.0
+    be_hit = f"{avg_loss / (avg_win + avg_loss) * 100:.1f}%" if (avg_win + avg_loss) > 0 else "n/a"
+    cum = pnl.cumsum()
+    peak = np.maximum.accumulate(np.r_[0.0, cum.to_numpy()])[1:]
+    max_dd = float((cum - peak).min()) if len(cum) else 0.0
+    return (f"Profit factor {pf}, avg win ₹{avg_win:,.0f} vs avg loss ₹-{avg_loss:,.0f} "
+            f"(break-even hit rate {be_hit}), max drawdown ₹{max_dd:,.0f}")
+
+
 def _breakdown(df: pd.DataFrame, title: str, key) -> list[str]:
     lines = [f"**{title}**", ""]
     for name, g in df.groupby(key, observed=True):
@@ -69,7 +90,7 @@ def _breakdown(df: pd.DataFrame, title: str, key) -> list[str]:
     return lines + [""]
 
 
-NEWS_STRATEGIES = ("results", "intel", "news")
+NEWS_STRATEGIES = ("results", "intel", "news", "results-gap", "preopen", "spurt")
 
 
 def team_of(strategy: pd.Series) -> pd.Series:
@@ -116,7 +137,8 @@ def review(df: pd.DataFrame, day: str, since: str, capitals: dict | None = None,
         out.append("")
 
     out += ["## All paper trades so far", "", _stats(df),
-            f"Worst trade {df['net_pct'].min():+.2f}%, best {df['net_pct'].max():+.2f}%", ""]
+            f"Worst trade {df['net_pct'].min():+.2f}%, best {df['net_pct'].max():+.2f}%",
+            _risk_summary(df), ""]
 
     reviewed = df[df["claude_verdict"].isin(["TRADE", "SKIP"])]
     if not reviewed.empty:

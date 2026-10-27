@@ -1,5 +1,5 @@
 """Mover Forecast (morning brief): which F&O stocks are likely to be today's top gainers and
-losers, and how their direction will be decided.
+losers, and how their direction and target price will be decided.
 
 What our data says makes a top mover (26 Oct 2026, 1 year x 76 stocks): a results day makes a
 stock about 5x more likely to be among the day's five biggest movers, and on results days the
@@ -8,7 +8,8 @@ other driver: the Data Analyzer's strong views. So:
   - results since the last close: expected size = the stock's typical results-day move (3 years of
     its own reactions, falling back to the 2.3% all-stock median); direction = set by the open
     (results-gap rule, agents/gapfollow.py), never by the figures alone (coin flip);
-  - strong news views (Data Analyzer): direction = the forecast, size = the stock's usual daily move.
+  - strong news views (Data Analyzer): direction = the forecast, size = the stock's usual daily move;
+  - target price: projected underlying target price based on expected percentage movement.
 
     python -m agents.mover_forecast        # ranked list for the morning brief
 """
@@ -66,20 +67,31 @@ def forecast(now: datetime | None = None, top: int = 12) -> list[dict]:
     rows = []
     for sym in universe:
         view = analyzer.stock_view(sym, items, now)
-        gap = (pre.get(sym) or {}).get("gap_pct")
+        pre_info = pre.get(sym) or {}
+        gap = pre_info.get("gap_pct")
+        prev = pre_info.get("prev_close")
         if sym in reported:
-            rows.append({"symbol": sym, "why": "results since last session", "expected_move_pct": results_move(sym),
+            exp_move = results_move(sym)
+            target_str = f"₹{prev * (1 + exp_move / 100):.1f} / ₹{prev * (1 - exp_move / 100):.1f}" if prev else "Pending open"
+            rows.append({"symbol": sym, "why": "results since last session", "expected_move_pct": exp_move,
                          "direction": "follow the gap if the first 15 min agree (results-gap rule)",
-                         "news_view": f"{view['direction']} {view['confidence']}%", "preopen_gap": gap})
+                         "news_view": f"{view['direction']} {view['confidence']}%", "preopen_gap": gap,
+                         "prev_close": prev, "expected_target_price": target_str})
         elif gap is not None and abs(gap) >= 2:
+            exp_move = abs(gap)
+            reversal_target = round(prev * (1 - 0.5 * gap / 100), 1) if prev else None
             rows.append({"symbol": sym, "why": f"pre-open gap {gap:+.1f}%, no results: ordinary-day gaps tend to reverse",
-                         "expected_move_pct": abs(gap), "direction": "fade candidate (movers team)", "news_view": "",
-                         "preopen_gap": gap})
+                         "expected_move_pct": exp_move, "direction": "fade candidate (movers team)", "news_view": "",
+                         "preopen_gap": gap, "prev_close": prev, "expected_target_price": f"₹{reversal_target}" if reversal_target else ""})
         elif view["strong"]:
             from .reaction import typical_move
+            exp_move = typical_move(sym) or 1.5
+            sign = 1 if view["direction"] == "up" else -1
+            target_val = round(prev * (1 + sign * exp_move / 100), 1) if prev else None
             rows.append({"symbol": sym, "why": "strong news: " + "; ".join(view["reasons"][:1])[:90],
-                         "expected_move_pct": typical_move(sym) or 1.0,
-                         "direction": f"{view['direction']} ({view['confidence']}%)", "news_view": "", "preopen_gap": gap})
+                         "expected_move_pct": exp_move,
+                         "direction": f"{view['direction']} ({view['confidence']}%)", "news_view": "", "preopen_gap": gap,
+                         "prev_close": prev, "expected_target_price": f"₹{target_val}" if target_val else ""})
     # Results first (the strongest driver), then by expected size.
     rows.sort(key=lambda r: (r["why"] != "results since last session", -r["expected_move_pct"]))
     return rows[:top]
@@ -88,7 +100,8 @@ def forecast(now: datetime | None = None, top: int = 12) -> list[dict]:
 def main() -> None:
     for r in forecast():
         pre = f"pre-open {r['preopen_gap']:+.1f}%  " if r.get("preopen_gap") is not None else ""
-        print(f"{r['symbol']:11} ~{r['expected_move_pct']:.1f}%  {pre}{r['direction']:44} {r['why'][:70]}"
+        tgt = f"target {r['expected_target_price']}  " if r.get("expected_target_price") else ""
+        print(f"{r['symbol']:11} ~{r['expected_move_pct']:.1f}%  {pre}{tgt}{r['direction']:40} {r['why'][:65]}"
               + (f"  [news reads {r['news_view']}]" if r["news_view"] else ""))
 
 

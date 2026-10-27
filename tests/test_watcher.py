@@ -339,3 +339,222 @@ def test_day_before_expiry_always_rolls():
     fb = {"days": 7, "min_premium": 5.0, "max_spread_pct": 2.0, "always_days": 2}
     assert needs_next_month(good, near, date(2026, 10, 26), fb)        # expiry tomorrow: roll even a fine contract
     assert not needs_next_month(good, near, date(2026, 10, 22), fb)    # 5 days left and fine: keep it
+
+
+def test_implied_volatility_and_live_greeks_enrichment():
+    from datetime import date
+    from agents import indmoney, options
+    bs = options.black_scholes(1800.0, 1800.0, 15 / 365.0, 0.065, 0.28, is_call=True)
+    iv = options.implied_volatility(bs.price, 1800.0, 1800.0, 15 / 365.0, 0.065, is_call=True)
+    assert abs(iv - 0.28) < 0.005
+
+    opt = indmoney.pick_option(chain(), "gainer", "ITM1", today=date(2026, 10, 16))
+    assert opt is not None
+    assert opt["gamma"] > 0 and opt["theta_day"] < 0 and opt["vega"] > 0 and opt["iv_used"] > 0
+
+    # Crossed book (ask < bid) must be rejected
+    crossed = chain(put_bid=51.0, put_ask=50.1)
+    assert indmoney.pick_option(crossed, "gainer", "ITM1") is None
+
+
+def test_results_gap_belongs_to_news_team_everywhere():
+    import review
+    trade = {"date": "2026-10-26", "status": "OPEN", "strategy": "results-gap", "entry_ask": "20", "qty": "500", "net_pnl": ""}
+    assert watcher.team_of(trade) == "news"
+    assert watcher.has_open([trade], "news") and not watcher.has_open([trade], "movers")
+    s = pd.Series(["reversal", "results", "intel", "results-gap"])
+    assert list(review.team_of(s)) == ["movers", "news", "news", "news"]
+
+
+def test_save_trades_preserves_concurrent_verdicts_and_external_trades(tmp_path, monkeypatch):
+    trades_file = tmp_path / "paper_trades.csv"
+    monkeypatch.setattr(watcher, "TRADES", trades_file)
+
+    row1 = {f: "" for f in watcher.FIELDS}
+    row1.update(date="2026-10-26", opened="10:00", symbol="TCS", contract="TCS-PUT", status="OPEN",
+                qty="500", entry_ask="40", target_bid="40.6")
+    watcher.save_trades([row1])
+
+    # Simulate cycle() loading initial trades
+    loaded = watcher.load_trades()
+    baseline = {watcher._trade_key(r) for r in loaded}
+
+    # Meanwhile on disk: Claude adds claude_verdict to row1 AND paper_trade.py appends row2
+    row1_disk = {**row1, "claude_verdict": "TRADE", "notes": "Confirmed by Claude"}
+    row2_disk = {f: "" for f in watcher.FIELDS}
+    row2_disk.update(date="2026-10-26", opened="10:01", symbol="INFY", contract="INFY-CALL", status="OPEN",
+                     qty="400", entry_ask="25", target_bid="25.4", strategy="results")
+    watcher.save_trades([row1_disk, row2_disk])
+
+    # Now cycle() finishes and saves its in-memory `loaded` list (where row1 has empty claude_verdict and row2 is absent)
+    loaded[0]["status"] = "TARGET"
+    loaded[0]["exit_bid"] = "40.7"
+    watcher.save_trades(loaded, baseline_keys=baseline)
+
+    final = watcher.load_trades()
+    assert len(final) == 2
+    assert final[0]["status"] == "TARGET" and final[0]["claude_verdict"] == "TRADE"
+    assert final[1]["symbol"] == "INFY" and final[1]["contract"] == "INFY-CALL"
+
+
+def test_square_off_fallback_when_bid_is_missing(capsys):
+    class ZeroBidAtClose(FakeIndMoney):
+        async def quotes(self, keys, segments=None):
+            return {k: {"entity_stats": {"bid_price": 0.0, "live_price": 47.5}} for k in keys}
+
+    trades = [{f: "" for f in watcher.FIELDS} | {
+        "date": "2026-10-16", "opened": "11:00", "symbol": "TECHM", "contract": "TECHM-27-OCT-1800-PUT",
+        "derivative_id": "P1800", "qty": "600", "entry_ask": "50.1", "target_bid": "50.85", "status": "OPEN"
+    }]
+    asyncio.run(watcher.manage_open_trades(ZeroBidAtClose(), trades, datetime(2026, 10, 16, 15, 21, tzinfo=IST), CFG))
+    assert trades[0]["status"] == "SQUARED_OFF"
+    assert trades[0]["exit_bid"] == 47.5
+
+
+def test_movers_same_symbol_loss_cooldown():
+    now = datetime(2026, 10, 16, 11, 0, tzinfo=IST)
+    cfg = {**CFG, "capital": 200000, "teams": {"movers": {"news_votes": True}}}
+    trades = [{f: "" for f in watcher.FIELDS} | {
+        "date": "2026-10-16", "opened": "10:00", "symbol": "TECHM", "side": "gainer",
+        "contract": "TECHM-27-OCT-1780-PUT", "status": "SQUARED_OFF", "net_pnl": "-1200",
+        "entry_ask": "38.0", "qty": "600", "strategy": "reversal"
+    }]
+    asyncio.run(watcher.scan(FakeIndMoney(), trades, now, cfg))
+    assert len(trades) == 1  # TECHM gainer skipped after earlier loss on same symbol+side today
+
+
+def test_news_team_respects_daymode_and_vix_panic(tmp_path, monkeypatch):
+    from tests.test_teams import FakeIndMoney as FakeNewsIM, NOW as TEAM_NOW, idea
+    day_file = tmp_path / "day_mode.json"
+    monkeypatch.setattr(watcher.daymode, "PATH", day_file)
+    monkeypatch.setattr(watcher.daymode.load, "__defaults__", (day_file,))
+
+    # 1. Avoid list blocks TECHM
+    day_file.write_text(json.dumps({"date": TEAM_NOW.date().isoformat(), "mode": "normal", "avoid": ["TECHM"]}))
+    idea("up")
+    trades = []
+    asyncio.run(watcher.news_team(FakeNewsIM(move=1.2), trades, TEAM_NOW, {**CFG, "capital": 200000}))
+    assert trades == []
+
+    # 2. VIX panic blocks news team
+    day_file.write_text(json.dumps({"date": TEAM_NOW.date().isoformat(), "mode": "normal", "avoid": []}))
+
+    class HighVixIM(FakeNewsIM):
+        async def quotes(self, keys, segments=None):
+            q = await super().quotes(keys, segments)
+            q[watcher.VIX_KEY] = {"entity_stats": {"live_price": 28.5, "day_change_percentage": 18.0}}
+            return q
+
+    idea("up")
+    trades = []
+    asyncio.run(watcher.news_team(HighVixIM(move=1.2), trades, TEAM_NOW, {**CFG, "capital": 200000, "max_vix": 22}))
+    assert trades == []
+
+
+def test_risk_liquidity_vetoes_and_second_order_moves():
+    from agents import risk
+    opt = {"est_premium": 3.5, "lot_size": 1000, "delta": -0.5, "gamma": 0.015, "theta_day": -1.2}
+    r = risk.plan(opt, 0, datetime(2026, 10, 16, 11, 0), {**CFG, "capital": 100000, "min_premium": 5.0, "max_spread_pct": 2.0},
+                  spread_pct=2.8)
+    assert not r["allowed"]
+    assert any("minimum" in b for b in r["blocks"]) and any("spread" in b for b in r["blocks"])
+    assert r["gamma_adjusted_move"] <= r["underlying_move"]
+    assert r["theta_adjusted_move"] >= r["underlying_move"]
+    assert r["reward_to_cost_ratio"] > 0
+
+
+def test_chart_reader_climax_absorption_and_momentum_fade():
+    from agents import chart_reader, momentum
+    df = intraday(SPIKE_THEN_FADE)
+    today_idx = df[df.index.date == df.index[-1].date()].index
+    peak_ts = today_idx[19]
+    df.loc[peak_ts, "High"] = 112.0
+    df.loc[peak_ts, "Close"] = 109.5
+    df.loc[peak_ts, "Volume"] = 5000.0
+    res = chart_reader.read_chart(df, {"dist_sma20_atr": 0, "chg_1w": 0}, "gainer")
+    assert any("Climax volume absorption" in s[0] for s in res["signals"])
+
+    from tests.test_teams import _candles
+    bad_candle = _candles(2500, green=True)
+    bad_candle.iloc[-1, bad_candle.columns.get_loc("High")] = 105.0
+    bad_candle.iloc[-1, bad_candle.columns.get_loc("Close")] = 100.1
+    book = {"NSE": {"total_bid_qty": 30000, "total_ask_qty": 10000}}
+    assert not momentum.early_signals(bad_candle, book, "up")["ok"]
+
+
+def test_consolidated_results_preferred_over_standalone():
+    from agents import announcements
+    filing_text = """
+    Statement of Standalone Financial Results for the Quarter Ended September 30, 2026
+    1 Revenue from operations      10,000    9,800    9,500
+    2 Net Profit after tax          1,000      950      900
+
+    Statement of Consolidated Financial Results for the Quarter Ended September 30, 2026
+    1 Revenue from operations      45,000   42,000   36,000
+    2 Net Profit after tax          5,400    4,800    4,000
+    """
+    figs = announcements.figures_from_text(filing_text)
+    assert figs["revenue"]["quarter"] == 45000 and figs["profit"]["quarter"] == 5400
+
+
+def test_top_nifty_gainers_roundup_and_review_risk_summary(tmp_path):
+    import review
+    from agents import intel
+    i = intel.make_item(id="k1", time="2026-10-26 10:00:00", source="MC", kind="news",
+                        headline="Kotak Mahindra Bank stock jumps 2%, among top Nifty gainers after Q2 results")
+    assert i["sentiment"] == 0.0
+
+    df = pd.DataFrame({
+        "date": ["2026-10-21", "2026-10-22"], "opened": ["10:00", "11:00"], "closed": ["10:30", "15:20"],
+        "symbol": ["INFY", "PNB"], "side": ["gainer", "loser"], "contract": ["C1", "C2"],
+        "entry_ask": [30.0, 5.0], "exit_bid": [30.6, 4.0], "qty": [500, 1000],
+        "spread_pct": [0.8, 1.2], "hit_probability": [90, 75], "chart_score": [80, 70],
+        "status": ["TARGET", "SQUARED_OFF"], "net_pnl": [600.0, -1000.0], "net_pct": [2.0, -20.0],
+        "hit": [True, False], "claude_verdict": ["TRADE", "SKIP"], "strategy": ["reversal", "results-gap"],
+        "oi_type": ["long build-up", ""]
+    })
+    txt = review.review(df, "2026-10-22", "2026-10-18")
+    assert "Profit factor 0.60" in txt and "break-even hit rate" in txt and "max drawdown" in txt
+
+
+def test_preopen_and_volume_spurt_ideas_generation(tmp_path, monkeypatch):
+    from agents import preopen
+    preopen_mock = {
+        "TECHM": {"iep": 1820.0, "gap_pct": 1.68, "prev_close": 1790.0, "buy_sell_ratio": 1.85, "volume": 50000},
+        "INFY": {"iep": 1180.0, "gap_pct": -1.80, "prev_close": 1201.6, "buy_sell_ratio": 0.55, "volume": 45000},
+    }
+    spurts_mock = {
+        "WIPRO": {"symbol": "WIPRO", "volume_x": 3.8, "change_pct": 2.1},
+    }
+    monkeypatch.setattr(preopen, "load", lambda kind, day: preopen_mock if kind == "preopen" else spurts_mock)
+    monkeypatch.setattr(watcher, "IDEAS", tmp_path / "ideas.csv")
+    watcher._daily.clear()
+    now = datetime(2026, 10, 27, 9, 20, tzinfo=IST)
+    watcher.reset_daily(now.date().isoformat())
+
+    c = {**watcher.NEWS_DEFAULTS, "preopen_rule": True, "spurt_rule": True}
+    universe = {"TECHM", "INFY", "WIPRO"}
+    watcher.preopen_early_ideas(now, c, set(), universe)
+    watcher.volume_spurt_ideas(now, c, set(), universe)
+
+    ideas = watcher._daily.get("ideas", {})
+    assert "TECHM" in ideas and ideas["TECHM"]["direction"] == "up" and ideas["TECHM"]["source"] == "preopen"
+    assert "INFY" in ideas and ideas["INFY"]["direction"] == "down" and ideas["INFY"]["source"] == "preopen"
+    assert "WIPRO" in ideas and ideas["WIPRO"]["direction"] == "up" and ideas["WIPRO"]["source"] == "spurt"
+
+
+def test_news_team_dynamic_forecast_target_replaces_one_percent():
+    from tests.test_teams import FakeIndMoney as FakeNewsIM, NOW as TEAM_NOW, idea
+    idea("up", confidence=85)
+    # Set an expected move of 3.5%
+    watcher._daily["ideas"]["TECHM"]["expected_move_pct"] = 3.5
+    trades = []
+    cfg_news = {**CFG, "capital": 200000, "teams": {**CFG.get("teams", {}), "news": {
+        **watcher.NEWS_DEFAULTS, "capital": 200000, "target_mode": "forecast", "forecast_capture": 0.6
+    }}}
+    asyncio.run(watcher.news_team(FakeNewsIM(move=1.2), trades, TEAM_NOW, cfg_news))
+    assert len(trades) == 1
+    t = trades[0]
+    # At 3.5% move on ₹1790 spot, underlying move is ~₹62.65, so option aim is well above the ₹50.85 1% target!
+    assert float(t["target_bid"]) > 52.0
+    assert float(t["target_bid"]) > float(t["entry_ask"]) * 1.02

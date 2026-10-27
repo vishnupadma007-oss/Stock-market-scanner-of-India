@@ -12,8 +12,8 @@ never committed. Access is read-only (market:read and portfolio:read; INDmoney r
 but this module only calls market-data tools).
 """
 import asyncio
-import contextlib
 import base64
+import contextlib
 import hashlib
 import json
 import os
@@ -26,8 +26,14 @@ from datetime import datetime, timedelta
 from pathlib import Path
 from urllib.parse import parse_qs, urlencode, urlparse
 
-import httpx2
+try:
+    import httpx2
+except ImportError:
+    import httpx as httpx2
 import pandas as pd
+
+from .options import black_scholes, implied_volatility
+
 try:
     from mcp.client.session import ClientSession
     from mcp.client.streamable_http import streamable_http_client
@@ -50,8 +56,8 @@ CALL_COST = {"get_indian_stocks_movers": 2}  # INDmoney counts some tools double
 
 def _usage() -> list[list[float]]:
     try:
-        rows = json.loads(USAGE_FILE.read_text())
-    except (FileNotFoundError, json.JSONDecodeError):
+        rows = json.loads(USAGE_FILE.read_text(encoding="utf-8"))
+    except (FileNotFoundError, json.JSONDecodeError, OSError):
         return []
     return [r for r in rows if r[0] > time.time() - 3600]
 
@@ -64,7 +70,9 @@ def record_call(tool: str, cost: int | None = None) -> None:
     with _usage_lock:
         rows = _usage() + [[time.time(), CALL_COST.get(tool, 1) if cost is None else cost, tool]]
         USAGE_FILE.parent.mkdir(parents=True, exist_ok=True)
-        USAGE_FILE.write_text(json.dumps(rows))
+        tmp = USAGE_FILE.with_suffix(".tmp")
+        tmp.write_text(json.dumps(rows), encoding="utf-8")
+        tmp.replace(USAGE_FILE)
 
 
 def calls_last_hour() -> int:
@@ -74,18 +82,22 @@ def calls_last_hour() -> int:
 # Even pacing: calls are spread evenly through the hour instead of in bursts. With a budget of
 # 450 calls/hour each call waits until 8 seconds after the previous one (16 for a double-cost call).
 _pace = {"gap": 3600 / 450, "next": 0.0}
+_pace_lock = threading.Lock()
 
 
 def set_hourly_budget(calls_per_hour: int) -> None:
-    _pace["gap"] = 3600 / calls_per_hour
+    with _pace_lock:
+        _pace["gap"] = 3600 / max(1, calls_per_hour)
 
 
 async def _wait_turn(cost: int) -> None:
-    now = time.monotonic()
-    start = max(now, _pace["next"])
-    _pace["next"] = start + cost * _pace["gap"]
-    if start > now:
-        await asyncio.sleep(start - now)
+    with _pace_lock:
+        now = time.monotonic()
+        start = max(now, _pace["next"])
+        _pace["next"] = start + cost * _pace["gap"]
+        delay = max(0.0, start - now)
+    if delay > 0:
+        await asyncio.sleep(delay)
 
 
 class LoginRequired(RuntimeError):
@@ -103,7 +115,10 @@ class RateLimited(RuntimeError):
 # ---------------------------------------------------------------- token handling
 
 def _load() -> dict:
-    data = json.loads(TOKEN_FILE.read_text()) if TOKEN_FILE.exists() else {}
+    try:
+        data = json.loads(TOKEN_FILE.read_text(encoding="utf-8")) if TOKEN_FILE.exists() else {}
+    except (json.JSONDecodeError, OSError):
+        data = {}
     # Allow bootstrapping from environment secrets (e.g. a cloud environment's settings).
     for key in ("client_id", "client_secret", "refresh_token"):
         env = os.environ.get(f"INDMONEY_{key.upper()}")
@@ -114,8 +129,10 @@ def _load() -> dict:
 
 def _save(data: dict) -> None:
     TOKEN_FILE.parent.mkdir(parents=True, exist_ok=True)
-    TOKEN_FILE.write_text(json.dumps(data, indent=1))
-    TOKEN_FILE.chmod(0o600)
+    tmp = TOKEN_FILE.with_suffix(".tmp")
+    tmp.write_text(json.dumps(data, indent=1), encoding="utf-8")
+    tmp.chmod(0o600)
+    tmp.replace(TOKEN_FILE)
 
 
 def _store_tokens(data: dict, resp: dict) -> None:
@@ -264,14 +281,16 @@ class IndMoney:
         """This month's contract; in expiry week, next month's when this month's fails the checks
         (too cheap or too wide a bid-ask gap). One extra chain call, only in that case."""
         chain = await self.option_chain(ind_key)
-        option = pick_option(chain, side, cfg["strike_choice"])
+        option = pick_option(chain, side, cfg["strike_choice"], today=today,
+                             rate=cfg.get("risk_free_rate", 0.065))
         fb = cfg.get("expiry_fallback") or {}
         if not needs_next_month(option, chain, today, fb):
             return option
         later = sorted(e for e in chain.get("expiry_list") or [] if e > str(chain.get("selected_expiry")))
         if not later:
             return option
-        nxt = pick_option(await self.option_chain(ind_key, expiry=later[0]), side, cfg["strike_choice"])
+        nxt = pick_option(await self.option_chain(ind_key, expiry=later[0]), side, cfg["strike_choice"],
+                          today=today, rate=cfg.get("risk_free_rate", 0.065))
         # Both months unusable: keep the narrower bid-ask gap (the team's own checks decide after that).
         if nxt is None or (option is not None and _fails(nxt, fb)
                            and (not _fails(option, fb) or option["spread_pct"] <= nxt["spread_pct"])):
@@ -354,8 +373,11 @@ def contract_expiry(name: str, today) -> "date":
     return d.replace(year=d.year + 1) if (today - d).days > 180 else d
 
 
-def pick_option(chain: dict, side: str, strike_choice: str) -> dict | None:
-    """Real contract from the live chain: PE for a gainer, CE for a loser, ATM or one strike ITM."""
+def pick_option(chain: dict, side: str, strike_choice: str, today=None, rate: float = 0.065) -> dict | None:
+    """Real contract from the live chain: PE for a gainer, CE for a loser, ATM or one strike ITM.
+    Rejects crossed/inverted quotes (ask < bid) and enriches missing Greeks (gamma, theta_day, vega, iv_used)
+    via implied volatility inversion when spot and expiry are known.
+    """
     rows = chain.get("option_chain_data") or []
     spot = chain.get("entity_details", {}).get("live_price")
     if not rows or not spot:
@@ -369,15 +391,35 @@ def pick_option(chain: dict, side: str, strike_choice: str) -> dict | None:
     leg = row.get("put_data" if side == "gainer" else "call_data") or {}
     bid = float(leg.get("buy_price", leg.get("bp")) or 0)
     ask = float(leg.get("sell_price", leg.get("sp")) or 0)
-    if bid <= 0 or ask <= 0 or not leg.get("derivative_id") or not leg.get("slug") \
+    if bid <= 0 or ask <= 0 or ask < bid or not leg.get("derivative_id") or not leg.get("slug") \
             or not chain.get("selected_expiry"):
-        return None  # strike not quoted on this side, or an incomplete reply
+        return None  # strike not quoted, crossed book, or an incomplete reply
     expiry = pd.to_datetime(chain["selected_expiry"]).date()
+    is_call = side != "gainer"
+    strike = float(strikes[i])
+    mid = 0.5 * (bid + ask)
+    ref_day = today if today is not None else min(datetime.now().date(), expiry)
+    days_left = max((expiry - ref_day).days, 1)
+    years = days_left / 365.0
+    iv = float(leg.get("iv") or leg.get("implied_volatility") or 0.0)
+    if iv > 3.0:  # percentage format (e.g. 24.5 -> 0.245)
+        iv /= 100.0
+    if iv <= 0:
+        iv = implied_volatility(mid, float(spot), strike, years, rate=rate, is_call=is_call)
+    bs = black_scholes(float(spot), strike, years, rate, iv, is_call=is_call)
+    delta = leg.get("delta")
+    if delta is None or delta == 0:
+        delta = round(bs.delta, 4)
     return {
         "contract": f"{leg['slug'].upper()}", "derivative_id": leg["derivative_id"],
         "type": "PE" if side == "gainer" else "CE", "strike": strikes[i], "expiry": expiry,
+        "days_to_expiry": days_left,
         "bid": bid, "ask": ask, "ltp": leg.get("current_price"), "est_premium": ask,
-        "spread_pct": (ask - bid) / ask * 100, "delta": leg.get("delta") or (-0.5 if side == "gainer" else 0.5),
+        "spread_pct": (ask - bid) / ask * 100, "delta": delta,
+        "gamma": round(float(leg.get("gamma") or bs.gamma), 6),
+        "theta_day": round(float(leg.get("theta") or bs.theta), 3),
+        "vega": round(float(leg.get("vega") or bs.vega), 3),
+        "iv_used": round(iv, 4),
         "lot_size": leg.get("lot_size"), "oi_tag": row.get("oi_trend_tag"), "spot": spot,
     }
 

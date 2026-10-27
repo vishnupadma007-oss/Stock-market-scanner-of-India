@@ -22,6 +22,12 @@ teams:
     max_move_pct: 4.0      # ...but not more (move used up)
     max_age_min: 120       # forget ideas older than this
     min_trend_score: 60    # Trend Checker (agents/momentum.py): the chart must back the news (0-100)
+    target_mode: forecast  # user decision: 1% target removed for news team; dynamic forecast-based target
+    forecast_capture: 0.6  # aim for 60% of the forecasted underlying move on the option premium
+    min_forecast_move_pct: 1.5 # minimum expected underlying move %
+    preopen_rule: true     # use NSE pre-open order flow imbalances for early opening trades (09:15-09:45)
+    preopen_confirm_from: "09:30"  # Claude, 27 Oct: pre-open ideas trade only from 09:30 while still moving the gap's way since the open
+    spurt_rule: true       # use NSE volume spurts (3x+ volume) for early intraday momentum participation
     gap_rule: true         # results-gap follower (agents/gapfollow.py, 26 Oct): stocks with results since the last close that open
     gap_from: "09:30"      # 1%+ away from Nifty and keep going in the first 15 min -> trade WITH the gap, whatever the figures say.
     gap_until: "10:30"     # Results-day gaps carried on 61-75% of the time (1 year), unlike ordinary-day gaps (movers' fade trade)
@@ -36,7 +42,7 @@ teams:
     max_capital_per_trade: 1.0  # user, 26 Oct: no per-trade limit; a trade may use all the free money (was 0.5)
 max_capital_per_trade: 1.0   # share of available money one trade may use (1.0 = all of it)
 max_trades_per_day: 50     # effectively no cap: trade every setup that passes the agents
-net_target_pct: 1.0        # target profit per trade, % of premium paid, AFTER all charges
+net_target_pct: 1.0        # target profit per trade for movers team, % of premium paid, AFTER all charges
 
 # How often the watcher looks. INDmoney allows 500 calls per hour for the whole account.
 # The watcher spreads its share evenly (450/hour = one call every 8 s, never in bursts), so:
