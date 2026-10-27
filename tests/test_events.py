@@ -168,3 +168,11 @@ def test_ocr_rows_are_cleaned_and_checked():
     assert announcements.figures_from_text(eternal)["revenue"]["prev_quarter"] == 20211
     assert announcements.figures_from_text("Revenue from operations 524551 524.493 385.93") == {}  # garbled: rejected
     assert announcements.clean_ocr_numbers("Net profit 1o5 2,4l0") == "Net profit 105 2,410"
+
+
+def test_change_pct_reads_loss_to_profit_as_a_rise():
+    from agents.announcements import change_pct
+    assert change_pct(169.0, -264.0) == 164.0
+    assert change_pct(-50.0, -100.0) == 50.0   # smaller loss is better
+    assert change_pct(110.0, 100.0) == 10.0
+    assert change_pct(1.0, 0) is None

@@ -179,6 +179,12 @@ def plausible(key: str, nums: list[float]) -> bool:
     return not same_sign or max(vals) / min(vals) <= 10
 
 
+def change_pct(cur: float, base: float) -> float | None:
+    """% change measured against the size of the base, so a loss turning into a profit reads as a
+    rise (-264 -> +169 is +164%, not -164%)."""
+    return round((cur - base) / abs(base) * 100.0, 1) if base else None
+
+
 def _row(key: str, lines: list[str], start: int = 0) -> tuple[int, dict] | None:
     for i in range(start, len(lines)):
         if re.search(ROWS[key], lines[i], re.I):
@@ -186,8 +192,7 @@ def _row(key: str, lines: list[str], start: int = 0) -> tuple[int, dict] | None:
             if len(nums) >= 3 and plausible(key, nums[:3]):
                 cur, prev_q, prev_y = nums[:3]
                 return i, {"quarter": cur, "prev_quarter": prev_q, "year_ago": prev_y,
-                           "qoq_pct": round((cur / prev_q - 1.0) * 100.0, 1) if prev_q else None,
-                           "yoy_pct": round((cur / prev_y - 1.0) * 100.0, 1) if prev_y else None}
+                           "qoq_pct": change_pct(cur, prev_q), "yoy_pct": change_pct(cur, prev_y)}
     return None
 
 

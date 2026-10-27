@@ -52,3 +52,4 @@ date,time,symbol,direction,confidence,source,priced_in
 2026-10-26,09:48,INFY,down,95,intel,largely priced in
 2026-10-26,10:16,AUBANK,down,88,intel,some pessimism priced in
 2026-10-26,11:39,POWERGRID,up,67,intel,
+2026-10-27,08:41,INFY,down,100,intel,partly priced in
