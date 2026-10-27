@@ -1,0 +1,4 @@
+time,symbol,direction,confidence,move_pct,reason
+09:15,INFY,down,100,-2.45,Trend Checker 0 < 60
+11:14,INFY,down,100,-2.04,Trend Checker 10 < 60
+11:20,INFY,down,100,-2.05,Trend Checker 10 < 60
