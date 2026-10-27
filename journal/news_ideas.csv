@@ -69,3 +69,5 @@ date,time,symbol,direction,confidence,source,priced_in
 2026-10-27,11:14,TCS,down,92,intel,largely priced in
 2026-10-27,11:14,WIPRO,down,87,intel,largely priced in
 2026-10-27,11:14,HCLTECH,down,86,intel,partly priced in
+2026-10-27,12:06,BEL,up,76,intel,not priced in
+2026-10-27,12:06,HAL,up,81,intel,not priced in
