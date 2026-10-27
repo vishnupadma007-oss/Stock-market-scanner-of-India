@@ -53,3 +53,10 @@ date,time,symbol,direction,confidence,source,priced_in
 2026-10-26,10:16,AUBANK,down,88,intel,some pessimism priced in
 2026-10-26,11:39,POWERGRID,up,67,intel,
 2026-10-27,08:41,INFY,down,100,intel,partly priced in
+2026-10-27,08:44,KOTAKBANK,up,74,intel,largely priced in
+2026-10-27,08:44,ITC,up,68,intel,not priced in
+2026-10-27,08:44,BPCL,down,85,intel,some pessimism priced in
+2026-10-27,08:44,AUBANK,down,66,intel,pessimism priced in
+2026-10-27,08:44,PAYTM,down,82,intel,largely priced in
+2026-10-27,08:44,POLICYBZR,down,72,intel,some pessimism priced in
+2026-10-27,08:44,DRREDDY,up,55,intel,largely priced in
