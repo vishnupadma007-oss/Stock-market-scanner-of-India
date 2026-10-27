@@ -48,3 +48,4 @@ latest date here before it allows a new proposal.
 | 2026-10-27 | News team pre-open rule: ideas trade only from 09:30 and only while the stock is still moving the gap's way since the open (`preopen_confirm_from`) | Replay of 26 Oct: all 8 stocks the rule picked (sell-heavy IT gap-downs) rallied after the open (Infosys +4.3%, Coforge +8.7% open to close); 1 year of data: ordinary-day gaps reverse more often than they continue | Claude (user allowed further enhancements) |
 | 2026-10-27 | Results parser | % change vs a negative base (loss to profit) now reads as a rise, not a fall (Paytm read "weak" on a turnaround) | bug fix |
 | 2026-10-27 | News Guard | Results filed after the previous session's close count as "results out today" (REC, filed 16:37 the evening before, slipped through as a movers bounce trade) | bug fix |
+| 2026-10-27 | INDmoney budget | 420 -> 380 calls/hour: the server cut us off at 401 counted calls at 12:12 (short pause) | safety |

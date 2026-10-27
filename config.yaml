@@ -50,7 +50,7 @@ net_target_pct: 1.0        # target profit per trade for movers team, % of premi
 # with a trade open, its exit price is checked every 15 seconds.
 scan_interval_min: 0
 exit_check_seconds: 15
-indmoney_hourly_budget: 420   # counted like INDmoney does (details calls per instrument); leaves ~80 for Claude
+indmoney_hourly_budget: 380   # INDmoney cut us off at 401 counted on 27 Oct; counted like INDmoney does (details calls per instrument); leaves ~80 for Claude
 # One trade at a time: while a trade is open, no new trades or signals (no Claude credits).
 # Setups that qualify meanwhile are only recorded in journal/held_setups.csv (checked every
 # hold_scan_min). After the exit, a fresh scan runs on the next tick.
