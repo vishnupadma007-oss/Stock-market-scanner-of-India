@@ -60,3 +60,7 @@ date,time,symbol,direction,confidence,source,priced_in
 2026-10-27,08:44,PAYTM,down,82,intel,largely priced in
 2026-10-27,08:44,POLICYBZR,down,72,intel,some pessimism priced in
 2026-10-27,08:44,DRREDDY,up,55,intel,largely priced in
+2026-10-27,09:15,GRASIM,down,75,preopen,NSE pre-open order imbalance
+2026-10-27,09:15,BAJAJFINSV,down,75,preopen,NSE pre-open order imbalance
+2026-10-27,09:15,MPHASIS,down,75,preopen,NSE pre-open order imbalance
+2026-10-27,09:15,JSWSTEEL,down,75,preopen,NSE pre-open order imbalance
