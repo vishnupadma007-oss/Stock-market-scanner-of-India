@@ -64,3 +64,5 @@ date,time,symbol,direction,confidence,source,priced_in
 2026-10-27,09:15,BAJAJFINSV,down,75,preopen,NSE pre-open order imbalance
 2026-10-27,09:15,MPHASIS,down,75,preopen,NSE pre-open order imbalance
 2026-10-27,09:15,JSWSTEEL,down,75,preopen,NSE pre-open order imbalance
+2026-10-27,09:43,RELIANCE,up,70,intel,partly priced in
+2026-10-27,09:43,COFORGE,up,43,intel,largely priced in
