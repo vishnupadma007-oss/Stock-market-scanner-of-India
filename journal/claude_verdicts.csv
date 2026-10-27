@@ -16,3 +16,4 @@ date,symbol,contract,verdict,reason
 2026-10-27,PFC,PFC-23-NOV-310-CALL,SKIP,"52-week low with fresh shorts (futures OI +11%); the 38% bounce level (313.6) prices the option at 13.71, below the 14.10 target"
 2026-10-27,TCS,TCS-23-NOV-2500-PUT,SKIP,"Already -2.5% and largely priced in; needs ~0.9% more (~2450); IT sell-offs rallied back on 26 Oct; ~20k premium with no stop-loss"
 2026-10-27,HINDUNILVR,HINDUNILVR-23-NOV-1760-CALL,TRADE,"Low held for 100 min, back above VWAP; target needs only ~+0.2% on the stock and the 38% bounce level prices the option at 63.69 > 62.75"
+2026-10-27,RECLTD,RECLTD-23-NOV-285-CALL,SKIP,"Results-reaction day (filed 26 Oct 16:37, down 4%): results moves carry on 61-75%, fading one goes against our data; News Guard missed it (fixed)"

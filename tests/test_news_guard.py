@@ -26,7 +26,9 @@ def test_results_and_regulatory_filings_block_any_side():
     assert news_guard.check("TCS", "gainer", [], results, NOW)["block"]
     order = [{"category": "REGULATORY", "time": "2026-09-24 10:00:00", "text": "SEBI order against the company"}]
     assert news_guard.check("TCS", "loser", [], order, NOW)["block"]
-    yesterday = [{"category": "RESULTS", "time": "2026-09-23 16:30:00", "text": "financial results"}]
+    yesterday = [{"category": "RESULTS", "time": "2026-09-23 12:30:00", "text": "financial results"}]
+    evening = [{"category": "RESULTS", "time": "2026-09-23 16:30:00", "text": "financial results"}]
+    assert news_guard.check("TCS", "gainer", [], evening, NOW)["block"]  # after the close: today reacts
     assert not news_guard.check("TCS", "gainer", [], yesterday, NOW)["block"]
 
 

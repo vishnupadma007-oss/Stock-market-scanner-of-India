@@ -558,3 +558,12 @@ def test_news_team_dynamic_forecast_target_replaces_one_percent():
     # At 3.5% move on ₹1790 spot, underlying move is ~₹62.65, so option aim is well above the ₹50.85 1% target!
     assert float(t["target_bid"]) > 52.0
     assert float(t["target_bid"]) > float(t["entry_ask"]) * 1.02
+
+
+def test_news_guard_counts_results_filed_after_last_close():
+    from agents import news_guard
+    now = datetime(2026, 10, 27, 12, 0, tzinfo=IST)
+    evening = [{"category": "RESULTS", "time": "2026-10-26 16:37:19", "text": "results"}]
+    assert news_guard.check("RECLTD", "loser", [], evening, now)["block"]
+    midday = [{"category": "RESULTS", "time": "2026-10-26 11:00:00", "text": "results"}]
+    assert not news_guard.check("RECLTD", "loser", [], midday, now)["block"]

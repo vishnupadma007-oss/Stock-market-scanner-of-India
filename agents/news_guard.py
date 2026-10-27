@@ -12,9 +12,9 @@ shared intelligence log and today's filings.
     side "gainer": we buy a PUT expecting a fade   -> good news strongly behind the stock blocks it
     side "loser":  we buy a CALL expecting a bounce -> bad news strongly behind the fall blocks it
 """
-from datetime import datetime
+from datetime import datetime, timedelta
 
-from . import analyzer
+from . import analyzer, holidays
 
 REGULATORY = ("REGULATORY",)
 
@@ -29,11 +29,14 @@ def check(symbol: str, side: str, items: list[dict], filings: list[dict], now: d
     if any(str(d) == today for d in results_dates or []):
         reasons.append("Results due today: stocks run up or sell off into results, and the reaction is a coin flip")
 
+    # Results filed after the previous session's close are today's news: today is the reaction day.
+    since = f"{holidays.previous_trading_day(now.date() - timedelta(days=1))} 15:00"
     for f in filings:
-        if not str(f.get("time", "")).startswith(today):
-            continue
-        if f.get("category") == "RESULTS":
+        t = str(f.get("time", ""))
+        if f.get("category") == "RESULTS" and t >= since:
             reasons.append("Results out today: results-day moves are large and their direction unpredictable")
+        elif not t.startswith(today):
+            continue
         elif f.get("category") in REGULATORY:
             reasons.append(f"Regulatory filing today: {str(f.get('text', ''))[:90]}")
 
