@@ -16,3 +16,4 @@ def keep_journal_clean(monkeypatch, tmp_path):
     monkeypatch.setattr(watcher, "GUARD_LOG", tmp_path / "news_guard.csv")
     monkeypatch.setattr(watcher, "SKIPS_DIR", tmp_path / "skips")
     monkeypatch.setattr(watcher.preopen, "DIR", tmp_path / "exchange")
+    monkeypatch.setattr(watcher.activity, "DIR", tmp_path / "exchange")

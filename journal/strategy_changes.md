@@ -49,3 +49,6 @@ latest date here before it allows a new proposal.
 | 2026-10-27 | Results parser | % change vs a negative base (loss to profit) now reads as a rise, not a fall (Paytm read "weak" on a turnaround) | bug fix |
 | 2026-10-27 | News Guard | Results filed after the previous session's close count as "results out today" (REC, filed 16:37 the evening before, slipped through as a movers bounce trade) | bug fix |
 | 2026-10-27 | INDmoney budget | 420 -> 380 calls/hour: the server cut us off at 401 counted calls at 12:12 (short pause) | safety |
+| 2026-10-27 | INDmoney quotes | Price requests sent in batches of 10 (the server limit): the news team asked for 12 and failed every cycle from 09:17 to 11:14, missing Paytm and AU Bank | bug fix |
+| 2026-10-27 | Error alerts | A repeating error shows again every 10 min with a count (was once an hour, which hid the 2-hour news-team outage); alert filter now includes `repeats` | visibility |
+| 2026-10-27 | News team: F&O Activity | New agents/activity.py (NSE OI spurts, all F&O stocks, every 2 min): an OI build-up the news's way allows the early entry from 0.2% and adds 15 points to the Trend Checker. Replaces NSE volume spurts as the early signal (that page never lists F&O stocks). Untested on history: snapshots saved daily to judge it | user request (news + volume cross-check, enter earlier) |

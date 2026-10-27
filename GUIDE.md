@@ -140,6 +140,7 @@ few INDmoney calls rather than after a full scan (calls are paced ~8 s apart).
 | Policy Impact | `agents/policy.py` (+ `policy-impact` skill) | Rulebook: RBI rates/CRR/risk weights, SEBI F&O, IRDAI commission caps, telecom tariffs, GST, duties, windfall tax, PLI, defence, visas, pharma tariffs...; who is hit or helped and how much; reversed, delayed or "talk" (may/might/expect/question) headlines count less; POLICY lines |
 | Commodities | `agents/commodities.py` | MCX crude, gas, gold, silver, copper, aluminium, zinc, nickel; 3%+ moves and the stocks they hit (COMMODITY lines) |
 | NSE pre-open + volume spurts | `agents/preopen.py` | Pre-open indicative open price, gap, buy/sell quantities (saved daily at 09:08); stocks trading 3x+ their 1-week volume (every 5 min). Free NSE pages, no INDmoney calls |
+| F&O Activity | `agents/activity.py` | Every 2 min from NSE's free OI-spurts page (all F&O stocks in one call): open interest change + price move = long/short build-up. A build-up the news's way lets the news team enter early (from 0.2%) and adds 15 points to the Trend Checker. Saved to `journal/intel/activity-<date>.jsonl`; untested on history, judged after a few weeks. (NSE's volume-spurts page lists only the top 25 market-wide and never showed an F&O stock on 27 Oct) |
 | Valuation | `agents/valuation.py` | P/E (P/B for banks and NBFCs) vs the sector-peer median, daily snapshot `journal/valuations/` |
 | Holidays | `agents/holidays.py` | NSE holiday calendar; nothing trades on closed days |
 

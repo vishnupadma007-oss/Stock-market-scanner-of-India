@@ -27,7 +27,9 @@ teams:
     min_forecast_move_pct: 1.5 # minimum expected underlying move %
     preopen_rule: true     # use NSE pre-open order flow imbalances for early opening trades (09:15-09:45)
     preopen_confirm_from: "09:30"  # Claude, 27 Oct: pre-open ideas trade only from 09:30 while still moving the gap's way since the open
-    spurt_rule: true       # use NSE volume spurts (3x+ volume) for early intraday momentum participation
+    spurt_rule: true       # NSE volume spurts (lists only the top 25 market-wide: rarely an F&O stock)
+    activity_rule: true    # F&O build-up (OI up + price the news's way) confirms a news idea early (agents/activity.py)
+    activity_min_oi_pct: 5.0
     gap_rule: true         # results-gap follower (agents/gapfollow.py, 26 Oct): stocks with results since the last close that open
     gap_from: "09:30"      # 1%+ away from Nifty and keep going in the first 15 min -> trade WITH the gap, whatever the figures say.
     gap_until: "10:30"     # Results-day gaps carried on 61-75% of the time (1 year), unlike ordinary-day gaps (movers' fade trade)

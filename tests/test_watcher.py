@@ -567,3 +567,14 @@ def test_news_guard_counts_results_filed_after_last_close():
     assert news_guard.check("RECLTD", "loser", [], evening, now)["block"]
     midday = [{"category": "RESULTS", "time": "2026-10-26 11:00:00", "text": "results"}]
     assert not news_guard.check("RECLTD", "loser", [], midday, now)["block"]
+
+
+def test_repeated_errors_show_again_with_a_count(monkeypatch, capsys):
+    t = [1000.0]
+    monkeypatch.setattr(watcher.clock, "time", lambda: t[0])
+    watcher._errors_seen.clear(); watcher._errors_count.clear()
+    for step in range(5):
+        watcher.emit("ERROR", {"error": "MCPError: boom"})
+        t[0] += 200
+    out = capsys.readouterr().out.strip().splitlines()
+    assert len(out) == 2 and '"repeats": 2' in out[1]  # shown at 0 s and 600 s; two hidden between

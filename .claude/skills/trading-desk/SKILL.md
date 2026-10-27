@@ -95,7 +95,7 @@ One short research pass that sets the day's mode. Keep it to a handful of search
    `python -m agents.indmoney finish "<address>"` and test again.
 2. Start the watcher in the background: `python watcher.py` (Bash, `run_in_background: true`,
    timeout 7200000). Then wait for its output with Monitor, waking only on lines that need action
-   (filter: `^(SIGNAL|EXIT|RESULT|SHOCK) |^STATUS.*"watching": false|^ERROR.*(login|Login|limit|budget|Stale)|Traceback`).
+   (filter: `^(SIGNAL|EXIT|RESULT|SHOCK) |^STATUS.*"watching": false|^ERROR.*(login|Login|limit|budget|Stale|repeats)|Traceback`).
    FORECAST, POLICY, COMMODITY and NEWS lines are still written to the log and acted on by the
    news team automatically; summarise them in the evening review instead of reacting one by one
    (user decision 24 Oct: saves Claude credits; yesterday 66 of 72 alerts needed no action). Waiting costs

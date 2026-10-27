@@ -29,7 +29,7 @@ from datetime import datetime, time, timedelta
 from pathlib import Path
 from zoneinfo import ZoneInfo
 
-from agents import (analyzer, announcements, candles, commodities, concalls, daymode, expectations,
+from agents import (activity, analyzer, announcements, candles, commodities, concalls, daymode, expectations,
                     gapfollow, holidays, intel, macro, news, news_guard, newsfeed, policy, preopen,
                     psychology, reaction, shock, valuation)
 from agents.chart_reader import read_chart
@@ -59,6 +59,7 @@ FILINGS_LOG = Path(__file__).resolve().parent / "journal" / "announcements.csv"
 IDEAS = Path(__file__).resolve().parent / "journal" / "news_ideas.csv"  # the news team's trade ideas
 
 _errors_seen: dict[str, float] = {}
+_errors_count: dict[str, int] = {}
 _daily: dict = {}  # once-a-day lookups: results calendar, crude contract
 _daily_lock = threading.RLock()
 _trades_lock = threading.RLock()
@@ -374,9 +375,15 @@ _print_lock = threading.Lock()  # the information track and the scanner both pri
 def emit(kind: str, payload: dict) -> None:
     with _print_lock:
         if kind == "ERROR":
+            # The same error is shown once per 10 minutes, then with how often it repeated: on 27 Oct a
+            # once-an-hour rule hid the news team failing every cycle for two hours.
             key = payload.get("error", "")[:120]
-            if clock.time() - _errors_seen.get(key, 0) < 3600:
+            _errors_count[key] = _errors_count.get(key, 0) + 1
+            if clock.time() - _errors_seen.get(key, 0) < 600:
                 return
+            if _errors_count[key] > 1:
+                payload = {**payload, "repeats": _errors_count[key] - 1}
+            _errors_count[key] = 0
             _errors_seen[key] = clock.time()
         print(f"{kind} {json.dumps(payload, default=str)}", flush=True)
 
@@ -410,6 +417,13 @@ def poll_exchange(cfg: dict, now: datetime) -> None:
         for sp in spurts:  # keep the first sighting of each stock, with the time
             seen.setdefault(sp["symbol"], {**sp, "time": now.strftime("%H:%M")})
         preopen.save("spurts", now.date(), seen)
+    pre = preopen.load("preopen", now.date()) or {}
+    if pre and market_open(now) and clock.time() - _daily.get("activity_at", 0) >= 120:
+        _daily["activity_at"] = clock.time()
+        rows = activity.fetch(cfg["universe"], {s: p["prev_close"] for s, p in pre.items() if p.get("prev_close")})
+        with _daily_lock:
+            _daily["activity"] = rows
+        activity.save(now.date(), now, rows)
 
 
 def information_track(cfg: dict) -> None:
@@ -817,6 +831,9 @@ NEWS_DEFAULTS = {
     "gap_rule": False,      # results-gap follower (agents/gapfollow.py)
     "gap_from": "09:30", "gap_until": "10:30", "gap_min_pct": 1.0, "gap_confidence": 75, "gap_max_move_pct": 8.0,
     "early_entry": False,   # enter before confirm_pct on volume + order book (agents/momentum.early_signals)
+    "activity_rule": True,  # F&O build-up the news's way (agents/activity.py): allows the early entry, +points on the trend
+    "activity_min_oi_pct": 5.0,
+    "activity_points": 15,
     "early_pct": 0.2,       # ...once the stock has moved at least this much the news's way
     "early_volume_x": 1.5,  # ...latest 5-min candle volume vs usual at that time of day
     "early_book_x": 1.5,    # ...NSE buyers vs sellers (sellers vs buyers for "down")
@@ -848,9 +865,17 @@ async def news_team(im: IndMoney, trades: list[dict], now: datetime, cfg: dict) 
                    key=lambda x: -x[1]["confidence"])[:10]
     if not ideas:
         return
-    for sym, _ in ideas:
+    for sym, _ in list(ideas):
         if sym not in _stock_keys:
-            _stock_keys[sym] = await expectations.stock_key(im, sym)
+            try:
+                _stock_keys[sym] = await expectations.stock_key(im, sym)
+            except (LoginRequired, RateLimited):
+                raise
+            except Exception as e:  # one stock's lookup must not stop the whole team
+                emit("ERROR", {"error": f"news team lookup {sym}: {type(e).__name__}: {e}"})
+                ideas.remove((sym, _))
+    if not ideas:
+        return
     quotes = await im.quotes([_stock_keys[sym] for sym, _ in ideas] + [NIFTY_KEY, VIX_KEY])
     # Market Context agent: how Nifty is moving and why (geopolitics, policy, economy, flows...).
     n_stats = (quotes.get(NIFTY_KEY) or {}).get("entity_stats") or {}
@@ -890,18 +915,25 @@ async def news_team(im: IndMoney, trades: list[dict], now: datetime, cfg: dict) 
                 continue
             daily = await daily_candles(im, _stock_keys[sym], now.date())
             intraday = await im.candles(_stock_keys[sym], "5minute", "7d")
+            # F&O Activity: derivatives traders building positions the news's way (agents/activity.py)
+            act = (_daily.get("activity") or {}).get(sym)
+            act_ok = c.get("activity_rule") and activity.confirms(act, idea["direction"], c["activity_min_oi_pct"])
             if early:
                 book = await im.quotes([_stock_keys[sym]], segments=["depth"])
                 sig = early_signals(intraday, (book.get(_stock_keys[sym]) or {}).get("market_depth"),
                                     idea["direction"], c["early_volume_x"], c["early_book_x"])
-                if not sig["ok"]:
+                if not sig["ok"] and not act_ok:
                     _daily["trend_failed"][sym] = now
-                    log_skip(now, sym, idea, move, "early entry: " + "; ".join(sig["notes"]))
+                    log_skip(now, sym, idea, move, "early entry: " + "; ".join(sig["notes"])
+                             + (f"; {activity.note(act)}" if act else ""))
                     continue
                 trend = {"score": None, "signals": [(f"Early entry: price {move:+.2f}%", 0)] +
-                         [(n, 0) for n in sig["notes"]]}
+                         [(n, 0) for n in sig["notes"]] + ([(activity.note(act), 0)] if act_ok else [])}
             else:
                 trend = read_trend(intraday, stock_profile(daily) if len(daily) >= 25 else {}, idea["direction"])
+                if act_ok:
+                    trend = {"score": min(100, trend["score"] + c["activity_points"]),
+                             "signals": trend["signals"] + [(activity.note(act), c["activity_points"])]}
                 if trend["score"] < c["min_trend_score"]:
                     _daily["trend_failed"][sym] = now
                     log_skip(now, sym, idea, move, f"Trend Checker {trend['score']} < {c['min_trend_score']}")
