@@ -1,11 +1,11 @@
 {
-  "date": "2026-10-26",
+  "date": "2026-10-27",
   "mode": "normal",
   "notes": [
-    "Expected Nifty open about flat (-0.1%, likely -0.6% to +0.5%): S&P 500 -0.5%, Brent -3.2% since Friday's close (cheaper crude helps India)",
-    "Weekend results: Infosys (revenue +10% YoY, +1.9% QoQ; profit +1.7% YoY), BPCL weak (profit -21% YoY, swing vs last quarter), Kotak profit +26% YoY, AU Bank profit -37% YoY, IDFC First revenue +20%; IndusInd, Coforge, Dr Reddy's filings not read automatically",
-    "Results today (F&O): Paytm, REC. Tomorrow: Bajaj Auto, Cipla, L&T, Maruti, SAIL, Tata Steel",
-    "Analyzer: Vedanta down 91% (metals sell-off), JSW Steel up 80% (results + penalty relief), Eternal up 76%"
+    "Expected Nifty open about +0.35% (likely -0.2% to +0.9%): S&P 500 +0.7% since Monday's close",
+    "October F&O expiry today: both teams use November contracts (expiry-day rule)",
+    "Results today (F&O): L&T, Maruti, Bajaj Auto, Cipla, Tata Steel, SAIL; last evening: Paytm (read as weak), REC",
+    "New today: user's enhancement pack (forecast targets for the news team, pre-open and volume-spurt ideas with a since-the-open check)"
   ],
-  "avoid": ["INFY", "BPCL", "KOTAKBANK", "INDUSINDBK", "DRREDDY", "COFORGE", "AUBANK", "IDFCFIRSTB", "SHRIRAMFIN", "JSWSTEEL", "PAYTM", "RECLTD"]
+  "avoid": []
 }
