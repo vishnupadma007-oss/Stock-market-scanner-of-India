@@ -214,10 +214,29 @@ def test_one_lot_allowed_when_half_the_money_is_less_than_a_lot():
     cheap_lot = {"ask": 10.0, "lot_size": 500}     # Rs 5,000: fits in half of Rs 16,696
     big_lot = {"ask": 30.0, "lot_size": 400}       # Rs 12,000: more than half, less than all
     assert watcher.capital_share(cheap_lot, {"capital": 16696}, c) == 0.5
-    assert watcher.capital_share(big_lot, {"capital": 16696}, c) == 1.0
+    share = watcher.capital_share(big_lot, {"capital": 16696}, c)
+    assert 0.5 < share < 1.0  # just enough for one lot
     from agents.risk import plan
-    r = plan({**big_lot, "est_premium": 30.0, "delta": 0.55}, 0, NOW, {**CFG, "capital": 16696, "max_capital_per_trade": 1.0})
+    r = plan({**big_lot, "est_premium": 30.0, "delta": 0.55}, 0, NOW, {**CFG, "capital": 16696, "max_capital_per_trade": share})
     assert r["qty"] == 400  # exactly one lot
+
+
+def test_free_money_is_split_over_the_empty_slots():
+    c = {"max_capital_per_trade": 1.0, "max_open_trades": 4}
+    lot = {"ask": 10.0, "lot_size": 100}  # Rs 1,000 a lot
+    assert watcher.capital_share(lot, {"capital": 40000}, c, open_now=0) == 0.25
+    assert watcher.capital_share(lot, {"capital": 30000}, c, open_now=1) == 1 / 3
+    assert watcher.capital_share(lot, {"capital": 10000}, c, open_now=3) == 1.0
+    big = {"ask": 100.0, "lot_size": 500}  # Rs 50,000: more than all the free money
+    assert watcher.capital_share(big, {"capital": 40000}, c) == 1.0  # the Risk agent then blocks it
+
+
+def test_team_full_counts_open_trades_against_the_limit():
+    cfg = {**CFG, "max_open_trades": 2}
+    rows = [{"status": "OPEN", "strategy": "reversal"}, {"status": "OPEN", "strategy": "intel"}]
+    assert not watcher.team_full(rows, cfg, "movers")
+    assert watcher.team_full(rows + [{"status": "OPEN", "strategy": "reversal"}], cfg, "movers")
+    assert watcher.team_full(rows, {**CFG, "max_open_trades": 1}, "news")
 
 
 def test_top_up_adds_paper_money_but_not_profit():

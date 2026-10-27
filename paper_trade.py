@@ -19,7 +19,7 @@ from agents.config import load_config
 from agents.indmoney import IndMoney
 from agents.risk import plan
 from watcher import (FIELDS, IST, NEWS_DEFAULTS, TEAMS, _t, _trade_key, account, capital_share,
-                     has_open, load_trades, rolled_note, save_trades, team_cfg, team_of,
+                     has_open, load_trades, max_open, open_count, team_full, rolled_note, save_trades, team_cfg, team_of,
                      valuation_view)
 
 
@@ -40,8 +40,10 @@ def check_rules(trades: list[dict], now: datetime, cfg: dict, symbol: str | None
         return f"{symbol} is on today's avoid list"
     if not _t(cfg["entry_start"]) <= now.time() <= _t(cfg["entry_end"]):
         return f"outside the entry window {cfg['entry_start']}-{cfg['entry_end']}"
-    if has_open(trades, "news") and cfg.get("one_trade_at_a_time", True):
-        return "a news-team trade is already open (one at a time)"
+    if team_full(trades, cfg, "news"):
+        return f"{max_open(cfg, 'news')} news-team trade(s) already open: the team's limit"
+    if symbol and any(t["status"] == "OPEN" and t.get("symbol") == symbol and team_of(t) == "news" for t in trades):
+        return f"a news-team trade on {symbol} is already open"
     return None
 
 
@@ -94,7 +96,9 @@ async def open_trade(symbol: str, direction: str, strategy: str, reason: str, ex
         "capital": free,
         "target_mode": news_cfg.get("target_mode", "forecast"),
         "forecast_capture": news_cfg.get("forecast_capture", 0.6),
-        "max_capital_per_trade": capital_share(option, {**cfg, "capital": free}, news_cfg),
+        "max_capital_per_trade": capital_share(option, {**cfg, "capital": free},
+                                               {**news_cfg, "max_open_trades": max_open(cfg, "news")},
+                                               open_count(trades, "news")),
     }
 
     risk = plan(option, trades_today, now, cfg_news,

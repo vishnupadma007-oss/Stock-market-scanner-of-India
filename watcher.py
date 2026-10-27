@@ -584,6 +584,11 @@ async def scan(im: IndMoney, trades: list[dict], now: datetime, cfg: dict, hold:
                    if t.get("date") == today and team_of(t) == "movers"
                    and t.get("status") == "SQUARED_OFF" and float(t.get("net_pnl") or 0) < 0}
     trades_today = sum(t["date"] == today and team_of(t) == "movers" for t in trades)
+    # Several trades at once (user, 27 Oct), each sized from the money still free; never two on one stock.
+    free_now = float(cfg["capital"])
+    open_now = open_count(trades, "movers")
+    open_syms = {t.get("symbol") for t in trades if t["status"] == "OPEN" and team_of(t) == "movers"}
+    slots = {"max_capital_per_trade": cfg["max_capital_per_trade"], "max_open_trades": max_open(cfg, "movers")}
     # The movers team picks trades from price only; news, filings and forecasts are the news team's
     # job. It borrows that knowledge as a safety brake (News Guard): serious news against a trade
     # makes it skip the stock (e.g. IRDAI's commission caps: PB Fintech -36% in a day).
@@ -609,7 +614,7 @@ async def scan(im: IndMoney, trades: list[dict], now: datetime, cfg: dict, hold:
         for m in movers:
             if yield_to_news and news_pending.is_set():
                 return  # a fresh news idea: let the news team act first
-            if (m["symbol"], side) in stopped_out:
+            if (m["symbol"], side) in stopped_out or m["symbol"] in open_syms:
                 continue
             try:
                 daily = await daily_candles(im, m["ind_key"], now.date())
@@ -633,7 +638,9 @@ async def scan(im: IndMoney, trades: list[dict], now: datetime, cfg: dict, hold:
                     continue
                 prev_close = m.get("previous_close") or m["price"] / (1 + m["change_pct"] / 100)
                 forecast = reversal_target(intraday, float(prev_close), side)
-                risk = plan(option, trades_today, now, cfg, sigma_per_min=intraday_sigma_per_min(intraday),
+                sized = {**cfg, "capital": free_now,
+                         "max_capital_per_trade": capital_share(option, {"capital": free_now}, slots, open_now)}
+                risk = plan(option, trades_today, now, sized, sigma_per_min=intraday_sigma_per_min(intraday),
                             spread_pct=option["spread_pct"], forecast=forecast)
                 extras = []
                 if news_votes:
@@ -676,8 +683,11 @@ async def scan(im: IndMoney, trades: list[dict], now: datetime, cfg: dict, hold:
                 trades.append(row)
                 taken.add(option["contract"])
                 trades_today += 1
-                if cfg.get("one_trade_at_a_time", True):
-                    hold = True  # the rest of this scan only records setups (one trade at a time)
+                open_now += 1
+                open_syms.add(m["symbol"])
+                free_now -= float(option["ask"]) * int(risk["qty"])
+                if open_now >= slots["max_open_trades"] or free_now <= 0:
+                    hold = True  # every slot (or all the money) in use: the rest of this scan only records setups
                 emit("SIGNAL", {
                     "team": "movers",
                     **{k: row[k] for k in ("symbol", "side", "contract", "qty", "entry_ask", "target_bid",
@@ -783,16 +793,31 @@ def volume_spurt_ideas(now: datetime, c: dict, done: set, universe: set) -> None
                  {"label": "NSE volume spurt"}, now, expected_move_pct=exp_move)
 
 
-def capital_share(option: dict, cfg: dict, c: dict) -> float:
-    """News team's share of its free money for one trade: at most `max_capital_per_trade`
-    (half), except that one single lot may use more when one lot alone costs more than that
-    (it then buys exactly one lot: two would not fit). Without this, after a few losses
-    the half-share was smaller than any normal lot and the team could not trade at all."""
-    share = c["max_capital_per_trade"]
-    lot_cost = float(option.get("ask") or 0) * float(option.get("lot_size") or 1)
+def capital_share(option: dict, cfg: dict, c: dict, open_now: int = 0) -> float:
+    """A team's share of its free money (`cfg["capital"]`) for one new trade. The free money is
+    split over the open-trade slots still empty (user, 27 Oct: as many trades as the money
+    allows), so a first trade leaves money for the next ones; never above `max_capital_per_trade`.
+    When one lot alone costs more than that share but the free money covers it, the trade buys
+    exactly one lot (without this, after a few losses no normal lot fitted and the team stopped)."""
+    slots = max(int(c.get("max_open_trades", 1)) - open_now, 1)
+    share = min(float(c["max_capital_per_trade"]), 1.0 / slots)
+    lot_cost = float(option.get("ask") or option.get("est_premium") or 0) * float(option.get("lot_size") or 1)
     if cfg["capital"] > 0 and lot_cost > cfg["capital"] * share:
-        return 1.0
+        return min(1.0, lot_cost * 1.000001 / cfg["capital"])  # one lot (or blocked when it costs more than all)
     return share
+
+
+def open_count(trades: list[dict], team: str) -> int:
+    return sum(t["status"] == "OPEN" and team_of(t) == team for t in trades)
+
+
+def max_open(cfg: dict, team: str) -> int:
+    """How many trades the team may hold at once (each still needs free money for at least one lot)."""
+    return int(team_cfg(cfg, team).get("max_open_trades", cfg.get("max_open_trades", 1)))
+
+
+def team_full(trades: list[dict], cfg: dict, team: str) -> bool:
+    return open_count(trades, team) >= max_open(cfg, team)
 
 
 SKIPS_DIR = Path(__file__).parent / "journal" / "intel"  # git-ignored by day, committed each evening
@@ -977,7 +1002,8 @@ async def news_team(im: IndMoney, trades: list[dict], now: datetime, cfg: dict) 
                 **cfg,
                 "target_mode": c.get("target_mode", "forecast"),
                 "forecast_capture": c.get("forecast_capture", 0.6),
-                "max_capital_per_trade": capital_share(option, cfg, c),
+                "max_capital_per_trade": capital_share(option, cfg, {**c, "max_open_trades": max_open(cfg, "news")},
+                                                       open_count(trades, "news")),
             }
             risk = plan(option, trades_today, now, cfg_news,
                         spread_pct=option["spread_pct"], forecast=news_forecast)
@@ -1012,7 +1038,7 @@ async def news_team(im: IndMoney, trades: list[dict], now: datetime, cfg: dict) 
                                          "option_price_there": risk["forecast_premium"] and round(risk["forecast_premium"], 2)},
                             "market": {"notes": mkt["notes"], "drivers": {t: {"tone": d["tone"], "headlines": d["headlines"]}
                                                                          for t, d in mkt["drivers"].items()}}})
-            return  # one trade at a time
+            return  # one new trade per round: the next round (about a minute) can add another
         except (LoginRequired, RateLimited):
             raise
         except Exception as e:
@@ -1053,19 +1079,17 @@ def team_cfg(cfg: dict, team: str) -> dict:
 
 
 async def cycle(cfg: dict) -> None:
-    """One round for both teams. Each team has its own capital and its own one-trade-at-a-time rule."""
+    """One round for both teams. Each team has its own capital and its own limit on open trades."""
     now = datetime.now(IST)
     trades = load_trades()
     baseline_keys = {_trade_key(t) for t in trades}
-    one_at_a_time = cfg.get("one_trade_at_a_time", True)
     try:
         async with IndMoney() as im:
             await manage_open_trades(im, trades, now, cfg)
             if _t(cfg["entry_start"]) <= now.time() <= _t(cfg["entry_end"]):
                 # News first: results, filings, preopen and spurts move stocks within minutes, so the news team
                 # acts before the movers' scan, and the scan stops for any idea that arrives meanwhile.
-                news_free = team_cfg(cfg, "news").get("auto_trade", True) \
-                    and not (has_open(trades, "news") and one_at_a_time)
+                news_free = team_cfg(cfg, "news").get("auto_trade", True) and not team_full(trades, cfg, "news")
                 news_free = news_free and account(trades, cfg, "news")[1] > 0
 
                 async def run_news():
@@ -1076,7 +1100,7 @@ async def cycle(cfg: dict) -> None:
                     await run_news()
                 else:
                     news_pending.clear()  # busy: ideas wait in the list, the movers need not stop
-                if has_open(trades, "movers") and one_at_a_time:
+                if team_full(trades, cfg, "movers"):
                     # Busy: note setups we would have taken (every few minutes), but open nothing.
                     if clock.time() - _hold_scan.get("at", 0) >= cfg.get("hold_scan_min", 10) * 60:
                         _hold_scan["at"] = clock.time()
@@ -1085,7 +1109,7 @@ async def cycle(cfg: dict) -> None:
                     _, free = account(trades, cfg, "movers")
                     if free > 0:  # size new trades from the money that is actually free right now
                         await scan(im, trades, now, {**cfg, "capital": free}, yield_to_news=news_free)
-                if news_free and news_pending.is_set() and not (has_open(trades, "news") and one_at_a_time):
+                if news_free and news_pending.is_set() and not team_full(trades, cfg, "news"):
                     await run_news()  # an idea arrived during the scan
     finally:
         save_trades(trades, baseline_keys=baseline_keys)
@@ -1150,7 +1174,7 @@ def main() -> None:
                     clock.sleep(60)
                     continue
                 trades = load_trades()
-                busy = all(has_open(trades, t) for t in TEAMS) and cfg.get("one_trade_at_a_time", True)
+                busy = all(team_full(trades, cfg, t) for t in TEAMS)
                 # While a trade is open, look for (and only record) setups every few minutes.
                 every = cfg.get("hold_scan_min", 5) if busy else args.interval
                 if args.once or clock.time() - last_scan >= every * 60:

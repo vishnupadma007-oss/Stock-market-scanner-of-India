@@ -16,7 +16,7 @@ backtests found, and how to set it up again.
 | Buy options only | Movers team: PUT on a top gainer that is fading, CALL on a top loser that is bouncing. News team: CALL when the news points up, PUT when it points down |
 | Target >= 1% net | Exit price must give at least 1% profit after ALL charges (brokerage, STT, exchange fees, GST, stamp duty, SEBI fee) and the bid-ask gap |
 | **No stop-loss** | A trade exits only at its target or at the 15:20 square-off |
-| Capital | ₹30,000 paper money per team; one trade at a time per team |
+| Capital | ₹30,000 paper money per team; up to 4 open trades per team (user, 27 Oct: as many as the money allows). Each new trade is sized from the free money split over the empty slots (one lot when a lot costs more), never two on one stock |
 
 ---
 

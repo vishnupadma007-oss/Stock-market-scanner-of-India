@@ -14,7 +14,8 @@ argue for one on every signal; mention risk only when something is unusual.
 These are **paper trades**. INDmoney access is read-only; never claim an order was placed.
 
 **Two teams trade side by side** (`config.yaml` -> `teams`), each with its own paper capital
-(₹30,000 each) and its own one-trade-at-a-time rule, so the user can see which one finds more
+(₹30,000 each) and its own limit of open trades (`max_open_trades`, 4: as many as the money
+allows, each sized from the free money split over the empty slots), so the user can see which one finds more
 chances and makes more money:
 - **Movers team** (strategy `reversal`): the top gainers/losers reversal above, read from price,
   charts, options and sector moves (`news_votes: false`), with the **News Guard** as a safety
@@ -52,7 +53,7 @@ One short research pass that sets the day's mode. Keep it to a handful of search
    already read, ratings, orders, deals, regulatory actions, management exits). For each
    result, judge the likely opening reaction (see "On a RESULT line") and put strong ones in
    `notes` as a watchlist with the expected direction; after 09:15, if the price confirms that
-   direction, open a results trade with `paper_trade.py` (one trade at a time).
+   direction, open a results trade with `paper_trade.py` (up to the team's open-trade limit, never two on one stock).
    Then today's events: RBI policy, Budget, F&O expiry (last Tuesday of the month), big results.
    For F&O companies reporting today or tomorrow (results calendar), use the `earnings-preview`
    skill in short form: the 2-3 metrics that will move the stock and a bull/bear case each, so
