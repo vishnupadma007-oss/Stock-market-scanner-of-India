@@ -14,3 +14,4 @@ date,symbol,contract,verdict,reason
 2026-10-26,KOTAKBANK,KOTAKBANK-27-OCT-435-CALL,SKIP,"Real story (Q2 profit +29% YoY) and the chart agrees (70), but the contract expires tomorrow: Rs 5.35 premium x 4,000 qty decays fast, the IOC profile; the stock has sat at about +2% since 09:25, so the move looks done"
 2026-10-26,JSWSTEEL,JSWSTEEL-23-NOV-1220-CALL,TRADE,"Strong quarter (record volumes, profit +40% YoY) plus court penalty relief; stock up 3.3% and pushing to new day highs; November contract, decent premium. Risk: much of the move done and the trade uses nearly all the team capital"
 2026-10-27,PFC,PFC-23-NOV-310-CALL,SKIP,"52-week low with fresh shorts (futures OI +11%); the 38% bounce level (313.6) prices the option at 13.71, below the 14.10 target"
+2026-10-27,TCS,TCS-23-NOV-2500-PUT,SKIP,"Already -2.5% and largely priced in; needs ~0.9% more (~2450); IT sell-offs rallied back on 26 Oct; ~20k premium with no stop-loss"
