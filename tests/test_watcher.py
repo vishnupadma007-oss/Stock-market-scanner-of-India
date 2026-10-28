@@ -594,3 +594,18 @@ def test_results_pdf_not_up_yet_is_tried_again(monkeypatch):
     monkeypatch.setattr(watcher.clock, "sleep", lambda s: None)
     out = watcher.read_results({"pdf": "x.pdf", "symbol": "CHOLAFIN", "category": "RESULTS"})
     assert len(calls) == 3 and out["read"]["view"] != "unread"
+
+
+def test_restart_remembers_filings_since_the_last_close(tmp_path, monkeypatch):
+    log = tmp_path / "ann.csv"
+    log.write_text("time,symbol,category,subject,text,pdf,seq_id\n"
+                   "2026-10-26 11:00:00,TCS,RESULTS,old,old,,1\n"
+                   "2026-10-27 17:13:09,LT,RESULTS,Outcome,results,,2\n")
+    monkeypatch.setattr(watcher, "FILINGS_LOG", log)
+    watcher._daily.clear()
+    watcher.reset_daily("2026-10-28")
+    assert watcher._daily["seen_filings"] == {"1", "2"}  # not reported again
+    assert list(watcher._daily["filings"]) == ["LT"]       # but still known to the teams
+    from agents import news_guard
+    now = datetime(2026, 10, 28, 14, 30, tzinfo=IST)
+    assert news_guard.check("LT", "gainer", [], watcher._daily["filings"]["LT"], now)["block"]

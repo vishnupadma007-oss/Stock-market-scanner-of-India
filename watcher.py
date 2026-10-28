@@ -25,7 +25,7 @@ import sys
 import threading
 import time as clock
 from concurrent.futures import ThreadPoolExecutor
-from datetime import datetime, time, timedelta
+from datetime import date, datetime, time, timedelta
 from pathlib import Path
 from zoneinfo import ZoneInfo
 
@@ -96,13 +96,21 @@ def reset_daily(today: str) -> None:
     with _daily_lock:
         if _daily.get("date") != today:
             _daily.clear()
-            # Filings already in the log were reported before (a restart must not report them again).
+            # Filings already in the log were reported before (a restart must not report them again),
+            # but the teams still need to know about them: since the previous session's close they go
+            # back into today's filings (28 Oct: after a restart the News Guard forgot L&T's results
+            # and the movers faded it).
+            since = f"{holidays.previous_trading_day(date.fromisoformat(today) - timedelta(days=1))} 15:00"
+            filings: dict = {}
+            seen = set()
             if FILINGS_LOG.exists():
                 with open(FILINGS_LOG, newline="", encoding="utf-8") as f:
-                    seen = {r["seq_id"] for r in csv.DictReader(f) if r.get("seq_id")}
-            else:
-                seen = set()
-            _daily.update(date=today, filings={}, seen_filings=seen, shocks_sent=set(), forecasts={},
+                    for r in csv.DictReader(f):
+                        if r.get("seq_id"):
+                            seen.add(r["seq_id"])
+                        if r.get("symbol") and r.get("time", "") >= since:
+                            filings.setdefault(r["symbol"], []).append(dict(r))
+            _daily.update(date=today, filings=filings, seen_filings=seen, shocks_sent=set(), forecasts={},
                           expectations={}, intel_seen={i["id"] for i in intel.load(today)})
 
 
