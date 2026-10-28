@@ -970,6 +970,11 @@ async def spurt_entries(im: IndMoney, trades: list[dict], now: datetime, cfg: di
                 continue
             news_note = (f"news agrees ({view['confidence']}%): " + "; ".join(view.get("reasons", [])[:1])[:120]
                          if view["strong"] else "no strong news either way")
+            # F&O Activity cross-check (open interest + price): noted on the trade so its value can be measured.
+            act = (_daily.get("activity") or {}).get(sym)
+            if act:
+                agrees = activity.confirms(act, g["direction"], c.get("activity_min_oi_pct", 5.0))
+                news_note += f"; {activity.note(act)}{' agrees' if agrees else ''}"
             intraday = await im.candles(key, "5minute", "7d")
             side = "loser" if sign > 0 else "gainer"  # loser -> CALL, gainer -> PUT
             option = await im.pick_contract(key, side, cfg, now.date(), budget=float(cfg["capital"]))
