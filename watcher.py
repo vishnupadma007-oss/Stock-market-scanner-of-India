@@ -247,10 +247,22 @@ def results_reaction(item: dict, now: datetime) -> dict:
         return {"error": f"{type(e).__name__}: {e}"[:200], "notes": []}
 
 
+PDF_RETRY_SECONDS = (20, 20, 20)  # NSE lists a filing a minute or two before its PDF is up (404)
+
+
 def read_results(item: dict) -> dict:
-    """One results reader: figures, highlights, sector KPIs and a first read of the quarter."""
+    """One results reader: figures, highlights, sector KPIs and a first read of the quarter.
+    A PDF that is not up yet (HTTP 404) is tried again for up to a minute (28 Oct: Chola and
+    Adani Enterprises came back unread although their PDFs appeared shortly after)."""
     try:
-        summary = announcements.results_summary(item["pdf"], item["symbol"])
+        for wait in (*PDF_RETRY_SECONDS, None):
+            try:
+                summary = announcements.results_summary(item["pdf"], item["symbol"])
+                break
+            except Exception as e:
+                if wait is None or "404" not in str(e):
+                    raise
+                clock.sleep(wait)
         item = {**item, **summary, "read": announcements.score_results(summary["figures"], item["symbol"])}
         if item["category"] == "BOARD":
             item["category"] = "RESULTS" if summary.get("is_results") or summary["figures"] else "BOARD"

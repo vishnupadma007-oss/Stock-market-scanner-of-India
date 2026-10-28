@@ -579,3 +579,18 @@ def test_repeated_errors_show_again_with_a_count(monkeypatch, capsys):
         t[0] += 200
     out = capsys.readouterr().out.strip().splitlines()
     assert len(out) == 2 and '"repeats": 2' in out[1]  # shown at 0 s and 600 s; two hidden between
+
+
+def test_results_pdf_not_up_yet_is_tried_again(monkeypatch):
+    calls = []
+
+    def summary(url, symbol):
+        calls.append(url)
+        if len(calls) < 3:
+            raise RuntimeError("404 Client Error: Not Found")
+        return {"figures": {}, "highlights": [], "is_results": True}
+
+    monkeypatch.setattr(watcher.announcements, "results_summary", summary)
+    monkeypatch.setattr(watcher.clock, "sleep", lambda s: None)
+    out = watcher.read_results({"pdf": "x.pdf", "symbol": "CHOLAFIN", "category": "RESULTS"})
+    assert len(calls) == 3 and out["read"]["view"] != "unread"
