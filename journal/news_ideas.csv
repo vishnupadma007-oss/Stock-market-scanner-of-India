@@ -73,3 +73,11 @@ date,time,symbol,direction,confidence,source,priced_in
 2026-10-27,12:06,HAL,up,81,intel,not priced in
 2026-10-27,13:36,CIPLA,down,60,intel,not priced in
 2026-10-28,08:42,RELIANCE,up,79,intel,partly priced in
+2026-10-28,08:42,ICICIBANK,down,73,intel,partly priced in
+2026-10-28,08:42,INFY,down,96,intel,partly priced in
+2026-10-28,08:42,TCS,down,77,intel,largely priced in
+2026-10-28,08:42,BHARTIARTL,up,51,intel,largely priced in
+2026-10-28,08:42,SHRIRAMFIN,up,76,intel,pessimism priced in
+2026-10-28,08:42,CIPLA,down,84,intel,some pessimism priced in
+2026-10-28,08:49,LT,up,79,intel,not priced in
+2026-10-28,08:49,SAIL,up,83,intel,not priced in
