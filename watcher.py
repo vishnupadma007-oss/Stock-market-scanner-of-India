@@ -21,6 +21,7 @@ import argparse
 import asyncio
 import csv
 import json
+import signal
 import sys
 import threading
 import time as clock
@@ -1168,6 +1169,9 @@ async def exits_only(cfg: dict) -> bool:
 
 
 def main() -> None:
+    # A stop (SIGTERM, e.g. a restart) ends the watcher like Ctrl+C: the running round's `finally`
+    # still saves its trades (28 Oct: a restart right after a SIGNAL lost the L&T paper trade).
+    signal.signal(signal.SIGTERM, lambda *_: sys.exit(0))
     cfg = load_config()
     ap = argparse.ArgumentParser()
     ap.add_argument("--once", action="store_true", help="run one cycle and exit")
