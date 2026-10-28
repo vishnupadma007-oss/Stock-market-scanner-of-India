@@ -1,0 +1,173 @@
+time,symbol,direction,confidence,move_pct,reason
+09:43,TCS,down,75,-2.98,Trend Checker 45 < 60
+09:43,LT,up,75,4.36,"risk: One lot costs ₹20,764, above the ₹7,039 per-trade budget."
+09:43,BAJAJFINSV,down,75,-1.91,"risk: One lot costs ₹15,795, above the ₹7,039 per-trade budget."
+09:43,PERSISTENT,down,75,-1.99,Trend Checker 30 < 60
+09:43,RELIANCE,up,79,0.56,"risk: One lot costs ₹24,800, above the ₹7,039 per-trade budget."
+09:43,LT,up,75,4.7,"risk: One lot costs ₹20,274, above the ₹7,039 per-trade budget."
+09:43,BAJAJFINSV,down,75,-1.65,"risk: One lot costs ₹15,540, above the ₹7,039 per-trade budget."
+09:54,RELIANCE,up,79,0.45,"early entry: Volume 0.5x usual on a red candle; Order book: buyers 0.7x sellers; F&O activity: long build-up (OI +2.8%, price +0.6%)"
+09:54,HCLTECH,down,77,-2.75,Trend Checker 30 < 60
+09:54,TCS,down,75,-2.87,Trend Checker 30 < 60
+09:54,LT,up,75,4.71,"risk: One lot costs ₹19,688, above the ₹7,039 per-trade budget."
+09:54,BAJAJFINSV,down,75,-1.69,"risk: One lot costs ₹16,035, above the ₹7,039 per-trade budget."
+10:02,HCLTECH,down,77,-2.77,Trend Checker 30 < 60
+10:02,TCS,down,75,-2.79,Trend Checker 30 < 60
+10:02,LT,up,75,4.17,market headwind: Nifty -0.80% (sliding)
+10:02,BAJAJFINSV,down,75,-2.19,"risk: One lot costs ₹17,070, above the ₹7,039 per-trade budget."
+10:11,HCLTECH,down,77,-2.72,Trend Checker 45 < 60
+10:11,TCS,down,75,-2.74,Trend Checker 30 < 60
+10:11,LT,up,75,4.04,market headwind: Nifty -0.84% (sliding)
+10:11,BAJAJFINSV,down,75,-2.33,"risk: One lot costs ₹17,520, above the ₹7,039 per-trade budget."
+10:16,LT,up,75,3.95,market headwind: Nifty -1.01% (sliding)
+10:16,BAJAJFINSV,down,75,-2.47,"risk: One lot costs ₹18,135, above the ₹7,039 per-trade budget."
+10:22,HCLTECH,down,77,-2.96,Trend Checker 55 < 60
+10:22,TCS,down,75,-2.93,"risk: One lot costs ₹18,068, above the ₹7,039 per-trade budget."
+10:22,LT,up,75,4.36,market headwind: Nifty -1.05% (sliding)
+10:22,BAJAJFINSV,down,75,-2.83,"risk: One lot costs ₹18,270, above the ₹7,039 per-trade budget."
+10:26,TCS,down,75,-2.91,"risk: One lot costs ₹17,966, above the ₹7,039 per-trade budget."
+10:26,LT,up,75,4.23,market headwind: Nifty -1.07% (sliding)
+10:26,BAJAJFINSV,down,75,-2.66,"risk: One lot costs ₹15,690, above the ₹7,039 per-trade budget."
+10:31,HCLTECH,down,77,-2.64,Trend Checker 40 < 60
+10:31,TCS,down,75,-2.82,"risk: One lot costs ₹17,798, above the ₹7,039 per-trade budget."
+10:31,LT,up,75,4.16,market headwind: Nifty -1.01% (sliding)
+10:31,BAJAJFINSV,down,75,-2.84,"risk: One lot costs ₹18,405, above the ₹7,039 per-trade budget."
+10:38,HCLTECH,down,77,-2.74,Trend Checker 40 < 60
+10:38,TCS,down,75,-3.02,"risk: One lot costs ₹17,831, above the ₹7,039 per-trade budget."
+10:38,LT,up,75,4.25,market headwind: Nifty -0.91% (sliding)
+10:38,BAJAJFINSV,down,75,-2.44,"risk: One lot costs ₹17,400, above the ₹7,039 per-trade budget."
+10:42,ICICIBANK,down,71,-1.07,Trend Checker 0 < 60
+10:49,TCS,down,92,-3.06,"risk: One lot costs ₹18,034, above the ₹7,039 per-trade budget."
+10:49,ICICIBANK,down,71,-1.09,Trend Checker 0 < 60
+10:49,TCS,down,92,-2.96,"risk: One lot costs ₹17,842, above the ₹7,039 per-trade budget."
+10:55,TCS,down,92,-3.01,"risk: One lot costs ₹18,135, above the ₹7,039 per-trade budget."
+10:55,ICICIBANK,down,71,-0.94,Trend Checker 0 < 60
+10:55,TCS,down,92,-2.98,"risk: One lot costs ₹17,696, above the ₹7,039 per-trade budget."
+11:04,TCS,down,92,-3.01,"risk: One lot costs ₹18,112, above the ₹7,039 per-trade budget."
+11:04,ICICIBANK,down,71,-0.89,Trend Checker 0 < 60
+11:08,TCS,down,92,-3.3,"risk: One lot costs ₹18,405, above the ₹7,039 per-trade budget."
+11:08,TCS,down,92,-3.4,"risk: One lot costs ₹18,236, above the ₹7,039 per-trade budget."
+11:08,HCLTECH,down,90,-2.65,Trend Checker 30 < 60
+11:08,WIPRO,down,83,-0.99,Trend Checker 40 < 60
+11:18,TCS,down,92,-3.16,"risk: One lot costs ₹18,878, above the ₹7,039 per-trade budget."
+11:18,LT,up,91,3.99,Trend Checker 45 < 60
+11:18,HCLTECH,down,90,-2.6,Trend Checker 45 < 60
+11:18,WIPRO,down,83,-0.93,Trend Checker 55 < 60
+11:18,ICICIBANK,down,71,-0.91,Trend Checker 25 < 60
+11:24,TCS,down,92,-3.27,"risk: One lot costs ₹18,608, above the ₹7,039 per-trade budget."
+11:24,LT,up,91,3.99,Trend Checker 45 < 60
+11:24,HCLTECH,down,90,-2.7,Trend Checker 45 < 60
+11:24,WIPRO,down,83,-1,Trend Checker 40 < 60
+11:24,ICICIBANK,down,71,-0.87,Trend Checker 0 < 60
+11:32,TCS,down,92,-3.28,"risk: One lot costs ₹18,878, above the ₹7,039 per-trade budget."
+11:32,LT,up,91,3.97,Trend Checker 30 < 60
+11:32,HCLTECH,down,90,-2.59,Trend Checker 30 < 60
+11:32,WIPRO,down,83,-1.09,Trend Checker 55 < 60
+11:32,ICICIBANK,down,71,-0.79,Trend Checker 0 < 60
+11:37,TCS,down,92,-3.48,"risk: One lot costs ₹18,945, above the ₹7,039 per-trade budget."
+11:37,LT,up,91,3.89,Trend Checker 30 < 60
+11:37,HCLTECH,down,90,-2.61,Trend Checker 40 < 60
+11:37,WIPRO,down,83,-1.1,Trend Checker 55 < 60
+11:37,ICICIBANK,down,71,-0.75,Trend Checker 0 < 60
+11:43,TCS,down,92,-3.34,"risk: One lot costs ₹18,855, above the ₹7,039 per-trade budget."
+11:43,LT,up,91,3.74,Trend Checker 30 < 60
+11:43,HCLTECH,down,90,-2.46,Trend Checker 25 < 60
+11:43,WIPRO,down,83,-0.97,Trend Checker 40 < 60
+11:43,ICICIBANK,down,71,-0.83,Trend Checker 10 < 60
+11:52,TCS,down,92,-2.86,Trend Checker 30 < 60
+11:52,LT,up,91,3.92,"risk: One lot costs ₹23,021, above the ₹7,039 per-trade budget."
+11:52,HCLTECH,down,90,-2.22,Trend Checker 0 < 60
+11:52,WIPRO,down,83,-0.79,Trend Checker 0 < 60
+11:52,ICICIBANK,down,71,-0.83,Trend Checker 25 < 60
+11:57,TCS,down,92,-2.75,Trend Checker 15 < 60
+11:57,LT,up,91,3.97,"risk: One lot costs ₹23,275, above the ₹7,039 per-trade budget."
+11:57,HCLTECH,down,90,-2.04,Trend Checker 0 < 60
+11:57,WIPRO,down,83,-0.76,Trend Checker 0 < 60
+11:57,ICICIBANK,down,71,-0.81,Trend Checker 25 < 60
+12:05,INFY,down,100,-3.89,Trend Checker 15 < 60
+12:05,TCS,down,92,-2.2,Trend Checker 15 < 60
+12:05,LT,up,91,3.82,"risk: One lot costs ₹22,575, above the ₹7,039 per-trade budget."
+12:05,HCLTECH,down,90,-1.89,Trend Checker 0 < 60
+12:05,WIPRO,down,83,-0.81,Trend Checker 0 < 60
+12:05,ICICIBANK,down,71,-0.82,Trend Checker 0 < 60
+12:10,INFY,down,100,-3.95,Trend Checker 15 < 60
+12:10,TCS,down,92,-2.29,Trend Checker 15 < 60
+12:10,LT,up,91,3.94,"risk: One lot costs ₹22,864, above the ₹7,039 per-trade budget."
+12:10,HCLTECH,down,90,-1.93,Trend Checker 0 < 60
+12:10,WIPRO,down,83,-0.99,Trend Checker 30 < 60
+12:10,ICICIBANK,down,71,-0.74,Trend Checker 0 < 60
+12:19,TCS,down,92,-2.5,Trend Checker 15 < 60
+12:19,HCLTECH,down,90,-2.22,Trend Checker 15 < 60
+12:19,WIPRO,down,83,-1.22,Trend Checker 55 < 60
+12:19,ICICIBANK,down,71,-0.84,Trend Checker 0 < 60
+12:31,TCS,down,92,-2.34,Trend Checker 15 < 60
+12:31,HCLTECH,down,90,-1.97,Trend Checker 0 < 60
+12:31,WIPRO,down,83,-1.03,Trend Checker 40 < 60
+12:31,ICICIBANK,down,71,-0.78,Trend Checker 10 < 60
+12:36,INFY,down,100,-3.9,Trend Checker 25 < 60
+12:36,TCS,down,92,-2.21,Trend Checker 25 < 60
+12:36,HCLTECH,down,90,-1.87,Trend Checker 0 < 60
+12:36,WIPRO,down,83,-0.96,Trend Checker 15 < 60
+12:36,ICICIBANK,down,71,-0.84,Trend Checker 10 < 60
+12:42,INFY,down,100,-3.81,Trend Checker 10 < 60
+12:49,TCS,down,99,-2.12,Trend Checker 0 < 60
+12:49,INFY,down,100,-3.86,Trend Checker 0 < 60
+12:53,HCLTECH,down,86,-1.68,Trend Checker 0 < 60
+12:53,TECHM,down,76,-1.73,Trend Checker 0 < 60
+12:58,INFY,down,100,-3.83,Trend Checker 0 < 60
+13:05,INFY,down,100,-3.88,Trend Checker 0 < 60
+13:05,TCS,down,99,-2.09,Trend Checker 10 < 60
+13:05,HCLTECH,down,85,-1.55,Trend Checker 0 < 60
+13:10,TECHM,down,75,-1.28,Trend Checker 0 < 60
+13:10,MPHASIS,down,74,-3.72,Trend Checker 15 < 60
+13:18,INFY,down,100,-3.84,Trend Checker 15 < 60
+13:18,TCS,down,99,-1.75,Trend Checker 15 < 60
+13:18,HCLTECH,down,85,-1.53,Trend Checker 0 < 60
+13:18,TECHM,down,75,-1.21,Trend Checker 0 < 60
+13:18,MPHASIS,down,74,-3.72,Trend Checker 15 < 60
+13:23,INFY,down,100,-3.68,Trend Checker 15 < 60
+13:23,TCS,down,99,-1.75,Trend Checker 15 < 60
+13:23,LT,up,88,3.91,Trend Checker 15 < 60
+13:23,HCLTECH,down,85,-1.53,Trend Checker 10 < 60
+13:23,TECHM,down,75,-1.2,Trend Checker 0 < 60
+13:23,MPHASIS,down,74,-3.69,Trend Checker 15 < 60
+13:32,INFY,down,100,-3.77,Trend Checker 15 < 60
+13:32,TCS,down,99,-1.62,Trend Checker 15 < 60
+13:32,LT,up,88,3.78,Trend Checker 40 < 60
+13:32,HCLTECH,down,85,-1.56,Trend Checker 0 < 60
+13:32,TECHM,down,75,-1.08,Trend Checker 0 < 60
+13:32,MPHASIS,down,74,-3.85,Trend Checker 15 < 60
+13:43,INFY,down,100,-3.68,Trend Checker 30 < 60
+13:43,TCS,down,99,-1.49,Trend Checker 15 < 60
+13:43,LT,up,88,3.85,Trend Checker 45 < 60
+13:43,HCLTECH,down,85,-1.38,Trend Checker 0 < 60
+13:43,TECHM,down,75,-1.11,Trend Checker 10 < 60
+13:43,MPHASIS,down,74,-3.68,Trend Checker 15 < 60
+13:51,INFY,down,100,-3.75,Trend Checker 30 < 60
+13:51,TCS,down,99,-1.58,Trend Checker 15 < 60
+13:51,LT,up,88,3.93,Trend Checker 55 < 60
+13:51,HCLTECH,down,85,-1.46,Trend Checker 0 < 60
+13:51,TECHM,down,75,-0.98,Trend Checker 10 < 60
+13:51,MPHASIS,down,74,-3.74,Trend Checker 15 < 60
+14:00,TCS,down,99,-1.98,Trend Checker 40 < 60
+14:00,HCLTECH,down,85,-1.96,Trend Checker 25 < 60
+14:00,TECHM,down,75,-1.26,Trend Checker 25 < 60
+14:04,LT,up,88,3.94,Trend Checker 55 < 60
+14:11,TCS,down,99,-1.77,Trend Checker 40 < 60
+14:11,HCLTECH,down,85,-1.88,Trend Checker 25 < 60
+14:11,TECHM,down,75,-1.14,Trend Checker 25 < 60
+14:18,TCS,down,99,-1.75,Trend Checker 30 < 60
+14:18,HCLTECH,down,85,-1.92,Trend Checker 40 < 60
+14:18,TECHM,down,75,-1.17,Trend Checker 25 < 60
+14:31,TCS,down,98,-1.94,Trend Checker 25 < 60
+14:37,TCS,down,98,-2.07,Trend Checker 55 < 60
+14:37,LT,up,84,3.99,Trend Checker 30 < 60
+14:43,TCS,down,98,-1.95,Trend Checker 40 < 60
+14:50,TCS,down,98,-1.86,Trend Checker 30 < 60
+14:57,TCS,down,98,-1.88,Trend Checker 15 < 60
+15:00,TVSMOTOR,up,79,3.8,"risk: One lot costs ₹31,456, above the ₹1,458 per-trade budget."
+15:06,TCS,down,98,-1.75,Trend Checker 15 < 60
+15:06,TVSMOTOR,up,79,3.63,"risk: One lot costs ₹29,496, above the ₹1,458 per-trade budget."
+15:13,TCS,down,98,-1.71,Trend Checker 15 < 60
+15:13,LT,up,84,3.95,Trend Checker 30 < 60
+15:13,TVSMOTOR,up,79,2.89,"risk: One lot costs ₹28,341, above the ₹1,458 per-trade budget."
