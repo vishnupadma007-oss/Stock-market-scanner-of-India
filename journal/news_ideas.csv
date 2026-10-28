@@ -94,3 +94,4 @@ date,time,symbol,direction,confidence,source,priced_in
 2026-10-28,09:15,COFORGE,down,75,preopen,NSE pre-open order imbalance
 2026-10-28,09:15,MPHASIS,down,75,preopen,NSE pre-open order imbalance
 2026-10-28,09:27,HDFCBANK,down,49,intel,pessimism priced in
+2026-10-28,15:03,TVSMOTOR,up,79,intel,not priced in
