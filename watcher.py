@@ -464,30 +464,46 @@ def information_track(cfg: dict) -> None:
 
 
 def spurt_track(cfg: dict) -> None:
-    """Quiet Volume Spurt scanner (agents/spurt.py) on its own thread: every F&O stock every minute
-    from Yahoo (free, one request). Earlier sessions are fetched once a day for the usual volume;
-    each new signal wakes the news team (`news_pending`), which confirms it live and buys."""
+    """Quiet Volume Spurt scanner (agents/spurt.py) on its own thread, every minute on NSE's own
+    live data: one free call covers every F&O stock (price, previous close, volume and value traded
+    so far). The usual volume by time of day is built once a day from the previous 10 sessions of
+    5-minute candles; the price 5 minutes ago comes from our own snapshots (saved daily). Each new
+    signal wakes the news team (`news_pending`), which confirms it live and buys."""
+    from collections import deque
     import pandas as pd
     c = {**spurt.DEFAULTS, **(cfg.get("spurt") or {})}
-    base: dict = {}
+    state: dict = {}
     while True:
         started = clock.time()
         now = datetime.now(IST)
-        if c.get("enabled", True) and market_open(now) and now.time() >= _t(c["from"]):
+        if c.get("enabled", True) and market_open(now):
             try:
-                if base.get("day") != now.date():
-                    base = {"day": now.date(), "frames": {s: f[f.index.date < now.date()]
-                                                          for s, f in spurt.fetch(cfg["universe"], 20).items()}}
-                today = spurt.fetch(cfg["universe"], 1)
-                frames = {s: pd.concat([base["frames"][s], f]) if s in base["frames"] else f for s, f in today.items()}
-                for sym, sig in spurt.scan(frames, now.date(), c).items():
+                if state.get("day") != now.date():
+                    state = {"day": now.date(), "curves": None, "prices": {}}
+                rows = spurt.fetch_nse(cfg["universe"])
+                spurt.save_snapshot(now.date(), now.strftime("%H:%M:%S"), rows)
+                if state["curves"] is None:  # once a day (Yahoo history); retried next minute on failure
+                    state["curves"] = {s: spurt.usual_curve(f, now.date(), c["baseline_days"])
+                                       for s, f in spurt.fetch(cfg["universe"], 20).items()}
+                minutes = (now.hour * 60 + now.minute + now.second / 60) - (9 * 60 + 15)
+                tick = clock.time()
+                for sym, r in rows.items():
+                    q = state["prices"].setdefault(sym, deque(maxlen=30))
+                    earlier = next((p for t, p in reversed(q) if tick - t >= 270), None)
+                    q.append((tick, r["price"]))
+                    if now.time() < _t(c["from"]) or now.time() > _t(cfg["entry_end"]):
+                        continue
+                    sig = spurt.live_signal(r, earlier, spurt.usual_now(state["curves"].get(sym), minutes),
+                                            minutes, c)
+                    if not sig:
+                        continue
                     with _daily_lock:
                         seen = _daily.setdefault("spurt_signals", {})
                         if sym in seen:
                             continue
-                        seen[sym] = {**sig, "found": now}
+                        seen[sym] = {**sig, "time": pd.Timestamp(now), "found": now}
                     news_pending.set()
-            except Exception as e:  # Yahoo hiccup: try again next minute
+            except Exception as e:  # NSE or Yahoo hiccup: try again next minute
                 emit("ERROR", {"error": f"spurt scan: {type(e).__name__}: {e}"})
         clock.sleep(max(5.0, c.get("poll_seconds", 60) - (clock.time() - started)))
 

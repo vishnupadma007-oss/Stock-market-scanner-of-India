@@ -100,3 +100,21 @@ def test_old_spurt_is_not_traded():
     cfg = {**load_config(), "capital": 30000}
     c = {**watcher.NEWS_DEFAULTS, **watcher.team_cfg(cfg, "news")}
     assert not asyncio.run(watcher.spurt_entries(Live(), [], now, cfg, c, set()))
+
+
+def test_nse_live_page_and_live_signal():
+    payload = {"total": {"data": [
+        {"symbol": "TCS", "series": "EQ", "pchange": 0.31, "previousClose": 1000.0, "lastPrice": 1003.1,
+         "totalTradedVolume": 12.0, "totalTradedValue": 120.12},   # 12 lakh shares, Rs 120.12 crore
+        {"symbol": "XYZ", "series": "EQ", "pchange": 2.0, "previousClose": 10, "lastPrice": 10.2,
+         "totalTradedVolume": 1.0, "totalTradedValue": 0.1}]}}
+    rows = spurt.parse_nse(payload, {"TCS"})
+    r = rows["TCS"]
+    assert set(rows) == {"TCS"} and r["volume"] == 1.2e6 and r["vwap"] == 1001.0
+    curve = spurt.usual_curve(days_of_candles(), date(2026, 10, 28))
+    usual = spurt.usual_now(curve, 60)  # 10:15: 12 candles of 1,000 shares
+    assert 11000 <= usual <= 13000
+    sig = spurt.live_signal(r, 1002.0, usual / 100, 60)  # far above the usual volume
+    assert sig["direction"] == "up" and sig["volume_x"] >= 1.5
+    assert spurt.live_signal(r, 1004.0, usual / 100, 60) is None   # last 5 minutes went down
+    assert spurt.live_signal(r, 1002.0, r["volume"], 60) is None   # usual volume
