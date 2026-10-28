@@ -1,11 +1,12 @@
 {
-  "date": "2026-10-27",
+  "date": "2026-10-28",
   "mode": "normal",
   "notes": [
-    "Expected Nifty open about +0.35% (likely -0.2% to +0.9%): S&P 500 +0.7% since Monday's close",
-    "October F&O expiry today: both teams use November contracts (expiry-day rule)",
-    "Results today (F&O): L&T, Maruti, Bajaj Auto, Cipla, Tata Steel, SAIL; last evening: Paytm (read as weak), REC",
-    "New today: user's enhancement pack (forecast targets for the news team, pre-open and volume-spurt ideas with a since-the-open check)"
+    "Expected Nifty open about +0.3% (Reaction analyst, US stocks + Brent)",
+    "Brent -4.3% overnight: helps oil marketers (BPCL, HPCL, IOC), paints, airlines; hurts ONGC, Oil India",
+    "Jio Platforms shares start trading today: Reliance in focus",
+    "Results since the last close: L&T strong (revenue +16%, profit +33%, record orders +28%), SAIL strong (revenue +20%, profit 4x), Maruti (record half-year volumes, figures not read), Bajaj Auto (filed 15:21, figures not read), Cipla (mixed)",
+    "New today: news team runs again all morning (quotes batched in 10s), F&O Activity reader, up to 4 open trades per team"
   ],
   "avoid": []
 }
