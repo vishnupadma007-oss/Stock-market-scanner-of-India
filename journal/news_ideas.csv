@@ -81,3 +81,16 @@ date,time,symbol,direction,confidence,source,priced_in
 2026-10-28,08:42,CIPLA,down,84,intel,some pessimism priced in
 2026-10-28,08:49,LT,up,79,intel,not priced in
 2026-10-28,08:49,SAIL,up,83,intel,not priced in
+2026-10-28,09:15,BAJAJFINSV,down,75,preopen,NSE pre-open order imbalance
+2026-10-28,09:15,PERSISTENT,down,75,preopen,NSE pre-open order imbalance
+2026-10-28,09:15,WIPRO,down,75,preopen,NSE pre-open order imbalance
+2026-10-28,09:15,BANKBARODA,down,75,preopen,NSE pre-open order imbalance
+2026-10-28,09:15,ITC,down,75,preopen,NSE pre-open order imbalance
+2026-10-28,09:15,HAL,down,75,preopen,NSE pre-open order imbalance
+2026-10-28,09:15,BPCL,down,80,preopen,NSE pre-open order imbalance
+2026-10-28,09:15,ONGC,down,75,preopen,NSE pre-open order imbalance
+2026-10-28,09:15,TECHM,down,75,preopen,NSE pre-open order imbalance
+2026-10-28,09:15,HCLTECH,down,75,preopen,NSE pre-open order imbalance
+2026-10-28,09:15,COFORGE,down,75,preopen,NSE pre-open order imbalance
+2026-10-28,09:15,MPHASIS,down,75,preopen,NSE pre-open order imbalance
+2026-10-28,09:27,HDFCBANK,down,49,intel,pessimism priced in
