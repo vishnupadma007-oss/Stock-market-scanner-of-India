@@ -163,6 +163,12 @@ expiry_fallback:
   days: 7                  # within this many calendar days of this month's expiry...
   min_premium: 5.0         # ...switch when this month's option is cheaper than this
   max_spread_pct: 2.0      # ...or its bid-ask gap is wider than this (% of the ask)
+budget_otm:                # user, 28 Oct: when one lot of the usual strike costs more than the team's free money,
+  enabled: true            # buy a cheaper strike further out of the money whose lot fits
+  max_steps: 10            # at most this many strikes out (the delta floor below is the real limit)
+  min_delta: 0.15          # it must still move with the stock (|delta|); further out needs a bigger move and decays faster
+  min_premium: 5.0
+  max_spread_pct: 2.0
 risk_free_rate: 0.065
 
 # Charges (verify with your broker's calculator)

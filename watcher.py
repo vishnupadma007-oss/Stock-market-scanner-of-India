@@ -633,7 +633,7 @@ async def scan(im: IndMoney, trades: list[dict], now: datetime, cfg: dict, hold:
                         record_guard(now, m["symbol"], side, chart["score"], guard["notes"])
                         continue  # serious news against the trade: move on to the next stock
 
-                option = await im.pick_contract(m["ind_key"], side, cfg, now.date())
+                option = await im.pick_contract(m["ind_key"], side, cfg, now.date(), budget=free_now)
                 if option is None or option["contract"] in taken:
                     continue
                 prev_close = m.get("previous_close") or m["price"] / (1 + m["change_pct"] / 100)
@@ -836,7 +836,12 @@ def log_skip(now: datetime, sym: str, idea: dict, move: float, reason: str) -> N
 
 
 def rolled_note(option: dict) -> str:
-    return f"Expiry week: next month's contract instead of {option['rolled_from']}" if option.get("rolled_from") else ""
+    notes = []
+    if option.get("rolled_from"):
+        notes.append(f"Expiry week: next month's contract instead of {option['rolled_from']}")
+    if option.get("otm_for_budget"):
+        notes.append(f"{option['otm_for_budget']} strike(s) out of the money so one lot fits the free money")
+    return "; ".join(notes)
 
 
 NEWS_DEFAULTS = {
@@ -967,7 +972,7 @@ async def news_team(im: IndMoney, trades: list[dict], now: datetime, cfg: dict) 
                 log_skip(now, sym, idea, move, "market headwind: " + "; ".join(mkt.get("notes", [])[:1]))
                 continue  # the whole market is moving hard the other way on news
             side = "loser" if idea["direction"] == "up" else "gainer"  # loser -> CALL, gainer -> PUT
-            option = await im.pick_contract(_stock_keys[sym], side, cfg, now.date())
+            option = await im.pick_contract(_stock_keys[sym], side, cfg, now.date(), budget=float(cfg["capital"]))
             if option is None or option["ask"] < c["min_premium"]:
                 log_skip(now, sym, idea, move, "no option" if option is None else f"premium Rs {option['ask']} under Rs {c['min_premium']}")
                 continue

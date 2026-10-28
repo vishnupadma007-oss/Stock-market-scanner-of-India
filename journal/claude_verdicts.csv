@@ -19,3 +19,4 @@ date,symbol,contract,verdict,reason
 2026-10-27,RECLTD,RECLTD-23-NOV-285-CALL,SKIP,"Results-reaction day (filed 26 Oct 16:37, down 4%): results moves carry on 61-75%, fading one goes against our data; News Guard missed it (fixed)"
 2026-10-27,HINDUNILVR,HINDUNILVR-23-NOV-1780-CALL,TRADE,"Second bounce trade after a win; chart 75 with EMAs turned up and price above VWAP; target needs only ~0.1% on the stock"
 2026-10-28,BPCL,BPCL-23-NOV-295-PUT,TRADE,"Saudi refinery attack: crude at $116 hurts oil marketers; heavy pre-open selling kept going after the open; trend 75; the 2% target level prices the option at 13.91 > 12.60. Wide 2.4% spread"
+2026-10-28,ADANIPORTS,ADANIPORTS-23-NOV-1880-CALL,TRADE,"User asked for an OTM call so one lot fits the Rs 7,039 free money: strong Q2 (revenue +24%, EBITDA +23%, guidance raised), price confirming up near the day high. Low delta (0.19): needs about +1.5% on the stock for the target"

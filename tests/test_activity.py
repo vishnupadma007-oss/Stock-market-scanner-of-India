@@ -42,3 +42,30 @@ def test_quotes_are_sent_in_batches_of_ten():
 
     out = asyncio.run(Fake().quotes([f"K{i}" for i in range(12)]))
     assert sizes == [10, 2] and len(out) == 12
+
+
+def _chain(spot=1767.0):
+    rows = []
+    for k, (ask, delta) in enumerate([(55.0, 0.57), (44.4, 0.5), (34.8, 0.43), (26.7, 0.36), (20.3, 0.3),
+                                      (15.25, 0.24), (11.45, 0.19), (8.75, 0.15)]):
+        strike = 1760 + 20 * k
+        rows.append({"strike_price": strike, "call_data": {
+            "derivative_id": f"D{strike}", "slug": f"adaniports-23-nov-{strike}-call", "sell_price": ask,
+            "buy_price": round(ask * 0.99, 2), "delta": delta, "lot_size": 475, "iv": 24}})
+    return {"option_chain_data": rows, "entity_details": {"live_price": spot},
+            "selected_expiry": "20261123", "expiry_list": ["20261123"]}
+
+
+def test_budget_steps_out_of_the_money_until_one_lot_fits():
+    from datetime import date
+    from agents.indmoney import affordable_option, lot_cost, pick_option
+    cfg = {"strike_choice": "ATM", "budget_otm": {"enabled": True, "max_steps": 8, "min_delta": 0.15}}
+    atm = pick_option(_chain(), "loser", "ATM", today=date(2026, 10, 28))
+    assert atm["strike"] == 1760 and lot_cost(atm) > 7039
+    opt = affordable_option(_chain(), "loser", cfg, date(2026, 10, 28), 7039)
+    assert opt["strike"] == 1880 and lot_cost(opt) <= 7039 and opt["otm_for_budget"] == 6
+    # Too little money even for the cheapest usable strike: nothing.
+    assert affordable_option(_chain(), "loser", cfg, date(2026, 10, 28), 1000) is None
+    # Delta floor: no strike weaker than 0.25 allowed -> nothing fits Rs 7,039.
+    strict = {**cfg, "budget_otm": {**cfg["budget_otm"], "min_delta": 0.25}}
+    assert affordable_option(_chain(), "loser", strict, date(2026, 10, 28), 7039) is None

@@ -50,6 +50,7 @@ def test_candles_frame():
 
 class FakeIndMoney:
     pick_contract = watcher.IndMoney.pick_contract
+    _pick_month = watcher.IndMoney._pick_month
 
     def __init__(self, put_bid=49.6, headlines=(), sector_chg=0.3):
         self.put_bid, self.headlines, self.sector_chg = put_bid, list(headlines), sector_chg

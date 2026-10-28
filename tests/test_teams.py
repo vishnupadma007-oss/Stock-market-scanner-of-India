@@ -22,6 +22,7 @@ CFG = {**load_config(), "strike_choice": "ITM1",
 
 class FakeIndMoney:
     pick_contract = watcher.IndMoney.pick_contract
+    _pick_month = watcher.IndMoney._pick_month
 
     def __init__(self, move):
         self.move = move
@@ -41,7 +42,7 @@ class FakeIndMoney:
     async def quotes(self, keys, segments=None):
         return {"INDS01469": {"entity_stats": {"live_price": 1790, "day_change_percentage": self.move}}}
 
-    async def option_chain(self, key):
+    async def option_chain(self, key, strikes_around_atm=4):
         return chain()
 
 

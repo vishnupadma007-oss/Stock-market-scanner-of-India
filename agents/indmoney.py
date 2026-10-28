@@ -277,26 +277,40 @@ class IndMoney:
         return await self.call("get_indian_stocks_option_chain", ind_key=ind_key,
                                use_expiry_date=False, strikes_around_atm=strikes_around_atm)
 
-    async def pick_contract(self, ind_key: str, side: str, cfg: dict, today) -> dict | None:
+    async def pick_contract(self, ind_key: str, side: str, cfg: dict, today, budget: float | None = None) -> dict | None:
         """This month's contract; in expiry week, next month's when this month's fails the checks
-        (too cheap or too wide a bid-ask gap). One extra chain call, only in that case."""
-        chain = await self.option_chain(ind_key)
+        (too cheap or too wide a bid-ask gap). One extra chain call, only in that case.
+        With `budget` (the team's free money): when one lot costs more, a cheaper strike further
+        out of the money whose lot fits (`affordable_option`), if `budget_otm` is enabled."""
+        option, chain = await self._pick_month(ind_key, side, cfg, today)
+        if budget is not None and option is not None and (cfg.get("budget_otm") or {}).get("enabled") \
+                and lot_cost(option) > budget:
+            cheaper = affordable_option(chain, side, cfg, today, budget)
+            if cheaper is not None:
+                return {**cheaper, **({"rolled_from": option["rolled_from"]} if option.get("rolled_from") else {})}
+        return option
+
+    async def _pick_month(self, ind_key: str, side: str, cfg: dict, today) -> tuple[dict | None, dict]:
+        # Wide enough to hold the cheaper out-of-the-money strikes too (same single call).
+        oc = cfg.get("budget_otm") or {}
+        width = 4 + (int(oc.get("max_steps", 4)) if oc.get("enabled") else 0)
+        chain = await self.option_chain(ind_key, strikes_around_atm=width)
         option = pick_option(chain, side, cfg["strike_choice"], today=today,
                              rate=cfg.get("risk_free_rate", 0.065))
         fb = cfg.get("expiry_fallback") or {}
         if not needs_next_month(option, chain, today, fb):
-            return option
+            return option, chain
         later = sorted(e for e in chain.get("expiry_list") or [] if e > str(chain.get("selected_expiry")))
         if not later:
-            return option
-        nxt = pick_option(await self.option_chain(ind_key, expiry=later[0]), side, cfg["strike_choice"],
-                          today=today, rate=cfg.get("risk_free_rate", 0.065))
+            return option, chain
+        nxt_chain = await self.option_chain(ind_key, expiry=later[0], strikes_around_atm=width)
+        nxt = pick_option(nxt_chain, side, cfg["strike_choice"], today=today, rate=cfg.get("risk_free_rate", 0.065))
         # Both months unusable: keep the narrower bid-ask gap (the team's own checks decide after that).
         if nxt is None or (option is not None and _fails(nxt, fb)
                            and (not _fails(option, fb) or option["spread_pct"] <= nxt["spread_pct"])):
-            return option
+            return option, chain
         nxt["rolled_from"] = option["contract"] if option else str(chain.get("selected_expiry"))
-        return nxt
+        return nxt, nxt_chain
 
     async def quotes(self, ind_keys: list[str], segments: list[str] | None = None) -> dict:
         """Live details, in batches of 10 keys: the server rejects a larger call outright (27 Oct: the
@@ -375,7 +389,8 @@ def contract_expiry(name: str, today) -> "date":
     return d.replace(year=d.year + 1) if (today - d).days > 180 else d
 
 
-def pick_option(chain: dict, side: str, strike_choice: str, today=None, rate: float = 0.065) -> dict | None:
+def pick_option(chain: dict, side: str, strike_choice: str, today=None, rate: float = 0.065,
+                otm_steps: int = 0) -> dict | None:
     """Real contract from the live chain: PE for a gainer, CE for a loser, ATM or one strike ITM.
     Rejects crossed/inverted quotes (ask < bid) and enriches missing Greeks (gamma, theta_day, vega, iv_used)
     via implied volatility inversion when spot and expiry are known.
@@ -389,6 +404,10 @@ def pick_option(chain: dict, side: str, strike_choice: str, today=None, rate: fl
     shift = 1 if strike_choice == "ITM1" else 0
     # ITM for a put is above spot, for a call below spot.
     i = min(atm_i + shift, len(strikes) - 1) if side == "gainer" else max(atm_i - shift, 0)
+    if otm_steps:  # cheaper strikes further out of the money: lower for a put, higher for a call
+        i = i - otm_steps if side == "gainer" else i + otm_steps
+        if not 0 <= i < len(strikes):
+            return None
     row = next(r for r in rows if r["strike_price"] == strikes[i])
     leg = row.get("put_data" if side == "gainer" else "call_data") or {}
     bid = float(leg.get("buy_price", leg.get("bp")) or 0)
@@ -424,6 +443,29 @@ def pick_option(chain: dict, side: str, strike_choice: str, today=None, rate: fl
         "iv_used": round(iv, 4),
         "lot_size": leg.get("lot_size"), "oi_tag": row.get("oi_trend_tag"), "spot": spot,
     }
+
+
+def lot_cost(option: dict) -> float:
+    return float(option.get("ask") or 0) * float(option.get("lot_size") or 1)
+
+
+def affordable_option(chain: dict, side: str, cfg: dict, today, budget: float) -> dict | None:
+    """When one lot of the usual strike costs more than the free money (`budget`), the first strike
+    further out of the money whose lot fits (user, 28 Oct: "purchase out of the money" so a trade
+    fits the money left). Each step must still be a usable option: premium >= `min_premium`,
+    bid-ask gap <= `max_spread_pct` and |delta| >= `min_delta` (it still moves with the stock;
+    a far OTM option needs a bigger stock move and loses value faster when the stock stalls)."""
+    oc = cfg.get("budget_otm") or {}
+    for steps in range(1, int(oc.get("max_steps", 4)) + 1):
+        opt = pick_option(chain, side, cfg["strike_choice"], today=today,
+                          rate=cfg.get("risk_free_rate", 0.065), otm_steps=steps)
+        if opt is None:
+            return None
+        if abs(float(opt.get("delta") or 0)) < oc.get("min_delta", 0.15) or opt["ask"] < oc.get("min_premium", 5.0):
+            return None  # further out only gets cheaper and weaker
+        if opt["spread_pct"] <= oc.get("max_spread_pct", 2.0) and lot_cost(opt) <= budget:
+            return {**opt, "otm_for_budget": steps}
+    return None
 
 
 def _fails(option: dict, fb: dict) -> bool:

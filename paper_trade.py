@@ -65,7 +65,7 @@ async def open_trade(symbol: str, direction: str, strategy: str, reason: str, ex
         key = await find_key(im, symbol)
         if not key:
             return {"opened": False, "reason": f"{symbol} not found on INDmoney"}
-        option = await im.pick_contract(key, side, cfg, now.date())
+        option = await im.pick_contract(key, side, cfg, now.date(), budget=free)
 
     if option is None:
         return {"opened": False, "reason": "no quoted option contract"}
