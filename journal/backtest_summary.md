@@ -123,3 +123,18 @@ The direction carries real information (the best variants beat their mirror imag
 but every variant loses on average with this exit: in the best one 304 wins averaged +1.19%
 (+Rs 1.09 lakh) and 34 losers averaged -17.8% (-Rs 1.82 lakh). Same pattern as every strategy
 tested so far: the small fixed target with no stop-loss.
+
+### Quiet volume spurt with bigger targets (user's plan, 28 Oct 2026)
+
+`python backtest_spurt.py --targets 1 10` (uses agents/spurt.py, the live code). Volume >= 1.5x usual,
+move 0.2-0.5%, same option model, no stop-loss, square-off 15:20:
+
+| Net target | Trades | Hit % | Avg per trade | Opposite (control) | Net |
+|---|---|---|---|---|---|
+| 1% | 338 | 90% | -0.72% | -2.51% | -Rs 72,982 |
+| **10%** | 174 | 68% | **+2.89%** | -4.19% | **+Rs 1,50,515** |
+
+The first strategy in our tests that is positive and clearly beats its mirror image; positive in both
+halves of the period (+3.35% and +2.43% per trade). Winners averaged +10.2%, the rest -12.5%.
+(The Risk agent's 60% hit-chance filter keeps 174 of the 338 signals at the 10% target.)
+20%+ targets: too few trades pass to judge. Live from 29 Oct (news team, label `quiet-spurt`).

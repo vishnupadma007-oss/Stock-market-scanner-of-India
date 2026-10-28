@@ -163,6 +163,17 @@ expiry_fallback:
   days: 7                  # within this many calendar days of this month's expiry...
   min_premium: 5.0         # ...switch when this month's option is cheaper than this
   max_spread_pct: 2.0      # ...or its bid-ask gap is wider than this (% of the ask)
+spurt:                     # Quiet Volume Spurt (user's strategy, 28 Oct; agents/spurt.py), traded by the news team
+  enabled: true
+  min_volume_x: 1.5        # cumulative volume vs usual at this time of day (previous 10 sessions)
+  min_move_pct: 0.2        # ...while the stock has moved only 0.2-0.5% from yesterday's close
+  max_move_pct: 0.5
+  from: "09:30"
+  target_net_pct: 10.0     # 10% net on the option (backtest: 68% hit, +2.89%/trade; a 1% target lost money)
+  fresh_min: 15            # a signal older than this is not traded
+  live_min_move_pct: 0.1   # live INDmoney check before buying: still moving its way...
+  live_max_move_pct: 0.8   # ...and not already run off
+  poll_seconds: 60
 budget_otm:                # user, 28 Oct: when one lot of the usual strike costs more than the team's free money,
   enabled: true            # buy a cheaper strike further out of the money whose lot fits
   max_steps: 10            # at most this many strikes out (the delta floor below is the real limit)

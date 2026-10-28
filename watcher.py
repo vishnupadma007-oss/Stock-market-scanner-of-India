@@ -32,7 +32,7 @@ from zoneinfo import ZoneInfo
 
 from agents import (activity, analyzer, announcements, candles, commodities, concalls, daymode, expectations,
                     gapfollow, holidays, intel, macro, news, news_guard, newsfeed, policy, preopen,
-                    psychology, reaction, shock, valuation)
+                    psychology, reaction, shock, spurt, valuation)
 from agents.chart_reader import read_chart
 from agents.config import load_config
 from agents.costs import round_trip_charges
@@ -461,6 +461,35 @@ def information_track(cfg: dict) -> None:
                 except Exception as e:  # one failing source must not stop the others
                     emit("ERROR", {"error": f"{step.__name__}: {type(e).__name__}: {e}"})
         clock.sleep(max(1.0, every - (clock.time() - started)))
+
+
+def spurt_track(cfg: dict) -> None:
+    """Quiet Volume Spurt scanner (agents/spurt.py) on its own thread: every F&O stock every minute
+    from Yahoo (free, one request). Earlier sessions are fetched once a day for the usual volume;
+    each new signal wakes the news team (`news_pending`), which confirms it live and buys."""
+    import pandas as pd
+    c = {**spurt.DEFAULTS, **(cfg.get("spurt") or {})}
+    base: dict = {}
+    while True:
+        started = clock.time()
+        now = datetime.now(IST)
+        if c.get("enabled", True) and market_open(now) and now.time() >= _t(c["from"]):
+            try:
+                if base.get("day") != now.date():
+                    base = {"day": now.date(), "frames": {s: f[f.index.date < now.date()]
+                                                          for s, f in spurt.fetch(cfg["universe"], 20).items()}}
+                today = spurt.fetch(cfg["universe"], 1)
+                frames = {s: pd.concat([base["frames"][s], f]) if s in base["frames"] else f for s, f in today.items()}
+                for sym, sig in spurt.scan(frames, now.date(), c).items():
+                    with _daily_lock:
+                        seen = _daily.setdefault("spurt_signals", {})
+                        if sym in seen:
+                            continue
+                        seen[sym] = {**sig, "found": now}
+                    news_pending.set()
+            except Exception as e:  # Yahoo hiccup: try again next minute
+                emit("ERROR", {"error": f"spurt scan: {type(e).__name__}: {e}"})
+        clock.sleep(max(5.0, c.get("poll_seconds", 60) - (clock.time() - started)))
 
 
 def _trade_key(t: dict) -> tuple:
@@ -894,6 +923,77 @@ NEWS_DEFAULTS = {
 }
 
 
+async def spurt_entries(im: IndMoney, trades: list[dict], now: datetime, cfg: dict, c: dict, done: set) -> bool:
+    """Quiet Volume Spurt (user's strategy, agents/spurt.py): a fresh signal is confirmed on the live
+    INDmoney quote (still moving its way, not run off), cross-checked with the news (strong news
+    against it skips it), then bought with a 10% net target on the option, sized like any news
+    trade. Returns True when it opened a trade."""
+    s = {**spurt.DEFAULTS, **(cfg.get("spurt") or {})}
+    if not s.get("enabled", True):
+        return False
+    fresh = [(sym, g) for sym, g in (_daily.get("spurt_signals") or {}).items()
+             if sym not in done and not g.get("handled") and sym in set(cfg["universe"])
+             and (now - g["time"].to_pydatetime()).total_seconds() <= s.get("fresh_min", 15) * 60]
+    trades_today = sum(t["date"] == now.date().isoformat() and team_of(t) == "news" for t in trades)
+    for sym, g in fresh:
+        g["handled"] = True
+        sign = 1 if g["direction"] == "up" else -1
+        idea = {"direction": g["direction"], "confidence": "", "source": "quiet-spurt"}
+        try:
+            if sym not in _stock_keys:
+                _stock_keys[sym] = await expectations.stock_key(im, sym)
+            key = _stock_keys[sym]
+            stats = ((await im.quotes([key])).get(key) or {}).get("entity_stats") or {}
+            move = stats.get("day_change_percentage")
+            if move is None or not s.get("live_min_move_pct", 0.1) <= sign * float(move) <= s.get("live_max_move_pct", 0.8):
+                log_skip(now, sym, idea, float(move or 0), f"quiet spurt: live move {move}% no longer fits")
+                continue
+            view = analyzer.stock_view(sym, analyzer.recent_items(now), now, cfg)
+            if view["strong"] and view["direction"] != g["direction"]:
+                log_skip(now, sym, idea, float(move), f"quiet spurt: strong news {view['direction']} ({view['confidence']}%) against it")
+                continue
+            news_note = (f"news agrees ({view['confidence']}%): " + "; ".join(view.get("reasons", [])[:1])[:120]
+                         if view["strong"] else "no strong news either way")
+            intraday = await im.candles(key, "5minute", "7d")
+            side = "loser" if sign > 0 else "gainer"  # loser -> CALL, gainer -> PUT
+            option = await im.pick_contract(key, side, cfg, now.date(), budget=float(cfg["capital"]))
+            if option is None or option["ask"] < c["min_premium"]:
+                log_skip(now, sym, idea, float(move), "quiet spurt: no usable option")
+                continue
+            sized = {**cfg, "net_target_pct": s["target_net_pct"], "target_mode": "fixed",
+                     "max_capital_per_trade": capital_share(option, cfg, {**c, "max_open_trades": max_open(cfg, "news")},
+                                                            open_count(trades, "news"))}
+            risk = plan(option, trades_today, now, sized, sigma_per_min=intraday_sigma_per_min(intraday),
+                        spread_pct=option["spread_pct"])
+            if not risk["allowed"]:
+                log_skip(now, sym, idea, float(move), "quiet spurt: risk: " + "; ".join(risk["blocks"])[:150])
+                continue
+            reason = (f"Quiet volume spurt at {g['time']:%H:%M}: volume {g['volume_x']:.1f}x usual, "
+                      f"move {g['move_pct']:+.2f}% ({news_note})")
+            row = {f: "" for f in FIELDS}
+            row.update(date=now.date().isoformat(), opened=now.strftime("%H:%M"), symbol=sym, side=side,
+                       contract=option["contract"], underlying_key=key, derivative_id=option["derivative_id"],
+                       qty=risk["qty"], entry_ask=option["ask"], target_bid=risk["target_premium"],
+                       spread_pct=round(option["spread_pct"], 2), hit_probability=round(risk["hit_probability"]),
+                       status="OPEN", notes="; ".join(filter(None, [rolled_note(option), reason])),
+                       strategy="quiet-spurt", valuation=valuation_view(sym).get("label", ""))
+            trades.append(row)
+            emit("SIGNAL", {"team": "news", "symbol": sym, "direction": g["direction"], "source": "quiet-spurt",
+                            "contract": option["contract"], "qty": risk["qty"], "entry_ask": option["ask"],
+                            "target_bid": risk["target_premium"], "spread_pct": row["spread_pct"],
+                            "spot": stats.get("live_price"), "day_change_pct": move,
+                            "lot_size": option["lot_size"], "net_profit_at_target": round(risk["net_profit"]),
+                            "hit_probability": row["hit_probability"], "square_off": cfg["square_off_time"],
+                            "reason": reason, "rolled_from": option.get("rolled_from"),
+                            "otm_for_budget": option.get("otm_for_budget")})
+            return True
+        except (LoginRequired, RateLimited):
+            raise
+        except Exception as e:
+            emit("ERROR", {"error": f"quiet spurt {sym}: {type(e).__name__}: {e}"})
+    return False
+
+
 async def news_team(im: IndMoney, trades: list[dict], now: datetime, cfg: dict) -> None:
     """News team: trade the strongest results/forecast idea once the price confirms its direction.
     Buys a CALL for "up" and a PUT for "down"; forecasts the target price based on news, no stop-loss, same exits."""
@@ -909,6 +1009,8 @@ async def news_team(im: IndMoney, trades: list[dict], now: datetime, cfg: dict) 
         await results_gap_ideas(im, now, c, done)
     preopen_early_ideas(now, c, done, universe)
     volume_spurt_ideas(now, c, done, universe)
+    if await spurt_entries(im, trades, now, cfg, c, done):
+        return  # one new trade per round
     # An idea whose priced-in check failed is not traded: unchecked is not "not priced in".
     ideas = sorted(((sym, i) for sym, i in (_daily.get("ideas") or {}).items()
                     if sym not in done and i["confidence"] >= c["min_confidence"] and i.get("priced_in")
@@ -1093,7 +1195,7 @@ def has_open(trades: list[dict], team: str | None = None) -> bool:
 #   movers  top gainers/losers reversal, read from price, charts and options (strategy "reversal")
 #   news    NSE filings, results, concalls, news forecasts, pre-open imbalances, volume spurts, and results-gap rule
 TEAMS = ("movers", "news")
-NEWS_STRATEGIES = ("results", "intel", "news", "results-gap", "preopen", "spurt")
+NEWS_STRATEGIES = ("results", "intel", "news", "results-gap", "preopen", "spurt", "quiet-spurt")
 
 
 def team_of(trade: dict) -> str:
@@ -1191,6 +1293,7 @@ def main() -> None:
     if not args.once:  # NSE, news and analyzer: their own track, independent of the scan timing
         threading.Thread(target=information_track, args=(cfg,), daemon=True).start()
         threading.Thread(target=filings_track, args=(cfg,), daemon=True).start()
+        threading.Thread(target=spurt_track, args=(cfg,), daemon=True).start()
     last_scan = 0.0
     while True:
         now = datetime.now(IST)
