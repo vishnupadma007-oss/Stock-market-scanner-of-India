@@ -103,3 +103,23 @@ NSE pre-open, 26 Oct: of 13 F&O stocks with a 1%+ pre-open gap only 23% kept goi
 Reversal backtest with the new Chart Reader (climax-volume absorption, RSI divergence, loss cooldown):
 132 trades, 85% at target, average -0.84% per trade (was -1.55%), misses -12% (was -15%),
 worst -43% (was -86%), total -Rs 33,086 (was -Rs 56,168). Better, still negative overall.
+
+## Quiet volume spurt (user's idea, 28 Oct 2026)
+
+Heavy volume for the time of day (cumulative volume vs the same bar over the previous 10 sessions)
+while the stock has moved only a little from yesterday's close; buy the option in the direction of
+that move (latest candle and VWAP side agreeing), first signal per stock per day from 09:30.
+~60 days x 76 stocks, ITM1, 1% net target, square-off 15:20, no stop-loss; opposite direction as control.
+
+| Volume vs usual | Move so far | Trades | Hit % | Avg per trade | Opposite (control) |
+|---|---|---|---|---|---|
+| >= 1.5x | 0.2-0.5% | 338 | 90% | -0.72% | -2.51% |
+| >= 3.0x | 0.3-1.0% | 71 | 90% | -0.96% | -2.68% |
+| >= 2.0x | 0.2-0.7% | 200 | 85% | -1.72% | -1.92% |
+| >= 2.0x | 0.3-1.0% | 256 | 85% | -1.85% | -2.50% |
+| >= 3.0x | 0.2-0.7% | 56 | 86% | -1.79% | -1.23% |
+
+The direction carries real information (the best variants beat their mirror image by ~1.7 points),
+but every variant loses on average with this exit: in the best one 304 wins averaged +1.19%
+(+Rs 1.09 lakh) and 34 losers averaged -17.8% (-Rs 1.82 lakh). Same pattern as every strategy
+tested so far: the small fixed target with no stop-loss.
