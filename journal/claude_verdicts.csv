@@ -23,3 +23,4 @@ date,symbol,contract,verdict,reason
 2026-10-28,LT,LT-23-NOV-3850-PUT,SKIP,"Results-reaction day (record orders, profit +33%): fading a results-day rally goes against our data; slipped past the News Guard because a restart forgot the morning filings (fixed)"
 2026-10-29,TVSMOTOR,TVSMOTOR-23-NOV-4200-CALL,TRADE,"First live quiet-spurt-news trade: very strong results (revenue +44%, profit +52%), 13.5x usual volume at +0.26%, news agrees; one lot uses almost all of the news team free money"
 2026-10-29,HINDUNILVR,HINDUNILVR-23-NOV-1840-CALL,SKIP,"Late entry (14:54, 26 min to square-off) after HUL already +2.6% on its results; needs another ~1% (to ~1,882) fast; chart strong (trend 100) but stretched (RSI 73)"
+2026-10-29,ASIANPAINT,ASIANPAINT-23-NOV-2260-CALL,SKIP,"Very late entry (about 15:00) for a 0.67% move; results mixed (sales +15%, margins down)"

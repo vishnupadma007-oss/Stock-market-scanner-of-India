@@ -179,3 +179,27 @@ def test_change_pct_reads_loss_to_profit_as_a_rise():
     assert change_pct(-50.0, -100.0) == 50.0   # smaller loss is better
     assert change_pct(110.0, 100.0) == 10.0
     assert change_pct(1.0, 0) is None
+
+
+def test_result_reported_once_per_company_unless_figures_arrive_later(monkeypatch, capsys):
+    from datetime import datetime
+    from zoneinfo import ZoneInfo
+    now = datetime(2026, 10, 29, 14, 10, tzinfo=ZoneInfo("Asia/Kolkata"))
+    watcher._daily.clear()
+    watcher.reset_daily(now.date().isoformat())
+    feed = []
+    monkeypatch.setattr(watcher.announcements, "fetch_feed", lambda **k: feed)
+    monkeypatch.setattr(watcher, "read_results", lambda item: {**item, "read": {"view": "unread"}, "figures": item.get("f", {})})
+    monkeypatch.setattr(watcher, "check_expectations", lambda *a, **k: {})
+    def filing(seq, f=None):
+        return {"seq_id": seq, "time": "2026-10-29 14:0%s:00" % seq, "symbol": "ASIANPAINT", "category": "RESULTS",
+                "subject": "x", "text": "results", "pdf": "a.pdf", "f": f or {}}
+    feed[:] = [filing("1")]
+    monkeypatch.setattr(watcher.announcements, "material", lambda rows, u, since="": list(rows))
+    watcher.poll_filings(CFG, now)
+    feed[:] = [filing("1"), filing("2")]
+    watcher.poll_filings(CFG, now)
+    feed[:] = [filing("1"), filing("2"), filing("3", {"revenue": {"quarter": 1}})]
+    watcher.poll_filings(CFG, now)
+    events = [l for l in capsys.readouterr().out.splitlines() if l.startswith("RESULT {")]
+    assert [json.loads(l[7:])["seq_id"] for l in events] == ["1", "3"]  # first, then the one with figures

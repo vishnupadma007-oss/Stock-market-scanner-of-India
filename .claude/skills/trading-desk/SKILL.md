@@ -94,18 +94,25 @@ One short research pass that sets the day's mode. Keep it to a handful of search
    If it says not logged in, run `python -m agents.indmoney login`, give the user the link,
    ask them to paste back the `localhost` address their browser ends on, then run
    `python -m agents.indmoney finish "<address>"` and test again.
-2. Start the watcher in the background: `python watcher.py` (Bash, `run_in_background: true`,
-   timeout 7200000). Then wait for its output with Monitor, waking only on lines that need action
-   (filter: `^(SIGNAL|EXIT|RESULT|SHOCK) |^STATUS.*"watching": false|^ERROR.*(login|Login|limit|budget|Stale|repeats)|Traceback`).
+2. **Claude credits (user, 29 Oct): every wake-up costs credits, so wake only for events.**
+   - Start the watcher detached, so the 2-hour background limit never stops it (no restart turns):
+     `setsid nohup python3 -u watcher.py >> <scratchpad>/watcher.log 2>&1 < /dev/null &` (plain Bash,
+     returns at once). It exits by itself after 15:30. Check with `pgrep -fa "^python3 -u watcher.py"`.
+   - Quiet the live journal files: `scripts/journal_quiet.sh on` (the end-of-turn commit check then
+     does not wake you after every reply; the 12:40 and 15:40 checks turn it off, commit, and the
+     12:40 one turns it back on).
+   - Wait for events with one background Bash, not a 30-minute Monitor:
+     `scripts/wait_event.sh <scratchpad>/watcher.log` (`run_in_background: true`, timeout 7200000). It
+     exits on the next SIGNAL / EXIT / RESULT / SHOCK / stopped watcher / serious error (plus anything in
+     the next 3 s). Handle the event, then start it again. If it times out, start it again only
+     before 15:30.
+   - Keep replies short; judge a SIGNAL from its own line (no extra tool calls unless something
+     looks wrong). Each company's RESULT is reported once a day.
    FORECAST, POLICY, COMMODITY and NEWS lines are still written to the log and acted on by the
-   news team automatically; summarise them in the evening review instead of reacting one by one
-   (user decision 24 Oct: saves Claude credits; yesterday 66 of 72 alerts needed no action). Waiting costs
-   nothing; do not poll.
-3. Background commands stop after 2 hours: when it ends before 15:30 IST on a weekday,
-   start it again. Open trades are kept in `journal/paper_trades.csv`, so nothing is lost.
-   **Standing permission (user, 2026-10-20):** for paper trading, restart the watcher (and
-   re-arm the Monitor) as many times as needed during market hours without asking first.
-   Just mention restarts briefly in the next status line.
+   news team automatically; summarise them in the evening review instead of reacting one by one.
+3. **Standing permission (user, 2026-10-20):** for paper trading, restart the watcher as many
+   times as needed during market hours without asking first. Open trades are kept in
+   `journal/paper_trades.csv`, so nothing is lost.
 
 ## On a SIGNAL line
 
@@ -276,7 +283,7 @@ Run it when the watcher prints `STATUS ... market closed`, or whenever the user 
 5. For companies that reported today: `python -m agents.reaction build SYM1 SYM2 ...` adds their
    new quarter and refits the model (`journal/reaction_model.json`); mention if its direction
    hit rate changed.
-6. Commit and push `journal/` (trades and the review) so it survives the session. The live logs
+6. Run `scripts/journal_quiet.sh off` first, then commit and push `journal/` (trades and the review) so it survives the session. The live logs
    `journal/intel/` and `journal/valuations/` are git-ignored during the day (no commit per turn),
    so force-add them here: `git add -f journal/intel journal/valuations && git add journal`.
    Also list the day's FORECAST / POLICY / COMMODITY / NEWS highlights from the watcher log in 3-6 lines.

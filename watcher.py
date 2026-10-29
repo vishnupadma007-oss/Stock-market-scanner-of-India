@@ -342,7 +342,12 @@ def poll_filings(cfg: dict, now: datetime) -> None:
                 add_idea(item["symbol"], "up" if view != "weak" else "down", confidence, "results",
                          f"Results {view}: " + "; ".join(item["read"]["notes"]), item["expectations"], now,
                          expected_move_pct=exp_close)
-            emit("RESULT", {**item, "lag_sec": lag_seconds(item, datetime.now(IST))})
+            # One RESULT per company per day (press release, dividend notice and investor deck repeat
+            # it), unless a later filing is the first one whose figures could be read.
+            sent = _daily.setdefault("results_sent", {})
+            if item["symbol"] not in sent or (item.get("figures") and not sent[item["symbol"]]):
+                sent[item["symbol"]] = bool(item.get("figures"))
+                emit("RESULT", {**item, "lag_sec": lag_seconds(item, datetime.now(IST))})
         intel_item = announcements.to_intel(item)
         intel.append([intel_item], _daily["intel_seen"])
         if item["category"] != "RESULTS" and intel_item["impact"] >= 3:
