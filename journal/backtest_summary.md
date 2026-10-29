@@ -138,3 +138,23 @@ The first strategy in our tests that is positive and clearly beats its mirror im
 halves of the period (+3.35% and +2.43% per trade). Winners averaged +10.2%, the rest -12.5%.
 (The Risk agent's 60% hit-chance filter keeps 174 of the 338 signals at the 10% target.)
 20%+ targets: too few trades pass to judge. Live from 29 Oct (news team, label `quiet-spurt`).
+
+### "News Team Wiring Enhanced" proposal (user, 29 Oct 2026)
+
+Same 60 days x 76 stocks, quiet-spurt entries, no stop-loss, 15:20 square-off; the proposal's
+1-minute volume-fade exit approximated on 5-minute candles (sell on a candle with < 50% of the spurt
+candle's volume and no new high or a 35%+ wick, if the option is up 5%+ or between -1% and +2%).
+
+| Variant | Trades | Avg per trade | Net |
+|---|---|---|---|
+| **Current: 1.5x, 0.2-0.5%, 10% target, hold** | 174 | **+2.89%** | **+Rs 1,50,515** |
+| Current + volume-fade exit | 174 | +1.49% | +Rs 77,542 |
+| Proposed 2.0x, 0.2-0.6%, 10% target | 91 | +1.96% | +Rs 53,259 |
+| Proposed 2.0x + volume-fade exit | 91 | +0.22% | +Rs 5,958 |
+| Current, 15% target (hit-chance filter) | 61 | +5.89% | +Rs 1,07,715 |
+| Current, 25% target, no filter | 347 | +1.15% | +Rs 1,19,122 |
+
+The fade exit cut trades that went on to reach their target (scratch exits in 36-50% of trades);
+the stricter 2.0x spurt halved the trades and lowered the average. Bigger targets earn more per
+trade but fewer trades qualify; the 10% target gave the most in total. News tiers cannot be tested
+(no news history). Not adopted; kept for the user's decision.
