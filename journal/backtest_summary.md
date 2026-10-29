@@ -158,3 +158,21 @@ The fade exit cut trades that went on to reach their target (scratch exits in 36
 the stricter 2.0x spurt halved the trades and lowered the average. Bigger targets earn more per
 trade but fewer trades qualify; the 10% target gave the most in total. News tiers cannot be tested
 (no news history). Not adopted; kept for the user's decision.
+
+### Sector check and overnight carry (user's ideas, 29 Oct 2026)
+
+Quiet spurt, 1.5x / 0.2-0.5% / 10% target, 60 days x 76 stocks. Sector = average move of the other
+F&O stocks in the same sector at the signal time (no sector index history in our data).
+
+| Variant | Trades | Hit % | Avg per trade | Net |
+|---|---|---|---|---|
+| **Current** | 174 | 68% | **+2.89%** | **+Rs 1,50,515** |
+| Skip when the sector moves against the trade at all | 94 | 65% | +2.09% | +Rs 58,920 |
+| ...the trades that would be skipped | 78 | 71% | +3.65% | +Rs 85,434 |
+| Skip when the sector is 0.5%+ against | 143 | 66% | +2.65% | +Rs 1,13,555 |
+| Hold overnight when the target is not hit by 15:20 | 174 | 79% | +1.84% | +Rs 95,900 (worst -94.5%) |
+| ...the 56 trades carried overnight | 56 | 36% | -15.77% | -Rs 2,64,597 |
+| ...the same 56 squared off at 15:20 | 56 | 0% | -12.51% | -Rs 2,09,982 |
+
+A spurt against its own sector did better, not worse (stock-specific buying is the signal), and
+carrying unfinished trades overnight lost more than squaring them off. Neither adopted.
