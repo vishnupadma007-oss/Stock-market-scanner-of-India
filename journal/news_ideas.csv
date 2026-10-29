@@ -95,3 +95,11 @@ date,time,symbol,direction,confidence,source,priced_in
 2026-10-28,09:15,MPHASIS,down,75,preopen,NSE pre-open order imbalance
 2026-10-28,09:27,HDFCBANK,down,49,intel,pessimism priced in
 2026-10-28,15:03,TVSMOTOR,up,79,intel,not priced in
+2026-10-29,08:42,RELIANCE,up,98,intel,partly priced in
+2026-10-29,08:42,INFY,down,100,intel,not priced in
+2026-10-29,08:42,TCS,down,97,intel,largely priced in
+2026-10-29,08:42,BHARTIARTL,up,59,intel,largely priced in
+2026-10-29,08:42,LT,up,80,intel,not priced in
+2026-10-29,08:42,VEDL,up,82,intel,some pessimism priced in
+2026-10-29,08:42,HEROMOTOCO,up,86,intel,not priced in
+2026-10-29,08:42,TVSMOTOR,up,86,intel,partly priced in
