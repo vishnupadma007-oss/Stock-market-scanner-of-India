@@ -1,0 +1,198 @@
+time,symbol,direction,confidence,move_pct,reason
+09:15,HEROMOTOCO,up,86,0.39,"early entry: Volume 1.7x usual on a green candle; Order book: buyers 1.2x sellers; F&O activity: short build-up (OI +23.3%, price -0.0%)"
+09:15,VEDL,up,82,0.73,Trend Checker 0 < 60
+09:15,RELIANCE,up,98,0.22,"early entry: Volume 1.1x usual on a green candle; Order book: buyers 1.0x sellers; F&O activity: long build-up (OI +0.3%, price +0.3%)"
+09:25,RELIANCE,up,98,0.5,Trend Checker 45 < 60
+09:25,VEDL,up,82,0.47,"early entry: Volume 0.8x usual on a green candle; Order book: buyers 0.6x sellers; F&O activity: long build-up (OI +0.1%, price +0.4%)"
+09:25,HINDUNILVR,up,65,0.45,"early entry: Volume 0.1x usual on a green candle; Order book: buyers 1.0x sellers; F&O activity: long build-up (OI +1.4%, price +0.5%)"
+09:30,SBIN,up,,0.51,"quiet spurt: risk: One lot costs ₹25,725, above the ₹404 per-trade budget.; Forecast chance of reaching the target is 51% (need 60%)."
+09:30,APOLLOHOSP,up,,0.07,quiet spurt: live move 0.07% no longer fits
+09:30,HINDUNILVR,up,,0.38,"quiet spurt: risk: One lot costs ₹13,440, above the ₹404 per-trade budget."
+09:30,HEROMOTOCO,down,,-0.13,quiet spurt: strong news up (86%) against it
+09:30,SUNPHARMA,up,,0.43,"quiet spurt: risk: One lot costs ₹21,490, above the ₹404 per-trade budget.; Forecast chance of reaching the target is 59% (need 60%)."
+09:30,POLICYBZR,up,,0.14,quiet spurt: no usable option
+09:30,LUPIN,up,,0.19,"quiet spurt: risk: One lot costs ₹30,196, above the ₹404 per-trade budget.; Forecast chance of reaching the target is 48% (need 60%)."
+09:30,RELIANCE,up,98,1.33,"risk: One lot costs ₹23,125, above the ₹404 per-trade budget."
+09:42,DLF,up,,0.09,quiet spurt: live move 0.09% no longer fits
+09:42,RELIANCE,up,98,1.28,"risk: One lot costs ₹20,600, above the ₹404 per-trade budget."
+09:42,VEDL,up,82,1.29,"risk: One lot costs ₹13,628, above the ₹404 per-trade budget."
+09:42,COALINDIA,up,75,0.97,"risk: One lot costs ₹18,968, above the ₹404 per-trade budget."
+09:42,CIPLA,down,75,-1.18,"risk: One lot costs ₹14,577, above the ₹404 per-trade budget."
+09:42,HINDUNILVR,up,65,0.61,"risk: One lot costs ₹13,440, above the ₹404 per-trade budget."
+09:42,RELIANCE,up,98,1.55,"risk: One lot costs ₹21,500, above the ₹404 per-trade budget."
+09:42,VEDL,up,82,1.52,"risk: One lot costs ₹13,858, above the ₹404 per-trade budget."
+09:42,COALINDIA,up,75,0.75,"risk: One lot costs ₹18,495, above the ₹404 per-trade budget."
+09:42,CIPLA,down,75,-0.76,Trend Checker 55 < 60
+09:42,HINDUNILVR,up,65,0.35,"early entry: Volume 0.2x usual on a green candle; Order book: buyers 1.0x sellers; F&O activity: long build-up (OI +1.4%, price +0.5%)"
+09:54,RELIANCE,up,98,1.87,"risk: One lot costs ₹22,625, above the ₹404 per-trade budget."
+09:54,VEDL,up,82,1.54,"risk: One lot costs ₹13,972, above the ₹404 per-trade budget."
+09:54,COALINDIA,up,75,0.77,Trend Checker 25 < 60
+09:54,CIPLA,down,75,-0.78,Trend Checker 40 < 60
+09:54,ADANIPORTS,up,74,2.52,"risk: One lot costs ₹28,001, above the ₹404 per-trade budget."
+09:54,HINDUNILVR,up,65,0.62,"risk: One lot costs ₹12,150, above the ₹404 per-trade budget."
+09:54,BAJAJFINSV,down,,-0.47,"quiet spurt: risk: One lot costs ₹15,150, above the ₹404 per-trade budget.; Forecast chance of reaching the target is 58% (need 60%)."
+09:54,RELIANCE,up,98,1.38,"risk: One lot costs ₹20,300, above the ₹404 per-trade budget."
+09:54,VEDL,up,82,1.74,"risk: One lot costs ₹14,088, above the ₹404 per-trade budget."
+09:54,ADANIPORTS,up,74,2.48,"risk: One lot costs ₹24,439, above the ₹404 per-trade budget."
+09:54,HINDUNILVR,up,65,0.95,"risk: One lot costs ₹12,570, above the ₹404 per-trade budget."
+10:03,RELIANCE,up,98,1.49,"risk: One lot costs ₹20,200, above the ₹404 per-trade budget."
+10:03,VEDL,up,82,1.67,"risk: One lot costs ₹13,742, above the ₹404 per-trade budget."
+10:03,COALINDIA,up,75,0.74,Trend Checker 50 < 60
+10:03,ADANIPORTS,up,74,2.92,"risk: One lot costs ₹24,486, above the ₹404 per-trade budget."
+10:03,HINDUNILVR,up,65,1.13,"risk: One lot costs ₹12,735, above the ₹404 per-trade budget."
+10:11,RELIANCE,up,98,1.49,"risk: One lot costs ₹20,150, above the ₹404 per-trade budget."
+10:11,VEDL,up,82,0.54,Trend Checker 15 < 60
+10:11,COALINDIA,up,75,0.79,"risk: One lot costs ₹19,035, above the ₹404 per-trade budget."
+10:11,ADANIPORTS,up,74,2.92,"risk: One lot costs ₹23,988, above the ₹404 per-trade budget."
+10:11,HINDUNILVR,up,65,1.11,"risk: One lot costs ₹12,240, above the ₹404 per-trade budget."
+10:15,RELIANCE,up,98,1.49,"risk: One lot costs ₹20,100, above the ₹404 per-trade budget."
+10:15,COALINDIA,up,75,1.07,"risk: One lot costs ₹18,968, above the ₹404 per-trade budget."
+10:15,ADANIPORTS,up,74,2.96,"risk: One lot costs ₹24,748, above the ₹404 per-trade budget."
+10:15,HINDUNILVR,up,65,1.26,"risk: One lot costs ₹12,120, above the ₹404 per-trade budget."
+10:19,RELIANCE,up,98,1.67,"risk: One lot costs ₹20,575, above the ₹404 per-trade budget."
+10:19,VEDL,up,82,0.64,Trend Checker 0 < 60
+10:19,COALINDIA,up,75,0.99,"risk: One lot costs ₹19,170, above the ₹404 per-trade budget."
+10:19,ADANIPORTS,up,74,3.17,"risk: One lot costs ₹25,484, above the ₹404 per-trade budget."
+10:19,HINDUNILVR,up,65,1.77,"risk: One lot costs ₹12,360, above the ₹404 per-trade budget."
+10:28,RELIANCE,up,98,1.8,"risk: One lot costs ₹20,850, above the ₹404 per-trade budget."
+10:28,VEDL,up,82,0.77,Trend Checker 45 < 60
+10:28,COALINDIA,up,75,1.08,"risk: One lot costs ₹19,642, above the ₹404 per-trade budget."
+10:28,ADANIPORTS,up,74,3.5,"risk: One lot costs ₹26,790, above the ₹404 per-trade budget."
+10:28,HINDUNILVR,up,65,2.35,"risk: One lot costs ₹12,780, above the ₹404 per-trade budget."
+10:32,RELIANCE,up,98,1.73,"risk: One lot costs ₹20,550, above the ₹404 per-trade budget."
+10:32,COALINDIA,up,75,1.24,"risk: One lot costs ₹19,710, above the ₹404 per-trade budget."
+10:32,ADANIPORTS,up,74,3.62,"risk: One lot costs ₹27,360, above the ₹404 per-trade budget."
+10:32,HINDUNILVR,up,65,2.42,"risk: One lot costs ₹12,960, above the ₹404 per-trade budget."
+10:42,RELIANCE,up,100,1.68,"risk: One lot costs ₹20,250, above the ₹404 per-trade budget."
+10:49,RELIANCE,up,100,1.68,"risk: One lot costs ₹20,200, above the ₹404 per-trade budget."
+10:49,RELIANCE,up,100,1.65,"risk: One lot costs ₹19,925, above the ₹404 per-trade budget."
+10:49,VEDL,up,78,1.63,"risk: One lot costs ₹14,030, above the ₹404 per-trade budget."
+10:49,ADANIPORTS,up,70,3.95,"risk: One lot costs ₹23,608, above the ₹404 per-trade budget."
+10:54,RELIANCE,up,100,1.55,Trend Checker 35 < 60
+10:54,VEDL,up,78,1.78,"risk: One lot costs ₹10,868, above the ₹404 per-trade budget."
+10:54,VEDL,up,78,2.02,"risk: One lot costs ₹10,810, above the ₹404 per-trade budget."
+10:54,HINDUNILVR,up,70,2.13,Trend Checker 50 < 60
+11:02,RELIANCE,up,100,1.48,Trend Checker 50 < 60
+11:02,VEDL,up,78,1.95,"risk: One lot costs ₹10,810, above the ₹404 per-trade budget."
+11:02,HINDUNILVR,up,70,2.04,Trend Checker 50 < 60
+11:02,BAJAJFINSV,up,,0.42,"quiet spurt: risk: One lot costs ₹19,710, above the ₹404 per-trade budget.; Forecast chance of reaching the target is 54% (need 60%)."
+11:02,VEDL,up,78,1.57,"risk: One lot costs ₹13,225, above the ₹404 per-trade budget."
+11:08,RELIANCE,up,100,1.5,"risk: One lot costs ₹22,300, above the ₹404 per-trade budget."
+11:08,VEDL,up,78,1.22,Trend Checker 45 < 60
+11:08,HINDUNILVR,up,70,1.94,Trend Checker 35 < 60
+11:14,RELIANCE,up,100,1.56,"risk: One lot costs ₹20,125, above the ₹404 per-trade budget."
+11:14,VEDL,up,78,1.35,Trend Checker 35 < 60
+11:14,HINDUNILVR,up,70,1.82,Trend Checker 35 < 60
+11:17,RELIANCE,up,100,1.58,"risk: One lot costs ₹19,825, above the ₹404 per-trade budget."
+11:20,RELIANCE,up,100,1.55,"risk: One lot costs ₹22,450, above the ₹404 per-trade budget."
+11:20,VEDL,up,78,1.16,Trend Checker 0 < 60
+11:20,ADANIPORTS,up,70,3.94,"risk: One lot costs ₹23,251, above the ₹404 per-trade budget."
+11:20,HINDUNILVR,up,70,1.99,"risk: One lot costs ₹11,055, above the ₹404 per-trade budget."
+11:27,RELIANCE,up,100,1.36,Trend Checker 35 < 60
+11:27,VEDL,up,78,0.84,Trend Checker 0 < 60
+11:27,ADANIPORTS,up,70,3.8,"risk: One lot costs ₹28,191, above the ₹404 per-trade budget."
+11:27,HINDUNILVR,up,70,2.01,"risk: One lot costs ₹13,425, above the ₹404 per-trade budget."
+11:31,ADANIPORTS,up,70,3.88,"risk: One lot costs ₹23,228, above the ₹404 per-trade budget."
+11:31,HINDUNILVR,up,70,1.7,"risk: One lot costs ₹13,605, above the ₹404 per-trade budget."
+11:34,RELIANCE,up,100,1.42,Trend Checker 20 < 60
+11:34,VEDL,up,78,0.84,Trend Checker 0 < 60
+11:34,ADANIPORTS,up,70,3.75,"risk: One lot costs ₹28,595, above the ₹404 per-trade budget."
+11:34,HINDUNILVR,up,70,1.83,"risk: One lot costs ₹13,560, above the ₹404 per-trade budget."
+11:40,RELIANCE,up,100,1.47,Trend Checker 50 < 60
+11:40,VEDL,up,78,0.79,Trend Checker 0 < 60
+11:42,ADANIPORTS,up,70,3.93,"risk: One lot costs ₹24,011, above the ₹404 per-trade budget."
+11:42,HINDUNILVR,up,70,1.93,"risk: One lot costs ₹10,800, above the ₹404 per-trade budget."
+11:46,RELIANCE,up,100,1.44,Trend Checker 50 < 60
+11:46,VEDL,up,78,0.82,Trend Checker 0 < 60
+11:46,HINDUNILVR,up,70,1.93,"risk: One lot costs ₹13,815, above the ₹404 per-trade budget."
+11:52,RELIANCE,up,100,1.61,"risk: One lot costs ₹20,050, above the ₹404 per-trade budget."
+11:52,VEDL,up,78,0.73,Trend Checker 10 < 60
+11:52,HINDUNILVR,up,70,1.77,Trend Checker 50 < 60
+11:55,RELIANCE,up,100,1.56,"risk: One lot costs ₹20,100, above the ₹404 per-trade budget."
+11:58,RELIANCE,up,100,1.64,Trend Checker 50 < 60
+11:58,VEDL,up,78,0.75,Trend Checker 10 < 60
+11:58,HINDUNILVR,up,70,1.78,Trend Checker 20 < 60
+12:04,RELIANCE,up,100,1.3,Trend Checker 20 < 60
+12:04,VEDL,up,78,0.77,Trend Checker 10 < 60
+12:04,HINDUNILVR,up,70,1.89,Trend Checker 35 < 60
+12:10,RELIANCE,up,100,1.37,Trend Checker 20 < 60
+12:10,VEDL,up,78,0.71,Trend Checker 10 < 60
+12:10,HINDUNILVR,up,70,1.66,Trend Checker 35 < 60
+12:13,APOLLOHOSP,up,,0.41,"quiet spurt: risk: One lot costs ₹33,631, above the ₹404 per-trade budget.; Forecast chance of reaching the target is 54% (need 60%)."
+12:19,RELIANCE,up,100,1.13,Trend Checker 0 < 60
+12:19,VEDL,up,78,0.84,Trend Checker 25 < 60
+12:19,HINDUNILVR,up,70,1.42,Trend Checker 0 < 60
+12:27,RELIANCE,up,100,1.06,Trend Checker 0 < 60
+12:27,VEDL,up,78,0.77,Trend Checker 25 < 60
+12:27,HINDUNILVR,up,70,1.39,Trend Checker 0 < 60
+12:34,RELIANCE,up,100,1.08,Trend Checker 0 < 60
+12:34,VEDL,up,78,0.77,Trend Checker 10 < 60
+12:34,HINDUNILVR,up,70,1.39,Trend Checker 0 < 60
+12:39,RELIANCE,up,100,1.15,Trend Checker 0 < 60
+12:39,VEDL,up,78,0.69,Trend Checker 10 < 60
+12:39,HINDUNILVR,up,70,1.46,Trend Checker 25 < 60
+12:42,RELIANCE,up,98,0.84,Trend Checker 0 < 60
+12:48,RELIANCE,up,98,0.87,Trend Checker 0 < 60
+12:48,VEDL,up,86,0.51,Trend Checker 0 < 60
+12:55,RELIANCE,up,98,0.73,Trend Checker 0 < 60
+12:55,VEDL,up,86,0.43,"early entry: Volume 0.5x usual on a red candle; Order book: buyers 0.5x sellers; F&O activity: long build-up (OI +2.9%, price +0.4%)"
+13:00,RELIANCE,up,98,1.02,Trend Checker 0 < 60
+13:00,VEDL,up,86,0.36,"early entry: Volume 0.4x usual on a red candle; Order book: buyers 0.5x sellers; F&O activity: long build-up (OI +2.9%, price +0.4%)"
+13:06,RELIANCE,up,98,1.01,Trend Checker 0 < 60
+13:06,VEDL,up,86,0.32,"early entry: Volume 0.6x usual on a red candle; Order book: buyers 0.5x sellers; F&O activity: short build-up (OI +2.9%, price -0.0%)"
+13:14,RELIANCE,up,98,0.99,Trend Checker 25 < 60
+13:14,VEDL,up,86,0.34,"early entry: Volume 1.1x usual on a green candle; Order book: buyers 0.6x sellers; F&O activity: long build-up (OI +2.9%, price +0.4%)"
+13:21,RELIANCE,up,98,0.95,Trend Checker 25 < 60
+13:21,VEDL,up,86,0.49,"early entry: Volume 0.6x usual on a red candle; Order book: buyers 0.6x sellers; F&O activity: short build-up (OI +2.8%, price -0.0%)"
+13:21,APOLLOHOSP,up,,0.29,"quiet spurt: risk: One lot costs ₹32,394, above the ₹404 per-trade budget.; Forecast chance of reaching the target is 44% (need 60%)."
+13:21,HINDUNILVR,up,88,1.37,Trend Checker 15 < 60
+13:29,RELIANCE,up,98,0.91,Trend Checker 10 < 60
+13:29,HINDUNILVR,up,88,1.41,Trend Checker 25 < 60
+13:29,VEDL,up,86,0.36,"early entry: Volume 0.4x usual on a red candle; Order book: buyers 0.5x sellers; F&O activity: short build-up (OI +2.8%, price -0.0%)"
+13:35,RELIANCE,up,98,1.43,"risk: One lot costs ₹22,225, above the ₹404 per-trade budget."
+13:35,HINDUNILVR,up,88,2.05,"risk: One lot costs ₹10,965, above the ₹404 per-trade budget."
+13:35,VEDL,up,86,0.41,"early entry: Volume 3.2x usual on a green candle; Order book: buyers 0.5x sellers; F&O activity: short build-up (OI +2.8%, price -0.0%)"
+13:42,RELIANCE,up,98,1.25,Trend Checker 45 < 60
+13:42,HINDUNILVR,up,88,1.93,"risk: One lot costs ₹11,265, above the ₹404 per-trade budget."
+13:42,VEDL,up,86,0.39,"early entry: Volume 0.5x usual on a red candle; Order book: buyers 0.6x sellers; F&O activity: short build-up (OI +2.8%, price -0.0%)"
+13:46,HINDUNILVR,up,88,1.93,"risk: One lot costs ₹10,920, above the ₹404 per-trade budget."
+13:48,RELIANCE,up,98,1.33,"risk: One lot costs ₹21,950, above the ₹404 per-trade budget."
+13:48,HINDUNILVR,up,88,1.9,"risk: One lot costs ₹10,935, above the ₹404 per-trade budget."
+13:48,VEDL,up,86,0.41,"early entry: Volume 0.1x usual on a red candle; Order book: buyers 0.6x sellers; F&O activity: short build-up (OI +3.3%, price -0.0%)"
+13:48,COALINDIA,up,,0.37,"quiet spurt: risk: One lot costs ₹17,618, above the ₹404 per-trade budget.; Forecast chance of reaching the target is 28% (need 60%)."
+13:48,RELIANCE,up,98,1.55,"risk: One lot costs ₹22,325, above the ₹404 per-trade budget."
+13:48,HINDUNILVR,up,88,1.93,"risk: One lot costs ₹11,025, above the ₹404 per-trade budget."
+13:57,RELIANCE,up,98,1.44,"risk: One lot costs ₹22,300, above the ₹404 per-trade budget."
+13:57,HINDUNILVR,up,88,1.95,"risk: One lot costs ₹10,815, above the ₹404 per-trade budget."
+13:57,VEDL,up,86,0.43,"early entry: Volume 0.9x usual on a red candle; Order book: buyers 0.6x sellers; F&O activity: short build-up (OI +3.7%, price -0.0%)"
+14:01,RELIANCE,up,98,1.09,Trend Checker 15 < 60
+14:01,HINDUNILVR,up,88,1.93,"risk: One lot costs ₹11,040, above the ₹404 per-trade budget."
+14:08,RELIANCE,up,98,0.98,Trend Checker 15 < 60
+14:08,HINDUNILVR,up,88,1.9,"risk: One lot costs ₹10,920, above the ₹404 per-trade budget."
+14:08,VEDL,up,86,0.36,"early entry: Volume 0.2x usual on a red candle; Order book: buyers 0.6x sellers; F&O activity: long build-up (OI +3.9%, price +0.4%)"
+14:08,HINDUNILVR,up,88,1.96,"risk: One lot costs ₹11,025, above the ₹404 per-trade budget."
+14:13,RELIANCE,up,98,0.9,Trend Checker 0 < 60
+14:13,HINDUNILVR,up,88,2.14,"risk: One lot costs ₹11,640, above the ₹404 per-trade budget."
+14:13,VEDL,up,86,0.43,"early entry: Volume 0.0x usual on a green candle; Order book: buyers 0.6x sellers; F&O activity: short build-up (OI +3.8%, price -0.0%)"
+14:20,RELIANCE,up,98,0.91,Trend Checker 0 < 60
+14:20,HINDUNILVR,up,88,2.13,"risk: One lot costs ₹11,430, above the ₹404 per-trade budget."
+14:20,VEDL,up,86,0.43,"early entry: Volume 1.3x usual on a green candle; Order book: buyers 0.6x sellers; F&O activity: long build-up (OI +3.8%, price +0.4%)"
+14:24,HINDUNILVR,up,88,2.16,"risk: One lot costs ₹11,640, above the ₹404 per-trade budget."
+14:27,RELIANCE,up,98,1.17,Trend Checker 0 < 60
+14:27,HINDUNILVR,up,88,2.18,"risk: One lot costs ₹11,610, above the ₹404 per-trade budget."
+14:27,VEDL,up,86,0.77,Trend Checker 40 < 60
+14:33,RELIANCE,up,98,0.95,Trend Checker 15 < 60
+14:33,HINDUNILVR,up,88,2.36,"risk: One lot costs ₹12,000, above the ₹404 per-trade budget."
+14:33,VEDL,up,86,0.82,Trend Checker 55 < 60
+14:36,HINDUNILVR,up,88,2.56,"risk: One lot costs ₹12,360, above the ₹404 per-trade budget."
+14:39,RELIANCE,up,98,1.19,Trend Checker 15 < 60
+14:39,HINDUNILVR,up,88,2.51,"risk: One lot costs ₹12,135, above the ₹404 per-trade budget."
+14:39,VEDL,up,86,0.97,Trend Checker 55 < 60
+14:42,RELIANCE,up,92,0.83,Trend Checker 0 < 60
+14:48,RELIANCE,up,92,0.83,Trend Checker 0 < 60
+14:48,HINDUNILVR,up,92,2.4,"risk: One lot costs ₹12,195, above the ₹404 per-trade budget."
+14:48,HINDUNILVR,up,92,2.45,"risk: One lot costs ₹12,705, above the ₹404 per-trade budget."
+14:53,ASIANPAINT,up,,-0.07,quiet spurt: live move -0.07% no longer fits
+14:55,RELIANCE,up,92,0.93,Trend Checker 0 < 60
+15:02,RELIANCE,up,92,1.03,Trend Checker 10 < 60
+15:09,RELIANCE,up,92,0.94,Trend Checker 0 < 60
