@@ -106,3 +106,4 @@ date,time,symbol,direction,confidence,source,priced_in
 2026-10-29,09:15,COALINDIA,up,75,preopen,NSE pre-open order imbalance
 2026-10-29,09:15,CIPLA,down,75,preopen,NSE pre-open order imbalance
 2026-10-29,09:20,HINDUNILVR,up,65,intel,not priced in
+2026-10-29,09:50,ADANIPORTS,up,74,intel,not priced in
