@@ -176,3 +176,18 @@ F&O stocks in the same sector at the signal time (no sector index history in our
 
 A spurt against its own sector did better, not worse (stock-specific buying is the signal), and
 carrying unfinished trades overnight lost more than squaring them off. Neither adopted.
+
+### Overnight carry on quiet nights only (user, 29 Oct 2026)
+
+The 52 quiet-spurt trades that missed their target by 15:20, split by whether the stock had results
+that day or the next (from journal/results_history; RBI/Fed dates not in our data):
+
+| Group | Trades | Square off 15:20 | Carry to next day |
+|---|---|---|---|
+| All | 52 | -12.48% | -15.99% |
+| Quiet (no results) | 51 | -12.27% | -14.64% |
+| Quiet and in profit at 15:20 | 10 | **+3.91%** | -5.53% |
+| Quiet and at a loss at 15:20 | 41 | -16.22% | -16.86% |
+
+51 of the 52 nights were already "quiet", and carrying still lost more: the overnight losses are not
+event-driven. Not adopted.
