@@ -997,8 +997,14 @@ async def spurt_entries(im: IndMoney, trades: list[dict], now: datetime, cfg: di
             if not risk["allowed"]:
                 log_skip(now, sym, idea, float(move), "quiet spurt: risk: " + "; ".join(risk["blocks"])[:150])
                 continue
+            # The previous session's move (a big run-up before the spurt may mean the news is priced in),
+            # recorded so the review can compare winners and losers.
+            closes = intraday.groupby(intraday.index.date)["Close"].last()
+            closes = closes[closes.index < now.date()]
+            prev_day = (f"; previous day {(closes.iloc[-1] / closes.iloc[-2] - 1) * 100:+.1f}%"
+                        if len(closes) >= 2 else "")
             reason = (f"Quiet volume spurt at {g['time']:%H:%M}: volume {g['volume_x']:.1f}x usual, "
-                      f"move {g['move_pct']:+.2f}% ({news_note}); target {tgt:g}% net")
+                      f"move {g['move_pct']:+.2f}% ({news_note}); target {tgt:g}% net{prev_day}")
             row = {f: "" for f in FIELDS}
             row.update(date=now.date().isoformat(), opened=now.strftime("%H:%M"), symbol=sym, side=side,
                        contract=option["contract"], underlying_key=key, derivative_id=option["derivative_id"],
