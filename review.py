@@ -90,7 +90,7 @@ def _breakdown(df: pd.DataFrame, title: str, key) -> list[str]:
     return lines + [""]
 
 
-NEWS_STRATEGIES = ("results", "intel", "news", "results-gap", "preopen", "spurt", "quiet-spurt")
+NEWS_STRATEGIES = ("results", "intel", "news", "results-gap", "preopen", "spurt", "quiet-spurt", "quiet-spurt-news")
 
 
 def team_of(strategy: pd.Series) -> pd.Series:

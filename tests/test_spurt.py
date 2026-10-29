@@ -118,3 +118,17 @@ def test_nse_live_page_and_live_signal():
     assert sig["direction"] == "up" and sig["volume_x"] >= 1.5
     assert spurt.live_signal(r, 1004.0, usual / 100, 60) is None   # last 5 minutes went down
     assert spurt.live_signal(r, 1002.0, r["volume"], 60) is None   # usual volume
+
+
+def test_spurt_with_agreeing_news_aims_for_15pct_under_its_own_label(monkeypatch):
+    now = datetime(2026, 10, 29, 10, 30, tzinfo=IST)
+    setup(now)
+    monkeypatch.setattr(watcher.analyzer, "stock_view", lambda *a, **k: {
+        "strong": True, "direction": "up", "confidence": 80, "reasons": ["Order win"]})
+    cfg = {**load_config(), "capital": 30000}
+    c = {**watcher.NEWS_DEFAULTS, **watcher.team_cfg(cfg, "news")}
+    trades = []
+    assert asyncio.run(watcher.spurt_entries(Live(), trades, now, cfg, c, set()))
+    t = trades[0]
+    assert t["strategy"] == "quiet-spurt-news" and watcher.team_of(t) == "news"
+    assert float(t["target_bid"]) >= 20.0 * 1.15 and "target 15% net" in t["notes"]

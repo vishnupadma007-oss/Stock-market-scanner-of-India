@@ -981,25 +981,34 @@ async def spurt_entries(im: IndMoney, trades: list[dict], now: datetime, cfg: di
             if option is None or option["ask"] < c["min_premium"]:
                 log_skip(now, sym, idea, float(move), "quiet spurt: no usable option")
                 continue
-            sized = {**cfg, "net_target_pct": s["target_net_pct"], "target_mode": "fixed",
-                     "max_capital_per_trade": capital_share(option, cfg, {**c, "max_open_trades": max_open(cfg, "news")},
-                                                            open_count(trades, "news"))}
-            risk = plan(option, trades_today, now, sized, sigma_per_min=intraday_sigma_per_min(intraday),
-                        spread_pct=option["spread_pct"])
+            # Live test (user, 29 Oct): when the news agrees with the spurt, aim for 15%; otherwise 10%.
+            # Each group has its own strategy label, so the evening review compares them. If 15% is out
+            # of reach before 15:20 (Risk agent's hit chance), the news-aligned trade still takes 10%.
+            news_agrees = view["strong"] and view["direction"] == g["direction"]
+            strategy = "quiet-spurt-news" if news_agrees else "quiet-spurt"
+            share = capital_share(option, cfg, {**c, "max_open_trades": max_open(cfg, "news")}, open_count(trades, "news"))
+            targets = [s.get("target_news_net_pct", 15.0), s["target_net_pct"]] if news_agrees else [s["target_net_pct"]]
+            for tgt in targets:
+                sized = {**cfg, "net_target_pct": tgt, "target_mode": "fixed", "max_capital_per_trade": share}
+                risk = plan(option, trades_today, now, sized, sigma_per_min=intraday_sigma_per_min(intraday),
+                            spread_pct=option["spread_pct"])
+                if risk["allowed"]:
+                    break
             if not risk["allowed"]:
                 log_skip(now, sym, idea, float(move), "quiet spurt: risk: " + "; ".join(risk["blocks"])[:150])
                 continue
             reason = (f"Quiet volume spurt at {g['time']:%H:%M}: volume {g['volume_x']:.1f}x usual, "
-                      f"move {g['move_pct']:+.2f}% ({news_note})")
+                      f"move {g['move_pct']:+.2f}% ({news_note}); target {tgt:g}% net")
             row = {f: "" for f in FIELDS}
             row.update(date=now.date().isoformat(), opened=now.strftime("%H:%M"), symbol=sym, side=side,
                        contract=option["contract"], underlying_key=key, derivative_id=option["derivative_id"],
                        qty=risk["qty"], entry_ask=option["ask"], target_bid=risk["target_premium"],
                        spread_pct=round(option["spread_pct"], 2), hit_probability=round(risk["hit_probability"]),
                        status="OPEN", notes="; ".join(filter(None, [rolled_note(option), reason])),
-                       strategy="quiet-spurt", valuation=valuation_view(sym).get("label", ""))
+                       strategy=strategy, valuation=valuation_view(sym).get("label", ""))
             trades.append(row)
-            emit("SIGNAL", {"team": "news", "symbol": sym, "direction": g["direction"], "source": "quiet-spurt",
+            emit("SIGNAL", {"team": "news", "symbol": sym, "direction": g["direction"], "source": strategy,
+                            "target_net_pct": tgt,
                             "contract": option["contract"], "qty": risk["qty"], "entry_ask": option["ask"],
                             "target_bid": risk["target_premium"], "spread_pct": row["spread_pct"],
                             "spot": stats.get("live_price"), "day_change_pct": move,
@@ -1216,7 +1225,7 @@ def has_open(trades: list[dict], team: str | None = None) -> bool:
 #   movers  top gainers/losers reversal, read from price, charts and options (strategy "reversal")
 #   news    NSE filings, results, concalls, news forecasts, pre-open imbalances, volume spurts, and results-gap rule
 TEAMS = ("movers", "news")
-NEWS_STRATEGIES = ("results", "intel", "news", "results-gap", "preopen", "spurt", "quiet-spurt")
+NEWS_STRATEGIES = ("results", "intel", "news", "results-gap", "preopen", "spurt", "quiet-spurt", "quiet-spurt-news")
 
 
 def team_of(trade: dict) -> str:
