@@ -103,3 +103,6 @@ date,time,symbol,direction,confidence,source,priced_in
 2026-10-29,08:42,VEDL,up,82,intel,some pessimism priced in
 2026-10-29,08:42,HEROMOTOCO,up,86,intel,not priced in
 2026-10-29,08:42,TVSMOTOR,up,86,intel,partly priced in
+2026-10-29,09:15,COALINDIA,up,75,preopen,NSE pre-open order imbalance
+2026-10-29,09:15,CIPLA,down,75,preopen,NSE pre-open order imbalance
+2026-10-29,09:20,HINDUNILVR,up,65,intel,not priced in
