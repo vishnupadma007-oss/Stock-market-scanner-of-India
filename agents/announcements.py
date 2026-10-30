@@ -304,13 +304,13 @@ def results_summary(url: str, symbol: str | None = None) -> dict:
     text = pdf_text(url)
     figures = figures_from_text(text)
     if not figures and symbol and text.strip():
-        # Our parser found no table (scanned or unusual layout): ask Grok, if a key is set (agents/grok.py).
-        from . import grok
+        # Our parser found no table (scanned or unusual layout): ask the AI helper, if a key is set (agents/ai_helper.py).
+        from . import ai_helper
         from .config import load_config
         try:
             cfg = load_config()
-            if grok.available(cfg):
-                figures = grok.results_figures(text, symbol, cfg)
+            if ai_helper.available(cfg):
+                figures = ai_helper.results_figures(text, symbol, cfg)
         except Exception:
             pass
     return {"figures": figures, "highlights": highlights(text),

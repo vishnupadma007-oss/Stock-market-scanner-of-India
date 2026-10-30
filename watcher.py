@@ -30,7 +30,7 @@ from datetime import date, datetime, time, timedelta
 from pathlib import Path
 from zoneinfo import ZoneInfo
 
-from agents import (activity, analyzer, announcements, grok, candles, commodities, concalls, daymode, expectations,
+from agents import (activity, analyzer, announcements, ai_helper, candles, commodities, concalls, daymode, expectations,
                     gapfollow, holidays, intel, macro, news, news_guard, newsfeed, policy, preopen,
                     psychology, reaction, shock, spurt, valuation)
 from agents.chart_reader import read_chart
@@ -396,13 +396,13 @@ def run_analyzer(cfg: dict, now: datetime) -> None:
 
 
 _print_lock = threading.Lock()
-_cfg_for_grok: dict = {}  # set in main(); Grok's own settings (config.yaml -> grok)  # the information track and the scanner both print events
+_cfg_for_grok: dict = {}  # set in main(); the AI helper's settings (config.yaml -> ai)  # the information track and the scanner both print events
 
 
 def emit(kind: str, payload: dict) -> None:
-    if kind == "SIGNAL" and grok.available(_cfg_for_grok):
-        # Stage 1, observe only: Grok's TRADE/SKIP view is logged beside the trade; it never blocks it.
-        threading.Thread(target=grok.log_verdict, args=(payload, _cfg_for_grok), daemon=True).start()
+    if kind == "SIGNAL" and ai_helper.available(_cfg_for_grok):
+        # Stage 1, observe only: the AI helper's TRADE/SKIP view is logged beside the trade; it never blocks it.
+        threading.Thread(target=ai_helper.log_verdict, args=(payload, _cfg_for_grok), daemon=True).start()
     with _print_lock:
         if kind == "ERROR":
             # The same error is shown once per 10 minutes, then with how often it repeated: on 27 Oct a

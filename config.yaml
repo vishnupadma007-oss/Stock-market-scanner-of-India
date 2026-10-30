@@ -291,8 +291,9 @@ shock:
   breadth_share: 0.8
   news_hours: 3.0
   news_count: 3
-grok:                        # Grok (xAI) helper, agents/grok.py (user's plan, 30 Oct). Key: XAI_API_KEY or ~/.config/xai/key
-  enabled: true              # without a key it does nothing
-  model: grok-4
-  max_calls_per_day: 80      # cap on xAI calls (results figures our parser misses + one view per SIGNAL)
+ai:                          # AI helper, agents/ai_helper.py (user's plan, 30 Oct). Keys live outside the repo:
+  enabled: true              # gemini: GEMINI_API_KEY or ~/.config/gemini/key; xai: XAI_API_KEY or ~/.config/xai/key
+  provider: gemini           # "gemini" (Google) or "xai" (Grok); without a key it does nothing
+  model: gemini-2.5-flash    # gemini-2.5-pro reads harder filings but is slower and dearer; grok-4 for xai
+  max_calls_per_day: 80      # cap on AI calls (results figures our parser misses + one view per SIGNAL)
   timeout: 60

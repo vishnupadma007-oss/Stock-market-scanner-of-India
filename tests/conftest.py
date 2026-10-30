@@ -17,5 +17,5 @@ def keep_journal_clean(monkeypatch, tmp_path):
     monkeypatch.setattr(watcher, "SKIPS_DIR", tmp_path / "skips")
     monkeypatch.setattr(watcher.preopen, "DIR", tmp_path / "exchange")
     monkeypatch.setattr(watcher.activity, "DIR", tmp_path / "exchange")
-    monkeypatch.setattr(watcher.grok, "api_key", lambda: None)  # tests never call xAI
-    monkeypatch.setattr(watcher.grok, "VERDICTS", tmp_path / "grok_verdicts.csv")
+    monkeypatch.setattr(watcher.ai_helper, "api_key", lambda provider="gemini": None)  # tests never call an AI
+    monkeypatch.setattr(watcher.ai_helper, "VERDICTS", tmp_path / "ai_verdicts.csv")
