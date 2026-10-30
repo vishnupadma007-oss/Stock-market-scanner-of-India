@@ -58,6 +58,7 @@ asking (paper trading only).
 User decisions to respect: intraday only; buy options (PE on fading gainers, CE on
 bouncing losers); target >= 1% net of all charges per trade; **no stop-loss**.
 
+In a new conversation, read the `desk-handover` skill first (state, user decisions, one-time setup).
 To run the desk, use the `trading-desk` skill. To judge whether results are real or luck, use the
 `quantforge-ai` skill's validation gates and `scripts/metrics.py` (its stop-loss/kill-switch advice
 does not apply here: the user chose no stop-loss).
