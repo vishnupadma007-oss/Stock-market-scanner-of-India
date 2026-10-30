@@ -101,13 +101,14 @@ One short research pass that sets the day's mode. Keep it to a handful of search
    - Quiet the live journal files: `scripts/journal_quiet.sh on` (the end-of-turn commit check then
      does not wake you after every reply; the 12:40 and 15:40 checks turn it off, commit, and the
      12:40 one turns it back on).
-   - Wait for events with one background Bash, not a 30-minute Monitor:
+   - Wait for problems only, with one background Bash, not a 30-minute Monitor:
      `scripts/wait_event.sh <scratchpad>/watcher.log` (`run_in_background: true`, timeout 7200000). It
-     exits on the next SIGNAL / EXIT / RESULT / SHOCK / stopped watcher / serious error (plus anything in
-     the next 3 s). Handle the event, then start it again. If it times out, start it again only
-     before 15:30.
-   - Keep replies short; judge a SIGNAL from its own line (no extra tool calls unless something
-     looks wrong). Each company's RESULT is reported once a day.
+     exits on a stopped watcher, login/budget/stale-data/repeating error, crash, or a SHOCK day. Fix
+     it, then start it again. If it times out, start it again only before 15:30.
+   - Trades, exits and results are NOT reported one by one (user, 30 Oct: Claude credits); the
+     12:40 and 15:40 checks list them from `journal/paper_trades.csv` and the watcher log. The AI
+     helper (Gemini) logs a TRADE/SKIP view on every signal instead of Claude.
+   - Keep replies short.
    FORECAST, POLICY, COMMODITY and NEWS lines are still written to the log and acted on by the
    news team automatically; summarise them in the evening review instead of reacting one by one.
 3. **Standing permission (user, 2026-10-20):** for paper trading, restart the watcher as many
