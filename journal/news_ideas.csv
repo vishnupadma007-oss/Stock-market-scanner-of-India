@@ -108,3 +108,19 @@ date,time,symbol,direction,confidence,source,priced_in
 2026-10-29,09:20,HINDUNILVR,up,65,intel,not priced in
 2026-10-29,09:50,ADANIPORTS,up,74,intel,not priced in
 2026-10-29,14:11,ASIANPAINT,up,67,intel,pessimism priced in
+2026-10-30,08:42,RELIANCE,up,100,intel,partly priced in
+2026-10-30,08:42,KOTAKBANK,up,41,intel,largely priced in
+2026-10-30,08:42,HINDUNILVR,up,94,intel,not priced in
+2026-10-30,08:42,ADANIPORTS,up,79,intel,not priced in
+2026-10-30,08:42,VEDL,up,88,intel,pessimism priced in
+2026-10-30,08:42,COALINDIA,up,84,intel,some pessimism priced in
+2026-10-30,08:42,PNB,down,83,intel,not priced in
+2026-10-30,08:42,CANBK,down,66,intel,not priced in
+2026-10-30,08:42,TRENT,up,85,intel,partly priced in
+2026-10-30,08:42,HEROMOTOCO,up,71,intel,not priced in
+2026-10-30,08:42,ASIANPAINT,up,85,intel,not priced in
+2026-10-30,09:15,GRASIM,down,75,preopen,NSE pre-open order imbalance
+2026-10-30,09:15,BHEL,down,75,preopen,NSE pre-open order imbalance
+2026-10-30,10:20,SUNPHARMA,up,82,intel,some pessimism priced in
+2026-10-30,10:53,HDFCBANK,down,45,intel,pessimism priced in
+2026-10-30,10:53,ITC,down,52,intel,not priced in
