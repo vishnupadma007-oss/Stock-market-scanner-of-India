@@ -1,0 +1,5 @@
+date,time,team,symbol,contract,verdict,confidence,reason
+2026-10-30,04:05,news,KOTAKBANK,KOTAKBANK-23-NOV-455-CALL,TRADE,88,"The trade aligns with desk rules (intraday, options bought, no stop-loss, 15:20 square-off) and presents a strong bullish case with an ITM call, supported by a quiet volume spurt, positive news sentiment, F&O long build-up, and a high hit probability."
+2026-10-30,04:06,news,CHOLAFIN,CHOLAFIN-23-NOV-1600-CALL,TRADE,90,"The signal adheres to all desk rules (intraday, options bought, 15:20 square-off, no stop-loss) and presents a high-probability (76%) ITM call option with strong bullish indicators from underlying price action and F&O data, mitigating the inherent risk of not using a stop-loss."
+2026-10-30,04:08,news,BANKBARODA,BANKBARODA-23-NOV-240-CALL,,,error: HTTPError
+2026-10-30,04:09,news,EICHERMOT,EICHERMOT-23-NOV-7500-CALL,TRADE,80,"The signal indicates a plausible bullish setup with F&O long build-up, a quiet volume spurt, and a decent hit probability (67%) supporting the intraday OTM call option purchase."
