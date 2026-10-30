@@ -191,3 +191,23 @@ that day or the next (from journal/results_history; RBI/Fed dates not in our dat
 
 51 of the 52 nights were already "quiet", and carrying still lost more: the overnight losses are not
 event-driven. Not adopted.
+
+### Early chart exit (user's idea, 30 Oct 2026)
+
+Sell as soon as the chart turns against the trade, instead of holding to the target or 15:20.
+Two rules on 5-minute closes: `entry_bar` (the stock closes beyond the low/high of the candle
+before entry) and `vwap` (closes on the wrong side of VWAP on a falling candle with rising volume).
+`--set early_exit=entry_bar|vwap`, same 60 days x 76 stocks (5 Aug - 30 Oct 2026).
+
+| Strategy | Exit | Trades | Hit % | Avg per trade | Net |
+|---|---|---|---|---|---|
+| Quiet spurt, 10% target | **hold (current)** | 171 | 68 | **+2.47%** | **+Rs 1,26,586** |
+| Quiet spurt, 10% target | entry_bar | 171 | 52 | +0.90% | +Rs 45,937 |
+| Quiet spurt, 10% target | vwap | 171 | 54 | +0.77% | +Rs 39,267 |
+| Movers reversal, 1% target | **hold (current)** | 130 | 85 | -0.93% | -Rs 36,390 |
+| Movers reversal, 1% target | entry_bar | 130 | 68 | -1.18% | -Rs 46,169 |
+| Movers reversal, 1% target | vwap | 130 | 72 | -1.04% | -Rs 40,617 |
+
+Both rules cut the worst losses (spurt worst trade -46% -> -31%) but sell too many trades that
+later reach the target, so total profit falls by about two thirds. On 30 Oct alone they would have
+helped (news team about -Rs 8,000 / -Rs 6,700 instead of -Rs 15,076). Not adopted.
