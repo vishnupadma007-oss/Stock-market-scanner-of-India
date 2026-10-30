@@ -1,0 +1,425 @@
+[
+ {
+  "seq_id": "158142",
+  "filed": "2023-11-09 14:13:15",
+  "pdf": "https://nsearchives.nseindia.com/corporate/LetterOutcomeSept23_09112023141315.pdf",
+  "figures": {
+   "revenue": {
+    "quarter": 3043.42,
+    "prev_quarter": 3178.36,
+    "year_ago": 3491.66,
+    "qoq_pct": -4.2,
+    "yoy_pct": -12.8
+   },
+   "profit": {
+    "quarter": 206.26,
+    "prev_quarter": 349.39,
+    "year_ago": 170.12,
+    "qoq_pct": -41.0,
+    "yoy_pct": 21.2
+   }
+  },
+  "view": "mixed",
+  "reaction": {
+   "reaction_day": "2023-11-09",
+   "when": "during market",
+   "gap_pct": 0.05,
+   "close_pct": -3.83,
+   "high_pct": 0.37,
+   "low_pct": -5.05,
+   "nifty_gap_pct": 0.07,
+   "nifty_close_pct": -0.25,
+   "runup_20d": -1.84,
+   "excess_close_pct": -3.58,
+   "excess_gap_pct": null
+  },
+  "profit_yoy": 21.2,
+  "profit_surprise": null,
+  "revenue_yoy": -12.8,
+  "revenue_surprise": null
+ },
+ {
+  "seq_id": "160728",
+  "filed": "2024-02-13 20:09:03",
+  "pdf": "https://nsearchives.nseindia.com/corporate/LetterOutcomeDec2023Results_13022024200903.pdf",
+  "figures": {},
+  "view": "unread",
+  "reaction": {
+   "reaction_day": "2024-02-14",
+   "when": "after close",
+   "gap_pct": 2.85,
+   "close_pct": 9.83,
+   "high_pct": 12.65,
+   "low_pct": 1.66,
+   "nifty_gap_pct": -0.76,
+   "nifty_close_pct": 0.45,
+   "runup_20d": 8.68,
+   "excess_close_pct": 9.38,
+   "excess_gap_pct": 3.61
+  },
+  "profit_yoy": null,
+  "profit_surprise": null,
+  "revenue_yoy": null,
+  "revenue_surprise": null
+ },
+ {
+  "seq_id": "162632",
+  "filed": "2024-05-27 19:06:15",
+  "pdf": "https://nsearchives.nseindia.com/corporate/LetterOutcomeFY202324Results_27052024190615.pdf",
+  "figures": {},
+  "view": "unread",
+  "reaction": {
+   "reaction_day": "2024-05-28",
+   "when": "after close",
+   "gap_pct": 3.19,
+   "close_pct": -1.52,
+   "high_pct": 6.15,
+   "low_pct": -2.5,
+   "nifty_gap_pct": 0.19,
+   "nifty_close_pct": -0.19,
+   "runup_20d": 1.64,
+   "excess_close_pct": -1.33,
+   "excess_gap_pct": 3.0
+  },
+  "profit_yoy": null,
+  "profit_surprise": null,
+  "revenue_yoy": null,
+  "revenue_surprise": null
+ },
+ {
+  "seq_id": "164869",
+  "filed": "2024-08-12 14:12:08",
+  "pdf": "https://nsearchives.nseindia.com/corporate/LetterOutcomeJune2024_12082024141208.pdf",
+  "figures": {
+   "revenue": {
+    "quarter": 2856.1,
+    "prev_quarter": 3579.05,
+    "year_ago": 3178.69,
+    "qoq_pct": -20.2,
+    "yoy_pct": -10.1
+   },
+   "profit": {
+    "quarter": 601.22,
+    "prev_quarter": 1015.83,
+    "year_ago": 349.39,
+    "qoq_pct": -40.8,
+    "yoy_pct": 72.1
+   }
+  },
+  "view": "mixed",
+  "reaction": {
+   "reaction_day": "2024-08-12",
+   "when": "during market",
+   "gap_pct": -0.49,
+   "close_pct": -1.72,
+   "high_pct": 0.24,
+   "low_pct": -4.42,
+   "nifty_gap_pct": -0.19,
+   "nifty_close_pct": -0.08,
+   "runup_20d": -11.1,
+   "excess_close_pct": -1.64,
+   "excess_gap_pct": null
+  },
+  "profit_yoy": 72.1,
+  "profit_surprise": 50.9,
+  "revenue_yoy": -10.1,
+  "revenue_surprise": 2.7
+ },
+ {
+  "seq_id": "167486",
+  "filed": "2024-11-13 16:38:59",
+  "pdf": "https://nsearchives.nseindia.com/corporate/LetterOutcomeSept2024Results_13112024163859.pdf",
+  "figures": {
+   "revenue": {
+    "quarter": 4001.48,
+    "prev_quarter": 2856.1,
+    "year_ago": 3043.83,
+    "qoq_pct": 40.1,
+    "yoy_pct": 31.5
+   },
+   "profit": {
+    "quarter": 1062.18,
+    "prev_quarter": 601.22,
+    "year_ago": 206.26,
+    "qoq_pct": 76.7,
+    "yoy_pct": 415.0
+   }
+  },
+  "view": "strong",
+  "reaction": {
+   "reaction_day": "2024-11-14",
+   "when": "after close",
+   "gap_pct": 4.69,
+   "close_pct": 0.08,
+   "high_pct": 5.0,
+   "low_pct": -0.29,
+   "nifty_gap_pct": -0.07,
+   "nifty_close_pct": -0.11,
+   "runup_20d": 6.75,
+   "excess_close_pct": 0.19,
+   "excess_gap_pct": 4.76
+  },
+  "profit_yoy": 100.0,
+  "profit_surprise": 53.4,
+  "revenue_yoy": 31.5,
+  "revenue_surprise": 43.0
+ },
+ {
+  "seq_id": "169618",
+  "filed": "2025-02-10 19:28:04",
+  "pdf": "https://nsearchives.nseindia.com/corporate/LetterOutcomeDec2024Results_10022025192804.pdf",
+  "figures": {
+   "revenue": {
+    "quarter": 4662.22,
+    "prev_quarter": 4001.48,
+    "year_ago": 3347.58,
+    "qoq_pct": 16.5,
+    "yoy_pct": 39.3
+   },
+   "profit": {
+    "quarter": 1582.9,
+    "prev_quarter": 1062.18,
+    "year_ago": 488.47,
+    "qoq_pct": 49.0,
+    "yoy_pct": 224.1
+   }
+  },
+  "view": "strong",
+  "reaction": {
+   "reaction_day": "2025-02-11",
+   "when": "after close",
+   "gap_pct": 2.3,
+   "close_pct": -4.05,
+   "high_pct": 3.78,
+   "low_pct": -5.63,
+   "nifty_gap_pct": 0.01,
+   "nifty_close_pct": -1.32,
+   "runup_20d": -5.13,
+   "excess_close_pct": -2.73,
+   "excess_gap_pct": 2.29
+  },
+  "profit_yoy": 100.0,
+  "profit_surprise": 14.0,
+  "revenue_yoy": 39.3,
+  "revenue_surprise": 28.6
+ },
+ {
+  "seq_id": "106242234",
+  "filed": "2025-05-21 18:59:13",
+  "pdf": "https://nsearchives.nseindia.com/corporate/bharatsahu_21052025185636_LetterOutcomeFY2024-25Results.pdf",
+  "figures": {
+   "revenue": {
+    "quarter": 5267.83,
+    "prev_quarter": 4662.22,
+    "year_ago": 3579.05,
+    "qoq_pct": 13.0,
+    "yoy_pct": 47.2
+   },
+   "profit": {
+    "quarter": 2078.37,
+    "prev_quarter": 1582.9,
+    "year_ago": 1015.83,
+    "qoq_pct": 31.3,
+    "yoy_pct": 104.6
+   }
+  },
+  "view": "strong",
+  "reaction": {
+   "reaction_day": "2025-05-22",
+   "when": "after close",
+   "gap_pct": 4.54,
+   "close_pct": 1.76,
+   "high_pct": 5.64,
+   "low_pct": 1.06,
+   "nifty_gap_pct": -0.32,
+   "nifty_close_pct": -0.82,
+   "runup_20d": 11.79,
+   "excess_close_pct": 2.58,
+   "excess_gap_pct": 4.86
+  },
+  "profit_yoy": 100.0,
+  "profit_surprise": 0.0,
+  "revenue_yoy": 47.2,
+  "revenue_surprise": 15.7
+ },
+ {
+  "seq_id": "106329631",
+  "filed": "2025-08-07 15:25:47",
+  "pdf": "https://nsearchives.nseindia.com/corporate/bharatsahu_07082025152405_LetterOutcomeJune2025.pdf",
+  "figures": {
+   "revenue": {
+    "quarter": 3806.94,
+    "prev_quarter": 5267.83,
+    "year_ago": 2856.1,
+    "qoq_pct": -27.7,
+    "yoy_pct": 33.3
+   },
+   "profit": {
+    "quarter": 1063.86,
+    "prev_quarter": 2078.37,
+    "year_ago": 601.22,
+    "qoq_pct": -48.8,
+    "yoy_pct": 77.0
+   }
+  },
+  "view": "good",
+  "reaction": {
+   "reaction_day": "2025-08-07",
+   "when": "during market",
+   "gap_pct": -0.22,
+   "close_pct": 0.6,
+   "high_pct": 1.2,
+   "low_pct": -2.09,
+   "nifty_gap_pct": -0.45,
+   "nifty_close_pct": 0.09,
+   "runup_20d": 4.83,
+   "excess_close_pct": 0.51,
+   "excess_gap_pct": null
+  },
+  "profit_yoy": 77.0,
+  "profit_surprise": -23.0,
+  "revenue_yoy": 33.3,
+  "revenue_surprise": -2.1
+ },
+ {
+  "seq_id": "106431991",
+  "filed": "2025-11-07 16:20:07",
+  "pdf": "https://nsearchives.nseindia.com/corporate/bharatsahu_07112025161556_SELetterOutcome.pdf",
+  "figures": {
+   "revenue": {
+    "quarter": 4292.34,
+    "prev_quarter": 3806.94,
+    "year_ago": 4001.48,
+    "qoq_pct": 12.8,
+    "yoy_pct": 7.3
+   },
+   "profit": {
+    "quarter": 1433.17,
+    "prev_quarter": 1063.86,
+    "year_ago": 1062.18,
+    "qoq_pct": 34.7,
+    "yoy_pct": 34.9
+   }
+  },
+  "view": "strong",
+  "reaction": {
+   "reaction_day": "2025-11-10",
+   "when": "after close",
+   "gap_pct": 2.74,
+   "close_pct": 9.64,
+   "high_pct": 10.61,
+   "low_pct": 2.74,
+   "nifty_gap_pct": 0.04,
+   "nifty_close_pct": 0.32,
+   "runup_20d": 3.19,
+   "excess_close_pct": 9.32,
+   "excess_gap_pct": 2.7
+  },
+  "profit_yoy": 34.9,
+  "profit_surprise": -65.1,
+  "revenue_yoy": 7.3,
+  "revenue_surprise": -29.0
+ },
+ {
+  "seq_id": "106513028",
+  "filed": "2026-01-30 14:55:01",
+  "pdf": "https://nsearchives.nseindia.com/corporate/bharatsahu_30012026145306_SELetter_Outcome.pdf",
+  "figures": {
+   "revenue": {
+    "quarter": 4730.95,
+    "prev_quarter": 4292.34,
+    "year_ago": 4662.22,
+    "qoq_pct": 10.2,
+    "yoy_pct": 1.5
+   },
+   "profit": {
+    "quarter": 1601.02,
+    "prev_quarter": 1433.17,
+    "year_ago": 1582.9,
+    "qoq_pct": 11.7,
+    "yoy_pct": 1.1
+   }
+  },
+  "view": "mixed",
+  "reaction": {
+   "reaction_day": "2026-01-30",
+   "when": "during market",
+   "gap_pct": -3.49,
+   "close_pct": -10.12,
+   "high_pct": -3.49,
+   "low_pct": -11.36,
+   "nifty_gap_pct": -0.67,
+   "nifty_close_pct": -0.39,
+   "runup_20d": 38.45,
+   "excess_close_pct": -9.73,
+   "excess_gap_pct": null
+  },
+  "profit_yoy": 1.1,
+  "profit_surprise": -87.4,
+  "revenue_yoy": 1.5,
+  "revenue_surprise": -34.8
+ },
+ {
+  "seq_id": "106605596",
+  "filed": "2026-04-30 14:48:49",
+  "pdf": "https://nsearchives.nseindia.com/corporate/bharatsahu_30042026144827_SEletterResults.pdf",
+  "figures": {
+   "revenue": {
+    "quarter": 5012.82,
+    "prev_quarter": 4730.95,
+    "year_ago": 5267.83,
+    "qoq_pct": 6.0,
+    "yoy_pct": -4.8
+   },
+   "profit": {
+    "quarter": 1717.71,
+    "prev_quarter": 1601.02,
+    "year_ago": 2078.37,
+    "qoq_pct": 7.3,
+    "yoy_pct": -17.4
+   }
+  },
+  "view": "weak",
+  "reaction": {
+   "reaction_day": "2026-04-30",
+   "when": "during market",
+   "gap_pct": -0.53,
+   "close_pct": -7.85,
+   "high_pct": -0.2,
+   "low_pct": -9.01,
+   "nifty_gap_pct": -0.75,
+   "nifty_close_pct": -0.74,
+   "runup_20d": 10.84,
+   "excess_close_pct": -7.11,
+   "excess_gap_pct": null
+  },
+  "profit_yoy": -17.4,
+  "profit_surprise": -73.3,
+  "revenue_yoy": -4.8,
+  "revenue_surprise": -25.1
+ },
+ {
+  "seq_id": "106720155",
+  "filed": "2026-07-31 21:01:51",
+  "pdf": "https://nsearchives.nseindia.com/corporate/bharatsahu_31072026210050_SELEtterOutcome.pdf",
+  "figures": {},
+  "view": "unread",
+  "reaction": {
+   "reaction_day": "2026-08-03",
+   "when": "after close",
+   "gap_pct": 2.26,
+   "close_pct": 5.41,
+   "high_pct": 5.41,
+   "low_pct": 0.99,
+   "nifty_gap_pct": 0.78,
+   "nifty_close_pct": 1.6,
+   "runup_20d": 0.24,
+   "excess_close_pct": 3.81,
+   "excess_gap_pct": 1.48
+  },
+  "profit_yoy": null,
+  "profit_surprise": null,
+  "revenue_yoy": null,
+  "revenue_surprise": null
+ }
+]

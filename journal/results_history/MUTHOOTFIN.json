@@ -1,0 +1,327 @@
+[
+ {
+  "seq_id": "105671592",
+  "filed": "2023-11-09 18:01:43",
+  "pdf": "https://nsearchives.nseindia.com/corporate/MUTHOOTFIN_09112023180143_MFIN_BM__Press_Release_Aug_SD.pdf",
+  "figures": {
+   "profit": {
+    "quarter": 25.0,
+    "prev_quarter": 16.0,
+    "year_ago": 15.0,
+    "qoq_pct": 56.2,
+    "yoy_pct": 66.7
+   }
+  },
+  "view": "strong",
+  "reaction": {
+   "reaction_day": "2023-11-10",
+   "when": "after close",
+   "gap_pct": -5.58,
+   "close_pct": -3.05,
+   "high_pct": -2.68,
+   "low_pct": -7.41,
+   "nifty_gap_pct": -0.22,
+   "nifty_close_pct": 0.15,
+   "runup_20d": 8.34,
+   "excess_close_pct": -3.2,
+   "excess_gap_pct": -5.36
+  },
+  "profit_yoy": 66.7,
+  "profit_surprise": null,
+  "revenue_yoy": null,
+  "revenue_surprise": null
+ },
+ {
+  "seq_id": "105759603",
+  "filed": "2024-02-14 16:35:29",
+  "pdf": "https://nsearchives.nseindia.com/corporate/MUTHOOTFIN_14022024163529_MFINBMPressReleasedec23sd.pdf",
+  "figures": {
+   "profit": {
+    "quarter": 13.0,
+    "prev_quarter": 8.0,
+    "year_ago": 4.0,
+    "qoq_pct": 62.5,
+    "yoy_pct": 225.0
+   }
+  },
+  "view": "strong",
+  "reaction": {
+   "reaction_day": "2024-02-15",
+   "when": "after close",
+   "gap_pct": 1.79,
+   "close_pct": -2.6,
+   "high_pct": 4.8,
+   "low_pct": -4.06,
+   "nifty_gap_pct": 0.3,
+   "nifty_close_pct": 0.32,
+   "runup_20d": -3.9,
+   "excess_close_pct": -2.92,
+   "excess_gap_pct": 1.49
+  },
+  "profit_yoy": 100.0,
+  "profit_surprise": 33.3,
+  "revenue_yoy": null,
+  "revenue_surprise": null
+ },
+ {
+  "seq_id": "163172",
+  "filed": "2024-05-30 15:53:12",
+  "pdf": "https://nsearchives.nseindia.com/corporate/OutcomeSigned_30052024155312.pdf",
+  "figures": {
+   "revenue": {
+    "quarter": 34089.16,
+    "prev_quarter": 31677.32,
+    "year_ago": 28534.32,
+    "qoq_pct": 7.6,
+    "yoy_pct": 19.5
+   },
+   "profit": {
+    "quarter": 10562.92,
+    "prev_quarter": 10272.57,
+    "year_ago": 9026.55,
+    "qoq_pct": 2.8,
+    "yoy_pct": 17.0
+   }
+  },
+  "view": "strong",
+  "reaction": {
+   "reaction_day": "2024-05-31",
+   "when": "after close",
+   "gap_pct": 1.61,
+   "close_pct": 0.56,
+   "high_pct": 4.22,
+   "low_pct": 0.04,
+   "nifty_gap_pct": 0.35,
+   "nifty_close_pct": 0.19,
+   "runup_20d": -2.2,
+   "excess_close_pct": 0.37,
+   "excess_gap_pct": 1.26
+  },
+  "profit_yoy": 17.0,
+  "profit_surprise": -66.3,
+  "revenue_yoy": 19.5,
+  "revenue_surprise": null
+ },
+ {
+  "seq_id": "165120",
+  "filed": "2024-08-13 15:54:17",
+  "pdf": "https://nsearchives.nseindia.com/corporate/MFLBMOUTCOMEFinalFilesigned_13082024155417.pdf",
+  "figures": {
+   "profit": {
+    "quarter": 10786.84,
+    "prev_quarter": 10562.92,
+    "year_ago": 9751.17,
+    "qoq_pct": 2.1,
+    "yoy_pct": 10.6
+   }
+  },
+  "view": "good",
+  "reaction": {
+   "reaction_day": "2024-08-14",
+   "when": "after close",
+   "gap_pct": 2.53,
+   "close_pct": -1.98,
+   "high_pct": 2.53,
+   "low_pct": -3.67,
+   "nifty_gap_pct": 0.19,
+   "nifty_close_pct": 0.02,
+   "runup_20d": 2.74,
+   "excess_close_pct": -2.0,
+   "excess_gap_pct": 2.34
+  },
+  "profit_yoy": 10.6,
+  "profit_surprise": -56.1,
+  "revenue_yoy": null,
+  "revenue_surprise": null
+ },
+ {
+  "seq_id": "167701",
+  "filed": "2024-11-14 15:58:36",
+  "pdf": "https://nsearchives.nseindia.com/corporate/MFINBMOutcome14_NovSD_14112024155836.pdf",
+  "figures": {
+   "profit": {
+    "quarter": 12511.42,
+    "prev_quarter": 10786.84,
+    "year_ago": 9909.99,
+    "qoq_pct": 16.0,
+    "yoy_pct": 26.3
+   }
+  },
+  "view": "strong",
+  "reaction": {
+   "reaction_day": "2024-11-18",
+   "when": "after close",
+   "gap_pct": 5.08,
+   "close_pct": 6.18,
+   "high_pct": 8.4,
+   "low_pct": 3.95,
+   "nifty_gap_pct": 0.31,
+   "nifty_close_pct": -0.34,
+   "runup_20d": -4.27,
+   "excess_close_pct": 6.52,
+   "excess_gap_pct": 4.77
+  },
+  "profit_yoy": 26.3,
+  "profit_surprise": -15.6,
+  "revenue_yoy": null,
+  "revenue_surprise": null
+ },
+ {
+  "seq_id": "169880",
+  "filed": "2025-02-12 15:41:58",
+  "pdf": "https://nsearchives.nseindia.com/corporate/MFINBMOutcome12022025sd_12022025154158.pdf",
+  "figures": {},
+  "view": "unread",
+  "reaction": {
+   "reaction_day": "2025-02-13",
+   "when": "after close",
+   "gap_pct": 3.02,
+   "close_pct": 6.18,
+   "high_pct": 6.96,
+   "low_pct": 2.02,
+   "nifty_gap_pct": 0.05,
+   "nifty_close_pct": -0.06,
+   "runup_20d": 1.27,
+   "excess_close_pct": 6.24,
+   "excess_gap_pct": 2.97
+  },
+  "profit_yoy": null,
+  "profit_surprise": null,
+  "revenue_yoy": null,
+  "revenue_surprise": null
+ },
+ {
+  "seq_id": "106231490",
+  "filed": "2025-05-14 17:29:29",
+  "pdf": "https://nsearchives.nseindia.com/corporate/MUTHOOTFIN_14052025172906_PressReleaseMerged_SD.pdf",
+  "figures": {},
+  "view": "unread",
+  "reaction": {
+   "reaction_day": "2025-05-15",
+   "when": "after close",
+   "gap_pct": 0.67,
+   "close_pct": -6.89,
+   "high_pct": 0.67,
+   "low_pct": -7.74,
+   "nifty_gap_pct": 0.11,
+   "nifty_close_pct": 1.6,
+   "runup_20d": 3.99,
+   "excess_close_pct": -8.49,
+   "excess_gap_pct": 0.56
+  },
+  "profit_yoy": null,
+  "profit_surprise": null,
+  "revenue_yoy": null,
+  "revenue_surprise": null
+ },
+ {
+  "seq_id": "106339087",
+  "filed": "2025-08-13 16:13:59",
+  "pdf": "https://nsearchives.nseindia.com/corporate/MUTHOOTFIN_13082025160653_BM_Outcome_Merged_sd.pdf",
+  "figures": {
+   "revenue": {
+    "quarter": 57033.17,
+    "prev_quarter": 48544.03,
+    "year_ago": 37037.88,
+    "qoq_pct": 17.5,
+    "yoy_pct": 54.0
+   },
+   "profit": {
+    "quarter": 20462.99,
+    "prev_quarter": 15078.36,
+    "year_ago": 10786.84,
+    "qoq_pct": 35.7,
+    "yoy_pct": 89.7
+   }
+  },
+  "view": "strong",
+  "reaction": {
+   "reaction_day": "2025-08-14",
+   "when": "after close",
+   "gap_pct": 8.77,
+   "close_pct": 9.86,
+   "high_pct": 11.56,
+   "low_pct": 6.43,
+   "nifty_gap_pct": -0.05,
+   "nifty_close_pct": 0.05,
+   "runup_20d": -2.94,
+   "excess_close_pct": 9.81,
+   "excess_gap_pct": 8.82
+  },
+  "profit_yoy": 89.7,
+  "profit_surprise": 71.2,
+  "revenue_yoy": 54.0,
+  "revenue_surprise": null
+ },
+ {
+  "seq_id": "106441773",
+  "filed": "2025-11-13 15:51:44",
+  "pdf": "https://nsearchives.nseindia.com/corporate/MUTHOOTFIN_13112025154532_MFIN_BM_OutcomeSD.pdf",
+  "figures": {
+   "revenue": {
+    "quarter": 64322.42,
+    "prev_quarter": 57033.17,
+    "year_ago": 41174.44,
+    "qoq_pct": 12.8,
+    "yoy_pct": 56.2
+   },
+   "profit": {
+    "quarter": 23451.7,
+    "prev_quarter": 20462.99,
+    "year_ago": 12511.42,
+    "qoq_pct": 14.6,
+    "yoy_pct": 87.4
+   }
+  },
+  "view": "strong",
+  "reaction": {
+   "reaction_day": "2025-11-14",
+   "when": "after close",
+   "gap_pct": 7.57,
+   "close_pct": 9.8,
+   "high_pct": 10.67,
+   "low_pct": 5.51,
+   "nifty_gap_pct": -0.43,
+   "nifty_close_pct": 0.12,
+   "runup_20d": 2.51,
+   "excess_close_pct": 9.68,
+   "excess_gap_pct": 8.0
+  },
+  "profit_yoy": 87.4,
+  "profit_surprise": 29.4,
+  "revenue_yoy": 56.2,
+  "revenue_surprise": 2.2
+ },
+ {
+  "seq_id": "106531779",
+  "filed": "2026-02-12 15:39:39",
+  "pdf": "https://nsearchives.nseindia.com/corporate/MUTHOOTFIN_12022026153800_MFIN_BM_Outcome_SD.pdf",
+  "figures": {
+   "profit": {
+    "quarter": 26564.22,
+    "prev_quarter": 23451.7,
+    "year_ago": 13630.9,
+    "qoq_pct": 13.3,
+    "yoy_pct": 94.9
+   }
+  },
+  "view": "strong",
+  "reaction": {
+   "reaction_day": "2026-02-13",
+   "when": "after close",
+   "gap_pct": -4.84,
+   "close_pct": -11.82,
+   "high_pct": -4.84,
+   "low_pct": -12.64,
+   "nifty_gap_pct": -0.91,
+   "nifty_close_pct": -1.3,
+   "runup_20d": 2.98,
+   "excess_close_pct": -10.52,
+   "excess_gap_pct": -3.93
+  },
+  "profit_yoy": 94.9,
+  "profit_surprise": 6.3,
+  "revenue_yoy": null,
+  "revenue_surprise": null
+ }
+]

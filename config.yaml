@@ -1,0 +1,299 @@
+# ------------------------------------------------------------------
+# Trading agent team settings. Edit these from your phone on GitHub.
+# ------------------------------------------------------------------
+
+capital: 30000             # starting paper-trading capital (₹); realised P&L is added back
+
+# Two teams trade side by side, each with its own paper capital and one trade at a time, to see
+# which finds more chances and makes more money. The evening review keeps a scoreboard.
+teams:
+  movers:                  # top gainers/losers reversal: price, chart, options, sector moves only
+    capital: 30000
+    news_votes: false      # true = also let news/filings/forecast agents vote on its trades
+    news_guard: true       # borrow the news team's knowledge as a safety brake: skip a stock with results today,
+                           # regulatory action, a policy hit, or strong news against the trade
+  news:                    # NSE filings, results, concalls, news -> Data Analyzer forecasts
+    capital: 30000
+    top_up: 81895          # paper money added (not profit): 26 Oct +13,304 back to Rs 30,000; 29 Oct +68,591 to Rs 1 lakh so 4 slots can trade (user gave free hands);
+                           # top-ups are not profit: the scoreboard keeps the team's real record (-Rs 11,895 to 29 Oct)
+    auto_trade: true       # opens trades by itself; Claude can also open them with paper_trade.py
+    min_confidence: 60     # forecast confidence needed, after the priced-in cut
+    confirm_pct: 0.5       # the stock must already move the forecast's way by this much today
+    max_move_pct: 4.0      # ...but not more (move used up)
+    max_age_min: 120       # forget ideas older than this
+    min_trend_score: 60    # Trend Checker (agents/momentum.py): the chart must back the news (0-100)
+    target_mode: forecast  # user decision: 1% target removed for news team; dynamic forecast-based target
+    forecast_capture: 0.6  # aim for 60% of the forecasted underlying move on the option premium
+    min_forecast_move_pct: 1.5 # minimum expected underlying move %
+    preopen_rule: true     # use NSE pre-open order flow imbalances for early opening trades (09:15-09:45)
+    preopen_confirm_from: "09:30"  # Claude, 27 Oct: pre-open ideas trade only from 09:30 while still moving the gap's way since the open
+    spurt_rule: true       # NSE volume spurts (lists only the top 25 market-wide: rarely an F&O stock)
+    activity_rule: true    # F&O build-up (OI up + price the news's way) confirms a news idea early (agents/activity.py)
+    activity_min_oi_pct: 5.0
+    gap_rule: true         # results-gap follower (agents/gapfollow.py, 26 Oct): stocks with results since the last close that open
+    gap_from: "09:30"      # 1%+ away from Nifty and keep going in the first 15 min -> trade WITH the gap, whatever the figures say.
+    gap_until: "10:30"     # Results-day gaps carried on 61-75% of the time (1 year), unlike ordinary-day gaps (movers' fade trade)
+    gap_min_pct: 1.0
+    gap_confidence: 75
+    gap_max_move_pct: 8.0  # such moves can run far (AU Bank -9% on 26 Oct), so the usual 4% "move used up" cap is wider here
+    early_entry: true      # user, 23 Oct: don't always wait for 0.5%. From a 0.2% move the news's way, enter when the
+    early_pct: 0.2         # latest 5-min candle has 1.5x the usual volume (same time of day) closing the news's way AND the
+    early_volume_x: 1.5    # NSE order book holds 1.5x more buyers than sellers (reverse for "down"). Replaces the Trend
+    early_book_x: 1.5      # Checker for those entries. Untestable on history (no NSE order-book data): judged on paper.
+    min_premium: 5.0       # no options under ₹5 (22 Oct: PNB ₹2.06 and IOC ₹1.85 were the two big losses)
+    max_capital_per_trade: 1.0  # user, 26 Oct: no per-trade limit; a trade may use all the free money (was 0.5)
+max_capital_per_trade: 1.0   # share of available money one trade may use (1.0 = all of it)
+max_trades_per_day: 50     # effectively no cap: trade every setup that passes the agents
+net_target_pct: 1.0        # target profit per trade for movers team, % of premium paid, AFTER all charges
+
+# How often the watcher looks. INDmoney allows 500 calls per hour for the whole account.
+# The watcher spreads its share evenly (450/hour = one call every 8 s, never in bursts), so:
+# with no trade open, entry scans run back to back (one full scan takes about 2 minutes);
+# with a trade open, its exit price is checked every 15 seconds.
+scan_interval_min: 0
+exit_check_seconds: 15
+indmoney_hourly_budget: 380   # INDmoney cut us off at 401 counted on 27 Oct; counted like INDmoney does (details calls per instrument); leaves ~80 for Claude
+# Open trades per team (user, 27 Oct: "as many trades as the capital allows"). Each new trade is
+# sized from the team's free money (capital - premium in open trades) split over the slots still
+# empty, so the first trade leaves money for the next; one lot is bought when a lot costs more than
+# that share and the free money covers it. Never two open trades on one stock. When every slot or
+# all the money is in use, qualifying setups are only recorded (journal/held_setups.csv, every hold_scan_min).
+max_open_trades: 4
+hold_scan_min: 10
+
+# Exits. No stop-loss: a trade exits at the target or at square-off time.
+square_off_time: "15:20"   # always exit intraday positions by this time (IST); NSE closes 15:30
+entry_start: "09:15"      # user decision 22 Oct: trade from the open (charts still need a few candles)
+entry_end: "15:15"         # last fresh entry; late entries pass only if the Risk agent still sees a 60%+ chance of the target before square-off
+
+# Scanner
+top_n: 5                   # how many gainers and losers to send to the chart reader
+min_move_pct: 2.0          # minimum day move to count as a top gainer/loser
+min_turnover_cr: 50        # minimum 20-day average daily turnover (₹ crore)
+
+# Which movers to trade: "loser" = buy CE on a bouncing top loser, "gainer" = buy PE on a
+# fading top gainer. Backtest (Aug-Oct 2026): losers +0.51%/trade, gainers -1.01%/trade.
+sides: [loser, gainer]
+
+# Market regime agent
+max_vix: 22                # above this India VIX -> no trades
+trend_day_nifty_pct: 1.2   # Nifty move that marks a strong trend day
+
+# Macro agent (sector, crude oil, rupee). Backtest: turned -0.35%/trade into +0.10%.
+use_macro: true
+macro:
+  sector_trend_pct: 1.5     # sector index move that counts as "the whole sector is moving"
+  sector_points: -15
+  crude_move_pct: 1.5
+  crude_points: -20
+  rupee_move_pct: 0.4
+  rupee_points: -10
+
+# News & Events agent (live only: no news history exists to backtest it)
+news:
+  block_results_day: true   # skip stocks with results today or yesterday evening
+  fresh_news_points: -25    # fresh news that explains the move = real catalyst
+  volume_spike_ratio: 3.0   # "sudden pressure": last 15 min volume vs normal
+  results_workers: 20       # results filings read at once (downloads overlap; OCR itself runs one per CPU core)
+
+# Crowd Psychology agent: futures OI build-up / short covering / long unwinding, 52-week
+# extremes, circuit frenzy. No OI history exists to backtest it, so it starts in "observe"
+# mode (readings logged and compared in the evening review). Switch to "score" once the
+# paper trades show it helps.
+psychology:
+  mode: observe
+
+# Valuation agent: P/E (P/B for lenders) vs sector peers, from Yahoo once a day. Observe mode:
+# shown on signals and logged per trade; switch to score once the evening review shows it helps.
+valuation:
+  mode: observe
+  agree_points: 5       # expensive gainer fading (PE) / cheap loser bouncing (CE)
+  against_points: -5
+
+# Candlestick Patterns agent (agents/candles.py): 19 classic patterns, shown on signals.
+# Observe mode (points 0): on 60 days of our 76 stocks (263,000 5-min candles, 22 Oct 2026)
+# no pattern predicted the next 30 minutes better than chance. Re-test with
+# `python -m agents.candles test` before giving it points.
+candles:
+  points: 0
+
+# Announcements agent: NSE's live corporate-filings feed (results, ratings, orders, deals,
+# regulatory actions), read every 30 s while the watcher runs. Results filings are parsed for
+# revenue/profit growth and reported as RESULT events; major filings as NEWS.
+info_poll_seconds: 30   # news feeds, valuations and the Data Analyzer run on their own track this often
+filings_poll_seconds: 10  # NSE filings (results, orders, regulatory) have their own faster thread: one call covers all companies
+
+# News agent (RSS: ET, Mint, Business Standard, CNBC-TV18, Google News for global/India macro)
+# and Data Analyzer (combines filings, concalls and news into a forecast per stock).
+# (Indian news feeds every 30 s; Google News searches every 2 min so Google does not block us)
+analyzer:
+  forecast_score: 2.0   # stock's own news score (max 3) for a FORECAST; also needs 2+ sources or one major item
+  min_sources: 2
+  agree_points: 10      # analyzer agrees with a reversal trade's direction
+  against_points: -20   # news flow points the other way
+
+# Commodities agent: MCX crude, natural gas, gold, silver, copper, aluminium, zinc, nickel.
+commodities:
+  move_pct: 1.5       # move that matters for the stocks linked to it
+  points: -20         # when the move pushes the stock against the trade
+  shock_pct: 3.0      # move reported once a day as a COMMODITY event for Claude to explain
+
+# Forecast agent: likely reversal level (VWAP or 38% retracement) is shown on every signal.
+# Backtest: blocking on it lowered results (-0.74%/trade), and aiming the target at it cut
+# the hit rate from 90% to 63% (-3.16%/trade), so both are off.
+forecast_filter: false
+target_mode: fixed          # "forecast" aims for forecast_capture of the forecast move
+forecast_capture: 0.7
+
+# Decision
+min_chart_score: 60        # chart-reader score needed for a TRADE signal
+min_hit_probability: 60    # forecast chance (%) the stock moves enough for the target before square-off
+assumed_spread_pct: 0.8    # bid-ask gap of the option, % of premium (real value used when live quotes exist)
+
+# Options
+strike_choice: "ITM1"       # "ATM" or "ITM1". ITM1: smaller worst loss in the backtest; all lots fit ₹30,000 (survey 2026-10-19)
+min_days_to_expiry: 3      # roll to next month's expiry when closer than this
+# Live contracts (both teams): this month's expiry, except in expiry week, where next month's is
+# used when this month's option is unusable. Backtest (60 days) was neutral on rolling early; real
+# near-expiry options are often cheap with wide gaps (IOC 27-Oct 130 PE: Rs 1.40, 6.3% gap vs
+# 23-Nov: Rs 3.85, 2.8%), so this only rescues setups that would otherwise be skipped or badly priced.
+expiry_fallback:
+  enabled: true
+  always_days: 2           # this close to expiry (expiry day or the day before): always next month's contract
+  days: 7                  # within this many calendar days of this month's expiry...
+  min_premium: 5.0         # ...switch when this month's option is cheaper than this
+  max_spread_pct: 2.0      # ...or its bid-ask gap is wider than this (% of the ask)
+spurt:                     # Quiet Volume Spurt (user's strategy, 28 Oct; agents/spurt.py), traded by the news team
+  enabled: true
+  min_volume_x: 1.5        # cumulative volume vs usual at this time of day (previous 10 sessions)
+  min_move_pct: 0.2        # ...while the stock has moved only 0.2-0.5% from yesterday's close
+  max_move_pct: 0.5
+  from: "09:30"
+  target_net_pct: 10.0     # 10% net on the option (backtest: 68% hit, +2.89%/trade; a 1% target lost money)
+  target_news_net_pct: 15.0  # live test (user, 29 Oct): 15% when the news agrees (label quiet-spurt-news); 10% if 15% is out of reach
+  fresh_min: 15            # a signal older than this is not traded
+  live_min_move_pct: 0.1   # live INDmoney check before buying: still moving its way...
+  live_max_move_pct: 0.8   # ...and not already run off
+  poll_seconds: 60
+budget_otm:                # user, 28 Oct: when one lot of the usual strike costs more than the team's free money,
+  enabled: true            # buy a cheaper strike further out of the money whose lot fits
+  max_steps: 10            # at most this many strikes out (the delta floor below is the real limit)
+  min_delta: 0.15          # it must still move with the stock (|delta|); further out needs a bigger move and decays faster
+  min_premium: 5.0
+  max_spread_pct: 2.0
+risk_free_rate: 0.065
+
+# Charges (verify with your broker's calculator)
+charges:
+  brokerage_per_order: 20      # flat ₹ per executed order
+  stt_sell_pct: 0.1            # STT on option sell premium
+  exchange_txn_pct: 0.03503    # NSE option transaction charge on premium
+  sebi_per_crore: 10
+  stamp_buy_pct: 0.003
+  gst_pct: 18
+
+# AI analyst (Claude). Needs ANTHROPIC_API_KEY in Streamlit secrets.
+ai:
+  enabled: true
+  model: "claude-opus-5-5"
+  effort: "medium"
+  max_candidates: 3          # AI reviews only the best few -> keeps token cost low
+  web_search: true           # let the AI check news for the move's real cause
+
+# Liquid F&O stocks to scan (NSE symbols). Lot sizes are read from NSE when
+# reachable; add overrides under lot_sizes if a lot looks wrong.
+lot_sizes: {}
+universe:
+  - RELIANCE
+  - HDFCBANK
+  - ICICIBANK
+  - INFY
+  - TCS
+  - SBIN
+  - AXISBANK
+  - KOTAKBANK
+  - BHARTIARTL
+  - LT
+  - ITC
+  - HINDUNILVR
+  - BAJFINANCE
+  - BAJAJFINSV
+  - MARUTI
+  - M&M
+  - SUNPHARMA
+  - TITAN
+  - ULTRACEMCO
+  - WIPRO
+  - HCLTECH
+  - TECHM
+  - PERSISTENT
+  - COFORGE
+  - MPHASIS
+  - ADANIENT
+  - ADANIPORTS
+  - TATASTEEL
+  - JSWSTEEL
+  - HINDALCO
+  - VEDL
+  - SAIL
+  - NMDC
+  - NATIONALUM
+  - ONGC
+  - NTPC
+  - POWERGRID
+  - COALINDIA
+  - BPCL
+  - IOC
+  - GAIL
+  - TATAPOWER
+  - DLF
+  - INDUSINDBK
+  - BANKBARODA
+  - PNB
+  - CANBK
+  - IDFCFIRSTB
+  - FEDERALBNK
+  - AUBANK
+  - SHRIRAMFIN
+  - CHOLAFIN
+  - MUTHOOTFIN
+  - RECLTD
+  - PFC
+  - BEL
+  - HAL
+  - BHEL
+  - TRENT
+  - ETERNAL
+  - PAYTM
+  - POLICYBZR
+  - DIXON
+  - CIPLA
+  - DRREDDY
+  - DIVISLAB
+  - LUPIN
+  - APOLLOHOSP
+  - EICHERMOT
+  - HEROMOTOCO
+  - BAJAJ-AUTO
+  - TVSMOTOR
+  - ASIANPAINT
+  - NESTLEIND
+  - BRITANNIA
+  - GRASIM
+
+# Shock-day guard for the movers team (agents/shock.py): on a market-wide rally or crash driven by
+# big news (war, ceasefire, policy surprise), reversals are a trap. Needs Nifty +-move_pct plus a
+# confirmation (sector breadth, VIX jump/collapse, or several big macro headlines).
+shock:
+  move_pct: 1.5        # rally: no fading gainers (PUTs); crash: no bounce trades on losers (CALLs)
+  extreme_pct: 2.5     # or move_pct with VIX moving 2 x vix_jump_pct: the movers team stands aside
+  vix_jump_pct: 12.0
+  breadth_share: 0.8
+  news_hours: 3.0
+  news_count: 3
+ai:                          # AI helper, agents/ai_helper.py (user's plan, 30 Oct). Keys live outside the repo:
+  enabled: true              # gemini: GEMINI_API_KEY or ~/.config/gemini/key; xai: XAI_API_KEY or ~/.config/xai/key
+  provider: gemini           # "gemini" (Google) or "xai" (Grok); without a key it does nothing
+  model: gemini-2.5-flash    # gemini-2.5-pro reads harder filings but is slower and dearer; grok-4 for xai
+  max_calls_per_day: 80      # cap on AI calls (results figures our parser misses + one view per SIGNAL)
+  timeout: 60

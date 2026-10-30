@@ -1,0 +1,26 @@
+date,symbol,contract,verdict,reason
+2026-10-21,RELIANCE,RELIANCE-27-OCT-1220-CALL,TRADE,Jio IPO opens today; price confirms; small target
+2026-10-21,PNB,PNB-27-OCT-122-CALL,SKIP,Largely priced in; priced-in check failed (rate limit) so confidence was not cut
+2026-10-21,INFY,INFY-27-OCT-1180-PUT,SKIP,Forecast level short of target; sector-wide IT rally; long build-up; results Friday
+2026-10-21,WIPRO,WIPRO-27-OCT-190-PUT,TRADE,Room to forecast level (3.82 vs 3.15 target); no OI build-up; Nifty turned down; IT sector rally is the risk
+2026-10-21,TCS,TCS-27-OCT-2520-PUT,VOID,Opened in the same scan as WIPRO (bug); voided
+2026-10-21,TCS,TCS-27-OCT-2540-PUT,TRADE,Room to forecast level (54.11 vs 50.70); short covering; Nifty down; IT sector rally is the risk
+2026-10-22,HDFCBANK,HDFCBANK-27-OCT-710-PUT,TRADE,Real news (data-leak probe); falling with a sliding market; trend score only at the 60 minimum on few candles; some pessimism priced in
+2026-10-22,POLICYBZR,POLICYBZR-27-OCT-1020-PUT,TRADE,Price and sliding market agree (trend 65); IRDAI story a month old and today slightly hopeful; wide 2% spread
+2026-10-22,IOC,IOC-27-OCT-129-PUT,TRADE,Strong falling chart (trend 90) with a sliding market; high crude hurts OMCs; the headline itself was unclear; wide 2.7% spread on a Rs 1.85 option
+2026-10-23,TCS,TCS-27-OCT-2580-PUT,TRADE,"Fade of the IT rally already under way (TCS -1.2% from 09:50, below VWAP, high not retested 17 candles, heavier red volume); target needs only a ~0.1% further dip. Risks: futures long build-up, weaker rupee helps IT, Infosys results today could reignite IT"
+2026-10-23,TCS,TCS-27-OCT-2560-PUT,SKIP,"Second bite at the same TCS fade minutes after the first hit target: reversal mostly done (past VWAP and the 38% retracement), price 0.4% above the day low (support), inverted-hammer candle against, futures long build-up and a weaker rupee behind IT"
+2026-10-26,BAJFINANCE,BAJFINANCE-23-NOV-930-PUT,TRADE,"Chart backs it (trend 80: below VWAP, falling EMAs, lower highs, below 20-day average), NBFCs under RBI-hike pressure, expensive vs peers; but the headline itself is a weekly market-cap round-up describing last week, not new news"
+2026-10-26,KOTAKBANK,KOTAKBANK-27-OCT-435-CALL,SKIP,"Real story (Q2 profit +29% YoY) and the chart agrees (70), but the contract expires tomorrow: Rs 5.35 premium x 4,000 qty decays fast, the IOC profile; the stock has sat at about +2% since 09:25, so the move looks done"
+2026-10-26,JSWSTEEL,JSWSTEEL-23-NOV-1220-CALL,TRADE,"Strong quarter (record volumes, profit +40% YoY) plus court penalty relief; stock up 3.3% and pushing to new day highs; November contract, decent premium. Risk: much of the move done and the trade uses nearly all the team capital"
+2026-10-27,PFC,PFC-23-NOV-310-CALL,SKIP,"52-week low with fresh shorts (futures OI +11%); the 38% bounce level (313.6) prices the option at 13.71, below the 14.10 target"
+2026-10-27,TCS,TCS-23-NOV-2500-PUT,SKIP,"Already -2.5% and largely priced in; needs ~0.9% more (~2450); IT sell-offs rallied back on 26 Oct; ~20k premium with no stop-loss"
+2026-10-27,HINDUNILVR,HINDUNILVR-23-NOV-1760-CALL,TRADE,"Low held for 100 min, back above VWAP; target needs only ~+0.2% on the stock and the 38% bounce level prices the option at 63.69 > 62.75"
+2026-10-27,RECLTD,RECLTD-23-NOV-285-CALL,SKIP,"Results-reaction day (filed 26 Oct 16:37, down 4%): results moves carry on 61-75%, fading one goes against our data; News Guard missed it (fixed)"
+2026-10-27,HINDUNILVR,HINDUNILVR-23-NOV-1780-CALL,TRADE,"Second bounce trade after a win; chart 75 with EMAs turned up and price above VWAP; target needs only ~0.1% on the stock"
+2026-10-28,BPCL,BPCL-23-NOV-295-PUT,TRADE,"Saudi refinery attack: crude at $116 hurts oil marketers; heavy pre-open selling kept going after the open; trend 75; the 2% target level prices the option at 13.91 > 12.60. Wide 2.4% spread"
+2026-10-28,ADANIPORTS,ADANIPORTS-23-NOV-1880-CALL,TRADE,"User asked for an OTM call so one lot fits the Rs 7,039 free money: strong Q2 (revenue +24%, EBITDA +23%, guidance raised), price confirming up near the day high. Low delta (0.19): needs about +1.5% on the stock for the target"
+2026-10-28,LT,LT-23-NOV-3850-PUT,SKIP,"Results-reaction day (record orders, profit +33%): fading a results-day rally goes against our data; slipped past the News Guard because a restart forgot the morning filings (fixed)"
+2026-10-29,TVSMOTOR,TVSMOTOR-23-NOV-4200-CALL,TRADE,"First live quiet-spurt-news trade: very strong results (revenue +44%, profit +52%), 13.5x usual volume at +0.26%, news agrees; one lot uses almost all of the news team free money"
+2026-10-29,HINDUNILVR,HINDUNILVR-23-NOV-1840-CALL,SKIP,"Late entry (14:54, 26 min to square-off) after HUL already +2.6% on its results; needs another ~1% (to ~1,882) fast; chart strong (trend 100) but stretched (RSI 73)"
+2026-10-29,ASIANPAINT,ASIANPAINT-23-NOV-2260-CALL,SKIP,"Very late entry (about 15:00) for a 0.67% move; results mixed (sales +15%, margins down)"

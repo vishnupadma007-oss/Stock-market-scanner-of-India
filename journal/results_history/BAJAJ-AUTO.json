@@ -1,0 +1,395 @@
+[
+ {
+  "seq_id": "159191",
+  "filed": "2024-01-24 16:05:12",
+  "pdf": "https://nsearchives.nseindia.com/corporate/OutcomeUFR_24012024160512.pdf",
+  "figures": {
+   "revenue": {
+    "quarter": 12113.51,
+    "prev_quarter": 10777.27,
+    "year_ago": 9315.14,
+    "qoq_pct": 12.4,
+    "yoy_pct": 30.0
+   },
+   "profit": {
+    "quarter": 2032.62,
+    "prev_quarter": 2020.05,
+    "year_ago": 1472.7,
+    "qoq_pct": 0.6,
+    "yoy_pct": 38.0
+   }
+  },
+  "view": "strong",
+  "reaction": {
+   "reaction_day": "2024-01-25",
+   "when": "after close",
+   "gap_pct": 2.04,
+   "close_pct": 5.33,
+   "high_pct": 5.72,
+   "low_pct": -0.04,
+   "nifty_gap_pct": 0.0,
+   "nifty_close_pct": -0.47,
+   "runup_20d": 11.52,
+   "excess_close_pct": 5.8,
+   "excess_gap_pct": 2.04
+  },
+  "profit_yoy": 38.0,
+  "profit_surprise": null,
+  "revenue_yoy": 30.0,
+  "revenue_surprise": null
+ },
+ {
+  "seq_id": "161050",
+  "filed": "2024-04-18 16:42:32",
+  "pdf": "https://nsearchives.nseindia.com/corporate/BSENSEResults180424_18042024164232.pdf",
+  "figures": {
+   "revenue": {
+    "quarter": 11484.68,
+    "prev_quarter": 12113.51,
+    "year_ago": 8904.72,
+    "qoq_pct": -5.2,
+    "yoy_pct": 29.0
+   }
+  },
+  "view": "good",
+  "reaction": {
+   "reaction_day": "2024-04-19",
+   "when": "after close",
+   "gap_pct": 0.6,
+   "close_pct": -2.4,
+   "high_pct": 0.76,
+   "low_pct": -3.56,
+   "nifty_gap_pct": -0.61,
+   "nifty_close_pct": 0.69,
+   "runup_20d": 8.16,
+   "excess_close_pct": -3.09,
+   "excess_gap_pct": 1.21
+  },
+  "profit_yoy": null,
+  "profit_surprise": null,
+  "revenue_yoy": 29.0,
+  "revenue_surprise": -1.0
+ },
+ {
+  "seq_id": "163510",
+  "filed": "2024-07-16 13:41:11",
+  "pdf": "https://nsearchives.nseindia.com/corporate/Finalresults160724_16072024134111.pdf",
+  "figures": {
+   "revenue": {
+    "quarter": 11928.02,
+    "prev_quarter": 11484.68,
+    "year_ago": 10309.77,
+    "qoq_pct": 3.9,
+    "yoy_pct": 15.7
+   },
+   "profit": {
+    "quarter": 1988.34,
+    "prev_quarter": 1936.0,
+    "year_ago": 1664.77,
+    "qoq_pct": 2.7,
+    "yoy_pct": 19.4
+   }
+  },
+  "view": "strong",
+  "reaction": {
+   "reaction_day": "2024-07-16",
+   "when": "during market",
+   "gap_pct": 0.43,
+   "close_pct": 0.47,
+   "high_pct": 2.45,
+   "low_pct": -0.41,
+   "nifty_gap_pct": 0.12,
+   "nifty_close_pct": 0.11,
+   "runup_20d": -7.67,
+   "excess_close_pct": 0.36,
+   "excess_gap_pct": null
+  },
+  "profit_yoy": 19.4,
+  "profit_surprise": -18.6,
+  "revenue_yoy": 15.7,
+  "revenue_surprise": -13.8
+ },
+ {
+  "seq_id": "165680",
+  "filed": "2024-10-16 16:27:09",
+  "pdf": "https://nsearchives.nseindia.com/corporate/OutcomeUFR_16102024162709.pdf",
+  "figures": {
+   "revenue": {
+    "quarter": 13127.47,
+    "prev_quarter": 11928.02,
+    "year_ago": 10777.27,
+    "qoq_pct": 10.1,
+    "yoy_pct": 21.8
+   },
+   "profit": {
+    "quarter": 2005.04,
+    "prev_quarter": 1988.34,
+    "year_ago": 1836.14,
+    "qoq_pct": 0.8,
+    "yoy_pct": 9.2
+   }
+  },
+  "view": "strong",
+  "reaction": {
+   "reaction_day": "2024-10-17",
+   "when": "after close",
+   "gap_pct": -3.4,
+   "close_pct": -12.89,
+   "high_pct": -2.84,
+   "low_pct": -13.31,
+   "nifty_gap_pct": 0.22,
+   "nifty_close_pct": -0.89,
+   "runup_20d": -1.03,
+   "excess_close_pct": -12.0,
+   "excess_gap_pct": -3.62
+  },
+  "profit_yoy": 9.2,
+  "profit_surprise": -19.5,
+  "revenue_yoy": 21.8,
+  "revenue_surprise": -7.2
+ },
+ {
+  "seq_id": "168715",
+  "filed": "2025-01-28 17:50:49",
+  "pdf": "https://nsearchives.nseindia.com/corporate/OUTCOME_UFR_28012025175049.pdf",
+  "figures": {
+   "revenue": {
+    "quarter": 12806.85,
+    "prev_quarter": 13127.47,
+    "year_ago": 12113.51,
+    "qoq_pct": -2.4,
+    "yoy_pct": 5.7
+   },
+   "profit": {
+    "quarter": 2108.73,
+    "prev_quarter": 2005.04,
+    "year_ago": 2041.0,
+    "qoq_pct": 5.2,
+    "yoy_pct": 3.3
+   }
+  },
+  "view": "mixed",
+  "reaction": {
+   "reaction_day": "2025-01-29",
+   "when": "after close",
+   "gap_pct": 0.26,
+   "close_pct": 2.71,
+   "high_pct": 4.87,
+   "low_pct": 0.26,
+   "nifty_gap_pct": 0.3,
+   "nifty_close_pct": 0.9,
+   "runup_20d": -1.64,
+   "excess_close_pct": 1.81,
+   "excess_gap_pct": -0.04
+  },
+  "profit_yoy": 3.3,
+  "profit_surprise": -16.1,
+  "revenue_yoy": 5.7,
+  "revenue_surprise": -19.7
+ },
+ {
+  "seq_id": "106254812",
+  "filed": "2025-05-29 18:02:41",
+  "pdf": "https://nsearchives.nseindia.com/corporate/lkwalimbe_bajajauto_co_in_29052025180144_Signed---Outcome_of_Board_Meeting_-_31_March_2025__002_.pdf",
+  "figures": {
+   "revenue": {
+    "quarter": 12147.97,
+    "prev_quarter": 12806.85,
+    "year_ago": 11484.68,
+    "qoq_pct": -5.1,
+    "yoy_pct": 5.8
+   },
+   "profit": {
+    "quarter": 2049.31,
+    "prev_quarter": 2108.73,
+    "year_ago": 1936.0,
+    "qoq_pct": -2.8,
+    "yoy_pct": 5.9
+   }
+  },
+  "view": "good",
+  "reaction": {
+   "reaction_day": "2025-05-30",
+   "when": "after close",
+   "gap_pct": -0.99,
+   "close_pct": -3.01,
+   "high_pct": -0.11,
+   "low_pct": -3.26,
+   "nifty_gap_pct": -0.08,
+   "nifty_close_pct": -0.33,
+   "runup_20d": 8.46,
+   "excess_close_pct": -2.68,
+   "excess_gap_pct": -0.91
+  },
+  "profit_yoy": 5.9,
+  "profit_surprise": -3.3,
+  "revenue_yoy": 5.8,
+  "revenue_surprise": -12.9
+ },
+ {
+  "seq_id": "106327254",
+  "filed": "2025-08-06 12:17:32",
+  "pdf": "https://nsearchives.nseindia.com/corporate/lkwalimbe_bajajauto_co_in_06082025121530_SE6AUG25.pdf",
+  "figures": {
+   "revenue": {
+    "quarter": 12584.45,
+    "prev_quarter": 12147.97,
+    "year_ago": 11928.02,
+    "qoq_pct": 3.6,
+    "yoy_pct": 5.5
+   },
+   "profit": {
+    "quarter": 2095.98,
+    "prev_quarter": 2049.31,
+    "year_ago": 1988.34,
+    "qoq_pct": 2.3,
+    "yoy_pct": 5.4
+   }
+  },
+  "view": "good",
+  "reaction": {
+   "reaction_day": "2025-08-06",
+   "when": "during market",
+   "gap_pct": 0.47,
+   "close_pct": -0.63,
+   "high_pct": 0.47,
+   "low_pct": -1.34,
+   "nifty_gap_pct": -0.03,
+   "nifty_close_pct": -0.31,
+   "runup_20d": 2.11,
+   "excess_close_pct": -0.32,
+   "excess_gap_pct": null
+  },
+  "profit_yoy": 5.4,
+  "profit_surprise": -2.1,
+  "revenue_yoy": 5.5,
+  "revenue_surprise": -5.2
+ },
+ {
+  "seq_id": "106432182",
+  "filed": "2025-11-07 17:03:28",
+  "pdf": "https://nsearchives.nseindia.com/corporate/lkwalimbe_bajajauto_co_in_07112025170145_SE_-_Outcome.pdf",
+  "figures": {
+   "revenue": {
+    "quarter": 14922.05,
+    "prev_quarter": 12584.45,
+    "year_ago": 13127.47,
+    "qoq_pct": 18.6,
+    "yoy_pct": 13.7
+   },
+   "profit": {
+    "quarter": 2122.03,
+    "prev_quarter": 2210.44,
+    "year_ago": 1385.44,
+    "qoq_pct": -4.0,
+    "yoy_pct": 53.2
+   }
+  },
+  "view": "strong",
+  "reaction": {
+   "reaction_day": "2025-11-10",
+   "when": "after close",
+   "gap_pct": 0.84,
+   "close_pct": 0.58,
+   "high_pct": 1.34,
+   "low_pct": -0.41,
+   "nifty_gap_pct": 0.04,
+   "nifty_close_pct": 0.32,
+   "runup_20d": -2.58,
+   "excess_close_pct": 0.26,
+   "excess_gap_pct": 0.8
+  },
+  "profit_yoy": 53.2,
+  "profit_surprise": 47.6,
+  "revenue_yoy": 13.7,
+  "revenue_surprise": 7.9
+ },
+ {
+  "seq_id": "106513259",
+  "filed": "2026-01-30 16:29:45",
+  "pdf": "https://nsearchives.nseindia.com/corporate/lkwalimbe_bajajauto_co_in_30012026162829_SE_-_Outcome_-_BM_30_Jan_26.pdf",
+  "figures": {
+   "revenue": {
+    "quarter": 15220.33,
+    "prev_quarter": 14922.05,
+    "year_ago": 12806.85,
+    "qoq_pct": 2.0,
+    "yoy_pct": 18.8
+   }
+  },
+  "view": "good",
+  "reaction": {
+   "reaction_day": "2026-02-02",
+   "when": "after close",
+   "gap_pct": -1.49,
+   "close_pct": -1.05,
+   "high_pct": -0.78,
+   "low_pct": -3.62,
+   "nifty_gap_pct": -2.07,
+   "nifty_close_pct": -0.92,
+   "runup_20d": 3.51,
+   "excess_close_pct": -0.13,
+   "excess_gap_pct": 0.58
+  },
+  "profit_yoy": null,
+  "profit_surprise": null,
+  "revenue_yoy": 18.8,
+  "revenue_surprise": 13.1
+ },
+ {
+  "seq_id": "106611584",
+  "filed": "2026-05-06 18:27:38",
+  "pdf": "https://nsearchives.nseindia.com/corporate/lkwalimbe_bajajauto_co_in_06052026182412_Outcome_of_Board_Meeting.pdf",
+  "figures": {
+   "revenue": {
+    "quarter": 16005.65,
+    "prev_quarter": 15220.33,
+    "year_ago": 12147.97,
+    "qoq_pct": 5.2,
+    "yoy_pct": 31.8
+   }
+  },
+  "view": "good",
+  "reaction": {
+   "reaction_day": "2026-05-07",
+   "when": "after close",
+   "gap_pct": 2.55,
+   "close_pct": 2.77,
+   "high_pct": 4.08,
+   "low_pct": 0.05,
+   "nifty_gap_pct": 0.28,
+   "nifty_close_pct": -0.02,
+   "runup_20d": 9.46,
+   "excess_close_pct": 2.79,
+   "excess_gap_pct": 2.27
+  },
+  "profit_yoy": null,
+  "profit_surprise": null,
+  "revenue_yoy": 31.8,
+  "revenue_surprise": 22.1
+ },
+ {
+  "seq_id": "106703749",
+  "filed": "2026-07-20 18:11:07",
+  "pdf": "https://nsearchives.nseindia.com/corporate/lkwalimbe_bajajauto_co_in_27062025144213_NSE_clarification_Audit_Qualification_27_June_2025.pdf",
+  "figures": {},
+  "view": "unread",
+  "reaction": {
+   "reaction_day": "2026-07-21",
+   "when": "after close",
+   "gap_pct": 0.02,
+   "close_pct": -1.13,
+   "high_pct": 0.36,
+   "low_pct": -1.71,
+   "nifty_gap_pct": -0.09,
+   "nifty_close_pct": -0.21,
+   "runup_20d": 3.6,
+   "excess_close_pct": -0.92,
+   "excess_gap_pct": 0.11
+  },
+  "profit_yoy": null,
+  "profit_surprise": null,
+  "revenue_yoy": null,
+  "revenue_surprise": null
+ }
+]
