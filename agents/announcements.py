@@ -302,7 +302,18 @@ RESULTS_TEXT = r"financial results|revenue from operations|statement of profit a
 def results_summary(url: str, symbol: str | None = None) -> dict:
     from .sector_results import kpi_lines
     text = pdf_text(url)
-    return {"figures": figures_from_text(text), "highlights": highlights(text),
+    figures = figures_from_text(text)
+    if not figures and symbol and text.strip():
+        # Our parser found no table (scanned or unusual layout): ask Grok, if a key is set (agents/grok.py).
+        from . import grok
+        from .config import load_config
+        try:
+            cfg = load_config()
+            if grok.available(cfg):
+                figures = grok.results_figures(text, symbol, cfg)
+        except Exception:
+            pass
+    return {"figures": figures, "highlights": highlights(text),
             "kpis": kpi_lines(text, symbol) if symbol else [],
             "is_results": bool(re.search(RESULTS_TEXT, text, re.I))}
 

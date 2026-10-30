@@ -22,6 +22,8 @@ Intraday mover-reversal options strategy on NSE F&O stocks, run by a team of age
   Results-gap follower (`agents/gapfollow.py`: news team trades WITH a results-day opening gap from 09:30)
   and the morning Mover Forecast (`agents/mover_forecast.py`: likely top gainers/losers and why)
   Quiet Volume Spurt (`agents/spurt.py`, user's strategy: heavy volume at a 0.2-0.5% move, live from NSE every minute -> news team buys, 10% target)
+  Grok helper (`agents/grok.py`, xAI, key in ~/.config/xai/key or XAI_API_KEY, never committed): reads results figures
+  the parser misses; logs an observe-only TRADE/SKIP view per SIGNAL (journal/grok_verdicts.csv, scored in the review)
   F&O Activity (`agents/activity.py`: live OI build-ups from NSE, confirm news ideas early)
   NSE pre-open and volume spurts (`agents/preopen.py`: saved daily in journal/intel/, used by the mover
   forecast at 09:10; the pre-open shows where a stock opens, not where it closes)

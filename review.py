@@ -173,6 +173,24 @@ def review(df: pd.DataFrame, day: str, since: str, capitals: dict | None = None,
     return "\n".join(out) + "\n"
 
 
+def grok_scorecard(df: pd.DataFrame) -> str:
+    """Grok's observe-only TRADE/SKIP views (journal/grok_verdicts.csv) against how the trades ended:
+    it earns a say in trade decisions only if its SKIPs lose and its TRADEs win more than the rest."""
+    path = ROOT / "journal" / "grok_verdicts.csv"
+    if not path.exists() or df.empty:
+        return ""
+    v = pd.read_csv(path, dtype=str).fillna("")
+    m = v.merge(df[["date", "contract", "net_pnl", "net_pct"]], on=["date", "contract"], how="inner")
+    if m.empty:
+        return ""
+    lines = [f"\n## Grok's views (observe only): {len(m)} closed trades\n"]
+    for verdict, g in m.groupby("verdict"):
+        lines.append(f"- {verdict or 'no view'}: {len(g)} trades, avg {g['net_pct'].mean():+.2f}% of premium, "
+                     f"net ₹{g['net_pnl'].sum():,.0f}")
+    lines.append("\nGrok helps only if its SKIP trades did clearly worse than its TRADE trades.\n")
+    return "\n".join(lines)
+
+
 def main() -> None:
     ap = argparse.ArgumentParser()
     ap.add_argument("--date", default=date.today().isoformat())
@@ -205,6 +223,7 @@ def main() -> None:
         text += (f"\n## Setups held while a trade was open: {len(held)}\n\n"
                  + "\n".join(f"- {r.time} {r.symbol} {r.contract} (score {r.score})" for r in held.itertuples())
                  + "\n")
+    text += grok_scorecard(df)
     REVIEWS.mkdir(parents=True, exist_ok=True)
     (REVIEWS / f"{args.date}.md").write_text(text, encoding="utf-8")
     if not df.empty and "strategy" in df:

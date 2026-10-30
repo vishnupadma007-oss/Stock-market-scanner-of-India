@@ -30,7 +30,7 @@ from datetime import date, datetime, time, timedelta
 from pathlib import Path
 from zoneinfo import ZoneInfo
 
-from agents import (activity, analyzer, announcements, candles, commodities, concalls, daymode, expectations,
+from agents import (activity, analyzer, announcements, grok, candles, commodities, concalls, daymode, expectations,
                     gapfollow, holidays, intel, macro, news, news_guard, newsfeed, policy, preopen,
                     psychology, reaction, shock, spurt, valuation)
 from agents.chart_reader import read_chart
@@ -395,10 +395,14 @@ def run_analyzer(cfg: dict, now: datetime) -> None:
                               "market": analyzer.market_mood(items, now)["mood"]})
 
 
-_print_lock = threading.Lock()  # the information track and the scanner both print events
+_print_lock = threading.Lock()
+_cfg_for_grok: dict = {}  # set in main(); Grok's own settings (config.yaml -> grok)  # the information track and the scanner both print events
 
 
 def emit(kind: str, payload: dict) -> None:
+    if kind == "SIGNAL" and grok.available(_cfg_for_grok):
+        # Stage 1, observe only: Grok's TRADE/SKIP view is logged beside the trade; it never blocks it.
+        threading.Thread(target=grok.log_verdict, args=(payload, _cfg_for_grok), daemon=True).start()
     with _print_lock:
         if kind == "ERROR":
             # The same error is shown once per 10 minutes, then with how often it repeated: on 27 Oct a
@@ -1316,6 +1320,7 @@ def main() -> None:
     # still saves its trades (28 Oct: a restart right after a SIGNAL lost the L&T paper trade).
     signal.signal(signal.SIGTERM, lambda *_: sys.exit(0))
     cfg = load_config()
+    _cfg_for_grok.update(cfg)
     ap = argparse.ArgumentParser()
     ap.add_argument("--once", action="store_true", help="run one cycle and exit")
     ap.add_argument("--interval", type=float, default=cfg.get("scan_interval_min", 1),

@@ -291,3 +291,8 @@ shock:
   breadth_share: 0.8
   news_hours: 3.0
   news_count: 3
+grok:                        # Grok (xAI) helper, agents/grok.py (user's plan, 30 Oct). Key: XAI_API_KEY or ~/.config/xai/key
+  enabled: true              # without a key it does nothing
+  model: grok-4
+  max_calls_per_day: 80      # cap on xAI calls (results figures our parser misses + one view per SIGNAL)
+  timeout: 60
