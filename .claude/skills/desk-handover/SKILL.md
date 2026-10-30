@@ -61,13 +61,16 @@ whenever something here changes, and commit it.
 - Brings ideas and documents (strategy write-ups, code). Check them; say clearly when the data says no.
 - Never claim a real order; never commit tokens or keys; no model names in commits.
 
-## State on 30 Oct 2026
+## State on 30 Oct 2026 (evening)
 
-- Scoreboard since 19 Oct: movers 9 trades, all hit target, +₹4,407; news 14 trades, 50% hit,
-  −₹11,895 (better since the quiet spurt: TVS Motor +₹4,297 on 29 Oct, the first quiet-spurt-news trade).
+- Scoreboard since 19 Oct (after 30 Oct): movers 9 trades, all hit target, +₹4,407; news 20 trades, 45% hit,
+  −₹26,970 (30 Oct: 2 targets, 4 quiet-spurt/intel CALLs lost at square-off, −₹15,076) (better since the quiet spurt: TVS Motor +₹4,297 on 29 Oct, the first quiet-spurt-news trade).
 - Live tests to judge with more trades: quiet-spurt 10% vs 15% when news agrees; F&O build-up note on
   spurts; previous-day run-up note on spurts (TVS was +3.7% the day before); AI helper's views;
   News Guard on results filed after the last close.
+- 30 Oct: the container restarted twice during market hours (~12:40, 14:39) and killed the watcher;
+  wait_event.sh did not catch it. The 14:39 stop stranded 4 trades, closed afterwards at the 15:20
+  5-minute candle price (noted in each row). Check the watcher at every wake-up.
 - Known weak spots: results PDFs that are scans (the AI helper now reads them; spot-check figures
   marked `source: ai` for the first week, e.g. Maruti 27 Oct read as profit −27% YoY, doubtful);
   the news team's late entries near 15:00 rarely reach target.

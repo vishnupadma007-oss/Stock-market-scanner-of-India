@@ -124,3 +124,5 @@ date,time,symbol,direction,confidence,source,priced_in
 2026-10-30,10:20,SUNPHARMA,up,82,intel,some pessimism priced in
 2026-10-30,10:53,HDFCBANK,down,45,intel,pessimism priced in
 2026-10-30,10:53,ITC,down,52,intel,not priced in
+2026-10-30,13:06,ETERNAL,up,73,intel,partly priced in
+2026-10-30,14:39,GAIL,up,69,intel,not priced in

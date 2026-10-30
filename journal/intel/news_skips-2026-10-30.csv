@@ -1,0 +1,10 @@
+time,symbol,direction,confidence,move_pct,reason
+09:15,ASIANPAINT,up,85,0.38,"early entry: Volume 1.5x usual on a red candle; Order book: buyers 1.2x sellers; F&O activity: short build-up (OI +30.9%, price -0.2%)"
+09:15,PNB,down,83,-0.65,Trend Checker 0 < 60
+09:24,PNB,down,83,-0.4,"early entry: Volume 0.4x usual on a green candle; Order book: sellers 1.2x buyers; F&O activity: short build-up (OI +0.5%, price -0.7%)"
+09:28,RELIANCE,down,,-0.09,quiet spurt: live move -0.09% no longer fits
+11:20,GRASIM,up,,0.7,"quiet spurt: risk: One lot costs ₹19,850, above the ₹15,262 per-trade budget.; Forecast chance of reaching the target is 47% (need 60%)."
+12:51,DLF,down,,-0.17,quiet spurt: risk: Forecast chance of reaching the target is 55% (need 60%).
+12:58,VEDL,up,96,0.96,Trend Checker 20 < 60
+13:04,VEDL,up,96,0.77,Trend Checker 5 < 60
+13:04,CANBK,down,72,-0.63,Trend Checker 15 < 60
