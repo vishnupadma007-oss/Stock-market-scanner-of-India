@@ -9,6 +9,7 @@ import argparse
 from datetime import time
 
 import pandas as pd
+import yaml
 
 from agents import spurt
 from agents.config import load_config
@@ -56,8 +57,13 @@ def main() -> None:
     ap.add_argument("--daily")
     ap.add_argument("--targets", nargs="+", type=float, default=[1.0, 10.0])
     ap.add_argument("--out", default="journal/backtest_spurt.csv")
+    ap.add_argument("--set", action="append", default=[], metavar="KEY=VALUE",
+                    help="try a config change, e.g. --set early_exit=entry_bar")
     args = ap.parse_args()
     cfg = load_config()
+    for item in args.set:
+        key, value = item.split("=", 1)
+        cfg[key] = yaml.safe_load(value)
     df = simulate(load(args.intraday, args.daily, cfg["universe"]), cfg, args.targets)
     df.to_csv(args.out, index=False)
     print("target  mode      trades  hit%   avg%   worst%    net Rs")

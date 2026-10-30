@@ -154,10 +154,33 @@ def run_trade(sym, side, option, risk, intra, t, day, cfg, half_spread):
         square_off = min(square_off, t + pd.Timedelta(minutes=cfg["time_exit_minutes"]))
     after = intra[(intra.index > t) & (intra.index <= square_off)]
     exit_bid, status, closed = None, "TIME_EXIT" if square_off < pd.Timestamp(f"{day} {cfg['square_off_time']}", tz=IST) else "SQUARED_OFF", square_off
+    rule = cfg.get("early_exit")  # None, "entry_bar" or "vwap": sell when the chart turns against the trade
+    d = 1 if side == "loser" else -1  # +1 = we hold a CALL, -1 = a PUT
+    before = intra[(intra.index < t) & (intra.index.date == day)]
+    if rule and before.empty:
+        rule = None
+    if rule:
+        ref = float(before["Low"].iloc[-1] if d > 0 else before["High"].iloc[-1])
+        today = intra[intra.index.date == day]
+        typical = (today["High"] + today["Low"] + today["Close"]) / 3
+        vwap = (typical * today["Volume"]).cumsum() / today["Volume"].cumsum().replace(0, float("nan"))
+    prev_vol = float(before["Volume"].iloc[-1]) if len(before) else 0.0
     for ts, bar in after.iterrows():
         best_spot = bar["Low"] if side == "gainer" else bar["High"]
         if option_mid(option, best_spot, ts, cfg) * (1 - half_spread) >= target:
             exit_bid, status, closed = target, "TARGET", ts
+            break
+        close = float(bar["Close"])
+        if rule == "entry_bar":
+            broken = (close - ref) * d < 0
+        elif rule == "vwap":
+            broken = (close - float(vwap.get(ts, close))) * d < 0 and float(bar["Volume"]) > prev_vol \
+                and (close - float(bar["Open"])) * d < 0
+        else:
+            broken = False
+        prev_vol = float(bar["Volume"])
+        if broken:  # sold at the bar's close
+            exit_bid, status, closed = option_mid(option, close, ts + pd.Timedelta(minutes=5), cfg) * (1 - half_spread), "CHART_EXIT", ts
             break
     if exit_bid is None:
         last_spot = after["Close"].iloc[-1] if len(after) else option["strike"]
