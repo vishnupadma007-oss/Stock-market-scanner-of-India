@@ -165,8 +165,14 @@ def run_trade(sym, side, option, risk, intra, t, day, cfg, half_spread):
         typical = (today["High"] + today["Low"] + today["Close"]) / 3
         vwap = (typical * today["Volume"]).cumsum() / today["Volume"].cumsum().replace(0, float("nan"))
     prev_vol = float(before["Volume"].iloc[-1]) if len(before) else 0.0
+    stop = entry * (1 - cfg["stop_loss_pct"] / 100) if cfg.get("stop_loss_pct") else None  # tests only: the desk has none
     for ts, bar in after.iterrows():
         best_spot = bar["Low"] if side == "gainer" else bar["High"]
+        worst_spot = bar["High"] if side == "gainer" else bar["Low"]
+        if stop is not None and option_mid(option, worst_spot, ts, cfg) * (1 - half_spread) <= stop:
+            # stop checked first inside a bar (we cannot see which came first): the cautious reading
+            exit_bid, status, closed = stop, "STOP", ts
+            break
         if option_mid(option, best_spot, ts, cfg) * (1 - half_spread) >= target:
             exit_bid, status, closed = target, "TARGET", ts
             break
