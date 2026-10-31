@@ -73,3 +73,11 @@ Carlo futures, learned score, expected value after charges) and logs it to `jour
 It does not block trades yet (`probability.mode: observe`): the walk-forward test favoured its approved
 trades (+3.48% vs +0.17% per trade) but not in both halves of the period. Exits unchanged: target only,
 no stop-loss (early chart exit tested 30 Oct and rejected).
+
+## 2026-10-31: Trade News Monitor added in observe mode (user's request)
+
+`agents/trade_news.py` checks every open trade for news published after entry: sell on bad news (stock's own
+regulatory action, major news or policy hit against it, market shock against the trade), raise the target
+once (+5% of premium) on good news; the AI helper confirms each call. Logged to `journal/trade_news.csv`, not
+acting (`trade_news.mode: observe`): the replay of 30 paper trades lost money when market/geopolitical news
+could trigger exits (now off), and the stock's own-news part had no cases to judge.

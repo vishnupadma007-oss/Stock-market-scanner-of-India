@@ -29,6 +29,8 @@ Intraday mover-reversal options strategy on NSE F&O stocks, run by a team of age
   forecast at 09:10; the pre-open shows where a stock opens, not where it closes)
   Probability Analyzer (`agents/probability.py`, user's design 31 Oct, observe mode: base rate + 2,000 Monte Carlo
   futures + learned score + expected value on each quiet-spurt trade, journal/probability.csv; `backtest_probability.py`)
+  Trade News Monitor (`agents/trade_news.py`, observe mode: news after entry -> would sell / raise the target,
+  journal/trade_news.csv; `backtest_trade_news.py` replays the paper trades with the intel log)
   Candlestick Patterns (`agents/candles.py`, observe mode: 19 patterns, no edge found on 60 days of data;
   `candlestick-patterns` skill) and NSE holidays (`agents/holidays.py`).
 - Information agents write to one log (`agents/intel.py`, `journal/intel/<date>.jsonl`): NSE filings,

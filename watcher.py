@@ -30,7 +30,7 @@ from datetime import date, datetime, time, timedelta
 from pathlib import Path
 from zoneinfo import ZoneInfo
 
-from agents import (activity, analyzer, announcements, ai_helper, candles, probability, commodities, concalls, daymode, expectations,
+from agents import (activity, analyzer, announcements, ai_helper, candles, probability, trade_news, commodities, concalls, daymode, expectations,
                     gapfollow, holidays, intel, macro, news, news_guard, newsfeed, policy, preopen,
                     psychology, reaction, shock, spurt, valuation)
 from agents.chart_reader import read_chart
@@ -568,6 +568,48 @@ def _t(hhmm: str) -> time:
     return time(int(h), int(m))
 
 
+def watch_news(t: dict, bid: float, now: datetime, cfg: dict) -> bool:
+    """Trade News Monitor (agents/trade_news.py, user's request 31 Oct): news that arrives while a trade
+    is open. Observe mode logs what it would do (journal/trade_news.csv, with the bid at that moment);
+    act mode sells on bad news and raises the target once on good news. True when it sold the trade."""
+    tc = {**trade_news.DEFAULTS, **(cfg.get("trade_news") or {}), "_ai": cfg.get("ai")}
+    if not tc.get("enabled", True):
+        return False
+    cache = _daily.setdefault("news_items", {"at": None, "items": []})
+    if cache["at"] is None or (now - cache["at"]).total_seconds() >= 60:
+        cache.update(at=now, items=analyzer.recent_items(now))
+    v = trade_news.check(t, cache["items"], now, _daily.get("shock_state", "normal"), tc)
+    if v["action"] == "hold":
+        return False
+    seen = _daily.setdefault("news_watch_seen", set())
+    key = (t["date"], t["symbol"], t["opened"], v["action"])
+    if key not in seen:
+        seen.add(key)
+        new = not TRADE_NEWS_LOG.exists()
+        with open(TRADE_NEWS_LOG, "a", newline="", encoding="utf-8") as f:
+            w = csv.writer(f)
+            if new:
+                w.writerow(["date", "time", "symbol", "contract", "action", "bid", "target_bid", "mode", "reason"])
+            w.writerow([t["date"], now.strftime("%H:%M"), t["symbol"], t["contract"], v["action"], bid,
+                        t["target_bid"], tc["mode"], v["reason"]])
+    if tc["mode"] != "act":
+        return False
+    if v["action"] == "raise":
+        t["target_bid"] = trade_news.raised_target(t, tc)
+        t["notes"] = f"{t.get('notes', '')}; news target raised to {t['target_bid']}: {v['reason'][:120]}"
+        return False
+    qty, entry = int(t["qty"]), float(t["entry_ask"])
+    charges = round_trip_charges(entry, bid, qty, cfg["charges"])["total"]
+    t.update(status="SQUARED_OFF", closed=now.strftime("%H:%M"), exit_bid=bid, charges=round(charges, 2),
+             net_pnl=round((bid - entry) * qty - charges, 2),
+             notes=f"{t.get('notes', '')}; news exit: {v['reason'][:150]}")
+    emit("EXIT", {k: t[k] for k in ("symbol", "contract", "status", "entry_ask", "exit_bid", "qty", "net_pnl")})
+    return True
+
+
+TRADE_NEWS_LOG = Path(__file__).resolve().parent / "journal" / "trade_news.csv"
+
+
 async def manage_open_trades(im: IndMoney, trades: list[dict], now: datetime, cfg: dict) -> None:
     square_off = now.time() >= _t(cfg["square_off_time"])
     open_trades = [t for t in trades if t["status"] == "OPEN"]
@@ -589,6 +631,8 @@ async def manage_open_trades(im: IndMoney, trades: list[dict], now: datetime, cf
         if not bid:
             continue
         bid = float(bid)
+        if not square_off and bid < float(t["target_bid"]) and watch_news(t, bid, now, cfg):
+            continue  # sold on bad news
         if bid >= float(t["target_bid"]) or square_off:
             qty, entry = int(t["qty"]), float(t["entry_ask"])
             charges = round_trip_charges(entry, bid, qty, cfg["charges"])["total"]
@@ -674,6 +718,7 @@ async def scan(im: IndMoney, trades: list[dict], now: datetime, cfg: dict, hold:
     # Shock-day guard: on a market-wide rally or crash driven by big news, reversals are a trap.
     shock_view = shock.assess(ctx["sectors"].get("Market"), ctx.get("vix_pct"), ctx["sectors"],
                               shared_news or analyzer.recent_items(now), now, cfg)
+    _daily["shock_state"] = shock_view["state"]  # read by the Trade News Monitor on open trades
     if shock_view["state"] != "normal":
         if _daily.setdefault("shock_sent", set()).isdisjoint({shock_view["state"]}):
             _daily["shock_sent"].add(shock_view["state"])

@@ -231,3 +231,25 @@ random walk lacks). Not proven: in the first half of the period the rejected tra
 (+4.5% vs +3.8%), only the second half separated (-2.9% vs +3.2%); a random 87 trades matched the
 approved average 9% of the time. Running in observe mode; switch `probability.mode: gate` only if
 live trades agree.
+
+### Trade News Monitor (user's request, 31 Oct 2026)
+
+`python backtest_trade_news.py --intraday ..`: the 30 closed paper trades of 21-30 Oct replayed bar by bar
+with the news that was in `journal/intel/` at each moment (option re-priced at the volatility implied by
+the real entry; shock states were not logged, so not replayed). Totals in the same model:
+
+| Variant | Net (30 trades) | Trades acted on |
+|---|---|---|
+| No monitor (model) | -Rs 11,344 | - |
+| Word list: own + market/geopolitical news | -Rs 14,894 | 13 |
+| Word list: stock's own news only | -Rs 10,584 | 1 (no exit fired) |
+| Own news, raise target +5% on milder good news | -Rs 9,585 | 3 raises |
+| Own news, raise +10% | -Rs 18,954 | 3 raises |
+| AI helper (Gemini) judging own + market news | -Rs 14,708 | 8 |
+
+Market-wide exits fired on background Iran-war / crude headlines and cut winners (TVS Motor +4,079 -> -917,
+Sun Pharma +1,621 -> -85); the AI helper made the same calls. The stock's own bad news never arrived during a
+trade in these 30, so that part is untested. Live in observe mode with market-news exits off.
+
+Probability Analyzer on the 30 Oct live quiet-spurt trades (model fitted on the 130 earlier backtest trades):
+it approved all four (Kotak, Cholamandalam, Bank of Baroda, Eicher), so it would not have changed the day.
