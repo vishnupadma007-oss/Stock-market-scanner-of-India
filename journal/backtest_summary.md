@@ -253,3 +253,21 @@ trade in these 30, so that part is untested. Live in observe mode with market-ne
 
 Probability Analyzer on the 30 Oct live quiet-spurt trades (model fitted on the 130 earlier backtest trades):
 it approved all four (Kotak, Cholamandalam, Bank of Baroda, Eicher), so it would not have changed the day.
+
+### Quiet spurt with small targets and repeat entries (user's idea, 31 Oct 2026)
+
+Same 60 days x 76 stocks, no hit-chance filter, no stop-loss, 15:20 square-off. "Repeat" = after a trade ends,
+the next spurt candle in the same stock that day is traded again.
+
+| Target | Entries | Trades | Hit % | Win avg | Miss avg | Avg per trade | Net |
+|---|---|---|---|---|---|---|---|
+| 1% | once a day | 341 | 88 | +1.2% | -16.2% | -0.96% | -Rs 98,275 |
+| 1% | repeat | 580 | 84 | +1.2% | -16.2% | -1.68% | -Rs 2,91,662 |
+| 3% | once a day | 341 | 79 | +3.2% | -13.5% | -0.35% | -Rs 35,541 |
+| 5% | once a day | 341 | 69 | +5.2% | -12.1% | -0.17% | -Rs 17,018 |
+| 10% | once a day | 341 | 53 | +10.2% | -10.3% | +0.57% | +Rs 58,552 |
+| 10% | repeat | 379 | 52 | +10.2% | -10.1% | +0.42% | +Rs 47,398 |
+
+A 1% win cannot pay for the misses: one miss (-16%) wipes out ~14 wins, and repeat entries add mostly losing
+trades. Only the 10% target is profitable (more so with the Risk agent's hit-chance filter: +Rs 1,26,586).
+Not adopted.
