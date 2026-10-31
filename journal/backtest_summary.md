@@ -271,3 +271,22 @@ the next spurt candle in the same stock that day is traded again.
 A 1% win cannot pay for the misses: one miss (-16%) wipes out ~14 wins, and repeat entries add mostly losing
 trades. Only the 10% target is profitable (more so with the Risk agent's hit-chance filter: +Rs 1,26,586).
 Not adopted.
+
+### Small target with a stop-loss and repeat entries (user's idea, 31 Oct 2026)
+
+Quiet spurt, same 60 days x 76 stocks; stop = option bid falls this % below the entry price (checked before
+the target inside each 5-minute bar); "repeat" = trade the next spurt in the same stock after each exit.
+
+| Target | Stop-loss | Entries | Trades | Hit % | Stopped % | Avg per trade | Net |
+|---|---|---|---|---|---|---|---|
+| 0.5% | 3% | once | 341 | 47 | 51 | -1.74% | -Rs 1,77,370 |
+| 0.5% | 3% | repeat | 934 | 50 | 48 | -1.72% | -Rs 4,79,947 |
+| 0.5% | 5% | repeat | 853 | 63 | 34 | -1.87% | -Rs 4,77,803 |
+| 1% | 3% | repeat | 915 | 48 | 49 | -1.59% | -Rs 4,34,378 |
+| 2% | 3% | repeat | 866 | 42 | 55 | -1.47% | -Rs 3,79,992 |
+| 10% | 3% | once | 341 | 23 | 74 | -0.49% | -Rs 50,435 |
+| **10%** | **none** | once | 341 | 53 | 0 | **+0.57%** | **+Rs 58,552** |
+
+A 3% stop on an option is inside its normal 5-minute noise (the bid-ask gap alone is ~1%), so about half of
+all trades are stopped out; a 0.5% win (+0.67% after costs) cannot pay for -3.9% stops. More trades only add
+more of the same loss. Not adopted; the desk keeps the 10% target and no stop-loss.
