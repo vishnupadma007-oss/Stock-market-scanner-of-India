@@ -211,3 +211,23 @@ before entry) and `vwap` (closes on the wrong side of VWAP on a falling candle w
 Both rules cut the worst losses (spurt worst trade -46% -> -31%) but sell too many trades that
 later reach the target, so total profit falls by about two thirds. On 30 Oct alone they would have
 helped (news team about -Rs 8,000 / -Rs 6,700 instead of -Rs 15,076). Not adopted.
+
+### Probability Analyzer (user's design, 31 Oct 2026)
+
+`python backtest_probability.py --intraday .. --daily ..`: every quiet-spurt trade (10% target, no
+stop-loss) judged before entry, walk-forward (base rate and learned score fitted on earlier days only;
+first 15 days used for learning). Readings: historical base rate (time of day x spurt size x side),
+Monte Carlo of 2,000 futures re-sampling the stock's own 5-minute moves with the option re-priced,
+logistic-regression score, expected value after charges; cut = weakest third of past trades.
+
+| Group (out-of-sample) | Trades | Hit % | Avg per trade | Worst | Net |
+|---|---|---|---|---|---|
+| All | 133 | 69 | +2.34% | -46.1% | +Rs 93,087 |
+| Approved | 87 | 71 | **+3.48%** | -33.2% | +Rs 90,768 |
+| Rejected | 46 | 65 | +0.17% | -46.1% | +Rs 2,318 |
+
+The Monte Carlo is cautious (57% average chance vs 68% actual: spurts have follow-through a
+random walk lacks). Not proven: in the first half of the period the rejected trades did better
+(+4.5% vs +3.8%), only the second half separated (-2.9% vs +3.2%); a random 87 trades matched the
+approved average 9% of the time. Running in observe mode; switch `probability.mode: gate` only if
+live trades agree.

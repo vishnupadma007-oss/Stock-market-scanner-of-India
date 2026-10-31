@@ -30,7 +30,7 @@ from datetime import date, datetime, time, timedelta
 from pathlib import Path
 from zoneinfo import ZoneInfo
 
-from agents import (activity, analyzer, announcements, ai_helper, candles, commodities, concalls, daymode, expectations,
+from agents import (activity, analyzer, announcements, ai_helper, candles, probability, commodities, concalls, daymode, expectations,
                     gapfollow, holidays, intel, macro, news, news_guard, newsfeed, policy, preopen,
                     psychology, reaction, shock, spurt, valuation)
 from agents.chart_reader import read_chart
@@ -948,6 +948,28 @@ NEWS_DEFAULTS = {
 }
 
 
+def probability_report(intraday, option: dict, risk: dict, spot, now: datetime, cfg: dict, sig: dict) -> dict | None:
+    """Probability Analyzer (agents/probability.py, user's design 31 Oct): base rate, 2,000 Monte Carlo
+    futures, learned score and expected value for a quiet-spurt trade, logged to journal/probability.csv.
+    Observe mode (config.yaml -> probability.mode) only logs; "gate" skips trades it rejects."""
+    pc = {**probability.DEFAULTS, **(cfg.get("probability") or {})}
+    if not pc.get("enabled", True):
+        return None
+    try:
+        spot = float(spot or intraday["Close"].iloc[-1])
+        square_off = datetime.combine(now.date(), _t(cfg["square_off_time"]), now.tzinfo)
+        rets = probability.recent_returns(intraday, now, pc["lookback_days"])
+        mc = probability.monte_carlo(option, spot, float(option["ask"]), float(risk["target_premium"]),
+                                     int(risk["qty"]), now, square_off, rets, cfg, n=pc["simulations"])
+        sig = {**sig, "sigma_ratio": probability.sigma_ratio(intraday, now, pc["lookback_days"])}
+        report = {**probability.assess(sig, mc, probability.load_model(), pc), "mode": pc["mode"]}
+        probability.log(now, sig.get("symbol", option["contract"].split("-")[0]), option["contract"], report)
+        return report
+    except Exception as e:  # never let the analyzer stop a trade
+        emit("ERROR", {"error": f"probability analyzer: {type(e).__name__}: {e}"})
+        return None
+
+
 async def spurt_entries(im: IndMoney, trades: list[dict], now: datetime, cfg: dict, c: dict, done: set) -> bool:
     """Quiet Volume Spurt (user's strategy, agents/spurt.py): a fresh signal is confirmed on the live
     INDmoney quote (still moving its way, not run off), cross-checked with the news (strong news
@@ -1014,6 +1036,12 @@ async def spurt_entries(im: IndMoney, trades: list[dict], now: datetime, cfg: di
                         if len(closes) >= 2 else "")
             reason = (f"Quiet volume spurt at {g['time']:%H:%M}: volume {g['volume_x']:.1f}x usual, "
                       f"move {g['move_pct']:+.2f}% ({news_note}); target {tgt:g}% net{prev_day}")
+            prob = probability_report(intraday, option, risk, stats.get("live_price"), now, cfg,
+                                      {"symbol": sym, "opened": now.strftime("%H:%M"), "volume_x": g["volume_x"],
+                                       "move_pct": g["move_pct"], "side": side})
+            if prob and not prob["approved"] and prob.get("mode") == "gate":
+                log_skip(now, sym, idea, float(move), "quiet spurt: probability analyzer: " + prob["rejection_reason"])
+                continue
             row = {f: "" for f in FIELDS}
             row.update(date=now.date().isoformat(), opened=now.strftime("%H:%M"), symbol=sym, side=side,
                        contract=option["contract"], underlying_key=key, derivative_id=option["derivative_id"],
@@ -1030,7 +1058,7 @@ async def spurt_entries(im: IndMoney, trades: list[dict], now: datetime, cfg: di
                             "lot_size": option["lot_size"], "net_profit_at_target": round(risk["net_profit"]),
                             "hit_probability": row["hit_probability"], "square_off": cfg["square_off_time"],
                             "reason": reason, "rolled_from": option.get("rolled_from"),
-                            "otm_for_budget": option.get("otm_for_budget")})
+                            "otm_for_budget": option.get("otm_for_budget"), "probability": prob})
             return True
         except (LoginRequired, RateLimited):
             raise

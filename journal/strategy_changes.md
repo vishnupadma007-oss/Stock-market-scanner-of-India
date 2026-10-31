@@ -65,3 +65,11 @@ latest date here before it allows a new proposal.
 | 2026-10-30 | Grok helper (xAI) | agents/grok.py: reads results figures our parser misses (scanned/unusual filings); observe-only TRADE/SKIP view on every SIGNAL, scored in the evening review; never blocks a trade; 80 calls/day cap; key outside the repo. Off until a key is saved | user plan |
 | 2026-10-30 | AI helper switched to Google Gemini | The key given is a Google Gemini key (not xAI): agents/grok.py became agents/ai_helper.py (provider gemini, model gemini-2.5-flash; xai optional). Figures copied in the filing's own unit. First reads: Maruti and Bajaj Auto 27 Oct filings (parser had found nothing) | user key |
 | 2026-10-30 | Claude credits (2) | Claude is woken only for problems (watcher stopped, login, budget, stale data, crash, SHOCK); trades, exits and results are reported in the 12:40 and 15:40 checks; the AI helper (Gemini) gives the per-signal view instead of Claude | user request |
+
+## 2026-10-31: Probability Analyzer added in observe mode (user's request)
+
+New agent `agents/probability.py` judges each quiet-spurt trade before entry (base rate, 2,000 Monte
+Carlo futures, learned score, expected value after charges) and logs it to `journal/probability.csv`.
+It does not block trades yet (`probability.mode: observe`): the walk-forward test favoured its approved
+trades (+3.48% vs +0.17% per trade) but not in both halves of the period. Exits unchanged: target only,
+no stop-loss (early chart exit tested 30 Oct and rejected).

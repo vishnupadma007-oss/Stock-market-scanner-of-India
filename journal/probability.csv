@@ -1,0 +1,1 @@
+date,time,symbol,contract,historical_win_rate,monte_carlo_target_prob,ml_confidence_score,blended_prob,expected_value_pct,worst5_pct,approved,rejection_reason

@@ -297,3 +297,11 @@ ai:                          # AI helper, agents/ai_helper.py (user's plan, 30 O
   model: gemini-2.5-flash    # gemini-2.5-pro reads harder filings but is slower and dearer; grok-4 for xai
   max_calls_per_day: 80      # cap on AI calls (results figures our parser misses + one view per SIGNAL)
   timeout: 60
+probability:               # Probability Analyzer (user's design, 31 Oct; agents/probability.py) on quiet-spurt trades
+  enabled: true
+  mode: observe            # observe: log only (journal/probability.csv); gate: skip trades it rejects
+  simulations: 2000        # Monte Carlo futures per trade
+  lookback_days: 20
+  reject_share: 0.33       # rejects the weakest third, by the cut saved in journal/probability_model.json
+  # Walk-forward test, 60 days: approved +3.48%/trade (87) vs rejected +0.17% (46), but the first half of
+  # the period showed the opposite; ~9% chance it is luck. Switch to gate only after live trades agree.
