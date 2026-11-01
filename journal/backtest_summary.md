@@ -290,3 +290,24 @@ the target inside each 5-minute bar); "repeat" = trade the next spurt in the sam
 A 3% stop on an option is inside its normal 5-minute noise (the bid-ask gap alone is ~1%), so about half of
 all trades are stopped out; a 0.5% win (+0.67% after costs) cannot pay for -3.9% stops. More trades only add
 more of the same loss. Not adopted; the desk keeps the 10% target and no stop-loss.
+
+### Target x stop-loss grid for both teams (user's request, 1 Nov 2026)
+
+Same 60 days; entries fixed (movers: live reversal rules, 152 trades; quiet spurt: first signal a day, 341),
+exits re-simulated for targets 1-30% net x stop-loss none/10/15/20/25/30/40/50% (88 combinations each).
+Chosen on the first half, checked on the second (quantforge-ai gates).
+
+- Movers reversal: every one of the 88 combinations loses money in the backtest (best: 15% target, 10% stop,
+  -Rs 24,900; current 1% / no stop -Rs 79,300). Its paper record (9 of 9 targets) is not confirmed by history.
+- Quiet spurt: no stop-loss beats every stop level at every target. Without the hit-chance filter, 15-20%
+  targets look steadier than 10%; with the live 60% hit-chance filter (how the desk trades):
+
+| Target | Trades | Hit % | Avg | Net | Quarters (Rs) |
+|---|---|---|---|---|---|
+| **10% (current)** | 171 | 68 | +2.47% | **+1,26,586** | +34.6k, +16.6k, +46.8k, +28.6k |
+| 12.5% | 111 | 65 | +3.22% | +1,07,175 | +33.5k, +13.5k, +53.4k, +6.7k |
+| 15% | 64 | 67 | +4.81% | +92,374 | +32.7k, +27.6k, +43.2k, -11.1k |
+| 20% | 23 | 39 | -2.02% | -13,953 | +1.2k, +20.5k, -20.2k, -15.5k |
+
+The current setting (10% target, no stop-loss, hit-chance filter) is the best tested: the most profit, the
+most trades, positive in all four quarters. No change.
