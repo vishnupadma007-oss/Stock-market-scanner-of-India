@@ -333,3 +333,19 @@ prices (30-minute candles; next-day exit at ~15:20, charges not included):
 Market-wide "important" news arrived on every night (56-85 items), so a "no big news" rule cannot be
 judged from headlines; the stock's own news excluded 3 of the 9. Opposite of the 60-day quiet-spurt test
 (51 quiet nights: carrying lost more). Small sample in one rising week; not adopted, for the user to decide.
+
+### Support / resistance check before buying (user, 2 Nov 2026)
+
+Levels: previous day high/low/close, classic pivots (P, R1, S1, R2, S2), 20-day high/low, today's high/low so
+far. For each backtest trade: distance to the nearest level AHEAD (in the trade's way, a "hurdle") and BEHIND
+(support under a CALL / resistance over a PUT), in % of the stock price.
+
+Quiet spurt (171 trades, 10% target): a hurdle close ahead did not hurt - within 0.3%: 121 trades, 68% hit,
++2.72%/trade; 0.3-0.6%: 36 trades, 75%, +3.05%; more than 0.6% of open space: 14 trades, worse (-0.38% to
+-4.14%). Most trades have some level within 0.3% (12 levels per stock), so "a level in the way" is the
+normal case and not a reason to skip.
+
+Movers reversal (130 trades, -Rs 36,390): buying right AT a level (within 0.3% of support for a CALL, of
+resistance for a PUT) was the only profitable group: 20 trades, 95% hit, +0.99%/trade, +Rs 5,931, positive
+in both halves. But at 0.4% it is already flat (29 trades, -Rs 105): a narrow peak on 20 trades, which fails
+the quantforge-ai gates (>= 100 trades, no single-parameter peak). Not adopted; worth watching live.
