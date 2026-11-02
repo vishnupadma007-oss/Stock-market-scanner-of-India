@@ -311,3 +311,25 @@ Chosen on the first half, checked on the second (quantforge-ai gates).
 
 The current setting (10% target, no stop-loss, hit-chance filter) is the best tested: the most profit, the
 most trades, positive in all four quarters. No change.
+
+### Overnight carry on the real paper trades (user, 2 Nov 2026)
+
+The 9 paper trades of 27-30 Oct that missed their target, held to the next session on real INDmoney option
+prices (30-minute candles; next-day exit at ~15:20, charges not included):
+
+| Trade | Squared off (actual) | Carried to next day |
+|---|---|---|
+| TCS PUT 27 Oct | -3,274 | target hit at the open: +2,576 |
+| BPCL PUT 28 Oct | +604 | -2,173 |
+| Adani Ports CALL 28 Oct | -1,006 | target hit at the open: +2,304 |
+| HUL CALL 29 Oct | -190 | -1,710 |
+| Asian Paints CALL 29 Oct (results that evening) | -270 | target hit: +1,363 |
+| Kotak CALL 30 Oct | -1,593 | target hit: +2,700 |
+| Cholamandalam CALL 30 Oct (RBI talk overnight) | -7,507 | target hit: +3,563 |
+| Bank of Baroda CALL 30 Oct (results that evening) | -6,375 | target hit: +2,750 |
+| Eternal CALL 30 Oct | -2,614 | -1,576 |
+| **Total** | **-22,225** | **+9,797** (6 of 9 hit) |
+
+Market-wide "important" news arrived on every night (56-85 items), so a "no big news" rule cannot be
+judged from headlines; the stock's own news excluded 3 of the 9. Opposite of the 60-day quiet-spurt test
+(51 quiet nights: carrying lost more). Small sample in one rising week; not adopted, for the user to decide.
