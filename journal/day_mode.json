@@ -1,12 +1,12 @@
 {
-  "date": "2026-10-30",
+  "date": "2026-11-02",
   "mode": "normal",
   "notes": [
-    "Expected Nifty open about flat (S&P -0.3%, Brent -2.6% since India's close)",
-    "Results since last session: Trent, Asian Paints, Coal India (results-gap rule decides direction after 09:30)",
-    "Sun Pharma: ILUMYA US approval for psoriatic arthritis (press release 08:05)",
-    "Canara Bank: regulatory action/order filed 29 Oct evening",
-    "Mover forecast: ASIANPAINT (results gap), RELIANCE, ADANIPORTS, HINDUNILVR up on news"
+    "Expected Nifty open about -0.4% (S&P 500 -1.8%, Brent -4.1% since India's Friday close)",
+    "Results since last session: Reliance, Bank of Baroda, BEL, PB Fintech, Dixon, NTPC, Muthoot Finance, Power Grid, GAIL, Sun Pharma (results-gap rule after 09:30)",
+    "Monthly auto sales out (M&M, Maruti, TVS, Eicher, Hero) - autos may move on volumes",
+    "Bharti Airtel: regulatory action/order filed Friday night; JSW Steel amalgamation effective",
+    "Mover forecast: GAIL, Sun Pharma (results gap), Trent up; PNB, Canara Bank down on regulatory news"
   ],
   "avoid": []
 }
