@@ -1,1 +1,2 @@
 date,time,symbol,contract,historical_win_rate,monte_carlo_target_prob,ml_confidence_score,blended_prob,expected_value_pct,worst5_pct,approved,rejection_reason
+2026-11-02,10:50,HEROMOTOCO,HEROMOTOCO-23-NOV-5200-PUT,0.673,0.448,0.688,0.603,-4.08,-55.2,False,blended chance 60% is in the weakest group (< 62%)

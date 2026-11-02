@@ -126,3 +126,21 @@ date,time,symbol,direction,confidence,source,priced_in
 2026-10-30,10:53,ITC,down,52,intel,not priced in
 2026-10-30,13:06,ETERNAL,up,73,intel,partly priced in
 2026-10-30,14:39,GAIL,up,69,intel,not priced in
+2026-11-02,08:43,RELIANCE,up,100,intel,partly priced in
+2026-11-02,08:43,SUNPHARMA,up,100,intel,not priced in
+2026-11-02,08:43,NTPC,up,73,intel,not priced in
+2026-11-02,08:43,GAIL,up,76,intel,not priced in
+2026-11-02,08:43,BANKBARODA,up,72,intel,not priced in
+2026-11-02,08:43,PNB,down,93,intel,not priced in
+2026-11-02,08:43,CANBK,down,69,intel,not priced in
+2026-11-02,08:43,TRENT,up,75,intel,largely priced in
+2026-11-02,08:54,BEL,up,68,intel,not priced in
+2026-11-02,08:55,COALINDIA,up,100,intel,pessimism priced in
+2026-11-02,08:55,MUTHOOTFIN,up,87,intel,pessimism priced in
+2026-11-02,08:56,POWERGRID,up,68,intel,partly priced in
+2026-11-02,09:00,ICICIBANK,down,70,intel,not priced in
+2026-11-02,09:00,SBIN,up,74,intel,partly priced in
+2026-11-02,09:15,DIVISLAB,up,75,preopen,NSE pre-open order imbalance
+2026-11-02,09:15,MUTHOOTFIN,down,80,preopen,NSE pre-open order imbalance
+2026-11-02,09:25,IOC,up,72,intel,some pessimism priced in
+2026-11-02,09:38,TATASTEEL,up,74,intel,
