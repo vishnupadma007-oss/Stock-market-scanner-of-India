@@ -132,3 +132,14 @@ def test_spurt_with_agreeing_news_aims_for_15pct_under_its_own_label(monkeypatch
     t = trades[0]
     assert t["strategy"] == "quiet-spurt-news" and watcher.team_of(t) == "news"
     assert float(t["target_bid"]) >= 20.0 * 1.15 and "target 15% net" in t["notes"]
+
+
+def test_parse_nse_reads_numbers_with_units():
+    from agents.spurt import parse_nse
+    row = {"symbol": "PNB", "series": "EQ", "lastPrice": "1,101.5", "previousClose": 1100, "pchange": "0.14",
+           "totalTradedVolume": "472.67 L", "totalTradedValue": "52.1 Cr"}
+    out = parse_nse({"total": {"data": [row]}}, {"PNB"})["PNB"]
+    assert out["volume"] == 472.67e5 and out["price"] == 1101.5
+    assert abs(out["vwap"] - 52.1 * 100 / 472.67) < 0.01
+    plain = parse_nse({"total": {"data": [{**row, "totalTradedVolume": 472.67, "totalTradedValue": 52.1}]}}, {"PNB"})
+    assert plain["PNB"]["volume"] == out["volume"]

@@ -78,6 +78,21 @@ def first_signal(df: pd.DataFrame, day: date, cfg: dict | None = None, until: ti
 NSE_TRADED = "https://www.nseindia.com/api/live-analysis-stocksTraded"
 
 
+_UNITS = {"k": 1e3, "l": 1e5, "lakh": 1e5, "lakhs": 1e5, "cr": 1e7, "crore": 1e7}
+
+
+def _num(v, unit: float = 1.0) -> float:
+    """NSE numbers, plain (in `unit`, e.g. lakh) or as text with a unit since 2 Nov 2026 ("472.67 L",
+    "1,234.5 Cr"); returned in `unit`."""
+    if isinstance(v, (int, float)):
+        return float(v)
+    parts = str(v).replace(",", "").split()
+    x = float(parts[0])
+    if len(parts) > 1 and parts[1].lower() in _UNITS:
+        return x * _UNITS[parts[1].lower()] / unit
+    return x
+
+
 def parse_nse(payload: dict, universe: set[str]) -> dict[str, dict]:
     """{symbol: {price, prev_close, move_pct, volume (shares), vwap}} from NSE's stocks-traded page
     (volume in lakh shares, value in crore rupees)."""
@@ -86,9 +101,9 @@ def parse_nse(payload: dict, universe: set[str]) -> dict[str, dict]:
         sym = r.get("symbol")
         if sym not in universe or r.get("series") != "EQ" or not r.get("previousClose") or not r.get("totalTradedVolume"):
             continue
-        vol_lakh, val_cr = float(r["totalTradedVolume"]), float(r.get("totalTradedValue") or 0)
-        out[sym] = {"price": float(r["lastPrice"]), "prev_close": float(r["previousClose"]),
-                    "move_pct": round(float(r.get("pchange") or 0), 2), "volume": vol_lakh * 1e5,
+        vol_lakh, val_cr = _num(r["totalTradedVolume"], 1e5), _num(r.get("totalTradedValue") or 0, 1e7)
+        out[sym] = {"price": _num(r["lastPrice"]), "prev_close": _num(r["previousClose"]),
+                    "move_pct": round(_num(r.get("pchange") or 0), 2), "volume": vol_lakh * 1e5,
                     "vwap": round(val_cr * 100 / vol_lakh, 2) if val_cr else None}
     return out
 
