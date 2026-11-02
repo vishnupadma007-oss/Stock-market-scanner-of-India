@@ -144,3 +144,4 @@ date,time,symbol,direction,confidence,source,priced_in
 2026-11-02,09:15,MUTHOOTFIN,down,80,preopen,NSE pre-open order imbalance
 2026-11-02,09:25,IOC,up,72,intel,some pessimism priced in
 2026-11-02,09:38,TATASTEEL,up,74,intel,
+2026-11-02,12:54,AUBANK,up,77,intel,some pessimism priced in
