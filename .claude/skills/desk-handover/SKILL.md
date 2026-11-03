@@ -38,7 +38,7 @@ whenever something here changes, and commit it.
 
 ## The user's standing decisions (do not change without asking)
 
-- Paper trading only; intraday only (overnight carry tested 29 Oct and rejected); buy options only
+- Paper trading only; intraday, except the overnight carry rule switched on 3 Nov (agents/carry.py, one night max); buy options only
   (CALL for up, PUT for down); **no stop-loss**; square-off 15:20.
 - Standing permission: restart the watcher during market hours without asking.
 - "Complete free hands" on paper cash flow: top-ups are fine (not counted as profit).
@@ -49,6 +49,8 @@ whenever something here changes, and commit it.
 - Quiet Volume Spurt is the user's own strategy (news team): heavy volume (1.5x usual for the time of
   day) at a small move (0.2-0.5%), live from NSE every minute; 10% target, 15% when the news agrees
   (label `quiet-spurt-news`, a live test: compare the labels after ~30 trades).
+- 3 Nov changes: quiet spurt aims 15% when reachable else 10%; news-forecast (intel) trades paused (lost Rs 25,965);
+  overnight carry live test; Probability Analyzer and Trade News Monitor in observe mode.
 - Claude credits: wake only for problems; report trades at 12:40 and 15:40; replies short; no live
   re-checks unless the user asks. The AI helper (Gemini) gives the per-signal TRADE/SKIP view
   (observe only, `journal/ai_verdicts.csv`); it may get a say only if its calls beat the rules.

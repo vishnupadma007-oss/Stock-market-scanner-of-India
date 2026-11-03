@@ -407,7 +407,8 @@ def test_square_off_fallback_when_bid_is_missing(capsys):
         "date": "2026-10-16", "opened": "11:00", "symbol": "TECHM", "contract": "TECHM-27-OCT-1800-PUT",
         "derivative_id": "P1800", "qty": "600", "entry_ask": "50.1", "target_bid": "50.85", "status": "OPEN"
     }]
-    asyncio.run(watcher.manage_open_trades(ZeroBidAtClose(), trades, datetime(2026, 10, 16, 15, 21, tzinfo=IST), CFG))
+    asyncio.run(watcher.manage_open_trades(ZeroBidAtClose(), trades, datetime(2026, 10, 16, 15, 21, tzinfo=IST),
+                                           {**CFG, "carry": {"enabled": False}}))
     assert trades[0]["status"] == "SQUARED_OFF"
     assert trades[0]["exit_bid"] == 47.5
 
@@ -609,3 +610,25 @@ def test_restart_remembers_filings_since_the_last_close(tmp_path, monkeypatch):
     from agents import news_guard
     now = datetime(2026, 10, 28, 14, 30, tzinfo=IST)
     assert news_guard.check("LT", "gainer", [], watcher._daily["filings"]["LT"], now)["block"]
+
+
+def test_carry_keeps_a_trade_overnight_and_sells_it_next_day(monkeypatch):
+    monkeypatch.setattr(watcher.news, "results_calendar", lambda: {})
+    monkeypatch.setattr(watcher.analyzer, "recent_items", lambda now: [])
+    watcher._daily.clear()
+
+    class Bid(FakeIndMoney):
+        async def quotes(self, keys, segments=None):
+            return {k: {"entity_stats": {"bid_price": 45.0}} for k in keys}
+
+    cfg = {**CFG, "carry": {"enabled": True}}
+    trades = [{f: "" for f in watcher.FIELDS} | {
+        "date": "2026-11-04", "opened": "11:00", "symbol": "TECHM", "side": "loser", "strategy": "quiet-spurt",
+        "contract": "TECHM-23-NOV-1800-CALL", "derivative_id": "C1800", "qty": "600", "entry_ask": "50.1",
+        "target_bid": "55.0", "status": "OPEN"}]
+    asyncio.run(watcher.manage_open_trades(Bid(), trades, datetime(2026, 11, 4, 15, 21, tzinfo=IST), cfg))
+    assert trades[0]["status"] == "OPEN" and "carried overnight" in trades[0]["notes"]
+    asyncio.run(watcher.manage_open_trades(Bid(), trades, datetime(2026, 11, 5, 9, 5, tzinfo=IST), cfg))
+    assert trades[0]["status"] == "OPEN"  # waits for the open
+    asyncio.run(watcher.manage_open_trades(Bid(), trades, datetime(2026, 11, 5, 15, 21, tzinfo=IST), cfg))
+    assert trades[0]["status"] == "SQUARED_OFF" and trades[0]["closed"] == "15:21"

@@ -30,7 +30,7 @@ from datetime import date, datetime, time, timedelta
 from pathlib import Path
 from zoneinfo import ZoneInfo
 
-from agents import (activity, analyzer, announcements, ai_helper, candles, probability, trade_news, commodities, concalls, daymode, expectations,
+from agents import (activity, analyzer, announcements, ai_helper, candles, carry, probability, trade_news, commodities, concalls, daymode, expectations,
                     gapfollow, holidays, intel, macro, news, news_guard, newsfeed, policy, preopen,
                     psychology, reaction, shock, spurt, valuation)
 from agents.chart_reader import read_chart
@@ -610,9 +610,27 @@ def watch_news(t: dict, bid: float, now: datetime, cfg: dict) -> bool:
 TRADE_NEWS_LOG = Path(__file__).resolve().parent / "journal" / "trade_news.csv"
 
 
+def _news_items(now: datetime) -> list[dict]:
+    """The intelligence log since the previous session, re-read at most once a minute."""
+    cache = _daily.setdefault("news_items", {"at": None, "items": []})
+    if cache["at"] is None or (now - cache["at"]).total_seconds() >= 60:
+        cache.update(at=now, items=analyzer.recent_items(now))
+    return cache["items"]
+
+
+def _next_session(day: date) -> date:
+    d = day + timedelta(days=1)
+    while not holidays.is_trading_day(d):
+        d += timedelta(days=1)
+    return d
+
+
 async def manage_open_trades(im: IndMoney, trades: list[dict], now: datetime, cfg: dict) -> None:
     square_off = now.time() >= _t(cfg["square_off_time"])
-    open_trades = [t for t in trades if t["status"] == "OPEN"]
+    cc = {**carry.DEFAULTS, **(cfg.get("carry") or {})}
+    # A trade carried overnight waits for the open: pre-market quotes are yesterday's.
+    open_trades = [t for t in trades if t["status"] == "OPEN"
+                   and (not carry.is_carried(t, now.date()) or carry.market_open(now, cc))]
     bids = {}
     fallbacks = {}
     for i in range(0, len(open_trades), 10):  # one quick quote call per 10 open options
@@ -631,6 +649,24 @@ async def manage_open_trades(im: IndMoney, trades: list[dict], now: datetime, cf
         if not bid:
             continue
         bid = float(bid)
+        if carry.is_carried(t, now.date()) and "overnight check done" not in str(t.get("notes", "")):
+            why = carry.overnight_exit(t, _news_items(now), now)
+            t["notes"] = f"{t.get('notes', '')}; overnight check done"
+            if why and bid < float(t["target_bid"]):
+                square_off_one(t, bid, now, cfg, f"sold at the open: {why}")
+                continue
+        if square_off and bid < float(t["target_bid"]) and cc["enabled"]:
+            if "results" not in _daily:
+                _daily["results"] = news.results_calendar()
+            ok, why = carry.should_carry(t, now, team_of(t), _news_items(now),
+                                         (_daily.get("results") or {}).get(t["symbol"]), _next_session(now.date()), cc)
+            if ok:
+                if carry.MARK not in str(t.get("notes", "")):
+                    t["notes"] = f"{t.get('notes', '')}; {carry.MARK} (bid {bid} at {now:%H:%M}, target {t['target_bid']})"
+                    emit("CARRY", {k: t[k] for k in ("symbol", "contract", "entry_ask", "target_bid")} | {"bid": bid})
+                continue
+            if why and "carry not allowed" not in str(t.get("notes", "")):
+                t["notes"] = f"{t.get('notes', '')}; carry not allowed: {why}"
         if not square_off and bid < float(t["target_bid"]) and watch_news(t, bid, now, cfg):
             continue  # sold on bad news
         if bid >= float(t["target_bid"]) or square_off:
@@ -640,6 +676,14 @@ async def manage_open_trades(im: IndMoney, trades: list[dict], now: datetime, cf
                      closed=now.strftime("%H:%M"), exit_bid=bid, charges=round(charges, 2),
                      net_pnl=round((bid - entry) * qty - charges, 2))
             emit("EXIT", {k: t[k] for k in ("symbol", "contract", "status", "entry_ask", "exit_bid", "qty", "net_pnl")})
+
+
+def square_off_one(t: dict, bid: float, now: datetime, cfg: dict, note: str) -> None:
+    qty, entry = int(t["qty"]), float(t["entry_ask"])
+    charges = round_trip_charges(entry, bid, qty, cfg["charges"])["total"]
+    t.update(status="SQUARED_OFF", closed=now.strftime("%H:%M"), exit_bid=bid, charges=round(charges, 2),
+             net_pnl=round((bid - entry) * qty - charges, 2), notes=f"{t.get('notes', '')}; {note[:150]}")
+    emit("EXIT", {k: t[k] for k in ("symbol", "contract", "status", "entry_ask", "exit_bid", "qty", "net_pnl")})
 
 
 GUARD_LOG = Path(__file__).resolve().parent / "journal" / "news_guard.csv"

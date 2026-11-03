@@ -315,3 +315,8 @@ trade_news:                # Trade News Monitor (user's request, 31 Oct; agents/
                            # fired on background war/oil stories and lost money, even with the AI helper judging them
   raise_pct: 5.0
   use_ai: true             # the AI helper confirms each exit/raise the word list nominates
+carry:                     # overnight carry (user, 3 Nov; agents/carry.py): a trade short of its target at 15:20 is kept
+  enabled: true            # one night instead of squared off, unless results are due today/next session, it filed results
+  teams: [news, movers]    # or a regulatory action today, or the option is within min_days_to_expiry of expiry; next morning
+  min_days_to_expiry: 3    # it is sold at the open on overnight results/regulatory filings or strong news against it,
+  open_after: "09:16"      # otherwise at the target or at 15:20. Live paper test (60-day backtest: carrying lost; 27-30 Oct real trades: it won)

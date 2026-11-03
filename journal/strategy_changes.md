@@ -97,3 +97,13 @@ quiet spurt 8 trades -Rs 7,173 live (one bad day, 30 Oct: -Rs 15,475) but +Rs 1,
 backtest; results-gap +10,580 (1), preopen +6,179 (3), movers reversal +4,407 (10). User (3 Nov): if the quiet
 spurt does well, lean the strategy towards it. `teams.news.paused_sources: [intel]`: forecast ideas are still
 logged in journal/news_ideas.csv (for judging) but not traded. Undo by emptying the list.
+
+## 2026-11-03: Overnight carry switched on (user's decision)
+
+`agents/carry.py`, `config.yaml -> carry`: at 15:20 a trade short of its target is kept one night instead of
+squared off, unless the stock has results today or next session (NSE calendar), filed results or a regulatory
+action today, or the option is within 3 days of expiry. Next morning (from 09:16) it is sold at the first bid if
+results/regulatory filings or strong news against it arrived overnight; otherwise it runs to the target or to
+15:20 (never a second night). Evidence was mixed (27-30 Oct real trades: -22,225 -> about +9,800 if carried;
+60-day quiet-spurt backtest: carrying lost more), so this is a live paper test; trades carry the note
+"carried overnight" so the review can compare. Undo with `carry.enabled: false`.

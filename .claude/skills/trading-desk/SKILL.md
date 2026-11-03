@@ -248,6 +248,13 @@ Tell the user the result in one line (team, contract, entry, exit, net P&L). Eac
 one position at a time: movers setups found while its trade is open are only recorded in
 `journal/held_setups.csv` (no SIGNAL), and a fresh scan runs right after the exit.
 
+## Overnight carry (user, 3 Nov)
+
+Trades short of their target at 15:20 may stay OPEN overnight (`agents/carry.py`, notes say "carried overnight").
+They are not stranded: do not square them off in the 15:40 check. If the watcher stopped before 15:20 (container
+restart), judge each still-open trade with `carry.should_carry` (same rules) and square off only those it refuses,
+at the 15:20 price. Carried trades are managed by the watcher from 09:16 the next session.
+
 ## Evening review
 
 Run it when the watcher prints `STATUS ... market closed`, or whenever the user asks.
