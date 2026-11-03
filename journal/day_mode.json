@@ -1,12 +1,12 @@
 {
-  "date": "2026-11-02",
+  "date": "2026-11-03",
   "mode": "normal",
   "notes": [
-    "Expected Nifty open about -0.4% (S&P 500 -1.8%, Brent -4.1% since India's Friday close)",
-    "Results since last session: Reliance, Bank of Baroda, BEL, PB Fintech, Dixon, NTPC, Muthoot Finance, Power Grid, GAIL, Sun Pharma (results-gap rule after 09:30)",
-    "Monthly auto sales out (M&M, Maruti, TVS, Eicher, Hero) - autos may move on volumes",
-    "Bharti Airtel: regulatory action/order filed Friday night; JSW Steel amalgamation effective",
-    "Mover forecast: GAIL, Sun Pharma (results gap), Trent up; PNB, Canara Bank down on regulatory news"
+    "Expected Nifty open about flat (S&P 500 -0.5%)",
+    "Brent crude -11% on Monday (117.6 -> 104.7), WTI -7%: helps oil marketers (BPCL, IOC, HPCL), paints, aviation; hurts ONGC, Oil India",
+    "Results since last session: ITC, National Aluminium; Lupin guidance",
+    "Mover forecast: Bank of Baroda and Reliance up on results news",
+    "Quiet spurt now aims for 15% when reachable, else 10% (changed 3 Nov)"
   ],
   "avoid": []
 }
