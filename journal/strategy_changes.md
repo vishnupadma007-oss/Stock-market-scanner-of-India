@@ -89,3 +89,11 @@ target; if the Risk agent's hit chance is below its minimum for 15%, it takes 10
 171 trades, same entries): +Rs 1,69,440 vs +Rs 1,26,586, better in both halves and for every variant tried.
 User's standing instruction (2 Nov): keep whatever makes more profit. Labels unchanged (quiet-spurt-news =
 news agrees).
+
+## 2026-11-03: News-forecast ("intel") trades paused; money and slots go to the quiet spurt
+
+Paper record 19 Oct - 3 Nov by strategy: intel 18 trades, 44% hit, -Rs 25,965 (the team's whole loss);
+quiet spurt 8 trades -Rs 7,173 live (one bad day, 30 Oct: -Rs 15,475) but +Rs 1,69,440 in the 60-day
+backtest; results-gap +10,580 (1), preopen +6,179 (3), movers reversal +4,407 (10). User (3 Nov): if the quiet
+spurt does well, lean the strategy towards it. `teams.news.paused_sources: [intel]`: forecast ideas are still
+logged in journal/news_ideas.csv (for judging) but not traded. Undo by emptying the list.

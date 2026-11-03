@@ -17,6 +17,8 @@ teams:
     top_up: 81895          # paper money added (not profit): 26 Oct +13,304 back to Rs 30,000; 29 Oct +68,591 to Rs 1 lakh so 4 slots can trade (user gave free hands);
                            # top-ups are not profit: the scoreboard keeps the team's real record (-Rs 11,895 to 29 Oct)
     auto_trade: true       # opens trades by itself; Claude can also open them with paper_trade.py
+    paused_sources: [intel] # 3 Nov: news-forecast trades lost Rs 25,965 on 18 paper trades (44% hit); still logged in
+                           # journal/news_ideas.csv to judge, but their money and slots go to the quiet spurt
     min_confidence: 60     # forecast confidence needed, after the priced-in cut
     confirm_pct: 0.5       # the stock must already move the forecast's way by this much today
     max_move_pct: 4.0      # ...but not more (move used up)

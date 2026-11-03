@@ -1134,6 +1134,7 @@ async def news_team(im: IndMoney, trades: list[dict], now: datetime, cfg: dict) 
     # An idea whose priced-in check failed is not traded: unchecked is not "not priced in".
     ideas = sorted(((sym, i) for sym, i in (_daily.get("ideas") or {}).items()
                     if sym not in done and i["confidence"] >= c["min_confidence"] and i.get("priced_in")
+                    and i.get("source") not in (c.get("paused_sources") or [])  # still logged as ideas
                     and (now - i["at"]).total_seconds() <= c["max_age_min"] * 60),
                    key=lambda x: -x[1]["confidence"])[:10]
     if not ideas:
