@@ -1,2 +1,4 @@
 date,time,symbol,contract,historical_win_rate,monte_carlo_target_prob,ml_confidence_score,blended_prob,expected_value_pct,worst5_pct,approved,rejection_reason
 2026-11-02,10:50,HEROMOTOCO,HEROMOTOCO-23-NOV-5200-PUT,0.673,0.448,0.688,0.603,-4.08,-55.2,False,blended chance 60% is in the weakest group (< 62%)
+2026-11-03,09:29,EICHERMOT,EICHERMOT-23-NOV-7200-CALL,0.717,0.57,0.673,0.653,0.43,-42.5,True,
+2026-11-03,09:38,JSWSTEEL,JSWSTEEL-23-NOV-1300-CALL,0.717,0.601,0.681,0.666,3.38,-48.4,True,

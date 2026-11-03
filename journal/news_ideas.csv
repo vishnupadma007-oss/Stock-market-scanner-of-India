@@ -145,3 +145,15 @@ date,time,symbol,direction,confidence,source,priced_in
 2026-11-02,09:25,IOC,up,72,intel,some pessimism priced in
 2026-11-02,09:38,TATASTEEL,up,74,intel,
 2026-11-02,12:54,AUBANK,up,77,intel,some pessimism priced in
+2026-11-03,08:42,RELIANCE,up,100,intel,partly priced in
+2026-11-03,08:42,NTPC,up,81,intel,not priced in
+2026-11-03,08:42,COALINDIA,up,87,intel,not priced in
+2026-11-03,08:42,BANKBARODA,up,100,intel,not priced in
+2026-11-03,08:46,NATIONALUM,up,67,intel,some pessimism priced in
+2026-11-03,08:54,AXISBANK,up,69,intel,some pessimism priced in
+2026-11-03,09:15,ASIANPAINT,up,75,preopen,NSE pre-open order imbalance
+2026-11-03,09:15,POWERGRID,down,75,preopen,NSE pre-open order imbalance
+2026-11-03,09:44,ITC,down,64,intel,not priced in
+2026-11-03,10:32,HDFCBANK,up,65,intel,pessimism priced in
+2026-11-03,10:32,HINDUNILVR,up,86,intel,not priced in
+2026-11-03,10:36,IOC,up,72,intel,not priced in
