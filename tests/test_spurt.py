@@ -75,7 +75,7 @@ def test_fresh_spurt_is_confirmed_live_and_bought_with_a_10pct_target(capsys):
     c = {**watcher.NEWS_DEFAULTS, **watcher.team_cfg(cfg, "news")}
     assert asyncio.run(watcher.spurt_entries(Live(), trades, now, cfg, c, set()))
     t = trades[0]
-    assert t["strategy"] == "quiet-spurt" and watcher.team_of(t) == "news" and t["side"] == "loser"
+    assert t["strategy"] == "quiet-spurt" and watcher.team_of(t) == "spurt" and t["side"] == "loser"
     assert float(t["target_bid"]) >= 20.0 * 1.10  # a 10% net target, not 1%
     assert "SIGNAL" in capsys.readouterr().out
     # Handled once: the next round does not buy it again.

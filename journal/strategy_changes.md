@@ -107,3 +107,13 @@ results/regulatory filings or strong news against it arrived overnight; otherwis
 15:20 (never a second night). Evidence was mixed (27-30 Oct real trades: -22,225 -> about +9,800 if carried;
 60-day quiet-spurt backtest: carrying lost more), so this is a live paper test; trades carry the note
 "carried overnight" so the review can compare. Undo with `carry.enabled: false`.
+
+## 2026-11-03: Three teams (user's decision)
+
+- news: news-based trades (results-gap, pre-open, results, and quiet spurts the news agrees with,
+  label quiet-spurt-news); news-forecast (intel) trades stay paused.
+- spurt (new): plain quiet volume spurts (no strong news either way), Rs 1,00,000, 4 slots.
+- movers: top gainers/losers reversal, unchanged.
+Each team has its own money and slots; the scoreboard in the evening review shows all three. Past quiet-spurt
+trades (29 Oct - 3 Nov) count for the spurt team from now on, so its record starts at 6 trades, -Rs 9,877;
+the news team's becomes 25 trades, -Rs 7,508. Overnight carry applies to all three.

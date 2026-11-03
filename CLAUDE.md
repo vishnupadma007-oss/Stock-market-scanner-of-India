@@ -44,7 +44,8 @@ Intraday mover-reversal options strategy on NSE F&O stocks, run by a team of age
   (NSE PDFs + Yahoo prices, cached in `journal/results_history/`, model in
   `journal/reaction_model.json`) to give the expected gap/close % with a range on every RESULT;
   also the likely Nifty open from US stocks and Brent (`python -m agents.reaction market`).
-- Two teams trade side by side, each with its own paper capital (`config.yaml` -> `teams`):
+- Three teams trade side by side (user, 3 Nov), each with its own paper capital (`config.yaml` -> `teams`):
+  spurt (plain quiet volume spurts, `quiet-spurt`), and
   movers (top gainers/losers reversal from the chart; the News Guard, `agents/news_guard.py`, borrows
   the news team's knowledge to skip stocks with results, regulatory action, policy hits or strong
   news against the trade, logged in `journal/news_guard.csv`); on market-wide shock days (`agents/shock.py`: big news +
@@ -52,7 +53,7 @@ Intraday mover-reversal options strategy on NSE F&O stocks, run by a team of age
   trades in a crash, and stands aside on extreme days (SHOCK events) and news (filings/results/news forecasts; the
   watcher opens its trades when the price confirms and the Trend Checker, `agents/momentum.py`,
   scores the chart 60+; ideas logged in `journal/news_ideas.csv`).
-  `review.py` keeps a team scoreboard. The user will pick the better team once both have 30+ trades.
+  `review.py` keeps a team scoreboard. The user will pick the best team once each has 30+ trades.
 - `paper_trade.py`: Claude opens news-team paper trades with it; the watcher manages exits.
 - Run tests with `python -m pytest -q`.
 

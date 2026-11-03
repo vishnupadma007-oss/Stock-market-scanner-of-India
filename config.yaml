@@ -44,6 +44,10 @@ teams:
     early_book_x: 1.5      # Checker for those entries. Untestable on history (no NSE order-book data): judged on paper.
     min_premium: 5.0       # no options under ₹5 (22 Oct: PNB ₹2.06 and IOC ₹1.85 were the two big losses)
     max_capital_per_trade: 1.0  # user, 26 Oct: no per-trade limit; a trade may use all the free money (was 0.5)
+  spurt:                   # user, 3 Nov: third team, plain Quiet Volume Spurts (no strong news either way; a spurt the
+    capital: 100000        # news agrees with goes to the news team as quiet-spurt-news). Same money as the news team.
+    max_open_trades: 4
+    auto_trade: true
 max_capital_per_trade: 1.0   # share of available money one trade may use (1.0 = all of it)
 max_trades_per_day: 50     # effectively no cap: trade every setup that passes the agents
 net_target_pct: 1.0        # target profit per trade for movers team, % of premium paid, AFTER all charges
@@ -317,6 +321,6 @@ trade_news:                # Trade News Monitor (user's request, 31 Oct; agents/
   use_ai: true             # the AI helper confirms each exit/raise the word list nominates
 carry:                     # overnight carry (user, 3 Nov; agents/carry.py): a trade short of its target at 15:20 is kept
   enabled: true            # one night instead of squared off, unless results are due today/next session, it filed results
-  teams: [news, movers]    # or a regulatory action today, or the option is within min_days_to_expiry of expiry; next morning
+  teams: [news, spurt, movers] # or a regulatory action today, or the option is within min_days_to_expiry of expiry; next morning
   min_days_to_expiry: 3    # it is sold at the open on overnight results/regulatory filings or strong news against it,
   open_after: "09:16"      # otherwise at the target or at 15:20. Live paper test (60-day backtest: carrying lost; 27-30 Oct real trades: it won)

@@ -1070,7 +1070,6 @@ async def spurt_entries(im: IndMoney, trades: list[dict], now: datetime, cfg: di
     fresh = [(sym, g) for sym, g in (_daily.get("spurt_signals") or {}).items()
              if sym not in done and not g.get("handled") and sym in set(cfg["universe"])
              and (now - g["time"].to_pydatetime()).total_seconds() <= s.get("fresh_min", 15) * 60]
-    trades_today = sum(t["date"] == now.date().isoformat() and team_of(t) == "news" for t in trades)
     for sym, g in fresh:
         g["handled"] = True
         sign = 1 if g["direction"] == "up" else -1
@@ -1095,23 +1094,32 @@ async def spurt_entries(im: IndMoney, trades: list[dict], now: datetime, cfg: di
             if act:
                 agrees = activity.confirms(act, g["direction"], c.get("activity_min_oi_pct", 5.0))
                 news_note += f"; {activity.note(act)}{' agrees' if agrees else ''}"
+            # Which team trades it (user, 3 Nov): the news team when the news agrees, else the spurt team.
+            news_agrees = view["strong"] and view["direction"] == g["direction"]
+            team = "news" if news_agrees else "spurt"
+            free = account(trades, cfg, team)[1]
+            if not team_cfg(cfg, team).get("auto_trade", True) or team_full(trades, cfg, team) or free <= 0:
+                log_skip(now, sym, idea, float(move), f"quiet spurt: {team} team full or out of money")
+                continue
+            trades_today = sum(t["date"] == now.date().isoformat() and team_of(t) == team for t in trades)
             intraday = await im.candles(key, "5minute", "7d")
             side = "loser" if sign > 0 else "gainer"  # loser -> CALL, gainer -> PUT
-            option = await im.pick_contract(key, side, cfg, now.date(), budget=float(cfg["capital"]))
+            option = await im.pick_contract(key, side, cfg, now.date(), budget=float(free))
             if option is None or option["ask"] < c["min_premium"]:
                 log_skip(now, sym, idea, float(move), "quiet spurt: no usable option")
                 continue
             # Live test (user, 29 Oct): when the news agrees with the spurt, aim for 15%; otherwise 10%.
             # Each group has its own strategy label, so the evening review compares them. If 15% is out
             # of reach before 15:20 (Risk agent's hit chance), the news-aligned trade still takes 10%.
-            news_agrees = view["strong"] and view["direction"] == g["direction"]
             strategy = "quiet-spurt-news" if news_agrees else "quiet-spurt"
-            share = capital_share(option, cfg, {**c, "max_open_trades": max_open(cfg, "news")}, open_count(trades, "news"))
+            share = capital_share(option, {**cfg, "capital": free}, {**c, "max_open_trades": max_open(cfg, team)},
+                                  open_count(trades, team))
             # Every spurt aims for 15% when the Risk agent's hit chance allows it, else 10% (backtest 3 Nov:
             # +Rs 1,69,440 vs +Rs 1,26,586 for 10% only, better in both halves; 15% alone has too few trades).
             targets = [s.get("target_news_net_pct", 15.0), s["target_net_pct"]]
             for tgt in targets:
-                sized = {**cfg, "net_target_pct": tgt, "target_mode": "fixed", "max_capital_per_trade": share}
+                sized = {**cfg, "capital": free, "net_target_pct": tgt, "target_mode": "fixed",
+                         "max_capital_per_trade": share}
                 risk = plan(option, trades_today, now, sized, sigma_per_min=intraday_sigma_per_min(intraday),
                             spread_pct=option["spread_pct"])
                 if risk["allowed"]:
@@ -1141,7 +1149,7 @@ async def spurt_entries(im: IndMoney, trades: list[dict], now: datetime, cfg: di
                        status="OPEN", notes="; ".join(filter(None, [rolled_note(option), reason])),
                        strategy=strategy, valuation=valuation_view(sym).get("label", ""))
             trades.append(row)
-            emit("SIGNAL", {"team": "news", "symbol": sym, "direction": g["direction"], "source": strategy,
+            emit("SIGNAL", {"team": team, "symbol": sym, "direction": g["direction"], "source": strategy,
                             "target_net_pct": tgt,
                             "contract": option["contract"], "qty": risk["qty"], "entry_ask": option["ask"],
                             "target_bid": risk["target_premium"], "spread_pct": row["spread_pct"],
@@ -1168,13 +1176,15 @@ async def news_team(im: IndMoney, trades: list[dict], now: datetime, cfg: dict) 
     c = {**NEWS_DEFAULTS, **team_cfg(cfg, "news")}
     today = now.date().isoformat()
     universe = set(cfg["universe"]) - avoid
-    done = {t["symbol"] for t in trades if t["date"] == today and team_of(t) == "news"} | avoid
+    done = {t["symbol"] for t in trades if t["date"] == today and team_of(t) in ("news", "spurt")} | avoid
     if c.get("gap_rule") and _t(c["gap_from"]) <= now.time() <= _t(c["gap_until"]):
         await results_gap_ideas(im, now, c, done)
     preopen_early_ideas(now, c, done, universe)
     volume_spurt_ideas(now, c, done, universe)
-    if await spurt_entries(im, trades, now, cfg, c, done):
+    if await spurt_entries(im, trades, now, cfg.get("_base", cfg), c, done):
         return  # one new trade per round
+    if not cfg.get("_news_ok", True):
+        return  # the news team is full or out of money; the spurt team had its turn above
     # An idea whose priced-in check failed is not traded: unchecked is not "not priced in".
     ideas = sorted(((sym, i) for sym, i in (_daily.get("ideas") or {}).items()
                     if sym not in done and i["confidence"] >= c["min_confidence"] and i.get("priced_in")
@@ -1359,12 +1369,16 @@ def has_open(trades: list[dict], team: str | None = None) -> bool:
 # Two teams trade side by side, each with its own paper capital, so their results can be compared:
 #   movers  top gainers/losers reversal, read from price, charts and options (strategy "reversal")
 #   news    NSE filings, results, concalls, news forecasts, pre-open imbalances, volume spurts, and results-gap rule
-TEAMS = ("movers", "news")
-NEWS_STRATEGIES = ("results", "intel", "news", "results-gap", "preopen", "spurt", "quiet-spurt", "quiet-spurt-news")
+TEAMS = ("movers", "news", "spurt")
+# Three teams (user, 3 Nov): news (news-based trades, incl. spurts the news agrees with), spurt (plain quiet
+# volume spurts) and movers (top gainers/losers reversal), each with its own capital and slots.
+NEWS_STRATEGIES = ("results", "intel", "news", "results-gap", "preopen", "spurt", "quiet-spurt-news")
+SPURT_STRATEGIES = ("quiet-spurt",)
 
 
 def team_of(trade: dict) -> str:
-    return "news" if trade.get("strategy") in NEWS_STRATEGIES else "movers"
+    s = trade.get("strategy")
+    return "spurt" if s in SPURT_STRATEGIES else "news" if s in NEWS_STRATEGIES else "movers"
 
 
 def team_cfg(cfg: dict, team: str) -> dict:
@@ -1382,12 +1396,18 @@ async def cycle(cfg: dict) -> None:
             if _t(cfg["entry_start"]) <= now.time() <= _t(cfg["entry_end"]):
                 # News first: results, filings, preopen and spurts move stocks within minutes, so the news team
                 # acts before the movers' scan, and the scan stops for any idea that arrives meanwhile.
-                news_free = team_cfg(cfg, "news").get("auto_trade", True) and not team_full(trades, cfg, "news")
-                news_free = news_free and account(trades, cfg, "news")[1] > 0
+                news_ok = team_cfg(cfg, "news").get("auto_trade", True) and not team_full(trades, cfg, "news") \
+                    and account(trades, cfg, "news")[1] > 0
+                spurt_ok = team_cfg(cfg, "spurt").get("auto_trade", True) and not team_full(trades, cfg, "spurt") \
+                    and account(trades, cfg, "spurt")[1] > 0
+                news_free = news_ok or spurt_ok
 
                 async def run_news():
                     news_pending.clear()
-                    await news_team(im, trades, now, {**cfg, "capital": account(trades, cfg, "news")[1]})
+                    ok = team_cfg(cfg, "news").get("auto_trade", True) and not team_full(trades, cfg, "news") \
+                        and account(trades, cfg, "news")[1] > 0
+                    await news_team(im, trades, now, {**cfg, "capital": account(trades, cfg, "news")[1],
+                                                      "_base": cfg, "_news_ok": ok})
 
                 if news_free:
                     await run_news()
@@ -1402,7 +1422,7 @@ async def cycle(cfg: dict) -> None:
                     _, free = account(trades, cfg, "movers")
                     if free > 0:  # size new trades from the money that is actually free right now
                         await scan(im, trades, now, {**cfg, "capital": free}, yield_to_news=news_free)
-                if news_free and news_pending.is_set() and not team_full(trades, cfg, "news"):
+                if news_free and news_pending.is_set():
                     await run_news()  # an idea arrived during the scan
     finally:
         save_trades(trades, baseline_keys=baseline_keys)
