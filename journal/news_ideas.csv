@@ -157,3 +157,5 @@ date,time,symbol,direction,confidence,source,priced_in
 2026-11-03,10:32,HDFCBANK,up,65,intel,pessimism priced in
 2026-11-03,10:32,HINDUNILVR,up,86,intel,not priced in
 2026-11-03,10:36,IOC,up,72,intel,not priced in
+2026-11-03,13:20,BAJAJFINSV,up,74,intel,some pessimism priced in
+2026-11-03,13:50,SBIN,up,100,intel,partly priced in
