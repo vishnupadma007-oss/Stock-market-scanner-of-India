@@ -1063,7 +1063,9 @@ async def spurt_entries(im: IndMoney, trades: list[dict], now: datetime, cfg: di
             news_agrees = view["strong"] and view["direction"] == g["direction"]
             strategy = "quiet-spurt-news" if news_agrees else "quiet-spurt"
             share = capital_share(option, cfg, {**c, "max_open_trades": max_open(cfg, "news")}, open_count(trades, "news"))
-            targets = [s.get("target_news_net_pct", 15.0), s["target_net_pct"]] if news_agrees else [s["target_net_pct"]]
+            # Every spurt aims for 15% when the Risk agent's hit chance allows it, else 10% (backtest 3 Nov:
+            # +Rs 1,69,440 vs +Rs 1,26,586 for 10% only, better in both halves; 15% alone has too few trades).
+            targets = [s.get("target_news_net_pct", 15.0), s["target_net_pct"]]
             for tgt in targets:
                 sized = {**cfg, "net_target_pct": tgt, "target_mode": "fixed", "max_capital_per_trade": share}
                 risk = plan(option, trades_today, now, sized, sigma_per_min=intraday_sigma_per_min(intraday),

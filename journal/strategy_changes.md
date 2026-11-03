@@ -81,3 +81,11 @@ regulatory action, major news or policy hit against it, market shock against the
 once (+5% of premium) on good news; the AI helper confirms each call. Logged to `journal/trade_news.csv`, not
 acting (`trade_news.mode: observe`): the replay of 30 paper trades lost money when market/geopolitical news
 could trigger exits (now off), and the stock's own-news part had no cases to judge.
+
+## 2026-11-03: Quiet spurt aims for 15% whenever reachable, else 10%
+
+Before: 15% only when the news agreed with the spurt, otherwise 10%. Now every spurt first tries a 15% net
+target; if the Risk agent's hit chance is below its minimum for 15%, it takes 10% as before. Backtest (60 days,
+171 trades, same entries): +Rs 1,69,440 vs +Rs 1,26,586, better in both halves and for every variant tried.
+User's standing instruction (2 Nov): keep whatever makes more profit. Labels unchanged (quiet-spurt-news =
+news agrees).

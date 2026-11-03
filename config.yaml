@@ -170,7 +170,8 @@ spurt:                     # Quiet Volume Spurt (user's strategy, 28 Oct; agents
   max_move_pct: 0.5
   from: "09:30"
   target_net_pct: 10.0     # 10% net on the option (backtest: 68% hit, +2.89%/trade; a 1% target lost money)
-  target_news_net_pct: 15.0  # live test (user, 29 Oct): 15% when the news agrees (label quiet-spurt-news); 10% if 15% is out of reach
+  target_news_net_pct: 15.0  # every spurt aims for 15% when the hit chance allows, else 10% (3 Nov backtest: +1.69 lakh vs +1.27);
+                           # label quiet-spurt-news still marks the spurts the news agrees with
   fresh_min: 15            # a signal older than this is not traded
   live_min_move_pct: 0.1   # live INDmoney check before buying: still moving its way...
   live_max_move_pct: 0.8   # ...and not already run off

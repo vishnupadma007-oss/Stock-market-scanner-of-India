@@ -349,3 +349,25 @@ Movers reversal (130 trades, -Rs 36,390): buying right AT a level (within 0.3% o
 resistance for a PUT) was the only profitable group: 20 trades, 95% hit, +0.99%/trade, +Rs 5,931, positive
 in both halves. But at 0.4% it is already flat (29 trades, -Rs 105): a narrow peak on 20 trades, which fails
 the quantforge-ai gates (>= 100 trades, no single-parameter peak). Not adopted; worth watching live.
+
+### Which spurts become big movers; bigger targets for them (user, 3 Nov 2026)
+
+60 days, 341 first-of-day spurts (no hit-chance filter) - after the signal: 98% moved further their way at
+some point (median +0.76% more), 68% closed the day their way, only 7% ended among the day's top 5
+gainers/losers. By group (net, 10% / 15% / 20% target):
+- Volume 2x+: +18k / +55k / +59k; 3x+: losing (34 trades). Volume size alone is not a good marker.
+- Spurts by 10:15: +74k / +1.12 lakh / +1.26 lakh; after 10:15: -16k / -40k / -22k.
+- Price and volume still building 15 minutes later ("confirmed", 58 trades): +3.7% / +4.8% / +6.7% per trade,
+  but known only 15 minutes later; entering at confirmation loses (-0.8%/trade): the move is in the first minutes.
+
+With the live hit-chance filter (how the desk trades), 171 trades:
+
+| Target rule | Net | 1st half | 2nd half |
+|---|---|---|---|
+| 10% always (until 3 Nov) | +Rs 1,26,586 | +51.2k | +75.4k |
+| 15% for spurts by 10:15 when reachable, else 10% | +Rs 1,56,505 | +64.4k | +92.1k |
+| **15% whenever reachable, else 10%** | **+Rs 1,69,440** | +70.2k | +99.3k |
+| 12.5% whenever reachable, else 10% | +Rs 1,44,356 | +69.4k | +74.9k |
+
+Every cut-off time (10:05-15:00) and 12.5%/15% beat 10%-only in both halves: a smooth, robust improvement
+with the same trades. Adopted 3 Nov (user: keep whatever makes more profit).
