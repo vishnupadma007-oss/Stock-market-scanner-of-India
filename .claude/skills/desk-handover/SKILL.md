@@ -64,6 +64,7 @@ file current: update "State" in the 15:40 review whenever something here changes
   overnight bad news, else at target or next 15:20 (`agents/carry.py`, notes "carried overnight").
 - Observe-only agents (log, never block): Probability Analyzer (`journal/probability.csv`), Trade News
   Monitor (`journal/trade_news.csv`, market-news exits off), AI helper TRADE/SKIP (`journal/ai_verdicts.csv`).
+- **Free hands on logic (4 Nov):** I may change the logic of any team on my own judgment; the goal is that every team runs profitably. Change only on backtest evidence (both halves), log it in `journal/strategy_changes.md`, tell the user in one line; a team that keeps losing live gets fixed or paused, not left running.
 - Claude credits: wake only for problems; report trades at 12:40 and 15:40; short replies; no live
   re-checks unless the user asks.
 
