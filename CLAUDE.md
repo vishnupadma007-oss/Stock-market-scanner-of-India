@@ -68,3 +68,6 @@ In a new conversation, read the `desk-handover` skill first (state, user decisio
 To run the desk, use the `trading-desk` skill. To judge whether results are real or luck, use the
 `quantforge-ai` skill's validation gates and `scripts/metrics.py` (its stop-loss/kill-switch advice
 does not apply here: the user chose no stop-loss).
+
+## Code map (Graphify)
+A code knowledge graph is in `graphify-out/` (`GRAPH_REPORT.md` first, then the `graphify` MCP tools or `graphify query "..."` / `graphify explain "X"`) to find code without reading whole files. Rebuild after code changes: `graphify update .` (local, no LLM). A new session needs `pip install graphifyy` first.

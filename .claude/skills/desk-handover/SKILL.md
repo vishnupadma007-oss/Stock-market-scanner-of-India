@@ -38,7 +38,7 @@ file current: update "State" in the 15:40 review whenever something here changes
    `python -m agents.indmoney login` and finish with `python -m agents.indmoney finish "<address>"`.
 4. **AI helper key** (Google Gemini) lives in `/root/.config/gemini/key`, outside the repo. If missing, ask
    the user once to paste it, save it with mode 600, never commit it, test with `python -m agents.ai_helper test`.
-5. Run `python -m pytest -q` once (209 tests should pass).
+5. `pip install -q graphifyy` (code-graph MCP in `.mcp.json`, graph in `graphify-out/`; `graphify update .` after code changes). Run `python -m pytest -q` once (209 tests should pass).
 6. Archive the previous conversation (`archive_session`) when the user asks; the last one was
    `session_016quqf66GTbFcU8arPvsQra`.
 
