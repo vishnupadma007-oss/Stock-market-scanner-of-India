@@ -398,3 +398,15 @@ day's average range (ATR) recovered best (+Rs 21,977 on 25 at 10%). Small sample
   study: extreme moves reverse within minutes) -> the news team must act in minutes and not mid-announcement.
 - Opening gaps: no academic NSE study found; practitioner data says small gaps fill and big gaps (1+ ATR) follow.
 - Open-interest build-ups: only broker explainers, no tested evidence -> recorded on spurt trades (oi_type), scored.
+
+### Quiet spurt: do volume or technical-strength filters help? (user's question, 4 Nov 2026)
+
+`backtest_spurt_filters.py`; 175 first-signal trades, 76 stocks, 60 days, 15%-else-10% target, no stop-loss. Live the
+spurt team does NOT check any chart strength (only volume 1.5x+, a 0.2-0.5% move, candle/VWAP side, news, OI note).
+All trades +Rs 1,56,206 (halves +1.20L / +0.36L). Volume 2x+: 72 trades +74.6k (fewer trades, less money, avg +3.5%
+vs +3.0%); 2.5x+: 34, +43k, avg +4.2%; 3x+: 21, +35k, avg +5.6% (better per trade, less money; both halves positive).
+Stretched/overbought set (5-min RSI>70, prev day >2% or 5-day run >4% in the trade's direction, >5% above EMA20, or a 20-day
+breakout): 35 trades, +1.5k only (halves -4.1k / +5.6k); the other 140 trades +154.7k. Against-the-trend entries did
+better (+3.65% avg) than with-trend (+1.97%); daily RSI in the trade's direction 55-65 lost (-11.5k, 35 trades).
+Verdict: no filter adds money in both halves, so none is switched on; a volume floor lowers total profit.
+Live (-Rs 7k on 8 trades) is far below this backtest: check live fills/spreads before trusting the backtest.
