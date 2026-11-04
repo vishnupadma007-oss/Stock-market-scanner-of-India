@@ -1,0 +1,420 @@
+[
+ {
+  "seq_id": "105685200",
+  "filed": "2023-11-29 10:33:26",
+  "pdf": "https://nsearchives.nseindia.com/corporate/WIPRO_29112023103326_Acknw_UDIN.pdf",
+  "figures": {},
+  "view": "unread",
+  "reaction": {
+   "reaction_day": "2023-11-29",
+   "when": "during market",
+   "gap_pct": 0.29,
+   "close_pct": 2.37,
+   "high_pct": 2.95,
+   "low_pct": 0.29,
+   "nifty_gap_pct": 0.44,
+   "nifty_close_pct": 1.04,
+   "runup_20d": -0.63,
+   "excess_close_pct": 1.33,
+   "excess_gap_pct": null
+  },
+  "profit_yoy": null,
+  "profit_surprise": null,
+  "revenue_yoy": null,
+  "revenue_surprise": null
+ },
+ {
+  "seq_id": "158936",
+  "filed": "2024-01-12 15:36:37",
+  "pdf": "https://nsearchives.nseindia.com/corporate/Reg33_12012024153637.pdf",
+  "figures": {
+   "revenue": {
+    "quarter": 222051.0,
+    "prev_quarter": 225159.0,
+    "year_ago": 232290.0,
+    "qoq_pct": -1.4,
+    "yoy_pct": -4.4
+   },
+   "profit": {
+    "quarter": 27006.0,
+    "prev_quarter": 26673.0,
+    "year_ago": 30650.0,
+    "qoq_pct": 1.2,
+    "yoy_pct": -11.9
+   }
+  },
+  "view": "weak",
+  "reaction": {
+   "reaction_day": "2024-01-15",
+   "when": "after close",
+   "gap_pct": 9.99,
+   "close_pct": 6.26,
+   "high_pct": 13.65,
+   "low_pct": 5.09,
+   "nifty_gap_pct": 0.72,
+   "nifty_close_pct": 0.93,
+   "runup_20d": 3.79,
+   "excess_close_pct": 5.33,
+   "excess_gap_pct": 9.27
+  },
+  "profit_yoy": -11.9,
+  "profit_surprise": null,
+  "revenue_yoy": -4.4,
+  "revenue_surprise": null
+ },
+ {
+  "seq_id": "161061",
+  "filed": "2024-04-19 15:44:44",
+  "pdf": "https://nsearchives.nseindia.com/corporate/Results_19042024154444.pdf",
+  "figures": {
+   "profit": {
+    "quarter": 24466.0,
+    "prev_quarter": 20229.0,
+    "year_ago": 22641.0,
+    "qoq_pct": 20.9,
+    "yoy_pct": 8.1
+   }
+  },
+  "view": "good",
+  "reaction": {
+   "reaction_day": "2024-04-22",
+   "when": "after close",
+   "gap_pct": 0.0,
+   "close_pct": 2.04,
+   "high_pct": 2.96,
+   "low_pct": -0.61,
+   "nifty_gap_pct": 0.86,
+   "nifty_close_pct": 0.86,
+   "runup_20d": -11.67,
+   "excess_close_pct": 1.18,
+   "excess_gap_pct": -0.86
+  },
+  "profit_yoy": 8.1,
+  "profit_surprise": 20.0,
+  "revenue_yoy": null,
+  "revenue_surprise": null
+ },
+ {
+  "seq_id": "163589",
+  "filed": "2024-07-19 15:34:36",
+  "pdf": "https://nsearchives.nseindia.com/corporate/OutcomeofBoardMeeting_19072024153436.pdf",
+  "figures": {
+   "revenue": {
+    "quarter": 164813.0,
+    "prev_quarter": 165932.0,
+    "year_ago": 172028.0,
+    "qoq_pct": -0.7,
+    "yoy_pct": -4.2
+   }
+  },
+  "view": "mixed",
+  "reaction": {
+   "reaction_day": "2024-07-22",
+   "when": "after close",
+   "gap_pct": -6.5,
+   "close_pct": -9.22,
+   "high_pct": -5.46,
+   "low_pct": -9.99,
+   "nifty_gap_pct": -0.35,
+   "nifty_close_pct": -0.09,
+   "runup_20d": 9.53,
+   "excess_close_pct": -9.13,
+   "excess_gap_pct": -6.15
+  },
+  "profit_yoy": null,
+  "profit_surprise": null,
+  "revenue_yoy": -4.2,
+  "revenue_surprise": 0.2
+ },
+ {
+  "seq_id": "165700",
+  "filed": "2024-10-17 15:45:00",
+  "pdf": "https://nsearchives.nseindia.com/corporate/FinancialResults_17102024154500.pdf",
+  "figures": {
+   "profit": {
+    "quarter": 27135.0,
+    "prev_quarter": 23746.0,
+    "year_ago": 20613.0,
+    "qoq_pct": 14.3,
+    "yoy_pct": 31.6
+   }
+  },
+  "view": "strong",
+  "reaction": {
+   "reaction_day": "2024-10-18",
+   "when": "after close",
+   "gap_pct": 0.61,
+   "close_pct": 3.76,
+   "high_pct": 5.61,
+   "low_pct": -0.75,
+   "nifty_gap_pct": -0.34,
+   "nifty_close_pct": 0.42,
+   "runup_20d": 0.73,
+   "excess_close_pct": 3.34,
+   "excess_gap_pct": 0.95
+  },
+  "profit_yoy": 31.6,
+  "profit_surprise": 33.5,
+  "revenue_yoy": null,
+  "revenue_surprise": null
+ },
+ {
+  "seq_id": "168353",
+  "filed": "2025-01-17 15:40:00",
+  "pdf": "https://nsearchives.nseindia.com/corporate/Reg33_17012025154000.pdf",
+  "figures": {
+   "profit": {
+    "quarter": 28121.0,
+    "prev_quarter": 27135.0,
+    "year_ago": 20229.0,
+    "qoq_pct": 3.6,
+    "yoy_pct": 39.0
+   }
+  },
+  "view": "strong",
+  "reaction": {
+   "reaction_day": "2025-01-20",
+   "when": "after close",
+   "gap_pct": 7.11,
+   "close_pct": 6.49,
+   "high_pct": 8.32,
+   "low_pct": 5.32,
+   "nifty_gap_pct": 0.38,
+   "nifty_close_pct": 0.61,
+   "runup_20d": -6.72,
+   "excess_close_pct": 5.88,
+   "excess_gap_pct": 6.73
+  },
+  "profit_yoy": 39.0,
+  "profit_surprise": 30.9,
+  "revenue_yoy": null,
+  "revenue_surprise": null
+ },
+ {
+  "seq_id": "106302941",
+  "filed": "2025-07-17 15:37:48",
+  "pdf": "https://nsearchives.nseindia.com/corporate/Cslogin_17072025153659_SEIntimationfinancialresults.pdf",
+  "figures": {
+   "revenue": {
+    "quarter": 221346.0,
+    "prev_quarter": 225042.0,
+    "year_ago": 219638.0,
+    "qoq_pct": -1.6,
+    "yoy_pct": 0.8
+   },
+   "profit": {
+    "quarter": 33365.0,
+    "prev_quarter": 35881.0,
+    "year_ago": 30366.0,
+    "qoq_pct": -7.0,
+    "yoy_pct": 9.9
+   }
+  },
+  "view": "mixed",
+  "reaction": {
+   "reaction_day": "2025-07-18",
+   "when": "after close",
+   "gap_pct": 3.07,
+   "close_pct": 2.44,
+   "high_pct": 4.34,
+   "low_pct": 1.92,
+   "nifty_gap_pct": -0.01,
+   "nifty_close_pct": -0.57,
+   "runup_20d": -3.16,
+   "excess_close_pct": 3.01,
+   "excess_gap_pct": 3.08
+  },
+  "profit_yoy": 9.9,
+  "profit_surprise": -21.7,
+  "revenue_yoy": 0.8,
+  "revenue_surprise": 5.0
+ },
+ {
+  "seq_id": "106409720",
+  "filed": "2025-10-16 15:42:44",
+  "pdf": "https://nsearchives.nseindia.com/corporate/Wipro_Secretarial_16102025154100_SEIntimationOutcomeofBM.pdf",
+  "figures": {
+   "revenue": {
+    "quarter": 177700.0,
+    "prev_quarter": 171954.0,
+    "year_ago": 172262.0,
+    "qoq_pct": 3.3,
+    "yoy_pct": 3.2
+   },
+   "profit": {
+    "quarter": 32624.0,
+    "prev_quarter": 33365.0,
+    "year_ago": 32266.0,
+    "qoq_pct": -2.2,
+    "yoy_pct": 1.1
+   }
+  },
+  "view": "mixed",
+  "reaction": {
+   "reaction_day": "2025-10-17",
+   "when": "after close",
+   "gap_pct": -1.5,
+   "close_pct": -5.09,
+   "high_pct": -1.5,
+   "low_pct": -5.79,
+   "nifty_gap_pct": -0.15,
+   "nifty_close_pct": 0.49,
+   "runup_20d": -1.14,
+   "excess_close_pct": -5.58,
+   "excess_gap_pct": -1.35
+  },
+  "profit_yoy": 1.1,
+  "profit_surprise": -30.5,
+  "revenue_yoy": 3.2,
+  "revenue_surprise": 4.9
+ },
+ {
+  "seq_id": "106499045",
+  "filed": "2026-01-16 15:39:57",
+  "pdf": "https://nsearchives.nseindia.com/corporate/Wipro_Secretarial_16012026153903_SEIntimationReg33.pdf",
+  "figures": {
+   "revenue": {
+    "quarter": 235558.0,
+    "prev_quarter": 226973.0,
+    "year_ago": 223188.0,
+    "qoq_pct": 3.8,
+    "yoy_pct": 5.5
+   },
+   "profit": {
+    "quarter": 27822.0,
+    "prev_quarter": 26142.0,
+    "year_ago": 28408.0,
+    "qoq_pct": 6.4,
+    "yoy_pct": -2.1
+   }
+  },
+  "view": "mixed",
+  "reaction": {
+   "reaction_day": "2026-01-19",
+   "when": "after close",
+   "gap_pct": -5.78,
+   "close_pct": -8.04,
+   "high_pct": -5.78,
+   "low_pct": -9.68,
+   "nifty_gap_pct": -0.16,
+   "nifty_close_pct": -0.42,
+   "runup_20d": 1.85,
+   "excess_close_pct": -7.62,
+   "excess_gap_pct": -5.62
+  },
+  "profit_yoy": -2.1,
+  "profit_surprise": -22.9,
+  "revenue_yoy": 5.5,
+  "revenue_surprise": 3.5
+ },
+ {
+  "seq_id": "106591641",
+  "filed": "2026-04-16 16:26:22",
+  "pdf": "https://nsearchives.nseindia.com/corporate/Wipro_Secretarial_16042026162417_Reg33Financials.pdf",
+  "figures": {
+   "revenue": {
+    "quarter": 242.363,
+    "prev_quarter": 235.558,
+    "year_ago": 225.042,
+    "qoq_pct": 2.9,
+    "yoy_pct": 7.7
+   }
+  },
+  "view": "mixed",
+  "reaction": {
+   "reaction_day": "2026-04-17",
+   "when": "after close",
+   "gap_pct": -2.5,
+   "close_pct": -2.83,
+   "high_pct": -1.81,
+   "low_pct": -3.69,
+   "nifty_gap_pct": -0.13,
+   "nifty_close_pct": 0.65,
+   "runup_20d": 1.9,
+   "excess_close_pct": -3.48,
+   "excess_gap_pct": -2.37
+  },
+  "profit_yoy": null,
+  "profit_surprise": null,
+  "revenue_yoy": 7.7,
+  "revenue_surprise": 4.5
+ },
+ {
+  "seq_id": "106700151",
+  "filed": "2026-07-16 15:49:54",
+  "pdf": "https://nsearchives.nseindia.com/corporate/Cslogin_16072026154829_Reg33Financials.pdf",
+  "figures": {
+   "revenue": {
+    "quarter": 244.786,
+    "prev_quarter": 242.363,
+    "year_ago": 221.346,
+    "qoq_pct": 1.0,
+    "yoy_pct": 10.6
+   },
+   "profit": {
+    "quarter": 28657.0,
+    "prev_quarter": 30371.0,
+    "year_ago": 36961.0,
+    "qoq_pct": -5.6,
+    "yoy_pct": -22.5
+   }
+  },
+  "view": "weak",
+  "reaction": {
+   "reaction_day": "2026-07-17",
+   "when": "after close",
+   "gap_pct": -2.36,
+   "close_pct": -0.98,
+   "high_pct": -0.83,
+   "low_pct": -2.36,
+   "nifty_gap_pct": 0.23,
+   "nifty_close_pct": 1.09,
+   "runup_20d": -3.59,
+   "excess_close_pct": -2.07,
+   "excess_gap_pct": -2.59
+  },
+  "profit_yoy": -22.5,
+  "profit_surprise": -23.6,
+  "revenue_yoy": 10.6,
+  "revenue_surprise": 6.2
+ },
+ {
+  "seq_id": "106818649",
+  "filed": "2026-10-15 15:47:35",
+  "pdf": "https://nsearchives.nseindia.com/corporate/Wipro_Secretarial_15102026154647_Reg33Financials.pdf",
+  "figures": {
+   "revenue": {
+    "quarter": 247527.0,
+    "prev_quarter": 244786.0,
+    "year_ago": 226973.0,
+    "qoq_pct": 1.1,
+    "yoy_pct": 9.1
+   },
+   "profit": {
+    "quarter": 28627.0,
+    "prev_quarter": 28657.0,
+    "year_ago": 26142.0,
+    "qoq_pct": -0.1,
+    "yoy_pct": 9.5
+   }
+  },
+  "view": "good",
+  "reaction": {
+   "reaction_day": "2026-10-16",
+   "when": "after close",
+   "gap_pct": -2.21,
+   "close_pct": 5.95,
+   "high_pct": 6.69,
+   "low_pct": -2.33,
+   "nifty_gap_pct": 0.29,
+   "nifty_close_pct": 0.65,
+   "runup_20d": 5.24,
+   "excess_close_pct": 5.3,
+   "excess_gap_pct": -2.5
+  },
+  "profit_yoy": 9.5,
+  "profit_surprise": 11.6,
+  "revenue_yoy": 9.1,
+  "revenue_surprise": 2.5
+ }
+]

@@ -1,0 +1,9 @@
+__pycache__/
+.pytest_cache/
+data/
+.streamlit/secrets.toml
+# High-churn live logs: written every 30 s by the watcher. Not tracked during the day so every
+# Claude turn does not need a commit; the evening review force-adds them once
+# (git add -f journal/intel journal/valuations). Files already committed stay tracked.
+journal/intel/
+journal/valuations/
