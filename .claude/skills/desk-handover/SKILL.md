@@ -58,6 +58,7 @@ file current: update "State" in the 15:40 review whenever something here changes
     day), results, and quiet spurts the news agrees with (`quiet-spurt-news`).
   - **spurt** (Rs 1 lakh): the user's Quiet Volume Spurt (volume 1.5x usual at a 0.2-0.5% move, no strong
     news); 15% target when the Risk agent's hit chance allows, else 10%; F&O OI build-up recorded (`oi_type`).
+  - (4 Nov evening) spurt team is now the user's revived pure engine (`spurt.pure` in config.yaml: no news, calm pre-open, OI not against, multi-week ok, 09:30-11:30, volume 1.8x, spread <= 1%, delta 0.50-0.65); backtest of the testable gates +Rs 97k vs +Rs 156k old rule, see backtest_summary.md. Judge it on live trades.
   - **movers** (Rs 30,000): top gainers/losers reversal, 1% target.
 - **Overnight carry (3 Nov, live test):** a trade short of its target at 15:20 stays one night unless results
   today/next session, its own results/regulatory filing today, or expiry within 3 days; sold at the open on
