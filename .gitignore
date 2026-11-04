@@ -7,3 +7,4 @@ data/
 # (git add -f journal/intel journal/valuations). Files already committed stay tracked.
 journal/intel/
 journal/valuations/
+trading_desk_code.zip
