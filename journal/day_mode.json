@@ -1,12 +1,10 @@
 {
-  "date": "2026-11-03",
+  "date": "2026-11-04",
   "mode": "normal",
   "notes": [
-    "Expected Nifty open about flat (S&P 500 -0.5%)",
-    "Brent crude -11% on Monday (117.6 -> 104.7), WTI -7%: helps oil marketers (BPCL, IOC, HPCL), paints, aviation; hurts ONGC, Oil India",
-    "Results since last session: ITC, National Aluminium; Lupin guidance",
-    "Mover forecast: Bank of Baroda and Reliance up on results news",
-    "Quiet spurt now aims for 15% when reachable, else 10% (changed 3 Nov)"
+    "Expected Nifty open about +0.2% (range -0.3 to +0.7; S&P 500 +0.4%, Brent -1.8%)",
+    "Results since last session: Lupin (profit -100% YoY, weak), BAJAJFINSV and SBIN gaps pending",
+    "Mover forecast: BAJAJFINSV ~2.5% and SBIN ~1.1% up on results (follow gap only if first 15 min agree); HDFCBANK, RELIANCE up on news"
   ],
   "avoid": []
 }

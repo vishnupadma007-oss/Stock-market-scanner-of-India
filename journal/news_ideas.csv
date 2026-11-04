@@ -159,3 +159,17 @@ date,time,symbol,direction,confidence,source,priced_in
 2026-11-03,10:36,IOC,up,72,intel,not priced in
 2026-11-03,13:20,BAJAJFINSV,up,74,intel,some pessimism priced in
 2026-11-03,13:50,SBIN,up,100,intel,partly priced in
+2026-11-04,08:41,RELIANCE,up,100,intel,partly priced in
+2026-11-04,08:41,HDFCBANK,up,84,intel,not priced in
+2026-11-04,08:41,ICICIBANK,up,70,intel,not priced in
+2026-11-04,08:41,SBIN,up,93,intel,partly priced in
+2026-11-04,08:41,AXISBANK,up,70,intel,not priced in
+2026-11-04,08:41,KOTAKBANK,down,73,intel,largely priced in
+2026-11-04,08:41,BAJAJFINSV,up,75,intel,not priced in
+2026-11-04,08:41,ASIANPAINT,up,81,intel,not priced in
+2026-11-04,09:15,BHEL,up,80,preopen,NSE pre-open order imbalance
+2026-11-04,09:15,HINDUNILVR,down,75,preopen,NSE pre-open order imbalance
+2026-11-04,09:15,TITAN,down,75,preopen,NSE pre-open order imbalance
+2026-11-04,09:15,VEDL,down,75,preopen,NSE pre-open order imbalance
+2026-11-04,09:15,HINDALCO,down,75,preopen,NSE pre-open order imbalance
+2026-11-04,09:15,SAIL,down,75,preopen,NSE pre-open order imbalance
