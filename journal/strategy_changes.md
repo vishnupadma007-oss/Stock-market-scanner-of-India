@@ -117,3 +117,12 @@ results/regulatory filings or strong news against it arrived overnight; otherwis
 Each team has its own money and slots; the scoreboard in the evening review shows all three. Past quiet-spurt
 trades (29 Oct - 3 Nov) count for the spurt team from now on, so its record starts at 6 trades, -Rs 9,877;
 the news team's becomes 25 trades, -Rs 7,508. Overnight carry applies to all three.
+
+## 2026-11-04: Four teams (user's decision)
+
+- preopen (new, Rs 1 lakh, 4 slots): gap recovery (new rule, backtest above), pre-open order flow, results-day gaps.
+- news: news forecasts trade again (unpaused: each team is judged on its own money), results, spurts the news
+  agrees with; forecast trades now skip a stock on its results day (SBI 3 Nov).
+- spurt: plain quiet spurts; the F&O open-interest build-up type is recorded on each trade (oi_type) for scoring.
+- movers: unchanged. Overnight carry applies to all four.
+Past preopen and results-gap trades now count for the pre-open team.

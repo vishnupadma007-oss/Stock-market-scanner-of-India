@@ -21,7 +21,7 @@ from datetime import date, datetime, time, timedelta
 
 from . import analyzer
 
-DEFAULTS = {"enabled": False, "teams": ["news", "spurt", "movers"], "min_days_to_expiry": 3, "open_after": "09:16"}
+DEFAULTS = {"enabled": False, "teams": ["news", "spurt", "preopen", "movers"], "min_days_to_expiry": 3, "open_after": "09:16"}
 MARK = "carried overnight"
 MONTHS = {m: i for i, m in enumerate(["JAN", "FEB", "MAR", "APR", "MAY", "JUN", "JUL", "AUG", "SEP", "OCT", "NOV", "DEC"], 1)}
 

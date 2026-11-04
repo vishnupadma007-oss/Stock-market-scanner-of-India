@@ -49,7 +49,8 @@ whenever something here changes, and commit it.
 - Quiet Volume Spurt is the user's own strategy (news team): heavy volume (1.5x usual for the time of
   day) at a small move (0.2-0.5%), live from NSE every minute; 10% target, 15% when the news agrees
   (label `quiet-spurt-news`, a live test: compare the labels after ~30 trades).
-- 3 Nov: three teams - news (incl. quiet-spurt-news), spurt (plain quiet spurts, Rs 1 lakh), movers.
+- 4 Nov: four teams - news (forecasts unpaused, skip results day; quiet-spurt-news), spurt (plain quiet spurts),
+  preopen (gap recovery, pre-open order flow, results-gap), movers. Each Rs 1 lakh except movers Rs 30,000.
 - 3 Nov changes: quiet spurt aims 15% when reachable else 10%; news-forecast (intel) trades paused (lost Rs 25,965);
   overnight carry live test; Probability Analyzer and Trade News Monitor in observe mode.
 - Claude credits: wake only for problems; report trades at 12:40 and 15:40; replies short; no live

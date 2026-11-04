@@ -371,3 +371,30 @@ With the live hit-chance filter (how the desk trades), 171 trades:
 
 Every cut-off time (10:05-15:00) and 12.5%/15% beat 10%-only in both halves: a smooth, robust improvement
 with the same trades. Adopted 3 Nov (user: keep whatever makes more profit).
+
+### Pre-open gap recovery (user's idea, 4 Nov 2026) - adopted for the new pre-open team
+
+60 days x 76 stocks (5-min data to 3 Nov). Stocks that open 1.5%+ away from yesterday's close; at 09:30:
+"recovery" = back 1%+ from the early extreme (09:15-09:30) AND past the opening price -> buy the recovery's
+direction; "continuation" = still 0.5%+ beyond the open the gap's way -> buy the gap's direction.
+
+| Setup | Target | Trades | Hit % | Avg | Net | Halves |
+|---|---|---|---|---|---|---|
+| **Recovery** | 15% if reachable, else 10% | 35 | - | - | **+Rs 33,588** | +10.3k / +23.3k |
+| Recovery | 10% | 35 | 74 | +1.59% | +Rs 16,644 | 0 / +16.6k |
+| Recovery | 15% | 19 | 63 | +5.40% | +Rs 30,794 | +8.2k / +22.6k |
+| Weak recovery (0.5% bounce only) | 10% | 97 | 66 | -0.18% | -Rs 5,162 | |
+| Continuation (gap holds) | 10% | 65 | 54 | -5.34% | -Rs 1,04,117 | -47.8k / -56.3k |
+
+A real recovery (1%+ and past the open) is the key; following a gap that holds loses heavily. Gaps under one
+day's average range (ATR) recovered best (+Rs 21,977 on 25 at 10%). Small sample (35 trades): live paper test.
+
+### Research notes (4 Nov 2026, web search)
+- Abnormal volume predicts returns over days to weeks, mostly upward (Lee, Kim & Kim 2016; Zheng 2007; Helsinki
+  and Thai studies): supports the quiet spurt and carrying spurt trades overnight.
+- Intraday momentum: the first half-hour's return predicts the last half-hour's (Gao, Han, Li, Zhou, JFE 2018;
+  12 of 16 markets), stronger on high-volume days; one replication found it weak.
+- News: prices adjust within 15-90 minutes, negative news more strongly (Oslo, Paris studies; Indian intraday
+  study: extreme moves reverse within minutes) -> the news team must act in minutes and not mid-announcement.
+- Opening gaps: no academic NSE study found; practitioner data says small gaps fill and big gaps (1+ ATR) follow.
+- Open-interest build-ups: only broker explainers, no tested evidence -> recorded on spurt trades (oi_type), scored.

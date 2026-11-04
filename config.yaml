@@ -17,8 +17,8 @@ teams:
     top_up: 81895          # paper money added (not profit): 26 Oct +13,304 back to Rs 30,000; 29 Oct +68,591 to Rs 1 lakh so 4 slots can trade (user gave free hands);
                            # top-ups are not profit: the scoreboard keeps the team's real record (-Rs 11,895 to 29 Oct)
     auto_trade: true       # opens trades by itself; Claude can also open them with paper_trade.py
-    paused_sources: [intel] # 3 Nov: news-forecast trades lost Rs 25,965 on 18 paper trades (44% hit); still logged in
-                           # journal/news_ideas.csv to judge, but their money and slots go to the quiet spurt
+    paused_sources: []     # 4 Nov: news forecasts trade again (user: four teams, each judged on its own money);
+                           # they lost Rs 25,965 on 18 trades up to 3 Nov - [intel] pauses them again
     min_confidence: 60     # forecast confidence needed, after the priced-in cut
     confirm_pct: 0.5       # the stock must already move the forecast's way by this much today
     max_move_pct: 4.0      # ...but not more (move used up)
@@ -48,6 +48,17 @@ teams:
     capital: 100000        # news agrees with goes to the news team as quiet-spurt-news). Same money as the news team.
     max_open_trades: 4
     auto_trade: true
+  preopen:                 # user, 4 Nov: fourth team, the opening session. Gap recovery (gap 1.5%+, back 1%+ from the
+    capital: 100000        # early extreme and past the open by 09:30 -> trade the recovery), pre-open order flow,
+    max_open_trades: 4     # results-day gaps (results-gap rule). Backtest gap recovery: 35 trades, 74% hit, +Rs 33,588.
+    auto_trade: true
+    gap_recovery:
+      enabled: true
+      from: "09:30"
+      until: "09:45"
+      min_gap_pct: 1.5
+      min_bounce_pct: 1.0
+      targets: [15.0, 10.0]
 max_capital_per_trade: 1.0   # share of available money one trade may use (1.0 = all of it)
 max_trades_per_day: 50     # effectively no cap: trade every setup that passes the agents
 net_target_pct: 1.0        # target profit per trade for movers team, % of premium paid, AFTER all charges
@@ -321,6 +332,6 @@ trade_news:                # Trade News Monitor (user's request, 31 Oct; agents/
   use_ai: true             # the AI helper confirms each exit/raise the word list nominates
 carry:                     # overnight carry (user, 3 Nov; agents/carry.py): a trade short of its target at 15:20 is kept
   enabled: true            # one night instead of squared off, unless results are due today/next session, it filed results
-  teams: [news, spurt, movers] # or a regulatory action today, or the option is within min_days_to_expiry of expiry; next morning
+  teams: [news, spurt, preopen, movers] # or a regulatory action today, or the option is within min_days_to_expiry of expiry; next morning
   min_days_to_expiry: 3    # it is sold at the open on overnight results/regulatory filings or strong news against it,
   open_after: "09:16"      # otherwise at the target or at 15:20. Live paper test (60-day backtest: carrying lost; 27-30 Oct real trades: it won)

@@ -358,13 +358,14 @@ def test_implied_volatility_and_live_greeks_enrichment():
     assert indmoney.pick_option(crossed, "gainer", "ITM1") is None
 
 
-def test_results_gap_belongs_to_news_team_everywhere():
+def test_strategies_map_to_the_four_teams_everywhere():
     import review
     trade = {"date": "2026-10-26", "status": "OPEN", "strategy": "results-gap", "entry_ask": "20", "qty": "500", "net_pnl": ""}
-    assert watcher.team_of(trade) == "news"
-    assert watcher.has_open([trade], "news") and not watcher.has_open([trade], "movers")
-    s = pd.Series(["reversal", "results", "intel", "results-gap"])
-    assert list(review.team_of(s)) == ["movers", "news", "news", "news"]
+    assert watcher.team_of(trade) == "preopen"
+    assert watcher.has_open([trade], "preopen") and not watcher.has_open([trade], "news")
+    s = pd.Series(["reversal", "results", "intel", "results-gap", "gap-recovery", "quiet-spurt", "quiet-spurt-news"])
+    assert list(review.team_of(s)) == ["movers", "news", "news", "preopen", "preopen", "spurt", "news"]
+    assert [watcher.team_of({"strategy": x}) for x in s] == list(review.team_of(s))
 
 
 def test_save_trades_preserves_concurrent_verdicts_and_external_trades(tmp_path, monkeypatch):

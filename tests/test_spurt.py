@@ -143,3 +143,43 @@ def test_parse_nse_reads_numbers_with_units():
     assert abs(out["vwap"] - 52.1 * 100 / 472.67) < 0.01
     plain = parse_nse({"total": {"data": [{**row, "totalTradedVolume": 472.67, "totalTradedValue": 52.1}]}}, {"PNB"})
     assert plain["PNB"]["volume"] == out["volume"]
+
+
+class Gapped(Live):
+    """TCS opened 2.5% down at 975.6 (prev close 1000), fell to 970, now 985: a 1.5% recovery past the open."""
+    def __init__(self, live=985.0):
+        self.live = live
+
+    async def quotes(self, keys, segments=None):
+        return {k: {"entity_stats": {"day_open": 975.6, "day_low": 970.0, "day_high": 986.0, "live_price": self.live,
+                                     "prev_close": 1000.0, "day_change_percentage": -1.5}} for k in keys}
+
+
+def gap_setup(monkeypatch, now):
+    watcher._daily.clear()
+    watcher.reset_daily(now.date().isoformat())
+    watcher._stock_keys["TCS"] = "K"
+    monkeypatch.setattr(watcher.preopen, "load", lambda kind, day: {"TCS": {"gap_pct": -2.4}} if kind == "preopen" else None)
+    monkeypatch.setattr(watcher.news, "results_calendar", lambda: {})
+    monkeypatch.setattr(watcher.analyzer, "recent_items", lambda now: [])
+    monkeypatch.setattr(watcher.daymode, "load", lambda day: {"mode": "normal", "avoid": []})
+
+
+def test_gap_recovery_buys_the_bounce_on_the_preopen_team(monkeypatch, capsys):
+    now = datetime(2026, 11, 4, 9, 31, tzinfo=IST)
+    gap_setup(monkeypatch, now)
+    cfg = {**load_config(), "capital": 30000}
+    trades = []
+    assert asyncio.run(watcher.gap_recovery_entries(Gapped(), trades, now, cfg))
+    t = trades[0]
+    assert t["strategy"] == "gap-recovery" and watcher.team_of(t) == "preopen" and t["side"] == "loser"  # a CALL
+
+
+def test_gap_recovery_skips_a_gap_that_holds(monkeypatch, capsys):
+    now = datetime(2026, 11, 4, 9, 31, tzinfo=IST)
+    gap_setup(monkeypatch, now)
+    trades = []
+    assert not asyncio.run(watcher.gap_recovery_entries(Gapped(live=972.0), trades, now, {**load_config(), "capital": 30000}))
+    assert not asyncio.run(watcher.gap_recovery_entries(Gapped(), trades, now.replace(hour=10, minute=30),
+                                                        {**load_config(), "capital": 30000}))  # outside the window
+    assert trades == []

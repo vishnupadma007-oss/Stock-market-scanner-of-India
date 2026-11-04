@@ -984,6 +984,11 @@ def team_full(trades: list[dict], cfg: dict, team: str) -> bool:
     return open_count(trades, team) >= max_open(cfg, team)
 
 
+def team_can_trade(trades: list[dict], cfg: dict, team: str) -> bool:
+    return bool(team_cfg(cfg, team).get("auto_trade", True)) and not team_full(trades, cfg, team) \
+        and account(trades, cfg, team)[1] > 0
+
+
 SKIPS_DIR = Path(__file__).parent / "journal" / "intel"  # git-ignored by day, committed each evening
 
 
@@ -1035,6 +1040,107 @@ NEWS_DEFAULTS = {
     "min_premium": 5.0,     # no options cheaper than this: tiny premiums need huge quantities and wide spreads
     "max_capital_per_trade": 0.5,  # share of the team's free money one trade may use (no stop-loss, so size is the brake)
 }
+
+
+GAP_DEFAULTS = {"enabled": True, "from": "09:30", "until": "09:45", "min_gap_pct": 1.5, "min_bounce_pct": 1.0,
+                "targets": [15.0, 10.0], "min_premium": 5.0}
+
+
+async def gap_recovery_entries(im: IndMoney, trades: list[dict], now: datetime, cfg: dict) -> bool:
+    """Pre-open team, gap recovery (user's idea, 4 Nov): a stock that opened 1.5%+ away from yesterday's close
+    and by 09:30 has come back 1%+ from its early extreme and past its opening price is bought in the
+    recovery's direction (CALL after a gap down, PUT after a gap up). Skipped when the gap has a reason
+    that makes it stick: results (the results-gap rule trades those WITH the gap) or strong own news
+    the gap's way. 60-day backtest: 35 trades, 74% hit, +Rs 33,588 with 15%-else-10% targets; trading
+    the gap's continuation instead lost Rs 1.04 lakh. Returns True when it opened a trade."""
+    g = {**GAP_DEFAULTS, **(team_cfg(cfg, "preopen").get("gap_recovery") or {})}
+    if not g["enabled"] or not (_t(g["from"]) <= now.time() <= _t(g["until"])):
+        return False
+    day = daymode.load(now.date())
+    if day["mode"] == "no_trade":
+        return False
+    today = now.date().isoformat()
+    seen = _daily.setdefault("gap_checked", set())
+    done = {t["symbol"] for t in trades if t["date"] == today} | set(day.get("avoid") or []) | seen
+    pre = preopen.load("preopen", now.date()) or {}
+    cands = [sym for sym, p in pre.items() if sym in set(cfg["universe"]) and sym not in done
+             and abs(float(p.get("gap_pct") or 0)) >= g["min_gap_pct"]][:10]
+    if not cands:
+        return False
+    for sym in cands:
+        if sym not in _stock_keys:
+            _stock_keys[sym] = await expectations.stock_key(im, sym)
+    quotes = await im.quotes([_stock_keys[s] for s in cands])
+    if "results" not in _daily:
+        _daily["results"] = news.results_calendar()
+    items = _news_items(now)
+    since = f"{holidays.previous_trading_day(now.date() - timedelta(days=1))} 15:00"
+    for sym in cands:
+        seen.add(sym)  # judged once a day, at the first look after 09:30
+        st = (quotes.get(_stock_keys[sym]) or {}).get("entity_stats") or {}
+        try:
+            o, lo, hi, live, pc = (float(st[k]) for k in ("day_open", "day_low", "day_high", "live_price", "prev_close"))
+        except (KeyError, TypeError, ValueError):
+            continue
+        gap = (o / pc - 1) * 100
+        if abs(gap) < g["min_gap_pct"]:
+            continue
+        d = 1 if gap < 0 else -1  # recovery direction
+        bounce = ((live - lo) if d > 0 else (hi - live)) / pc * 100
+        idea = {"direction": "up" if d > 0 else "down", "confidence": "", "source": "gap-recovery"}
+        if bounce < g["min_bounce_pct"] or (live - o) * d <= 0:
+            continue  # no real recovery attempt: the gap is holding (continuation lost money in the backtest)
+        if today in {str(x) for x in (_daily.get("results") or {}).get(sym, [])} or \
+                carry._own_filings(items, sym, since, now.strftime("%Y-%m-%d %H:%M"), ("RESULTS",)):
+            log_skip(now, sym, idea, gap, "gap recovery: results day (results-gap rule's stock)")
+            continue
+        view = analyzer.stock_view(sym, [i for i in items if str(i.get("time", ""))[:16] > since], now, cfg)
+        if view["strong"] and view["direction"] == ("down" if gap < 0 else "up"):
+            log_skip(now, sym, idea, gap, f"gap recovery: strong news behind the gap ({view['confidence']}%)")
+            continue
+        try:
+            free = account(trades, cfg, "preopen")[1]
+            side = "loser" if d > 0 else "gainer"
+            option = await im.pick_contract(_stock_keys[sym], side, cfg, now.date(), budget=float(free))
+            if option is None or option["ask"] < g["min_premium"]:
+                log_skip(now, sym, idea, gap, "gap recovery: no usable option")
+                continue
+            intraday = await im.candles(_stock_keys[sym], "5minute", "7d")
+            c = team_cfg(cfg, "preopen")
+            share = capital_share(option, {**cfg, "capital": free},
+                                  {**c, "max_open_trades": max_open(cfg, "preopen"),
+                                   "max_capital_per_trade": c.get("max_capital_per_trade", 1.0)},
+                                  open_count(trades, "preopen"))
+            n_today = sum(t["date"] == today and team_of(t) == "preopen" for t in trades)
+            for tgt in g["targets"]:
+                risk = plan(option, n_today, now, {**cfg, "capital": free, "net_target_pct": tgt, "target_mode": "fixed",
+                                                   "max_capital_per_trade": share},
+                            sigma_per_min=intraday_sigma_per_min(intraday), spread_pct=option["spread_pct"])
+                if risk["allowed"]:
+                    break
+            if not risk["allowed"]:
+                log_skip(now, sym, idea, gap, "gap recovery: risk: " + "; ".join(risk["blocks"])[:150])
+                continue
+            reason = (f"Gap recovery: opened {gap:+.1f}% vs yesterday, back {bounce:.1f}% from the early "
+                      f"{'low' if d > 0 else 'high'} and past the open by {now:%H:%M}; target {tgt:g}% net")
+            row = {f: "" for f in FIELDS}
+            row.update(date=today, opened=now.strftime("%H:%M"), symbol=sym, side=side, contract=option["contract"],
+                       underlying_key=_stock_keys[sym], derivative_id=option["derivative_id"], qty=risk["qty"],
+                       entry_ask=option["ask"], target_bid=risk["target_premium"], spread_pct=round(option["spread_pct"], 2),
+                       hit_probability=round(risk["hit_probability"]), status="OPEN",
+                       notes="; ".join(filter(None, [rolled_note(option), reason])), strategy="gap-recovery",
+                       valuation=valuation_view(sym).get("label", ""))
+            trades.append(row)
+            emit("SIGNAL", {"team": "preopen", "symbol": sym, "direction": idea["direction"], "source": "gap-recovery",
+                            "contract": option["contract"], "qty": risk["qty"], "entry_ask": option["ask"],
+                            "target_bid": risk["target_premium"], "target_net_pct": tgt, "gap_pct": round(gap, 2),
+                            "bounce_pct": round(bounce, 2), "reason": reason, "square_off": cfg["square_off_time"]})
+            return True
+        except (LoginRequired, RateLimited):
+            raise
+        except Exception as e:
+            emit("ERROR", {"error": f"gap recovery {sym}: {type(e).__name__}: {e}"})
+    return False
 
 
 def probability_report(intraday, option: dict, risk: dict, spot, now: datetime, cfg: dict, sig: dict) -> dict | None:
@@ -1147,7 +1253,8 @@ async def spurt_entries(im: IndMoney, trades: list[dict], now: datetime, cfg: di
                        qty=risk["qty"], entry_ask=option["ask"], target_bid=risk["target_premium"],
                        spread_pct=round(option["spread_pct"], 2), hit_probability=round(risk["hit_probability"]),
                        status="OPEN", notes="; ".join(filter(None, [rolled_note(option), reason])),
-                       strategy=strategy, valuation=valuation_view(sym).get("label", ""))
+                       strategy=strategy, valuation=valuation_view(sym).get("label", ""),
+                       oi_type=(act or {}).get("kind", "not recorded"))  # scored in the review's crowd breakdown
             trades.append(row)
             emit("SIGNAL", {"team": team, "symbol": sym, "direction": g["direction"], "source": strategy,
                             "target_net_pct": tgt,
@@ -1176,7 +1283,7 @@ async def news_team(im: IndMoney, trades: list[dict], now: datetime, cfg: dict) 
     c = {**NEWS_DEFAULTS, **team_cfg(cfg, "news")}
     today = now.date().isoformat()
     universe = set(cfg["universe"]) - avoid
-    done = {t["symbol"] for t in trades if t["date"] == today and team_of(t) in ("news", "spurt")} | avoid
+    done = {t["symbol"] for t in trades if t["date"] == today and team_of(t) in ("news", "spurt", "preopen")} | avoid
     if c.get("gap_rule") and _t(c["gap_from"]) <= now.time() <= _t(c["gap_until"]):
         await results_gap_ideas(im, now, c, done)
     preopen_early_ideas(now, c, done, universe)
@@ -1184,7 +1291,8 @@ async def news_team(im: IndMoney, trades: list[dict], now: datetime, cfg: dict) 
     if await spurt_entries(im, trades, now, cfg.get("_base", cfg), c, done):
         return  # one new trade per round
     if not cfg.get("_news_ok", True):
-        return  # the news team is full or out of money; the spurt team had its turn above
+        return  # the news and pre-open teams are full or out of money; the spurt team had its turn above
+    base = cfg.get("_base", cfg)
     # An idea whose priced-in check failed is not traded: unchecked is not "not priced in".
     ideas = sorted(((sym, i) for sym, i in (_daily.get("ideas") or {}).items()
                     if sym not in done and i["confidence"] >= c["min_confidence"] and i.get("priced_in")
@@ -1213,9 +1321,23 @@ async def news_team(im: IndMoney, trades: list[dict], now: datetime, cfg: dict) 
         return  # VIX panic regime: option premiums inflated and erratic
     mkt = market_context_view(analyzer.recent_items(now), now, n_stats.get("day_change_percentage"),
                               live_vix, v_stats.get("day_change_percentage"))
-    trades_today = sum(t["date"] == today and team_of(t) == "news" for t in trades)
     for sym, idea in ideas:
         try:
+            # Each idea trades on its own team's money and slots: pre-open and results-gap ideas on the
+            # pre-open team, the rest on the news team (user, 4 Nov).
+            team = team_of({"strategy": idea["source"]})
+            if not team_can_trade(trades, base, team):
+                continue
+            free = account(trades, base, team)[1]
+            cfg = {**base, "capital": free}
+            trades_today = sum(t["date"] == today and team_of(t) == team for t in trades)
+            if idea["source"] in ("intel", "news"):
+                # Not on the stock's results day (4 Nov): prices take 15-90 minutes to digest results and the
+                # first moves are a coin flip (3 Nov: SBI bought at 14:09 mid-results, -Rs 7,164).
+                if "results" not in _daily:
+                    _daily["results"] = news.results_calendar()
+                if today in {str(x) for x in (_daily.get("results") or {}).get(sym, [])}:
+                    continue
             stats = (quotes.get(_stock_keys[sym]) or {}).get("entity_stats") or {}
             move = stats.get("day_change_percentage")
             if move is None:
@@ -1305,8 +1427,8 @@ async def news_team(im: IndMoney, trades: list[dict], now: datetime, cfg: dict) 
                 **cfg,
                 "target_mode": c.get("target_mode", "forecast"),
                 "forecast_capture": c.get("forecast_capture", 0.6),
-                "max_capital_per_trade": capital_share(option, cfg, {**c, "max_open_trades": max_open(cfg, "news")},
-                                                       open_count(trades, "news")),
+                "max_capital_per_trade": capital_share(option, cfg, {**c, "max_open_trades": max_open(cfg, team)},
+                                                       open_count(trades, team)),
             }
             risk = plan(option, trades_today, now, cfg_news,
                         spread_pct=option["spread_pct"], forecast=news_forecast)
@@ -1325,7 +1447,7 @@ async def news_team(im: IndMoney, trades: list[dict], now: datetime, cfg: dict) 
                                                      rolled_note(option), idea["reason"]])), strategy=idea["source"],
                        valuation=valuation_view(sym).get("label", ""))
             trades.append(row)
-            emit("SIGNAL", {"team": "news", "symbol": sym, "direction": idea["direction"],
+            emit("SIGNAL", {"team": team, "symbol": sym, "direction": idea["direction"],
                             "contract": option["contract"], "qty": risk["qty"], "entry_ask": option["ask"],
                             "target_bid": risk["target_premium"], "spread_pct": row["spread_pct"],
                             "spot": spot_price, "day_change_pct": move,
@@ -1369,16 +1491,19 @@ def has_open(trades: list[dict], team: str | None = None) -> bool:
 # Two teams trade side by side, each with its own paper capital, so their results can be compared:
 #   movers  top gainers/losers reversal, read from price, charts and options (strategy "reversal")
 #   news    NSE filings, results, concalls, news forecasts, pre-open imbalances, volume spurts, and results-gap rule
-TEAMS = ("movers", "news", "spurt")
-# Three teams (user, 3 Nov): news (news-based trades, incl. spurts the news agrees with), spurt (plain quiet
-# volume spurts) and movers (top gainers/losers reversal), each with its own capital and slots.
-NEWS_STRATEGIES = ("results", "intel", "news", "results-gap", "preopen", "spurt", "quiet-spurt-news")
+TEAMS = ("movers", "news", "spurt", "preopen")
+# Four teams (user, 3-4 Nov): news (news forecasts, results, spurts the news agrees with), spurt (plain quiet
+# volume spurts), preopen (opening session: gap recovery, pre-open order flow, results-day gaps) and movers
+# (top gainers/losers reversal), each with its own capital and slots.
+NEWS_STRATEGIES = ("results", "intel", "news", "spurt", "quiet-spurt-news")
 SPURT_STRATEGIES = ("quiet-spurt",)
+PREOPEN_STRATEGIES = ("preopen", "results-gap", "gap-recovery")
 
 
 def team_of(trade: dict) -> str:
     s = trade.get("strategy")
-    return "spurt" if s in SPURT_STRATEGIES else "news" if s in NEWS_STRATEGIES else "movers"
+    return ("spurt" if s in SPURT_STRATEGIES else "preopen" if s in PREOPEN_STRATEGIES
+            else "news" if s in NEWS_STRATEGIES else "movers")
 
 
 def team_cfg(cfg: dict, team: str) -> dict:
@@ -1396,16 +1521,13 @@ async def cycle(cfg: dict) -> None:
             if _t(cfg["entry_start"]) <= now.time() <= _t(cfg["entry_end"]):
                 # News first: results, filings, preopen and spurts move stocks within minutes, so the news team
                 # acts before the movers' scan, and the scan stops for any idea that arrives meanwhile.
-                news_ok = team_cfg(cfg, "news").get("auto_trade", True) and not team_full(trades, cfg, "news") \
-                    and account(trades, cfg, "news")[1] > 0
-                spurt_ok = team_cfg(cfg, "spurt").get("auto_trade", True) and not team_full(trades, cfg, "spurt") \
-                    and account(trades, cfg, "spurt")[1] > 0
-                news_free = news_ok or spurt_ok
+                news_free = any(team_can_trade(trades, cfg, t) for t in ("news", "spurt", "preopen"))
 
                 async def run_news():
                     news_pending.clear()
-                    ok = team_cfg(cfg, "news").get("auto_trade", True) and not team_full(trades, cfg, "news") \
-                        and account(trades, cfg, "news")[1] > 0
+                    if team_can_trade(trades, cfg, "preopen"):
+                        await gap_recovery_entries(im, trades, now, cfg)
+                    ok = team_can_trade(trades, cfg, "news") or team_can_trade(trades, cfg, "preopen")
                     await news_team(im, trades, now, {**cfg, "capital": account(trades, cfg, "news")[1],
                                                       "_base": cfg, "_news_ok": ok})
 

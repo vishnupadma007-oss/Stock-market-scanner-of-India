@@ -44,8 +44,9 @@ Intraday mover-reversal options strategy on NSE F&O stocks, run by a team of age
   (NSE PDFs + Yahoo prices, cached in `journal/results_history/`, model in
   `journal/reaction_model.json`) to give the expected gap/close % with a range on every RESULT;
   also the likely Nifty open from US stocks and Brent (`python -m agents.reaction market`).
-- Three teams trade side by side (user, 3 Nov), each with its own paper capital (`config.yaml` -> `teams`):
-  spurt (plain quiet volume spurts, `quiet-spurt`), and
+- Four teams trade side by side (user, 3-4 Nov), each with its own paper capital (`config.yaml` -> `teams`):
+  spurt (plain quiet volume spurts, `quiet-spurt`), preopen (gap recovery at 09:30, pre-open order flow,
+  results-day gaps), and
   movers (top gainers/losers reversal from the chart; the News Guard, `agents/news_guard.py`, borrows
   the news team's knowledge to skip stocks with results, regulatory action, policy hits or strong
   news against the trade, logged in `journal/news_guard.csv`); on market-wide shock days (`agents/shock.py`: big news +

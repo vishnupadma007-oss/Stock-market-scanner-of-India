@@ -90,18 +90,20 @@ def _breakdown(df: pd.DataFrame, title: str, key) -> list[str]:
     return lines + [""]
 
 
-NEWS_STRATEGIES = ("results", "intel", "news", "results-gap", "preopen", "spurt", "quiet-spurt-news")
+NEWS_STRATEGIES = ("results", "intel", "news", "spurt", "quiet-spurt-news")
 SPURT_STRATEGIES = ("quiet-spurt",)
-TEAMS = ("movers", "news", "spurt")
+PREOPEN_STRATEGIES = ("preopen", "results-gap", "gap-recovery")
+TEAMS = ("movers", "news", "spurt", "preopen")
 
 
 def team_of(strategy: pd.Series) -> pd.Series:
-    return strategy.map(lambda s: "spurt" if s in SPURT_STRATEGIES else "news" if s in NEWS_STRATEGIES else "movers")
+    return strategy.map(lambda s: "spurt" if s in SPURT_STRATEGIES else "preopen" if s in PREOPEN_STRATEGIES
+                        else "news" if s in NEWS_STRATEGIES else "movers")
 
 
 def scoreboard(df: pd.DataFrame, day: str, capitals: dict, chances: dict) -> list[str]:
     """Movers team vs news team: chances found, trades, hit rate, money made, return on own capital."""
-    out = ["## Team scoreboard: movers vs news vs spurt", "",
+    out = ["## Team scoreboard: movers vs news vs spurt vs preopen", "",
            "| Team | Chances today | Trades today | Net today | Trades so far | Hit target | Avg per trade | Net so far | Return on capital |",
            "|---|---|---|---|---|---|---|---|---|"]
     teams = team_of(df["strategy"]) if not df.empty and "strategy" in df else pd.Series(dtype=str)
@@ -210,7 +212,7 @@ def main() -> None:
     opened_teams = team_of(opened["strategy"]) if "strategy" in opened else pd.Series("movers", index=opened.index)
     chances = {"movers": int((opened_teams == "movers").sum()) + len(held),
                "news": int((ideas["date"] == args.date).sum()) if "date" in ideas.columns else 0,
-               "spurt": int((opened_teams == "spurt").sum())}
+               "spurt": int((opened_teams == "spurt").sum()), "preopen": int((opened_teams == "preopen").sum())}
     capitals = {team: (cfg.get("teams") or {}).get(team, {}).get("capital", cfg["capital"]) for team in TEAMS}
     text = review(df, args.date, last_change_date(), capitals, chances)
     guard_path = ROOT / "journal" / "news_guard.csv"
