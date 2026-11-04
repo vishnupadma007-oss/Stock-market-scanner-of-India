@@ -410,3 +410,20 @@ breakout): 35 trades, +1.5k only (halves -4.1k / +5.6k); the other 140 trades +1
 better (+3.65% avg) than with-trend (+1.97%); daily RSI in the trade's direction 55-65 lost (-11.5k, 35 trades).
 Verdict: no filter adds money in both halves, so none is switched on; a volume floor lowers total profit.
 Live (-Rs 7k on 8 trades) is far below this backtest: check live fills/spreads before trusting the backtest.
+
+### Revived pure spurt engine (user's design, 4 Nov 2026): `backtest_spurt_revival.py`
+
+Stage by stage, 60 days x 76 stocks, 15%-else-10% target, no stop-loss (halves split by date):
+
+| Stage | Trades | Hit % | Avg | Net | Half 1 / Half 2 |
+|---|---|---|---|---|---|
+| 0 old rule (1.5x, to 15:15) | 175 | 63 | +2.98% | +Rs 1,56,206 | +83.6k / +72.6k |
+| 1 + volume 1.8x | 103 | 65 | +3.85% | +Rs 1,18,616 | +59.7k / +58.9k |
+| 2 + window 09:30-11:30 | 93 | 62 | +3.25% | +Rs 90,388 | +53.4k / +37.0k |
+| 3 + calm pre-open (gap <= 1%, proxy: opening bar) | 83 | 64 | +3.91% | +Rs 97,104 | +53.3k / +43.8k |
+| 4 + multi-week filter (REVIVED, testable part) | 83 | 64 | +3.91% | +Rs 97,104 | +53.3k / +43.8k |
+
+The multi-week veto never fired in 60 days (needs a 8%+ run into a 20-day high). Not backtestable (no history): zero-news
+quarantine, F&O OI confirmation, delta 0.50-0.65 / spread <= 1%. Revived rules: better per trade (+3.9% vs +3.0%), profitable in
+both halves, but less total money (fewer trades). Switched on at the user's request. The "dynamic breakeven lock" in the user's
+chart (a stop once +8-10%) was NOT built: it is a stop-loss, against the no-stop-loss rule.

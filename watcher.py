@@ -1165,6 +1165,25 @@ def probability_report(intraday, option: dict, risk: dict, spot, now: datetime, 
         return None
 
 
+async def pure_spurt_gate(im: IndMoney, sym: str, key: str, direction: str, now: datetime, pure: dict) -> str:
+    """Revived pure spurt gates (user's design 4 Nov, agents/spurt.py): prime window, zero-news quarantine,
+    calm pre-open, F&O open-interest confirmation, multi-week structure. Returns why it fails, "" if it passes."""
+    ok, why = spurt.check_institutional_timing(now, "09:30", pure["window_until"])
+    if not ok:
+        return why
+    quarantined, why = spurt.check_news_quarantine(sym, now, {}, [], analyzer.recent_items(now), _daily.get("results") or {})
+    if quarantined:
+        return why
+    ok, why = spurt.check_preopen_profile(sym, preopen.load("preopen", now.date()) or {}, pure["preopen_max_gap_pct"])
+    if not ok:
+        return why
+    ok, why = spurt.check_fo_activity(sym, direction, _daily.get("activity") or {}, pure["min_oi_pct"])
+    if not ok:
+        return why
+    ok, why, _ = spurt.check_multiweek_context(await daily_candles(im, key, now.date()), direction, now.date())
+    return "" if ok else why
+
+
 async def spurt_entries(im: IndMoney, trades: list[dict], now: datetime, cfg: dict, c: dict, done: set) -> bool:
     """Quiet Volume Spurt (user's strategy, agents/spurt.py): a fresh signal is confirmed on the live
     INDmoney quote (still moving its way, not run off), cross-checked with the news (strong news
@@ -1203,6 +1222,12 @@ async def spurt_entries(im: IndMoney, trades: list[dict], now: datetime, cfg: di
             # Which team trades it (user, 3 Nov): the news team when the news agrees, else the spurt team.
             news_agrees = view["strong"] and view["direction"] == g["direction"]
             team = "news" if news_agrees else "spurt"
+            pure = {**spurt.PURE_DEFAULTS, **(s.get("pure") or {})}
+            if team == "spurt" and pure["enabled"]:  # revived pure engine (user, 4 Nov): every gate must pass
+                why = await pure_spurt_gate(im, sym, key, g["direction"], now, pure)
+                if why:
+                    log_skip(now, sym, idea, float(move), "pure spurt: " + why)
+                    continue
             free = account(trades, cfg, team)[1]
             if not team_cfg(cfg, team).get("auto_trade", True) or team_full(trades, cfg, team) or free <= 0:
                 log_skip(now, sym, idea, float(move), f"quiet spurt: {team} team full or out of money")
@@ -1214,6 +1239,11 @@ async def spurt_entries(im: IndMoney, trades: list[dict], now: datetime, cfg: di
             if option is None or option["ask"] < c["min_premium"]:
                 log_skip(now, sym, idea, float(move), "quiet spurt: no usable option")
                 continue
+            if team == "spurt" and pure["enabled"]:
+                why = spurt.check_option_limits(option, pure)
+                if why:
+                    log_skip(now, sym, idea, float(move), "pure spurt: " + why)
+                    continue
             # Live test (user, 29 Oct): when the news agrees with the spurt, aim for 15%; otherwise 10%.
             # Each group has its own strategy label, so the evening review compares them. If 15% is out
             # of reach before 15:20 (Risk agent's hit chance), the news-aligned trade still takes 10%.

@@ -28,7 +28,7 @@ INDmoney's live quote confirms before buying.
 
     python -m agents.spurt            # today's signals so far
 """
-from datetime import date, time
+from datetime import date, time, datetime
 
 import numpy as np
 import pandas as pd
@@ -203,3 +203,181 @@ def main() -> None:
 
 if __name__ == "__main__":
     main()
+
+
+# ==============================================================================
+# Enhanced Pure Institutional Volume Spurt Engine (Revived Spurt Engine, Nov 2026)
+# ==============================================================================
+
+def check_news_quarantine(symbol: str, now: datetime, daily_intel: dict,
+                          filings: list[dict], items: list[dict],
+                          results_calendar: dict) -> tuple[bool, str]:
+    """Total News Quarantine Filter: returns (is_quarantined, reason).
+    If a stock has ANY news, corporate filing, analyst forecast, or upcoming results,
+    it is strictly disqualified from the Pure Volume Spurt Team.
+    """
+    today_str = now.strftime("%Y-%m-%d")
+    
+    # 1. Results Calendar: results today or upcoming in next 2 sessions
+    if results_calendar:
+        r_dates = results_calendar.get(symbol, [])
+        if any(str(d) == today_str for d in r_dates):
+            return True, "Results due today; extreme binary volatility"
+        next_days = [(now.date() + pd.Timedelta(days=i)).strftime("%Y-%m-%d") for i in (1, 2)]
+        if any(str(d) in next_days for d in r_dates):
+            return True, "Results due in next 48h; pre-results positioning noise"
+
+    # 2. Corporate & Regulatory Filings: today or post-close yesterday
+    for f in filings:
+        if f.get("symbol") == symbol:
+            cat = f.get("category", "")
+            t = str(f.get("time", ""))
+            if t.startswith(today_str) or cat == "RESULTS":
+                return True, f"Filing detected ({cat}): {str(f.get('text', ''))[:60]}"
+
+    # 3. Active News / Media / Policy headlines in recent items
+    for item in items:
+        if symbol in item.get("symbols", []):
+            kind = item.get("kind", "")
+            headline = item.get("headline", "")[:60]
+            return True, f"Recent news/catalyst ({kind}): {headline}"
+
+    # 4. Intelligence log / Daily forecasts
+    if symbol in (daily_intel.get("forecasts") or {}):
+        return True, "Stock has active Data Analyzer forecast"
+
+    return False, "Clean: Zero news detected (Pure Tape Anomaly)"
+
+
+def check_preopen_profile(symbol: str, preopen_data: dict, max_gap_pct: float = 1.0) -> tuple[bool, str]:
+    """Pre-Market Interlinking: verifies the stock did not have a violent opening gap.
+    Pure quiet institutional spurts require an uncrowded, calm pre-open where the market
+    underestimated the stock before the open.
+    """
+    if not preopen_data or symbol not in preopen_data:
+        return True, "No pre-open gap distortion recorded"
+
+    pod = preopen_data[symbol]
+    gap = pod.get("gap_pct", pod.get("pchange", 0.0))
+    if abs(gap) > max_gap_pct:
+        return False, f"Pre-open gap {gap:+.2f}% too large (> {max_gap_pct}%); handled by Preopen Team"
+
+    return True, f"Pre-open calm ({gap:+.2f}% gap); ideal for stealth intraday flow"
+
+
+def check_fo_activity(symbol: str, direction: str, activity_data: dict,
+                      min_oi_pct: float = 2.0) -> tuple[bool, str]:
+    """Derivatives Institutional Footprint: verifies volume is backed by real Open Interest (OI)
+    expansion, not empty retail churn or day-trader noise.
+    """
+    if not activity_data or symbol not in activity_data:
+        return True, "No derivatives OI distortion recorded"
+
+    act = activity_data[symbol]
+    kind = act.get("kind", "")
+    oi_pct = act.get("oi_pct", 0.0)
+
+    if direction == "up":
+        if kind == "long build-up":
+            return True, f"Institutional confirmation: Long build-up (OI {oi_pct:+.1f}%)"
+        elif kind == "short covering":
+            return True, f"Short covering rally (OI {oi_pct:+.1f}%)"
+        elif kind == "short build-up":
+            return False, f"Bearish trap: Short build-up against upward spurt (OI {oi_pct:+.1f}%)"
+    elif direction == "down":
+        if kind == "short build-up":
+            return True, f"Institutional confirmation: Short build-up (OI {oi_pct:+.1f}%)"
+        elif kind == "long unwinding":
+            return True, f"Long unwinding flush (OI {oi_pct:+.1f}%)"
+        elif kind == "long build-up":
+            return False, f"Bullish trap: Long build-up against downward spurt (OI {oi_pct:+.1f}%)"
+
+    return True, f"Derivatives flow neutral: {kind} (OI {oi_pct:+.1f}%)"
+
+
+def check_multiweek_context(daily_df: pd.DataFrame, direction: str,
+                            now_date: date) -> tuple[bool, str, dict]:
+    """Multi-Week Structural Context (The 5%-10% Prior Move Parameter):
+    Evaluates prior 1-3 week momentum and consolidation structures.
+    Prevents buying exhausted blow-off tops or shorting oversold climax bottoms.
+    """
+    past = daily_df[daily_df.index.date < now_date]
+    if len(past) < 20:
+        return True, "Insufficient daily history; pass with default risk", {}
+
+    pc = past["Close"]
+    spot = float(pc.iloc[-1])
+    run5 = float((pc.iloc[-1] / pc.iloc[-6] - 1.0) * 100.0) if len(pc) >= 6 else 0.0
+    run10 = float((pc.iloc[-1] / pc.iloc[-11] - 1.0) * 100.0) if len(pc) >= 11 else 0.0
+    hi20 = float(past["High"].tail(20).max())
+    lo20 = float(past["Low"].tail(20).min())
+    dist_to_hi = (hi20 / spot - 1.0) * 100.0
+    dist_to_lo = (spot / lo20 - 1.0) * 100.0
+
+    meta = {
+        "run5": round(run5, 2), "run10": round(run10, 2),
+        "hi20": round(hi20, 2), "lo20": round(lo20, 2),
+        "dist_to_hi": round(dist_to_hi, 2), "dist_to_lo": round(dist_to_lo, 2)
+    }
+
+    if direction == "up":
+        # 1. Exhaustion Veto: up > 8% in 5d or > 12% in 10d and hugging 20d high
+        if (run5 > 8.0 or run10 > 12.0) and dist_to_hi < 0.5:
+            return False, f"Exhaustion risk: Stock already surged {run5:+.1f}% (5d) / {run10:+.1f}% (10d) into 20d high", meta
+
+        # 2. Golden Base Breakout: 5%-10% prior move with tight recent consolidation
+        if 4.0 <= run10 <= 12.0 and abs(run5) < 3.0:
+            return True, f"Golden Base Breakout: Tight consolidation (5d {run5:+.1f}%) after prior move ({run10:+.1f}%)", meta
+
+        # 3. Fresh Trend Ignition from base
+        if abs(run10) < 4.0:
+            return True, f"Fresh Trend Ignition from tight base ({run10:+.1f}% over 10d)", meta
+
+        return True, f"Standard upward structure (5d {run5:+.1f}%, 10d {run10:+.1f}%)", meta
+
+    else: # direction == "down"
+        # 1. Climax Dump Veto: down > 8% in 5d or > 12% in 10d into 20d low
+        if (run5 < -8.0 or run10 < -12.0) and dist_to_lo < 0.5:
+            return False, f"Climax dump risk: Stock already dumped {run5:+.1f}% (5d) / {run10:+.1f}% (10d) into 20d low", meta
+
+        # 2. Golden Breakdown: tight consolidation before fresh breakdown
+        if -12.0 <= run10 <= -4.0 and abs(run5) < 3.0:
+            return True, f"Golden Breakdown: Tight consolidation (5d {run5:+.1f}%) before leg down ({run10:+.1f}%)", meta
+
+        # 3. Fresh Breakdown from Highs
+        if abs(run10) < 4.0:
+            return True, f"Fresh Top Breakdown from tight base ({run10:+.1f}% over 10d)", meta
+
+        return True, f"Standard downward structure (5d {run5:+.1f}%, 10d {run10:+.1f}%)", meta
+
+
+def check_institutional_timing(now: datetime, entry_from: str = "09:30",
+                               entry_until: str = "11:30") -> tuple[bool, str]:
+    """Prime Institutional Window: Volume spurts in the morning (09:30-11:30) have the highest
+    follow-through. Afternoon spurts suffer from intraday decay and lack of momentum.
+    """
+    t = now.time()
+    t_start = time.fromisoformat(entry_from)
+    t_end = time.fromisoformat(entry_until)
+
+    if t < t_start:
+        return False, f"Too early for volume spurt ({t:%H:%M} < {entry_from})"
+    if t > t_end:
+        return False, f"Outside prime institutional window ({t:%H:%M} > {entry_until}); avoid late churn"
+
+    return True, f"Inside prime institutional execution window ({t:%H:%M})"
+
+
+PURE_DEFAULTS = {"enabled": True, "window_until": "11:30", "preopen_max_gap_pct": 1.0, "min_oi_pct": 2.0,
+                 "max_spread_pct": 1.0, "min_delta": 0.50, "max_delta": 0.65}
+
+
+def check_option_limits(option: dict, pure: dict) -> str:
+    """The pure spurt's contract limits (user, 4 Nov): bid-ask gap <= max_spread_pct and |delta| inside the band.
+    Returns why it fails, "" if the contract fits. A missing delta is not held against the contract."""
+    if option.get("spread_pct", 0) > pure["max_spread_pct"]:
+        return f"bid-ask gap {option['spread_pct']:.2f}% > {pure['max_spread_pct']}%"
+    delta = option.get("delta")
+    if delta is not None and not pure["min_delta"] <= abs(float(delta)) <= pure["max_delta"]:
+        return f"delta {abs(float(delta)):.2f} outside {pure['min_delta']}-{pure['max_delta']}"
+    return ""

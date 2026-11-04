@@ -59,13 +59,14 @@ table{border-collapse:collapse;width:100%;font-size:13px;background:#fff}td,th{b
   <div class="step go">Buy CALL (up) or PUT (down)</div>
   <div class="small">Live record is negative so far; being reviewed.</div></div>
 
- <div class="teamcol"><h3>SPURT team (Rs 1 lakh)</h3>
-  <div class="step">NSE volume 1.5x+ usual at a 0.2-0.5% move; candle and VWAP side agree (spurt.py)</div><p class="dn">&#9660;</p>
-  <div class="step">Live INDmoney quote still fits the move (0.1-0.8%)</div><p class="dn">&#9660;</p>
-  <div class="step no">Skip: strong news against it. If news agrees, the trade goes to the news team</div><p class="dn">&#9660;</p>
-  <div class="step">F&amp;O OI build-up noted; Probability Analyzer logs (observe)</div><p class="dn">&#9660;</p>
-  <div class="step go">Buy CALL (up) / PUT (down); target 15% if Risk allows, else 10%</div>
-  <div class="small">No chart-strength check today (tested 4 Nov: no filter added money).</div></div>
+ <div class="teamcol"><h3>SPURT team (Rs 1 lakh) - revived pure engine</h3>
+  <div class="step no">1. Zero-news quarantine: out if results today/next 2 days or ANY news/filing on the stock (it goes to the news team if the news agrees)</div><p class="dn">&#9660;</p>
+  <div class="step">2. Pre-open calm: gap between -1% and +1%</div><p class="dn">&#9660;</p>
+  <div class="step">3. Multi-week structure: veto exhaustion runs (&gt;8% in 5d / &gt;12% in 10d at the 20-day high)</div><p class="dn">&#9660;</p>
+  <div class="step">4. NSE volume 1.8x+ usual at a 0.2-0.5% move, candle and VWAP agree; window 09:30-11:30</div><p class="dn">&#9660;</p>
+  <div class="step">5. F&amp;O OI not against it (long build-up / short covering for CALL; short build-up / long unwinding for PUT)</div><p class="dn">&#9660;</p>
+  <div class="step go">Buy ITM1 option: bid-ask gap &le;1%, delta 0.50-0.65; target 15% if Risk allows, else 10%</div>
+  <div class="small">Backtest of the testable gates: 83 trades, +Rs 97k (old rule +Rs 156k). News and OI gates cannot be backtested.</div></div>
 
  <div class="teamcol"><h3>MOVERS team (Rs 30,000)</h3>
   <div class="step">Top gainers/losers of the day (INDmoney movers)</div><p class="dn">&#9660;</p>

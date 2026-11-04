@@ -183,3 +183,43 @@ def test_gap_recovery_skips_a_gap_that_holds(monkeypatch, capsys):
     assert not asyncio.run(watcher.gap_recovery_entries(Gapped(), trades, now.replace(hour=10, minute=30),
                                                         {**load_config(), "capital": 30000}))  # outside the window
     assert trades == []
+
+
+def test_pure_spurt_news_quarantine():
+    now = datetime(2026, 11, 4, 10, 0, tzinfo=IST)
+    res, reason = spurt.check_news_quarantine('BRITANNIA', now, {}, [], [], {'BRITANNIA': ['2026-11-04']})
+    assert res is True and 'Results due today' in reason
+
+    res, reason = spurt.check_news_quarantine('TCS', now, {}, [], [], {'BRITANNIA': ['2026-11-04']})
+    assert res is False and 'Zero news' in reason
+
+
+def test_pure_spurt_preopen_and_fo_activity():
+    # Pre-open calm check
+    ok, _ = spurt.check_preopen_profile('VOLTAS', {'VOLTAS': {'gap_pct': 2.5}}, max_gap_pct=1.0)
+    assert not ok
+    ok, _ = spurt.check_preopen_profile('TITAN', {'TITAN': {'gap_pct': 0.3}}, max_gap_pct=1.0)
+    assert ok
+
+    # F&O Activity check
+    act = {'TCS': {'kind': 'long build-up', 'oi_pct': 4.5}}
+    ok, _ = spurt.check_fo_activity('TCS', 'up', act)
+    assert ok
+    ok, _ = spurt.check_fo_activity('TCS', 'down', act)
+    assert not ok
+
+
+def test_pure_spurt_multiweek_context():
+    idx = pd.bdate_range(end='2026-11-04', periods=30)
+    close_exhausted = [100.0] * 24 + [102.0, 105.0, 108.0, 112.0, 115.0, 115.0]
+    df_exhausted = pd.DataFrame({'Close': close_exhausted, 'High': close_exhausted, 'Low': close_exhausted}, index=idx)
+    ok, reason, _ = spurt.check_multiweek_context(df_exhausted, 'up', date(2026, 11, 4))
+    assert not ok and 'Exhaustion risk' in reason
+
+
+def test_pure_spurt_option_limits():
+    pure = spurt.PURE_DEFAULTS
+    assert spurt.check_option_limits({"spread_pct": 0.8, "delta": 0.6}, pure) == ""
+    assert "bid-ask" in spurt.check_option_limits({"spread_pct": 1.5, "delta": 0.6}, pure)
+    assert "delta" in spurt.check_option_limits({"spread_pct": 0.8, "delta": -0.3}, pure)
+    assert spurt.check_option_limits({"spread_pct": 0.8}, pure) == ""

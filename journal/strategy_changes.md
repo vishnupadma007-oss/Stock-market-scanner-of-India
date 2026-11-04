@@ -126,3 +126,9 @@ the news team's becomes 25 trades, -Rs 7,508. Overnight carry applies to all thr
 - spurt: plain quiet spurts; the F&O open-interest build-up type is recorded on each trade (oi_type) for scoring.
 - movers: unchanged. Overnight carry applies to all four.
 Past preopen and results-gap trades now count for the pre-open team.
+
+## 4 Nov 2026 (evening): revived pure spurt engine (user's design)
+- Spurt TEAM now needs: no news (results within 2 days, any filing/news on the stock), pre-open gap within 1%, F&O OI not against
+  it, multi-week structure ok, window 09:30-11:30, volume 1.8x (was 1.5x), bid-ask gap <= 1%, delta 0.50-0.65. News-agreeing spurts
+  still go to the news team. Switch: config.yaml spurt.pure.enabled. Backtest of the testable gates: see backtest_summary.md.
+- Fixed in the supplied code: open-interest field is `oi_pct` (not `oi_change_pct`). Breakeven lock not built (stop-loss).

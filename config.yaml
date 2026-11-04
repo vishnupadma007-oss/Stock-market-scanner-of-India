@@ -182,7 +182,7 @@ expiry_fallback:
   max_spread_pct: 2.0      # ...or its bid-ask gap is wider than this (% of the ask)
 spurt:                     # Quiet Volume Spurt (user's strategy, 28 Oct; agents/spurt.py), traded by the news team
   enabled: true
-  min_volume_x: 1.5        # cumulative volume vs usual at this time of day (previous 10 sessions)
+  min_volume_x: 1.8        # cumulative volume vs usual at this time of day (previous 10 sessions); 1.8 since the 4 Nov revival (was 1.5)
   min_move_pct: 0.2        # ...while the stock has moved only 0.2-0.5% from yesterday's close
   max_move_pct: 0.5
   from: "09:30"
@@ -193,6 +193,14 @@ spurt:                     # Quiet Volume Spurt (user's strategy, 28 Oct; agents
   live_min_move_pct: 0.1   # live INDmoney check before buying: still moving its way...
   live_max_move_pct: 0.8   # ...and not already run off
   poll_seconds: 60
+  pure:                    # user's revived pure engine (4 Nov, agents/spurt.py): spurt TEAM trades only stocks with no news,
+    enabled: true          # calm pre-open (gap <= 1%), F&O OI not against it, sound multi-week structure, 09:30-11:30,
+    window_until: "11:30"  # bid-ask gap <= 1% and delta 0.50-0.65. News-agreeing spurts still go to the news team.
+    preopen_max_gap_pct: 1.0   # Backtest of the testable gates (volume 1.8x, window, calm pre-open): 83 trades, +Rs 97k vs
+    min_oi_pct: 2.0            # +Rs 156k for the old rule; news, OI and delta/spread limits cannot be backtested (no history).
+    max_spread_pct: 1.0
+    min_delta: 0.50
+    max_delta: 0.65
 budget_otm:                # user, 28 Oct: when one lot of the usual strike costs more than the team's free money,
   enabled: true            # buy a cheaper strike further out of the money whose lot fits
   max_steps: 10            # at most this many strikes out (the delta floor below is the real limit)
