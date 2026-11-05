@@ -1,10 +1,11 @@
 {
-  "date": "2026-11-04",
+  "date": "2026-11-05",
   "mode": "normal",
   "notes": [
-    "Expected Nifty open about +0.2% (range -0.3 to +0.7; S&P 500 +0.4%, Brent -1.8%)",
-    "Results since last session: Lupin (profit -100% YoY, weak), BAJAJFINSV and SBIN gaps pending",
-    "Mover forecast: BAJAJFINSV ~2.5% and SBIN ~1.1% up on results (follow gap only if first 15 min agree); HDFCBANK, RELIANCE up on news"
+    "Expected Nifty open about +0.7% (range +0.15 to +1.2; S&P 500 +1.6%, Brent -9.5%)",
+    "Brent crude down sharply: helps oil marketers, paints, aviation; hurts ONGC, Oil India",
+    "Results since last session: Apollo Hospitals, PFC gap pending (follow only if first 15 min agree)",
+    "Spurt team now runs the revived pure engine (no news, calm pre-open, window 09:30-11:30, volume 1.8x)"
   ],
   "avoid": []
 }

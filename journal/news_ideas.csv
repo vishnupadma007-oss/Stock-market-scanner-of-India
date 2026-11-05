@@ -173,3 +173,20 @@ date,time,symbol,direction,confidence,source,priced_in
 2026-11-04,09:15,VEDL,down,75,preopen,NSE pre-open order imbalance
 2026-11-04,09:15,HINDALCO,down,75,preopen,NSE pre-open order imbalance
 2026-11-04,09:15,SAIL,down,75,preopen,NSE pre-open order imbalance
+2026-11-05,08:42,HDFCBANK,up,77,intel,not priced in
+2026-11-05,08:42,NATIONALUM,up,77,intel,some pessimism priced in
+2026-11-05,08:42,BPCL,down,72,intel,not priced in
+2026-11-05,08:42,IOC,down,77,intel,not priced in
+2026-11-05,08:42,BEL,up,85,intel,not priced in
+2026-11-05,08:42,APOLLOHOSP,up,83,intel,not priced in
+2026-11-05,09:15,ASIANPAINT,up,75,preopen,NSE pre-open order imbalance
+2026-11-05,09:15,MUTHOOTFIN,up,75,preopen,NSE pre-open order imbalance
+2026-11-05,09:15,CHOLAFIN,up,75,preopen,NSE pre-open order imbalance
+2026-11-05,09:15,AXISBANK,up,75,preopen,NSE pre-open order imbalance
+2026-11-05,09:15,HINDALCO,up,75,preopen,NSE pre-open order imbalance
+2026-11-05,09:24,SBIN,down,89,intel,partly priced in
+2026-11-05,09:31,APOLLOHOSP,down,75,results-gap,results gap rule
+2026-11-05,11:25,HINDUNILVR,up,82,intel,not priced in
+2026-11-05,11:37,ICICIBANK,up,85,intel,not priced in
+2026-11-05,11:37,SBIN,up,94,intel,partly priced in
+2026-11-05,11:37,BAJFINANCE,up,80,intel,

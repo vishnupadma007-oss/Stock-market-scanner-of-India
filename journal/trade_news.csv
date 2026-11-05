@@ -1,3 +1,13 @@
 date,time,symbol,contract,action,bid,target_bid,mode,reason
 2026-11-02,10:13,RELIANCE,RELIANCE-23-NOV-1230-CALL,raise,33.65,67.5,observe,"AI: The headline reports a significant 6% jump in Reliance Industries shares today due to strong Q2 earnings, indicating a clear upward trend that is highly favourable for a CALL option held on the stock. (Reliance Industries shares jump 6%, set for biggest single-day gain since Jan 20)"
 2026-11-02,11:47,RELIANCE,RELIANCE-23-NOV-1230-CALL,raise,43.1,67.5,observe,"AI: The headline clearly indicates Reliance Industries shares are experiencing a significant, positive rally today due to Q2 earnings. This is new and highly material information, directly confirming the  (Reliance Industries shares set for biggest-single day jump since April 2020 as Q)"
+2026-11-04,09:24,ASIANPAINT,ASIANPAINT-23-NOV-2440-PUT,exit,19.5,62.7,observe,market shock (rally)
+2026-11-04,09:24,HINDALCO,HINDALCO-23-NOV-920-PUT,exit,16.5,32.7,observe,market shock (rally)
+2026-11-05,09:41,ASIANPAINT,ASIANPAINT-23-NOV-2540-PUT,exit,52.75,65.2,observe,market shock (rally)
+2026-11-05,09:56,HDFCBANK,HDFCBANK-23-NOV-760-PUT,exit,15.9,19.25,observe,market shock (rally)
+2026-11-05,09:56,KOTAKBANK,KOTAKBANK-23-NOV-470-PUT,exit,10.4,12.4,observe,market shock (rally)
+2026-11-04,10:13,ASIANPAINT,ASIANPAINT-23-NOV-2440-PUT,exit,19.3,62.7,observe,market shock (rally)
+2026-11-04,10:13,HINDALCO,HINDALCO-23-NOV-920-PUT,exit,18.6,32.7,observe,market shock (rally)
+2026-11-05,10:13,ASIANPAINT,ASIANPAINT-23-NOV-2540-PUT,exit,58.65,65.2,observe,market shock (rally)
+2026-11-05,10:13,HDFCBANK,HDFCBANK-23-NOV-760-PUT,exit,17.45,19.25,observe,market shock (rally)
+2026-11-05,10:13,KOTAKBANK,KOTAKBANK-23-NOV-470-PUT,exit,10.6,12.4,observe,market shock (rally)

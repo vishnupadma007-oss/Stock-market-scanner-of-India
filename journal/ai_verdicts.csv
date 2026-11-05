@@ -25,3 +25,11 @@ date,time,team,symbol,contract,verdict,confidence,reason
 2026-11-04,05:04,spurt,HINDALCO,HINDALCO-23-NOV-920-PUT,,,error: ReadTimeout
 2026-11-04,05:09,movers,COALINDIA,COALINDIA-23-NOV-394-75-CALL,,,error: HTTPError
 2026-11-04,05:25,spurt,BRITANNIA,BRITANNIA-23-NOV-4950-PUT,,,error: HTTPError
+2026-11-05,03:58,news,BEL,BEL-23-NOV-395-CALL,TRADE,75,"The trade benefits from strong news catalysts and bullish intraday momentum, supported by a rallying broader market and positive FII flows, making the modest intraday target achievable despite the absence of a stop-loss and the underlying stock being extended on daily charts."
+2026-11-05,04:04,preopen,ASIANPAINT,ASIANPAINT-23-NOV-2540-PUT,TRADE,85,"The trade accurately executes a confirmed gap-recovery reversal, with the underlying moving below its open by 09:31, using a suitable PUT option to target a 10% net profit within the desk's no-stop-loss and intraday square-off policy."
+2026-11-05,04:09,news,NATIONALUM,NATIONALUM-23-NOV-325-CALL,TRADE,92,"The trade is strongly supported by positive company news, bullish technical indicators, high signal confidence, and a favorable overall market environment with strong FII inflows."
+2026-11-05,04:16,preopen,HDFCBANK,HDFCBANK-23-NOV-760-PUT,SKIP,95,"The HDFCBANK-23-NOV-760-PUT contract is likely a deep out-of-the-money option for HDFCBANK, making the proposed 15% intraday target extremely improbable and exposing the entire premium to loss due to the absence of a stop-loss."
+2026-11-05,04:20,preopen,AXISBANK,AXISBANK-23-NOV-1260-CALL,,,error: HTTPError
+2026-11-05,04:26,preopen,KOTAKBANK,KOTAKBANK-23-NOV-470-PUT,,,error: HTTPError
+2026-11-05,05:59,news,HINDUNILVR,HINDUNILVR-23-NOV-1980-CALL,TRADE,85,"The signal indicates a strong directional move backed by a clear catalyst (concall results/outlook not priced in), robust technicals, and a highly positive overall market sentiment, with a conservative target for an ITM call option."
+2026-11-05,06:18,news,SBIN,SBIN-23-NOV-990-CALL,TRADE,92,"Strong positive news for banking stocks, robust technical indicators, and supportive broader market conditions create a high-conviction intraday long opportunity for SBIN."
