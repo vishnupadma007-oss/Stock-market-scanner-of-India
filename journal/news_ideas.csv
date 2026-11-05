@@ -190,3 +190,5 @@ date,time,symbol,direction,confidence,source,priced_in
 2026-11-05,11:37,ICICIBANK,up,85,intel,not priced in
 2026-11-05,11:37,SBIN,up,94,intel,partly priced in
 2026-11-05,11:37,BAJFINANCE,up,80,intel,
+2026-11-05,13:01,M&M,up,88,intel,not priced in
+2026-11-05,15:16,COALINDIA,up,78,intel,not priced in
