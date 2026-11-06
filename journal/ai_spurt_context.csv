@@ -1,0 +1,3 @@
+date,time,team,symbol,contract,market_wide,catalyst,take_it,confidence,reason
+2026-11-06,04:06,spurt,SUNPHARMA,SUNPHARMA-23-NOV-1820-CALL,False,none,NO,85,"Heavy volume with minimal price change and no immediate catalyst indicates indecision or distribution, making it unsuitable for an intraday option buy expecting immediate directional momentum."
+2026-11-06,04:16,spurt,LT,LT-23-NOV-4100-PUT,False,none,NO,85,"A quiet volume spurt with a minimal price change on high volume suggests absorption of selling pressure or lack of strong directional conviction, making it unsuitable for an intraday option purchase expecting further movement."
