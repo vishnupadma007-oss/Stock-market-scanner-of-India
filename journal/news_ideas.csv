@@ -214,3 +214,4 @@ date,time,symbol,direction,confidence,source,priced_in
 2026-11-06,09:15,SHRIRAMFIN,down,75,preopen,NSE pre-open order imbalance
 2026-11-06,09:15,BAJFINANCE,down,75,preopen,NSE pre-open order imbalance
 2026-11-06,11:50,ICICIBANK,up,82,intel,partly priced in
+2026-11-06,13:52,HINDALCO,up,72,intel,some pessimism priced in

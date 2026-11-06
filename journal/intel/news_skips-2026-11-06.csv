@@ -1,0 +1,16 @@
+time,symbol,direction,confidence,move_pct,reason
+09:15,M&M,up,93,1.24,Trend Checker 0 < 60
+09:15,BHARTIARTL,up,82,1.76,Trend Checker 0 < 60
+09:15,TITAN,up,92,1.19,Trend Checker 40 < 60
+09:24,M&M,up,93,2.38,Trend Checker 50 < 60
+09:24,TITAN,up,92,0.77,Trend Checker 50 < 60
+09:24,BHARTIARTL,up,82,1.52,Trend Checker 35 < 60
+09:30,BHARTIARTL,down,,3.07,gap recovery: results day (results-gap rule's stock)
+09:30,DIVISLAB,up,,0.39,pure spurt: Results due in next 48h; pre-results positioning noise
+09:42,ULTRACEMCO,down,,-0.09,quiet spurt: live move -0.09% no longer fits
+09:57,NTPC,up,,-0.71,quiet spurt: live move -0.71% no longer fits
+10:05,MARUTI,up,,0.1,"pure spurt: Material news/catalyst (policy): RBI repo rate hike: talk, not yet action: costlier vehicle l"
+10:43,ONGC,up,,0.27,quiet spurt: news team full or out of money
+14:00,INDUSINDBK,up,,0.42,pure spurt: Outside prime institutional window (14:00 > 11:30); avoid late churn
+14:00,IOC,up,,0.42,pure spurt: Outside prime institutional window (14:00 > 11:30); avoid late churn
+14:26,HINDALCO,up,,0.23,quiet spurt: news team full or out of money
