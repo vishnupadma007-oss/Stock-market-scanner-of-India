@@ -211,7 +211,7 @@ if __name__ == "__main__":
 
 def check_news_quarantine(symbol: str, now: datetime, daily_intel: dict,
                           filings: list[dict], items: list[dict],
-                          results_calendar: dict) -> tuple[bool, str]:
+                          results_calendar: dict, min_impact: int = 3) -> tuple[bool, str]:
     """Total News Quarantine Filter: returns (is_quarantined, reason).
     If a stock has ANY news, corporate filing, analyst forecast, or upcoming results,
     it is strictly disqualified from the Pure Volume Spurt Team.
@@ -235,12 +235,14 @@ def check_news_quarantine(symbol: str, now: datetime, daily_intel: dict,
             if t.startswith(today_str) or cat == "RESULTS":
                 return True, f"Filing detected ({cat}): {str(f.get('text', ''))[:60]}"
 
-    # 3. Active News / Media / Policy headlines in recent items
+    # 3. Material news only (user, 5 Nov: option 2): filings, policy hits and high-impact news. Routine media
+    #    articles, concall transcripts and call schedules do not disqualify a clean tape.
     for item in items:
         if symbol in item.get("symbols", []):
             kind = item.get("kind", "")
-            headline = item.get("headline", "")[:60]
-            return True, f"Recent news/catalyst ({kind}): {headline}"
+            if kind in ("filing", "policy") or (kind == "news" and int(item.get("impact", 0) or 0) >= min_impact):
+                headline = (item.get("headline") or item.get("category") or "")[:60]
+                return True, f"Material news/catalyst ({kind}): {headline}"
 
     # 4. Intelligence log / Daily forecasts
     if symbol in (daily_intel.get("forecasts") or {}):

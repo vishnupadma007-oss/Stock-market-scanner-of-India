@@ -132,3 +132,9 @@ Past preopen and results-gap trades now count for the pre-open team.
   it, multi-week structure ok, window 09:30-11:30, volume 1.8x (was 1.5x), bid-ask gap <= 1%, delta 0.50-0.65. News-agreeing spurts
   still go to the news team. Switch: config.yaml spurt.pure.enabled. Backtest of the testable gates: see backtest_summary.md.
 - Fixed in the supplied code: open-interest field is `oi_pct` (not `oi_change_pct`). Breakeven lock not built (stop-loss).
+
+## 6 Nov 2026: pure spurt news gate narrowed (user's option 2)
+- 5 Nov the spurt team took no trade: 8 of 15 signals were quarantined by "any news on the stock" (routine articles, concall
+  transcripts). Now only material news disqualifies: filings (results, regulatory, guidance, ratings...), policy hits and
+  news of impact 3+; results due within 2 days still disqualify. Routine articles and concall items no longer do.
+  Not backtestable (no news history); judged on live trades.

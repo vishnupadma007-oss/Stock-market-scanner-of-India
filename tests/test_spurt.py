@@ -223,3 +223,14 @@ def test_pure_spurt_option_limits():
     assert "bid-ask" in spurt.check_option_limits({"spread_pct": 1.5, "delta": 0.6}, pure)
     assert "delta" in spurt.check_option_limits({"spread_pct": 0.8, "delta": -0.3}, pure)
     assert spurt.check_option_limits({"spread_pct": 0.8}, pure) == ""
+
+
+def test_news_quarantine_ignores_routine_news():
+    now = datetime(2026, 11, 5, 10, 0, tzinfo=IST)
+    routine = [{"symbols": ["ITC"], "kind": "news", "impact": 1, "headline": "How ITC shares are performing"},
+               {"symbols": ["ITC"], "kind": "concall", "impact": 2, "headline": "ITC concall transcript"}]
+    assert spurt.check_news_quarantine("ITC", now, {}, [], routine, {})[0] is False
+    big = routine + [{"symbols": ["ITC"], "kind": "news", "impact": 3, "headline": "ITC probe"}]
+    assert spurt.check_news_quarantine("ITC", now, {}, [], big, {})[0] is True
+    filing = [{"symbols": ["ITC"], "kind": "filing", "category": "RESULTS", "impact": 3, "headline": "Results"}]
+    assert spurt.check_news_quarantine("ITC", now, {}, [], filing, {})[0] is True
