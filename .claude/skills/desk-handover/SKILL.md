@@ -63,7 +63,7 @@ file current: update "State" in the 15:40 review whenever something here changes
 - **Overnight carry (3 Nov, live test):** a trade short of its target at 15:20 stays one night unless results
   today/next session, its own results/regulatory filing today, or expiry within 3 days; sold at the open on
   overnight bad news, else at target or next 15:20 (`agents/carry.py`, notes "carried overnight").
-- Observe-only agents (log, never block): Probability Analyzer (`journal/probability.csv`), Trade News
+- Observe-only agents (log, never block; AI spurt context check from 6 Nov, journal/ai_spurt_context.csv): Probability Analyzer (`journal/probability.csv`), Trade News
   Monitor (`journal/trade_news.csv`, market-news exits off), AI helper TRADE/SKIP (`journal/ai_verdicts.csv`).
 - **Free hands on logic (4 Nov):** I may change the logic of any team on my own judgment; the goal is that every team runs profitably. Change only on backtest evidence (both halves), log it in `journal/strategy_changes.md`, tell the user in one line; a team that keeps losing live gets fixed or paused, not left running.
 - Claude credits: wake only for problems; report trades at 12:40 and 15:40; short replies; no live

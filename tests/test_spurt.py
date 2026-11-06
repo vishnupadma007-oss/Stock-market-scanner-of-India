@@ -234,3 +234,16 @@ def test_news_quarantine_ignores_routine_news():
     assert spurt.check_news_quarantine("ITC", now, {}, [], big, {})[0] is True
     filing = [{"symbols": ["ITC"], "kind": "filing", "category": "RESULTS", "impact": 3, "headline": "Results"}]
     assert spurt.check_news_quarantine("ITC", now, {}, [], filing, {})[0] is True
+
+
+def test_ai_spurt_context_prompt_and_log(tmp_path, monkeypatch):
+    from agents import ai_helper
+    items = [{"symbols": ["ITC"], "kind": "news", "impact": 1, "time": "2026-11-05 09:00", "headline": "ITC article"},
+             {"symbols": [], "scope": "global", "kind": "news", "impact": 3, "time": "2026-11-05 08:00", "headline": "Midterm verdict"}]
+    info = {"symbol": "ITC", "direction": "up", "move": 0.3, "volume_x": 2.0, **ai_helper.context_info("ITC", items, "up", "normal")}
+    assert "ITC article" in info["own"] and "Midterm verdict" in info["market"]
+    assert "ITC" in ai_helper.CONTEXT_PROMPT.format(**info)
+    monkeypatch.setattr(ai_helper, "CONTEXT_LOG", tmp_path / "ctx.csv")
+    monkeypatch.setattr(ai_helper, "ask", lambda *a, **k: '{"market_wide": true, "catalyst": "none", "take_it": "NO", "confidence": 70, "reason": "x"}')
+    ai_helper.log_spurt_context(info, {"team": "spurt", "contract": "ITC-23-NOV-400-CALL"})
+    assert "NO" in (tmp_path / "ctx.csv").read_text()

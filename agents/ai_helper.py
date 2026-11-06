@@ -170,6 +170,53 @@ def log_verdict(signal: dict, cfg: dict | None = None) -> None:
                     data.get("confidence", ""), str(data.get("reason", ""))[:300]])
 
 
+CONTEXT_LOG = Path(__file__).resolve().parents[1] / "journal" / "ai_spurt_context.csv"
+CONTEXT_PROMPT = """You are a second opinion for an Indian NSE F&O intraday desk. A quiet volume spurt (heavy volume while the
+stock has moved only a little) fired and the desk would buy an option in the direction of the move. Decide whether
+this entry makes sense given the news and the market context.
+Reply with JSON only: {{"market_wide": true or false (is the move driven by a market-wide or sector event rather than
+this stock?), "catalyst": "none" or "routine" or "material" (news behind THIS stock), "take_it": "YES" or "NO",
+"confidence": 0-100, "reason": "one sentence"}}.
+
+STOCK: {symbol}  DIRECTION: {direction}  MOVE: {move:+.2f}%  VOLUME: {volume_x}x usual
+MARKET MOOD: {mood}   SHOCK STATE: {shock}
+HEADLINES ON THIS STOCK (newest first):
+{own}
+BIG MARKET / GLOBAL HEADLINES:
+{market}"""
+
+
+def context_info(symbol: str, items: list[dict], mood, shock: str, limit: int = 6) -> dict:
+    """Headline lists for the prompt, from the intelligence log items."""
+    own = sorted((i for i in items if symbol in i.get("symbols", [])), key=lambda i: i.get("time", ""), reverse=True)
+    mkt = sorted((i for i in items if i.get("scope") in ("market", "global") and int(i.get("impact", 0) or 0) >= 3),
+                 key=lambda i: i.get("time", ""), reverse=True)
+    fmt = lambda rows: "\n".join(f"- ({r.get('kind', '')}) {str(r.get('headline') or r.get('category') or '')[:140]}"
+                                 for r in rows[:limit]) or "- none"
+    return {"own": fmt(own), "market": fmt(mkt), "mood": mood, "shock": shock}
+
+
+def log_spurt_context(info: dict, trade: dict, cfg: dict | None = None) -> None:
+    """Observe only (user's plan, 6 Nov): the AI's view of a quiet-spurt entry, appended to journal/ai_spurt_context.csv
+    and scored in the evening review (YES vs NO, market-wide vs stock-specific). It never blocks a trade."""
+    try:
+        data = _json(ask(CONTEXT_PROMPT.format(**info), cfg)) or {}
+    except Exception as e:  # never let the helper disturb trading
+        data = {"take_it": "", "reason": f"error: {type(e).__name__}"}
+    if not data:
+        return
+    new = not CONTEXT_LOG.exists()
+    CONTEXT_LOG.parent.mkdir(exist_ok=True)
+    with open(CONTEXT_LOG, "a", newline="", encoding="utf-8") as f:
+        w = csv.writer(f)
+        if new:
+            w.writerow(["date", "time", "team", "symbol", "contract", "market_wide", "catalyst", "take_it",
+                        "confidence", "reason"])
+        w.writerow([date.today().isoformat(), datetime.now().strftime("%H:%M"), trade.get("team", ""),
+                    info["symbol"], trade.get("contract", ""), data.get("market_wide", ""), data.get("catalyst", ""),
+                    data.get("take_it", ""), data.get("confidence", ""), str(data.get("reason", ""))[:300]])
+
+
 def main(argv: list[str]) -> None:
     if len(argv) > 1 and argv[1] == "test":
         from .config import load_config

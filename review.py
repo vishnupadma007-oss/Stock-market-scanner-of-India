@@ -195,6 +195,25 @@ def ai_scorecard(df: pd.DataFrame) -> str:
     return "\n".join(lines)
 
 
+def ai_context_scorecard(df: pd.DataFrame) -> str:
+    """The AI context check on quiet-spurt entries (journal/ai_spurt_context.csv, observe only) against how the trades
+    ended. It earns a gate only if its NO entries clearly did worse than its YES entries (30+ trades, both halves)."""
+    path = ROOT / "journal" / "ai_spurt_context.csv"
+    if not path.exists() or df.empty:
+        return ""
+    v = pd.read_csv(path, dtype=str).fillna("")
+    m = v.merge(df[["date", "contract", "net_pnl", "net_pct"]], on=["date", "contract"], how="inner")
+    if m.empty:
+        return ""
+    lines = [f"\n## AI context check on spurt entries (observe only): {len(m)} closed trades\n"]
+    for col in ("take_it", "market_wide", "catalyst"):
+        for val, g in m.groupby(col):
+            lines.append(f"- {col} = {val or 'none'}: {len(g)} trades, avg {g['net_pct'].mean():+.2f}% of premium, "
+                         f"net ₹{g['net_pnl'].sum():,.0f}")
+    lines.append("\nThe AI earns a say only if its NO trades did clearly worse than its YES trades.\n")
+    return "\n".join(lines)
+
+
 def main() -> None:
     ap = argparse.ArgumentParser()
     ap.add_argument("--date", default=date.today().isoformat())
@@ -229,6 +248,7 @@ def main() -> None:
                  + "\n".join(f"- {r.time} {r.symbol} {r.contract} (score {r.score})" for r in held.itertuples())
                  + "\n")
     text += ai_scorecard(df)
+    text += ai_context_scorecard(df)
     REVIEWS.mkdir(parents=True, exist_ok=True)
     (REVIEWS / f"{args.date}.md").write_text(text, encoding="utf-8")
     if not df.empty and "strategy" in df:

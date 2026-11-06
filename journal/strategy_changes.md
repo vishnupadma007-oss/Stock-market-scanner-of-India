@@ -138,3 +138,8 @@ Past preopen and results-gap trades now count for the pre-open team.
   transcripts). Now only material news disqualifies: filings (results, regulatory, guidance, ratings...), policy hits and
   news of impact 3+; results due within 2 days still disqualify. Routine articles and concall items no longer do.
   Not backtestable (no news history); judged on live trades.
+
+## 6 Nov 2026: AI context check on spurt entries (observe only, user's plan)
+- Every quiet-spurt entry (spurt and news-agrees) gets a Gemini view: market-wide vs stock-specific, catalyst none/routine/material,
+  take it YES/NO (agents/ai_helper.py, journal/ai_spurt_context.csv). It never blocks a trade. The evening review scores YES vs NO.
+  It earns a gate only after 30+ trades with NO clearly worse than YES in both halves.

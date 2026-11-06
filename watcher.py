@@ -1295,6 +1295,18 @@ async def spurt_entries(im: IndMoney, trades: list[dict], now: datetime, cfg: di
                             "hit_probability": row["hit_probability"], "square_off": cfg["square_off_time"],
                             "reason": reason, "rolled_from": option.get("rolled_from"),
                             "otm_for_budget": option.get("otm_for_budget"), "probability": prob})
+            if ai_helper.available(_cfg_for_grok):  # observe only (6 Nov): AI context check on the spurt entry
+                try:
+                    info = {"symbol": sym, "direction": g["direction"], "move": float(g["move_pct"]),
+                            "volume_x": g["volume_x"],
+                            **ai_helper.context_info(sym, analyzer.recent_items(now),
+                                                     analyzer.market_mood(analyzer.recent_items(now), now)["mood"],
+                                                     _daily.get("shock_state", "normal"))}
+                    threading.Thread(target=ai_helper.log_spurt_context,
+                                     args=(info, {"team": team, "contract": option["contract"]}, _cfg_for_grok),
+                                     daemon=True).start()
+                except Exception as e:
+                    emit("ERROR", {"error": f"ai spurt context: {type(e).__name__}: {e}"})
             return True
         except (LoginRequired, RateLimited):
             raise
