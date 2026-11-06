@@ -342,4 +342,5 @@ carry:                     # overnight carry (user, 3 Nov; agents/carry.py): a t
   enabled: true            # one night instead of squared off, unless results are due today/next session, it filed results
   teams: [news, spurt, preopen, movers] # or a regulatory action today, or the option is within min_days_to_expiry of expiry; next morning
   min_days_to_expiry: 3    # it is sold at the open on overnight results/regulatory filings or strong news against it,
+  carry_puts: false        # 6 Nov: PUTs are squared off at 15:20 (5 carried PUTs: 1 win, 4 losses, -Rs 37,000; CALLs +Rs 26,000)
   open_after: "09:16"      # otherwise at the target or at 15:20. Live paper test (60-day backtest: carrying lost; 27-30 Oct real trades: it won)

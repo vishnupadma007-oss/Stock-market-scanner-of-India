@@ -21,7 +21,7 @@ from datetime import date, datetime, time, timedelta
 
 from . import analyzer
 
-DEFAULTS = {"enabled": False, "teams": ["news", "spurt", "preopen", "movers"], "min_days_to_expiry": 3, "open_after": "09:16"}
+DEFAULTS = {"enabled": False, "teams": ["news", "spurt", "preopen", "movers"], "min_days_to_expiry": 3, "open_after": "09:16", "carry_puts": True}
 MARK = "carried overnight"
 MONTHS = {m: i for i, m in enumerate(["JAN", "FEB", "MAR", "APR", "MAY", "JUN", "JUL", "AUG", "SEP", "OCT", "NOV", "DEC"], 1)}
 
@@ -51,6 +51,8 @@ def should_carry(trade: dict, now: datetime, team: str, items: list[dict], resul
     today = now.date()
     if not c["enabled"] or team not in c["teams"]:
         return False, "carry off for this team"
+    if not c["carry_puts"] and str(trade.get("contract", "")).endswith("-PUT"):
+        return False, "PUTs are not carried"
     if str(trade.get("date")) != today.isoformat():
         return False, "already carried one night"
     exp = expiry_of(trade.get("contract", ""), today)

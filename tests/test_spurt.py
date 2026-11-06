@@ -247,3 +247,14 @@ def test_ai_spurt_context_prompt_and_log(tmp_path, monkeypatch):
     monkeypatch.setattr(ai_helper, "ask", lambda *a, **k: '{"market_wide": true, "catalyst": "none", "take_it": "NO", "confidence": 70, "reason": "x"}')
     ai_helper.log_spurt_context(info, {"team": "spurt", "contract": "ITC-23-NOV-400-CALL"})
     assert "NO" in (tmp_path / "ctx.csv").read_text()
+
+
+def test_puts_are_not_carried_when_switched_off():
+    from datetime import date
+    from agents import carry
+    now = datetime(2026, 11, 6, 15, 20, tzinfo=IST)
+    put = {"date": "2026-11-06", "symbol": "LT", "contract": "LT-23-NOV-4100-PUT"}
+    call = {**put, "contract": "LT-23-NOV-4100-CALL"}
+    cfg = {"enabled": True, "carry_puts": False}
+    assert carry.should_carry(put, now, "spurt", [], None, date(2026, 11, 9), cfg) == (False, "PUTs are not carried")
+    assert carry.should_carry(call, now, "spurt", [], None, date(2026, 11, 9), cfg)[0] is True

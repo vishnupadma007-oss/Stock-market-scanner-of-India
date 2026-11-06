@@ -143,3 +143,8 @@ Past preopen and results-gap trades now count for the pre-open team.
 - Every quiet-spurt entry (spurt and news-agrees) gets a Gemini view: market-wide vs stock-specific, catalyst none/routine/material,
   take it YES/NO (agents/ai_helper.py, journal/ai_spurt_context.csv). It never blocks a trade. The evening review scores YES vs NO.
   It earns a gate only after 30+ trades with NO clearly worse than YES in both halves.
+
+## 6 Nov 2026 (evening): PUTs are no longer carried overnight
+- Live record of carried trades: PUTs 5 trades, 1 win, net -Rs 37,200 (ASIANPAINT -9.6k, HINDALCO -8.9k, ASIANPAINT +10.7k, HDFCBANK -19.3k,
+  KOTAKBANK -10.1k); CALLs 5 trades +Rs 26,000. The 29 Oct / 2 Nov backtests also found carrying lost overall. Small sample, user's free hands.
+  Switch: config.yaml carry.carry_puts (false). The PUTs already carried (LT, GRASIM) are squared off at tomorrow's 15:20 as before.
