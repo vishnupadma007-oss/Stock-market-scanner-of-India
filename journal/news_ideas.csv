@@ -192,3 +192,25 @@ date,time,symbol,direction,confidence,source,priced_in
 2026-11-05,11:37,BAJFINANCE,up,80,intel,
 2026-11-05,13:01,M&M,up,88,intel,not priced in
 2026-11-05,15:16,COALINDIA,up,78,intel,not priced in
+2026-11-06,08:41,BHARTIARTL,up,82,intel,some pessimism priced in
+2026-11-06,08:41,BAJFINANCE,up,74,intel,partly priced in
+2026-11-06,08:41,M&M,up,93,intel,not priced in
+2026-11-06,08:41,TITAN,up,92,intel,partly priced in
+2026-11-06,08:41,COALINDIA,up,80,intel,some pessimism priced in
+2026-11-06,08:41,APOLLOHOSP,up,71,intel,not priced in
+2026-11-06,08:48,ONGC,up,88,intel,not priced in
+2026-11-06,08:48,BRITANNIA,up,91,intel,not priced in
+2026-11-06,08:48,MPHASIS,up,74,intel,not priced in
+2026-11-06,09:15,JSWSTEEL,down,75,preopen,NSE pre-open order imbalance
+2026-11-06,09:15,GRASIM,down,75,preopen,NSE pre-open order imbalance
+2026-11-06,09:15,CIPLA,down,75,preopen,NSE pre-open order imbalance
+2026-11-06,09:15,MUTHOOTFIN,down,75,preopen,NSE pre-open order imbalance
+2026-11-06,09:15,RELIANCE,down,75,preopen,NSE pre-open order imbalance
+2026-11-06,09:15,ASIANPAINT,down,75,preopen,NSE pre-open order imbalance
+2026-11-06,09:15,VEDL,down,75,preopen,NSE pre-open order imbalance
+2026-11-06,09:15,HAL,down,75,preopen,NSE pre-open order imbalance
+2026-11-06,09:15,BPCL,down,75,preopen,NSE pre-open order imbalance
+2026-11-06,09:15,BANKBARODA,down,75,preopen,NSE pre-open order imbalance
+2026-11-06,09:15,SHRIRAMFIN,down,75,preopen,NSE pre-open order imbalance
+2026-11-06,09:15,BAJFINANCE,down,75,preopen,NSE pre-open order imbalance
+2026-11-06,11:50,ICICIBANK,up,82,intel,partly priced in

@@ -7,3 +7,5 @@ date,time,symbol,contract,historical_win_rate,monte_carlo_target_prob,ml_confide
 2026-11-04,10:26,NESTLEIND,NESTLEIND-23-NOV-1250-PUT,0.721,0.371,0.751,0.615,1.25,-55.2,False,blended chance 61% is in the weakest group (< 62%)
 2026-11-04,10:32,HINDALCO,HINDALCO-23-NOV-920-PUT,0.654,0.365,0.687,0.569,-0.13,-38.7,False,blended chance 57% is in the weakest group (< 62%)
 2026-11-04,10:52,BRITANNIA,BRITANNIA-23-NOV-4950-PUT,0.673,0.47,0.71,0.618,2.39,-53.6,False,blended chance 62% is in the weakest group (< 62%)
+2026-11-06,09:30,SUNPHARMA,SUNPHARMA-23-NOV-1820-CALL,0.717,0.611,0.623,0.65,1.65,-53.6,True,
+2026-11-06,09:42,LT,LT-23-NOV-4100-PUT,0.717,0.367,0.687,0.59,-1.77,-48.8,False,blended chance 59% is in the weakest group (< 62%)
