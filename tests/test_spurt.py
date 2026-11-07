@@ -47,6 +47,9 @@ class Live:
     async def quotes(self, keys, segments=None):
         return {k: {"entity_stats": {"day_change_percentage": self.move, "live_price": 1003.5}} for k in keys}
 
+    async def day_changes(self, keys):
+        return {k: 0.5 for k in keys}  # the Nifty is up: a rising spurt is with the market
+
     async def candles(self, key, interval, lookback):
         d = days_of_candles(n_days=6)
         walk = 1000.0 * np.exp(np.cumsum(np.random.default_rng(7).normal(0, 0.003, len(d))))
@@ -258,3 +261,12 @@ def test_puts_are_not_carried_when_switched_off():
     cfg = {"enabled": True, "carry_puts": False}
     assert carry.should_carry(put, now, "spurt", [], None, date(2026, 11, 9), cfg) == (False, "PUTs are not carried")
     assert carry.should_carry(call, now, "spurt", [], None, date(2026, 11, 9), cfg)[0] is True
+
+
+def test_spurt_trades_with_the_market():
+    assert spurt.check_market_alignment("up", 0.4)[0] is True
+    assert spurt.check_market_alignment("up", -0.4)[0] is False
+    assert spurt.check_market_alignment("down", -0.1)[0] is True
+    assert spurt.check_market_alignment("down", 0.2)[0] is False
+    assert spurt.check_market_alignment("down", None)[0] is True
+    assert spurt.check_market_alignment("up", 0.1, 0.2)[0] is False

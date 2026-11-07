@@ -371,7 +371,8 @@ def check_institutional_timing(now: datetime, entry_from: str = "09:30",
 
 
 PURE_DEFAULTS = {"enabled": True, "window_until": "11:30", "preopen_max_gap_pct": 1.0, "min_oi_pct": 2.0,
-                 "max_spread_pct": 1.0, "min_delta": 0.50, "max_delta": 0.65}
+                 "max_spread_pct": 1.0, "min_delta": 0.50, "max_delta": 0.65,
+                 "with_market": True, "market_min_pct": 0.0}
 
 
 def check_option_limits(option: dict, pure: dict) -> str:
@@ -383,3 +384,15 @@ def check_option_limits(option: dict, pure: dict) -> str:
     if delta is not None and not pure["min_delta"] <= abs(float(delta)) <= pure["max_delta"]:
         return f"delta {abs(float(delta)):.2f} outside {pure['min_delta']}-{pure['max_delta']}"
     return ""
+
+
+def check_market_alignment(direction: str, nifty_move_pct: float | None, min_pct: float = 0.0) -> tuple[bool, str]:
+    """Trade WITH the market (user's idea, backtest 7 Nov): a spurt is taken only when the Nifty's move today (vs yesterday's
+    close) points the same way. 60 days: revived rules +Rs 91k -> +Rs 117k, hit 62% -> 74%, positive in both halves; the same
+    entries against the market lost money. No Nifty reading is not held against the trade."""
+    if nifty_move_pct is None:
+        return True, "no Nifty reading"
+    sign = 1 if direction == "up" else -1
+    if sign * float(nifty_move_pct) > min_pct:
+        return True, f"with the market (Nifty {nifty_move_pct:+.2f}%)"
+    return False, f"against the market: spurt {direction}, Nifty {nifty_move_pct:+.2f}%"

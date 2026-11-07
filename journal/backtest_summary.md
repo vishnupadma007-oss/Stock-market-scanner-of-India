@@ -427,3 +427,24 @@ The multi-week veto never fired in 60 days (needs a 8%+ run into a 20-day high).
 quarantine, F&O OI confirmation, delta 0.50-0.65 / spread <= 1%. Revived rules: better per trade (+3.9% vs +3.0%), profitable in
 both halves, but less total money (fewer trades). Switched on at the user's request. The "dynamic breakeven lock" in the user's
 chart (a stop once +8-10%) was NOT built: it is a stop-loss, against the no-stop-loss rule.
+
+### Spurt redesign: trade WITH the market (user's question, 7 Nov 2026): `backtest_spurt_v2.py`
+
+Why the live spurt team lost: the plain rule has been flat in the backtest too in the last two weeks (+Rs 637 and -Rs 4,821 per week), while it
+earned in Aug-Oct. Live 13 closed trades since 30 Oct: spurts WITH the Nifty's move that day 8 trades +Rs 6,103; against it 5 trades -Rs 16,948.
+60 days x 76 stocks (data to 6 Nov), window 09:30-11:30, 15%-else-10% target, no stop-loss; control = same entries the opposite way (all lose).
+
+| Rule | Trades | Hit % | Avg | Net | Half 1 / Half 2 |
+|---|---|---|---|---|---|
+| Plain rule (1.5x, 0.2-0.5% move) | 165 | 62 | +2.5% | +Rs 1,25,259 | +75k / +50k |
+| + with the Nifty | 106 | 67 | +4.2% | +Rs 1,33,936 | +58k / +76k |
+| + against the Nifty | 97 | 54 | -0.7% | -Rs 20,635 | +28k / -48k |
+| + with the Nifty & volume 1.8x | 59 | 71 | +6.5% | +Rs 1,14,120 | +56k / +58k |
+| + with the Nifty & volume 2.5x | 37 | 78 | +6.9% | +Rs 75,954 | +30k / +46k |
+| Revived rules (1.8x, window, calm gap) | 87 | 62 | +3.5% | +Rs 91,179 | +63k / +28k |
+| **Revived + with the Nifty (adopted)** | 53 | 74 | +7.4% | **+Rs 1,17,463** | +60k / +58k |
+
+Waiting for a breakout first (past the first-30-minute range, yesterday's high/low, the day's high/low, opening-range style) removed the edge
+(+Rs 5k to +40k; the move is already used up). Stock stronger than the Nifty by 0.2%: ~0. Against-the-market and 'last-bar burst' lost.
+Revived + with the Nifty is positive in 10 of 12 weeks (revived alone: 3 negative weeks in the last 4). Caveats: 60 days, one regime, many
+variants tried (the control and both halves guard against luck); news, OI and delta/spread gates cannot be backtested.

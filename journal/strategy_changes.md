@@ -148,3 +148,8 @@ Past preopen and results-gap trades now count for the pre-open team.
 - Live record of carried trades: PUTs 5 trades, 1 win, net -Rs 37,200 (ASIANPAINT -9.6k, HINDALCO -8.9k, ASIANPAINT +10.7k, HDFCBANK -19.3k,
   KOTAKBANK -10.1k); CALLs 5 trades +Rs 26,000. The 29 Oct / 2 Nov backtests also found carrying lost overall. Small sample, user's free hands.
   Switch: config.yaml carry.carry_puts (false). The PUTs already carried (LT, GRASIM) are squared off at tomorrow's 15:20 as before.
+
+## 7 Nov 2026: spurt trades WITH the market (user's question: why is the spurt team not profitable?)
+- A spurt (spurt team) is taken only if the Nifty's move today (vs yesterday's close) points the same way (config spurt.pure.with_market).
+  Backtest: revived rules +Rs 91k -> +Rs 117k, hit 62% -> 74%, both halves positive; live: with-market spurts +Rs 6.1k, against -Rs 16.9k.
+  Breakout-confirmation variants (ORB, yesterday's high/low) were tested and removed the edge. See backtest_summary.md.

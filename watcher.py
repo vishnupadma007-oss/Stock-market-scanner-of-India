@@ -1181,7 +1181,16 @@ async def pure_spurt_gate(im: IndMoney, sym: str, key: str, direction: str, now:
     if not ok:
         return why
     ok, why, _ = spurt.check_multiweek_context(await daily_candles(im, key, now.date()), direction, now.date())
-    return "" if ok else why
+    if not ok:
+        return why
+    if pure.get("with_market", True):  # trade with the market (backtest 7 Nov): the Nifty's move today must agree
+        if clock.time() - _daily.get("nifty_at", 0) > 60:
+            _daily["nifty_move"] = (await im.day_changes([NIFTY_KEY])).get(NIFTY_KEY)
+            _daily["nifty_at"] = clock.time()
+        ok, why = spurt.check_market_alignment(direction, _daily.get("nifty_move"), pure.get("market_min_pct", 0.0))
+        if not ok:
+            return why
+    return ""
 
 
 async def spurt_entries(im: IndMoney, trades: list[dict], now: datetime, cfg: dict, c: dict, done: set) -> bool:
