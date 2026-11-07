@@ -1279,8 +1279,13 @@ async def spurt_entries(im: IndMoney, trades: list[dict], now: datetime, cfg: di
             closes = closes[closes.index < now.date()]
             prev_day = (f"; previous day {(closes.iloc[-1] / closes.iloc[-2] - 1) * 100:+.1f}%"
                         if len(closes) >= 2 else "")
+            try:  # support / resistance around the entry, observe only (noted for the review)
+                lv = spurt.level_note(await daily_candles(im, key, now.date()), g["direction"],
+                                      float(stats.get("live_price") or 0) or float(intraday["Close"].iloc[-1]), now.date())
+            except Exception:
+                lv = ""
             reason = (f"Quiet volume spurt at {g['time']:%H:%M}: volume {g['volume_x']:.1f}x usual, "
-                      f"move {g['move_pct']:+.2f}% ({news_note}); target {tgt:g}% net{prev_day}")
+                      f"move {g['move_pct']:+.2f}% ({news_note}); target {tgt:g}% net{prev_day}" + (f"; {lv}" if lv else ""))
             prob = probability_report(intraday, option, risk, stats.get("live_price"), now, cfg,
                                       {"symbol": sym, "opened": now.strftime("%H:%M"), "volume_x": g["volume_x"],
                                        "move_pct": g["move_pct"], "side": side})

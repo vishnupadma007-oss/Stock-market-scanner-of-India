@@ -401,3 +401,22 @@ def check_market_alignment(direction: str, nifty_move_pct: float | None, min_pct
     if sign * move > min_pct:
         return True, f"with the market (Nifty {move:+.2f}%)"
     return False, f"against the market: spurt {direction}, Nifty {move:+.2f}%"
+
+
+def level_note(daily_df: pd.DataFrame, direction: str, price: float, today: date, look: int = 60, k: int = 2) -> str:
+    """Support / resistance around the entry (observe only, user's question 7 Nov): the nearest swing high above and swing low
+    below in the last `look` sessions, the room ahead and behind in the trade's direction, and whether it broke the 20-day high/low.
+    Noted on the trade so the review can test it on live trades (the 60-day backtest: no filter added money)."""
+    past = daily_df[daily_df.index.date < today].tail(look)
+    if len(past) < 2 * k + 3 or not price:
+        return ""
+    hi, lo = past["High"].values, past["Low"].values
+    res = [hi[i] for i in range(k, len(past) - k) if hi[i] == max(hi[i - k:i + k + 1]) and hi[i] > price * 1.0005]
+    sup = [lo[i] for i in range(k, len(past) - k) if lo[i] == min(lo[i - k:i + k + 1]) and lo[i] < price * 0.9995]
+    up = (min(res) / price - 1) * 100 if res else None
+    dn = (price / max(sup) - 1) * 100 if sup else None
+    ahead, behind = (up, dn) if direction == "up" else (dn, up)
+    h20, l20 = float(past["High"].tail(20).max()), float(past["Low"].tail(20).min())
+    brk = price > h20 if direction == "up" else price < l20
+    fmt = lambda v: "none" if v is None else f"{v:.1f}%"
+    return f"levels: room ahead {fmt(ahead)}, level behind {fmt(behind)}, {'breaks' if brk else 'inside'} the 20-day range"

@@ -452,3 +452,10 @@ variants tried (the control and both halves guard against luck); news, OI and de
 Direction split by the Nifty's day (same entries, 60 days; flat = |Nifty| < 0.15%): Nifty up: CALLs +Rs 44,663 (51 trades) vs PUTs against +Rs 1,422 (45);
 Nifty down: PUTs +Rs 22,999 (20) vs CALLs against -Rs 39,303 (27); flat market: both directions +Rs 66,428 (57; CALLs +36,008, PUTs +31,761, both
 halves positive). Rule adopted: up -> CALLs only, down -> PUTs only, flat -> both (config spurt.pure.market_flat_band_pct).
+
+### Spurt and support / resistance (user's question, 7 Nov 2026) - on top of the market rule (120 trades, +Rs 1,26,057, halves +67k / +59k)
+Levels = swing highs/lows of the last 60 sessions. Room ahead >= 1%: 100 trades +Rs 1,10,102; >= 2%: 81, +Rs 1,02,793; >= 3%: 68, +Rs 68,482 (less
+money, avg +3.7 / +4.2 / +3.4% vs +3.5%). Right at the wall (< 1% ahead): 26 trades +Rs 31,905 (still profitable). Breaking the 20-day high/low today:
+27 trades, 74% hit, +4.4% avg, +Rs 35,459 (both halves positive, but little money). Room ahead >= 1% with the level behind within 2%: 44 trades, 77% hit,
++6.8% avg, +Rs 89,618 (both halves positive), but its opposite-direction control also earned (+Rs 17k), so part of it is volatility, not direction.
+No level filter adds money, so none is a gate; the level note (room ahead, level behind, 20-day breakout) is recorded on every spurt trade (observe only).

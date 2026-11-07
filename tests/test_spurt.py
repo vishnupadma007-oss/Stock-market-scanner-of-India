@@ -272,3 +272,12 @@ def test_spurt_trades_with_the_market():
     assert spurt.check_market_alignment("up", -0.05)[0] is True
     assert spurt.check_market_alignment("down", None)[0] is True
     assert spurt.check_market_alignment("up", 0.3, 0.4)[0] is False
+
+
+def test_level_note_reports_room_and_breakout():
+    idx = pd.bdate_range(end="2026-11-05", periods=40)
+    base = np.r_[np.linspace(100, 110, 20), np.linspace(110, 100, 20)]
+    df = pd.DataFrame({"High": base + 1, "Low": base - 1, "Close": base}, index=idx)
+    note = spurt.level_note(df, "up", 105.0, date(2026, 11, 6))
+    assert "room ahead" in note and "20-day range" in note
+    assert spurt.level_note(df.head(3), "up", 105.0, date(2026, 11, 6)) == ""
