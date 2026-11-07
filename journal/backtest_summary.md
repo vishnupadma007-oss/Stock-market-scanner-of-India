@@ -448,3 +448,7 @@ Waiting for a breakout first (past the first-30-minute range, yesterday's high/l
 (+Rs 5k to +40k; the move is already used up). Stock stronger than the Nifty by 0.2%: ~0. Against-the-market and 'last-bar burst' lost.
 Revived + with the Nifty is positive in 10 of 12 weeks (revived alone: 3 negative weeks in the last 4). Caveats: 60 days, one regime, many
 variants tried (the control and both halves guard against luck); news, OI and delta/spread gates cannot be backtested.
+
+Direction split by the Nifty's day (same entries, 60 days; flat = |Nifty| < 0.15%): Nifty up: CALLs +Rs 44,663 (51 trades) vs PUTs against +Rs 1,422 (45);
+Nifty down: PUTs +Rs 22,999 (20) vs CALLs against -Rs 39,303 (27); flat market: both directions +Rs 66,428 (57; CALLs +36,008, PUTs +31,761, both
+halves positive). Rule adopted: up -> CALLs only, down -> PUTs only, flat -> both (config spurt.pure.market_flat_band_pct).

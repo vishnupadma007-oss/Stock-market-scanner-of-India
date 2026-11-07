@@ -202,6 +202,7 @@ spurt:                     # Quiet Volume Spurt (user's strategy, 28 Oct; agents
     min_delta: 0.50
     max_delta: 0.65
     with_market: true      # 7 Nov: only trade WITH the market (Nifty's move today in the spurt's direction). Backtest 60 days:
+    market_flat_band_pct: 0.15  # flat market (|Nifty| < 0.15%): both CALLs and PUTs allowed (backtest: both profitable)
     market_min_pct: 0.0    # revived rules +Rs 91k -> +Rs 117k, hit 62% -> 74%, both halves positive; against-the-market entries lose.
 budget_otm:                # user, 28 Oct: when one lot of the usual strike costs more than the team's free money,
   enabled: true            # buy a cheaper strike further out of the money whose lot fits

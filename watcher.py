@@ -1187,7 +1187,8 @@ async def pure_spurt_gate(im: IndMoney, sym: str, key: str, direction: str, now:
         if clock.time() - _daily.get("nifty_at", 0) > 60:
             _daily["nifty_move"] = (await im.day_changes([NIFTY_KEY])).get(NIFTY_KEY)
             _daily["nifty_at"] = clock.time()
-        ok, why = spurt.check_market_alignment(direction, _daily.get("nifty_move"), pure.get("market_min_pct", 0.0))
+        ok, why = spurt.check_market_alignment(direction, _daily.get("nifty_move"), pure.get("market_min_pct", 0.0),
+                                                  pure.get("market_flat_band_pct", 0.15))
         if not ok:
             return why
     return ""

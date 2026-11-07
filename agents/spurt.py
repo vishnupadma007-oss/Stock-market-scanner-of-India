@@ -372,7 +372,7 @@ def check_institutional_timing(now: datetime, entry_from: str = "09:30",
 
 PURE_DEFAULTS = {"enabled": True, "window_until": "11:30", "preopen_max_gap_pct": 1.0, "min_oi_pct": 2.0,
                  "max_spread_pct": 1.0, "min_delta": 0.50, "max_delta": 0.65,
-                 "with_market": True, "market_min_pct": 0.0}
+                 "with_market": True, "market_min_pct": 0.0, "market_flat_band_pct": 0.15}
 
 
 def check_option_limits(option: dict, pure: dict) -> str:
@@ -386,13 +386,18 @@ def check_option_limits(option: dict, pure: dict) -> str:
     return ""
 
 
-def check_market_alignment(direction: str, nifty_move_pct: float | None, min_pct: float = 0.0) -> tuple[bool, str]:
-    """Trade WITH the market (user's idea, backtest 7 Nov): a spurt is taken only when the Nifty's move today (vs yesterday's
-    close) points the same way. 60 days: revived rules +Rs 91k -> +Rs 117k, hit 62% -> 74%, positive in both halves; the same
-    entries against the market lost money. No Nifty reading is not held against the trade."""
+def check_market_alignment(direction: str, nifty_move_pct: float | None, min_pct: float = 0.0,
+                           flat_band_pct: float = 0.15) -> tuple[bool, str]:
+    """Trade WITH the market (user's idea, backtest 7 Nov). Nifty up -> only spurts up (CALLs); Nifty down -> only spurts down
+    (PUTs); a flat market (|Nifty| under `flat_band_pct`) -> both directions. 60 days: with the market CALLs +Rs 44.7k (against: PUTs
+    +Rs 1.4k), PUTs +Rs 23k (against: CALLs -Rs 39k), flat market both ways +Rs 66k (CALLs +36k, PUTs +32k). No Nifty reading is not
+    held against the trade."""
     if nifty_move_pct is None:
         return True, "no Nifty reading"
+    move = float(nifty_move_pct)
+    if abs(move) < flat_band_pct:
+        return True, f"flat market (Nifty {move:+.2f}%): both directions"
     sign = 1 if direction == "up" else -1
-    if sign * float(nifty_move_pct) > min_pct:
-        return True, f"with the market (Nifty {nifty_move_pct:+.2f}%)"
-    return False, f"against the market: spurt {direction}, Nifty {nifty_move_pct:+.2f}%"
+    if sign * move > min_pct:
+        return True, f"with the market (Nifty {move:+.2f}%)"
+    return False, f"against the market: spurt {direction}, Nifty {move:+.2f}%"

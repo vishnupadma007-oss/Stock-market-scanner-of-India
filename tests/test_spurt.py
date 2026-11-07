@@ -266,7 +266,9 @@ def test_puts_are_not_carried_when_switched_off():
 def test_spurt_trades_with_the_market():
     assert spurt.check_market_alignment("up", 0.4)[0] is True
     assert spurt.check_market_alignment("up", -0.4)[0] is False
-    assert spurt.check_market_alignment("down", -0.1)[0] is True
-    assert spurt.check_market_alignment("down", 0.2)[0] is False
+    assert spurt.check_market_alignment("down", -0.3)[0] is True
+    assert spurt.check_market_alignment("down", 0.3)[0] is False
+    assert spurt.check_market_alignment("down", 0.05)[0] is True   # flat market: both directions
+    assert spurt.check_market_alignment("up", -0.05)[0] is True
     assert spurt.check_market_alignment("down", None)[0] is True
-    assert spurt.check_market_alignment("up", 0.1, 0.2)[0] is False
+    assert spurt.check_market_alignment("up", 0.3, 0.4)[0] is False
