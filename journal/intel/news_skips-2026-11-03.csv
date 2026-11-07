@@ -1,0 +1,21 @@
+time,symbol,direction,confidence,move_pct,reason
+09:15,AXISBANK,up,69,0.5,Trend Checker 0 < 60
+09:21,AXISBANK,up,69,0.88,Trend Checker 20 < 60
+09:29,BANKBARODA,up,100,0.27,"early entry: Volume 0.3x usual on a green candle; Order book: buyers 0.6x sellers; F&O activity: short build-up (OI +0.1%, price -0.1%)"
+09:29,AXISBANK,up,69,1.33,Trend Checker 30 < 60
+09:29,VEDL,down,,0.42,quiet spurt: live move 0.42% no longer fits
+09:29,CANBK,up,,-0.03,quiet spurt: live move -0.03% no longer fits
+09:29,HINDALCO,down,,-0.12,quiet spurt: risk: Forecast chance of reaching the target is 59% (need 60%).
+09:38,RELIANCE,down,,-1.05,quiet spurt: live move -1.05% no longer fits
+09:38,ITC,up,,0.04,quiet spurt: live move 0.04% no longer fits
+09:38,TATASTEEL,up,,0.25,quiet spurt: risk: Forecast chance of reaching the target is 57% (need 60%).
+13:20,BAJAJFINSV,up,74,1.27,Trend Checker 15 < 60
+13:26,BAJAJFINSV,up,74,1.24,Trend Checker 15 < 60
+13:32,BAJAJFINSV,up,74,0.9,Trend Checker 15 < 60
+13:38,BAJAJFINSV,up,74,1.11,Trend Checker 15 < 60
+13:49,BAJAJFINSV,up,74,1.22,Trend Checker 45 < 60
+13:49,SBIN,up,100,1.61,Trend Checker 40 < 60
+13:54,SBIN,down,,-0.36,quiet spurt: strong news up (100%) against it
+13:56,BAJAJFINSV,up,74,1.24,Trend Checker 55 < 60
+14:03,SBIN,up,100,0.49,"early entry: Volume 29.0x usual on a green candle; Order book: buyers 0.5x sellers; F&O activity: short build-up (OI +19.1%, price -0.4%)"
+14:03,BAJAJFINSV,up,74,1.06,Trend Checker 40 < 60

@@ -1,0 +1,116 @@
+time,symbol,direction,confidence,move_pct,reason
+09:15,GAIL,up,76,1.14,Trend Checker 0 < 60
+09:15,TRENT,up,75,0.82,Trend Checker 0 < 60
+09:15,SBIN,up,74,1.09,Trend Checker 0 < 60
+09:24,GAIL,up,76,2.29,Trend Checker 45 < 60
+09:24,NTPC,up,73,3.45,Trend Checker 45 < 60
+09:30,COALINDIA,up,80,2.66,Trend Checker 30 < 60
+09:30,GAIL,up,76,1.78,Trend Checker 45 < 60
+09:30,RELIANCE,up,75,5.55,Trend Checker 45 < 60
+09:30,BANKBARODA,up,75,3.99,Trend Checker 45 < 60
+09:42,COALINDIA,up,80,2.94,Trend Checker 45 < 60
+09:42,GAIL,up,76,1.91,Trend Checker 45 < 60
+09:42,BANKBARODA,up,75,3.69,Trend Checker 55 < 60
+09:42,IOC,up,75,2.62,Trend Checker 30 < 60
+09:42,NTPC,up,73,3.08,"risk: One lot costs ₹11,175, above the ₹2,147 per-trade budget."
+09:49,COALINDIA,up,80,2.88,Trend Checker 55 < 60
+09:49,GAIL,up,76,2.97,"risk: One lot costs ₹18,354, above the ₹2,147 per-trade budget."
+09:49,BANKBARODA,up,75,3.67,"risk: One lot costs ₹21,645, above the ₹2,147 per-trade budget."
+09:49,IOC,up,75,3.07,Trend Checker 40 < 60
+09:49,NTPC,up,73,3.13,"risk: One lot costs ₹10,875, above the ₹2,147 per-trade budget."
+09:57,COALINDIA,up,80,3.02,Trend Checker 55 < 60
+09:57,GAIL,up,76,3.44,"risk: One lot costs ₹22,400, above the ₹2,147 per-trade budget."
+09:57,BANKBARODA,up,75,3.26,Trend Checker 55 < 60
+09:57,IOC,up,75,3.1,premium Rs 4.23 under Rs 5.0
+09:57,NTPC,up,73,3.02,"risk: One lot costs ₹10,350, above the ₹2,147 per-trade budget."
+10:01,GAIL,up,76,3.08,"risk: One lot costs ₹21,406, above the ₹2,147 per-trade budget."
+10:01,IOC,up,75,2.79,premium Rs 3.97 under Rs 5.0
+10:01,NTPC,up,73,2.91,Trend Checker 55 < 60
+10:05,COALINDIA,up,80,3.11,"risk: One lot costs ₹15,525, above the ₹2,147 per-trade budget."
+10:05,GAIL,up,76,3.16,"risk: One lot costs ₹20,980, above the ₹2,147 per-trade budget."
+10:05,BANKBARODA,up,75,2.79,Trend Checker 45 < 60
+10:05,IOC,up,75,2.83,premium Rs 4.0 under Rs 5.0
+10:13,COALINDIA,up,80,3.2,"risk: One lot costs ₹15,930, above the ₹2,147 per-trade budget."
+10:13,GAIL,up,76,3.05,"risk: One lot costs ₹21,548, above the ₹2,147 per-trade budget."
+10:13,BANKBARODA,up,75,2.39,Trend Checker 15 < 60
+10:13,IOC,up,75,2.84,Trend Checker 55 < 60
+10:13,NTPC,up,73,2.47,Trend Checker 30 < 60
+10:17,COALINDIA,up,80,3.24,"risk: One lot costs ₹16,268, above the ₹2,147 per-trade budget."
+10:17,GAIL,up,76,3.16,"risk: One lot costs ₹21,620, above the ₹2,147 per-trade budget."
+10:21,COALINDIA,up,80,3.46,Trend Checker 55 < 60
+10:21,GAIL,up,76,3.3,"risk: One lot costs ₹21,406, above the ₹2,147 per-trade budget."
+10:21,BANKBARODA,up,75,2.44,Trend Checker 30 < 60
+10:21,IOC,up,75,3.11,Trend Checker 55 < 60
+10:21,NTPC,up,73,2.64,"risk: One lot costs ₹9,000, above the ₹2,147 per-trade budget."
+10:29,COALINDIA,up,80,3.62,Trend Checker 55 < 60
+10:29,GAIL,up,76,3.12,"risk: One lot costs ₹21,264, above the ₹2,147 per-trade budget."
+10:29,BANKBARODA,up,75,2.54,"risk: One lot costs ₹24,921, above the ₹2,147 per-trade budget."
+10:29,IOC,up,75,3.14,premium Rs 4.25 under Rs 5.0
+10:29,NTPC,up,73,2.64,"risk: One lot costs ₹9,525, above the ₹2,147 per-trade budget."
+10:34,COALINDIA,up,80,3.51,Trend Checker 55 < 60
+10:34,GAIL,up,76,3.27,"risk: One lot costs ₹22,010, above the ₹2,147 per-trade budget."
+10:34,BANKBARODA,up,75,3.31,"risk: One lot costs ₹21,499, above the ₹2,147 per-trade budget."
+10:34,IOC,up,75,3.19,premium Rs 4.21 under Rs 5.0
+10:34,NTPC,up,73,2.85,"risk: One lot costs ₹9,300, above the ₹2,147 per-trade budget."
+10:50,ICICIBANK,down,64,-0.4,early entry: Volume 0.4x usual on a red candle; Order book: sellers 1.6x buyers
+10:54,INDUSINDBK,down,,-0.49,"quiet spurt: risk: One lot costs ₹15,575, above the ₹3,075 per-trade budget.; Forecast chance of reaching the target is 50% (need 60%)."
+10:54,NTPC,up,90,2.43,Trend Checker 30 < 60
+10:54,IOC,up,75,3.32,premium Rs 4.22 under Rs 5.0
+10:54,COALINDIA,up,100,3.79,"risk: One lot costs ₹13,905, above the ₹3,075 per-trade budget."
+10:54,BANKBARODA,up,93,3.1,Trend Checker 55 < 60
+10:54,IOC,up,75,3.12,Trend Checker 55 < 60
+10:54,GAIL,up,73,3.84,"risk: One lot costs ₹17,963, above the ₹3,075 per-trade budget."
+11:08,COALINDIA,up,100,3.91,"risk: One lot costs ₹14,648, above the ₹3,075 per-trade budget."
+11:08,BANKBARODA,up,93,3.16,Trend Checker 45 < 60
+11:08,NTPC,up,90,2.45,"risk: One lot costs ₹8,550, above the ₹3,075 per-trade budget."
+11:08,IOC,up,75,3.2,Trend Checker 45 < 60
+11:08,GAIL,up,73,3.79,"risk: One lot costs ₹19,276, above the ₹3,075 per-trade budget."
+11:08,BAJAJ-AUTO,down,,-0.2,"quiet spurt: risk: One lot costs ₹18,746, above the ₹3,075 per-trade budget."
+11:08,COALINDIA,up,100,4,"risk: One lot costs ₹14,782, above the ₹3,075 per-trade budget."
+11:08,NTPC,up,90,2.78,"risk: One lot costs ₹9,375, above the ₹3,075 per-trade budget."
+11:19,BANKBARODA,up,93,3.02,Trend Checker 15 < 60
+11:19,NTPC,up,90,2.8,"risk: One lot costs ₹9,150, above the ₹3,075 per-trade budget."
+11:19,IOC,up,75,3.09,Trend Checker 45 < 60
+11:23,NTPC,up,90,2.67,"risk: One lot costs ₹9,000, above the ₹3,075 per-trade budget."
+11:30,BANKBARODA,up,93,2.83,Trend Checker 30 < 60
+11:30,NTPC,up,90,2.61,"risk: One lot costs ₹8,850, above the ₹3,075 per-trade budget."
+11:30,IOC,up,75,3.01,Trend Checker 45 < 60
+11:34,NTPC,up,90,2.69,"risk: One lot costs ₹8,625, above the ₹3,075 per-trade budget."
+11:37,BANKBARODA,up,93,2.98,Trend Checker 55 < 60
+11:37,NTPC,up,90,2.48,Trend Checker 45 < 60
+11:37,IOC,up,75,3.08,Trend Checker 45 < 60
+11:43,BANKBARODA,up,93,2.9,Trend Checker 55 < 60
+11:43,NTPC,up,90,2.4,Trend Checker 30 < 60
+11:43,IOC,up,75,2.9,premium Rs 4.28 under Rs 5.0
+11:47,IOC,up,75,3.27,Trend Checker 55 < 60
+11:51,BANKBARODA,up,93,2.87,Trend Checker 40 < 60
+11:51,NTPC,up,90,1.96,Trend Checker 15 < 60
+11:57,BANKBARODA,up,93,2.94,Trend Checker 40 < 60
+11:57,NTPC,up,90,1.87,Trend Checker 15 < 60
+11:57,IOC,up,75,3.49,premium Rs 3.81 under Rs 5.0
+12:01,IOC,up,75,3.38,premium Rs 4.31 under Rs 5.0
+12:05,BANKBARODA,up,93,2.7,Trend Checker 15 < 60
+12:05,NTPC,up,90,2.06,Trend Checker 30 < 60
+12:05,IOC,up,75,3.29,premium Rs 3.82 under Rs 5.0
+12:12,BANKBARODA,up,93,2.93,Trend Checker 40 < 60
+12:12,NTPC,up,90,2.42,Trend Checker 45 < 60
+12:12,IOC,up,75,3.51,premium Rs 4.02 under Rs 5.0
+12:16,IOC,up,75,3.63,premium Rs 3.97 under Rs 5.0
+12:19,BANKBARODA,up,93,2.81,Trend Checker 25 < 60
+12:19,NTPC,up,90,2.45,Trend Checker 55 < 60
+12:19,IOC,up,75,3.64,premium Rs 3.97 under Rs 5.0
+12:26,BANKBARODA,up,93,2.67,Trend Checker 25 < 60
+12:26,NTPC,up,90,2.17,Trend Checker 55 < 60
+12:26,IOC,up,75,3.47,premium Rs 3.86 under Rs 5.0
+12:30,IOC,up,75,3.4,premium Rs 3.82 under Rs 5.0
+12:34,BANKBARODA,up,93,2.76,Trend Checker 25 < 60
+12:34,NTPC,up,90,2.23,Trend Checker 40 < 60
+12:34,IOC,up,75,3.28,premium Rs 4.33 under Rs 5.0
+12:41,BANKBARODA,up,93,2.79,Trend Checker 30 < 60
+12:41,NTPC,up,90,2.18,Trend Checker 15 < 60
+12:41,IOC,up,75,3.23,Trend Checker 15 < 60
+12:57,AUBANK,up,77,3.52,Trend Checker 55 < 60
+13:00,APOLLOHOSP,down,,-0.55,"quiet spurt: risk: One lot costs ₹32,338, above the ₹3,075 per-trade budget.; Forecast chance of reaching the target is 53% (need 60%)."
+13:06,AUBANK,up,77,3.24,"risk: One lot costs ₹15,225, above the ₹3,075 per-trade budget."
+13:08,AUBANK,up,77,3.22,Trend Checker 50 < 60
+13:15,AUBANK,up,77,3.01,Trend Checker 35 < 60

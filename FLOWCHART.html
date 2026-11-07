@@ -1,0 +1,121 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Trading Desk Flowchart</title>
+<style>
+body{font-family:system-ui,Arial,sans-serif;margin:0;padding:16px;background:#f6f7f9;color:#1c2330;max-width:1100px;margin:auto}
+h1{font-size:22px}h2{font-size:18px;margin:28px 0 8px;border-bottom:2px solid #cfd6e2;padding-bottom:4px}
+.row{display:flex;flex-wrap:wrap;gap:10px;justify-content:center;margin:6px 0}
+.box{background:#fff;border:1.5px solid #8aa0c2;border-radius:8px;padding:8px 10px;font-size:13px;min-width:150px;max-width:260px}
+.box b{display:block;margin-bottom:3px}
+.info{border-color:#6aa57a;background:#eef8f0}.team{border-color:#c28a3a;background:#fff6e8}.core{border-color:#5a7fc2;background:#eef3fc}
+.out{border-color:#a05ac2;background:#f6eefa}.stop{border-color:#c25a5a;background:#fdeeee}
+.arrow{text-align:center;font-size:22px;color:#5a6b86;margin:0}
+.teamcol{flex:1;min-width:230px}
+.teamcol h3{margin:0 0 6px;font-size:15px;text-align:center}
+.step{background:#fff;border:1.5px solid #c28a3a;border-radius:8px;padding:6px 9px;margin:0 0 4px;font-size:12.5px}
+.step.no{border-color:#c25a5a;background:#fdeeee}.step.go{border-color:#5a9a6a;background:#eef8f0}
+.dn{text-align:center;color:#c28a3a;margin:0 0 4px;line-height:1}
+table{border-collapse:collapse;width:100%;font-size:13px;background:#fff}td,th{border:1px solid #cfd6e2;padding:5px 7px;vertical-align:top;text-align:left}th{background:#e8edf6}
+.small{font-size:12px;color:#55627a}
+@media(prefers-color-scheme:dark){body{background:#12161d;color:#e4e9f2}.box,.step,table{background:#1b212c}.info{background:#16261b}.team{background:#2a2113}.core{background:#172036}.out{background:#241a2e}.stop,.step.no{background:#2e1818}.step.go{background:#16261b}th{background:#232b3a}td,th{border-color:#34405a}.small{color:#9aa8c2}}
+</style></head><body>
+<h1>Trading Desk: how every agent works (paper trading only, NSE F&amp;O stock options)</h1>
+<p class="small">Updated 4 Nov 2026. Nothing here places real orders; INDmoney access is read-only. Rules from the user: buy options only (CALL for up, PUT for down), no stop-loss, square-off 15:20 except the overnight carry rule. Four teams trade side by side with their own paper money.</p>
+
+<h2>1. The whole system</h2>
+<div class="row">
+ <div class="box info"><b>NSE filings</b>checked every 10 s: results, orders, regulatory (agents/announcements.py)</div>
+ <div class="box info"><b>Results reader</b>20 parallel workers, OCR for scanned PDFs, AI helper (Gemini) for figures the parser misses</div>
+ <div class="box info"><b>News feeds</b>ET, Mint, BS, CNBC-TV18, Google News every 30 s (newsfeed.py); Concalls (concalls.py)</div>
+ <div class="box info"><b>NSE pre-open + volume spurts</b>pre-open at 09:08; spurts every minute (preopen.py, spurt.py)</div>
+ <div class="box info"><b>Policy, Macro, Commodities, Market context</b>RBI/SEBI/GST/tariffs to stocks hit or helped; Nifty move and why</div>
+ <div class="box info"><b>F&amp;O Activity</b>live open-interest build-ups (activity.py)</div>
+</div>
+<p class="arrow">&#8595;</p>
+<div class="row">
+ <div class="box core"><b>Intelligence log</b>journal/intel/&lt;date&gt;.jsonl (intel.py)</div>
+ <div class="box core"><b>Data Analyzer</b>forecast per stock + market mood (analyzer.py)</div>
+ <div class="box core"><b>Expectations + Valuation + Results Reaction</b>already priced in? P/E, P/B; expected gap from 3 yrs of results</div>
+ <div class="box core"><b>Shock agent</b>big news + Nifty 1.5%+ with breadth/VIX = stand aside or flip (shock.py)</div>
+ <div class="box core"><b>Day mode</b>normal / careful / no_trade (daymode.py, journal/day_mode.json)</div>
+</div>
+<p class="arrow">&#8595; four teams, each with its own paper money and 4 slots &#8595;</p>
+
+<h2>2. The four teams: how each one decides</h2>
+<div class="row" style="align-items:flex-start">
+ <div class="teamcol"><h3>PREOPEN team (Rs 1 lakh)</h3>
+  <div class="step">A. <b>Gap recovery</b> (new 4 Nov): stock opens 1.5%+ from yesterday's close</div><p class="dn">&#9660;</p>
+  <div class="step">Wait to 09:30: price back 1%+ from the early extreme AND past the open</div><p class="dn">&#9660;</p>
+  <div class="step no">Skip: results day, or strong news behind the gap</div><p class="dn">&#9660;</p>
+  <div class="step go">Buy the recovery direction (CALL after gap-down, PUT after gap-up)</div>
+  <div class="step" style="margin-top:8px">B. <b>Pre-open order flow</b> and <b>results-day gaps</b> (gapfollow.py): follow the gap from 09:30 if the first 15 min agree</div>
+  <div class="small">Backtest: recovery +Rs 33.6k on 35 trades; continuation loses.</div></div>
+
+ <div class="teamcol"><h3>NEWS team (Rs 1 lakh)</h3>
+  <div class="step">Idea: analyzer forecast, results filing, or quiet spurt the news agrees with</div><p class="dn">&#9660;</p>
+  <div class="step no">Skip: stock's own results day (for forecasts), already priced in (Expectations)</div><p class="dn">&#9660;</p>
+  <div class="step">Price confirms the direction</div><p class="dn">&#9660;</p>
+  <div class="step">Trend Checker scores the chart 60+ (momentum.py)</div><p class="dn">&#9660;</p>
+  <div class="step go">Buy CALL (up) or PUT (down)</div>
+  <div class="small">Live record is negative so far; being reviewed.</div></div>
+
+ <div class="teamcol"><h3>SPURT team (Rs 1 lakh) - revived pure engine</h3>
+  <div class="step no">1. News quarantine: out if results today/next 2 days or MATERIAL news (filings, policy hits, high-impact news; routine articles ignored) (it goes to the news team if the news agrees)</div><p class="dn">&#9660;</p>
+  <div class="step">2. Pre-open calm: gap between -1% and +1%</div><p class="dn">&#9660;</p>
+  <div class="step">3. Multi-week structure: veto exhaustion runs (&gt;8% in 5d / &gt;12% in 10d at the 20-day high)</div><p class="dn">&#9660;</p>
+  <div class="step">4. NSE volume 1.8x+ usual at a 0.2-0.5% move, candle and VWAP agree; window 09:30-11:30</div><p class="dn">&#9660;</p>
+  <div class="step">5. F&amp;O OI not against it (long build-up / short covering for CALL; short build-up / long unwinding for PUT)</div><p class="dn">&#9660;</p>
+  <div class="step go">Buy ITM1 option: bid-ask gap &le;1%, delta 0.50-0.65; target 15% if Risk allows, else 10%</div>
+  <div class="small">Backtest of the testable gates: 83 trades, +Rs 97k (old rule +Rs 156k). News and OI gates cannot be backtested.</div></div>
+
+ <div class="teamcol"><h3>MOVERS team (Rs 30,000)</h3>
+  <div class="step">Top gainers/losers of the day (INDmoney movers)</div><p class="dn">&#9660;</p>
+  <div class="step">Chart reader: reversal setup, support/resistance, regime (chart_reader.py, regime.py)</div><p class="dn">&#9660;</p>
+  <div class="step no">News Guard: skip results, regulatory action, policy hit, strong news against (news_guard.py)</div><p class="dn">&#9660;</p>
+  <div class="step no">Shock days: no fading gainers in a rally, no bounces in a crash</div><p class="dn">&#9660;</p>
+  <div class="step go">Buy PUT on a fading gainer / CALL on a bouncing loser; 1% target</div></div>
+</div>
+
+<p class="arrow">&#8595; every trade, all teams &#8595;</p>
+<div class="row">
+ <div class="box core"><b>Options agent</b>picks the contract: nearest expiry, 1 strike in the money, bid-ask gap and delta limits (options.py, indmoney.pick_option)</div>
+ <div class="box core"><b>Risk agent</b>size from free money, target premium net of all charges, hit chance (risk.py, costs.py)</div>
+ <div class="box core"><b>Decision agent</b>final TRADE / SKIP, one lot minimum, never two on a stock (decision.py)</div>
+ <div class="box out"><b>Paper trade + SIGNAL</b>row in journal/paper_trades.csv (journal.py, paper_trade.py)</div>
+</div>
+<p class="arrow">&#8595;</p>
+<div class="row">
+ <div class="box out"><b>Exit checker (every 15 s)</b>sells at the target bid</div>
+ <div class="box stop"><b>15:20 decision (carry.py)</b>stays one night UNLESS: results today/next session, own filing today, or expiry within 3 days. Otherwise squared off</div>
+ <div class="box out"><b>Next morning</b>sold at the open on overnight bad news; else target or next 15:20</div>
+ <div class="box out"><b>Trade News Monitor</b>news after entry: would sell / raise target (observe only)</div>
+</div>
+<p class="arrow">&#8595;</p>
+<div class="row">
+ <div class="box info"><b>15:40 review (review.py)</b>scoreboard per team, breakdowns, AI helper scoring, journal commit</div>
+ <div class="box info"><b>Observe-only agents</b>Probability Analyzer, Candlestick patterns, Crowd psychology, AI TRADE/SKIP view: log, never block</div>
+ <div class="box info"><b>User decides</b>the best team after 30+ trades each</div>
+</div>
+
+<h2>3. A trading day</h2>
+<table><tr><th>Time (IST)</th><th>What happens</th></tr>
+<tr><td>08:40</td><td>Morning brief: overnight filings, expected Nifty open (US stocks, crude), day mode, mover forecast; watcher started</td></tr>
+<tr><td>09:08 / 09:10</td><td>Pre-open snapshot saved; mover forecast message</td></tr>
+<tr><td>09:15 - 15:15</td><td>Entries. Preopen gap recovery decided at 09:30. NSE filings every 10 s; spurts every minute</td></tr>
+<tr><td>12:40</td><td>Midday trades report; journal pushed</td></tr>
+<tr><td>13:40, 14:40</td><td>Watcher health check (restart if the container killed it)</td></tr>
+<tr><td>15:20</td><td>Square-off or carry overnight</td></tr>
+<tr><td>15:40</td><td>Evening review and report</td></tr></table>
+
+<h2>4. Files</h2>
+<table><tr><th>File</th><th>Purpose</th></tr>
+<tr><td>watcher.py</td><td>All-day watcher: scans, entries for every team, exits, status lines</td></tr>
+<tr><td>agents/</td><td>Every agent (information, analysis, trading, research)</td></tr>
+<tr><td>config.yaml</td><td>Teams, capital, targets, thresholds</td></tr>
+<tr><td>review.py</td><td>Evening review and team scoreboard</td></tr>
+<tr><td>backtest_*.py</td><td>Tests of each idea on 60 days of 5-minute data</td></tr>
+<tr><td>tests/</td><td>209 automated tests (python -m pytest -q)</td></tr>
+<tr><td>journal/</td><td>paper_trades.csv, strategy_changes.md, backtest_summary.md, reviews</td></tr>
+<tr><td>GUIDE.md, CLAUDE.md, .claude/skills/</td><td>Documentation and the instructions Claude follows (desk-handover, trading-desk)</td></tr></table>
+<p class="small">Secrets (INDmoney login, Gemini key) live outside the project folder and are not in the archive.</p>
+</body></html>
