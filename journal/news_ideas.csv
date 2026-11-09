@@ -228,3 +228,6 @@ date,time,symbol,direction,confidence,source,priced_in
 2026-11-09,08:50,TATASTEEL,up,83,intel,partly priced in
 2026-11-09,11:06,PNB,up,68,intel,partly priced in
 2026-11-09,11:10,SBIN,up,90,intel,not priced in
+2026-11-09,13:29,INFY,down,82,intel,not priced in
+2026-11-09,13:29,TCS,down,71,intel,not priced in
+2026-11-09,13:29,HCLTECH,down,82,intel,partly priced in

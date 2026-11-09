@@ -14,3 +14,4 @@ date,time,symbol,contract,action,bid,target_bid,mode,reason
 2026-11-05,13:49,BEL,BEL-23-NOV-395-CALL,exit,9.65,13.7,observe,market shock (extreme)
 2026-11-05,13:49,NATIONALUM,NATIONALUM-23-NOV-325-CALL,exit,9.65,11.9,observe,market shock (extreme)
 2026-11-05,13:49,HINDUNILVR,HINDUNILVR-23-NOV-1980-CALL,exit,29.2,37.5,observe,market shock (extreme)
+2026-11-06,15:06,MPHASIS,MPHASIS-23-NOV-2550-CALL,raise,32.45,191.5,observe,"AI: The Mphasis concall transcript reports strongest sequential growth in three years, a record pipeline, and critically, a raise in growth guidance for the year. Raising guidance is a significant bullish (MPHASIS concall transcript: Q2 delivered what we said it would: our strongest se)"
