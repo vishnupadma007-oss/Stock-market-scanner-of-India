@@ -1,10 +1,11 @@
 {
-  "date": "2026-11-06",
-  "mode": "careful",
+  "date": "2026-11-09",
+  "mode": "normal",
   "notes": [
-    "Big overnight shock: S&P 500 -4.4%, Brent +5.3%; expected Nifty open about -1.3% (range -1.8 to -0.8)",
-    "Results since last session: Bharti Airtel, Titan, ONGC, Britannia (all read strong); M&M gap pending",
-    "Spurt team on the revived pure engine with the narrowed news gate; AI context check logging"
+    "Expected Nifty open about flat (+0.04%, range -0.5 to +0.6; S&P 500 flat over the weekend, Brent -0.2%)",
+    "Results since last session: Divi's Labs, Tata Steel (both strong); Hindalco gap pending",
+    "Spurt team: revived pure engine + trades with the market (flat Nifty allows CALLs and PUTs)",
+    "PUTs are no longer carried overnight"
   ],
   "avoid": []
 }

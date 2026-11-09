@@ -215,3 +215,16 @@ date,time,symbol,direction,confidence,source,priced_in
 2026-11-06,09:15,BAJFINANCE,down,75,preopen,NSE pre-open order imbalance
 2026-11-06,11:50,ICICIBANK,up,82,intel,partly priced in
 2026-11-06,13:52,HINDALCO,up,72,intel,some pessimism priced in
+2026-11-09,08:41,HDFCBANK,up,69,intel,not priced in
+2026-11-09,08:41,ICICIBANK,up,70,intel,partly priced in
+2026-11-09,08:41,BHARTIARTL,up,92,intel,partly priced in
+2026-11-09,08:41,TITAN,up,93,intel,partly priced in
+2026-11-09,08:41,MPHASIS,up,86,intel,not priced in
+2026-11-09,08:41,HINDALCO,up,78,intel,pessimism priced in
+2026-11-09,08:41,ONGC,up,88,intel,not priced in
+2026-11-09,08:41,BEL,up,78,intel,not priced in
+2026-11-09,08:41,DIVISLAB,up,79,intel,partly priced in
+2026-11-09,08:41,BRITANNIA,up,86,intel,some pessimism priced in
+2026-11-09,08:50,TATASTEEL,up,83,intel,partly priced in
+2026-11-09,11:06,PNB,up,68,intel,partly priced in
+2026-11-09,11:10,SBIN,up,90,intel,not priced in
