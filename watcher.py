@@ -1205,7 +1205,10 @@ async def spurt_entries(im: IndMoney, trades: list[dict], now: datetime, cfg: di
     fresh = [(sym, g) for sym, g in (_daily.get("spurt_signals") or {}).items()
              if sym not in done and not g.get("handled") and sym in set(cfg["universe"])
              and (now - g["time"].to_pydatetime()).total_seconds() <= s.get("fresh_min", 15) * 60]
+    pure_cfg = {**spurt.PURE_DEFAULTS, **(s.get("pure") or {})}
     for sym, g in fresh:
+        if pure_cfg["enabled"] and now.time() < time(9, 30):
+            continue  # the pure engine starts at 09:30: wait for the next round instead of dropping the signal
         g["handled"] = True
         sign = 1 if g["direction"] == "up" else -1
         idea = {"direction": g["direction"], "confidence": "", "source": "quiet-spurt"}

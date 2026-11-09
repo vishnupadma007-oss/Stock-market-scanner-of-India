@@ -364,7 +364,7 @@ def check_institutional_timing(now: datetime, entry_from: str = "09:30",
 
     if t < t_start:
         return False, f"Too early for volume spurt ({t:%H:%M} < {entry_from})"
-    if t > t_end:
+    if (t.hour, t.minute) > (t_end.hour, t_end.minute):  # the whole closing minute counts
         return False, f"Outside prime institutional window ({t:%H:%M} > {entry_until}); avoid late churn"
 
     return True, f"Inside prime institutional execution window ({t:%H:%M})"

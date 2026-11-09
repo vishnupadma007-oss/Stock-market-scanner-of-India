@@ -157,3 +157,7 @@ Past preopen and results-gap trades now count for the pre-open team.
 ## 7 Nov 2026: support / resistance on spurts (observe only)
 - Tested (backtest_summary.md): no support/resistance/breakout filter added money on top of the market rule. Spurt trades now carry a level note
   (room ahead, level behind, 20-day breakout) in their notes so live trades can confirm or reject it.
+
+## 9 Nov 2026: fix, spurt signals before 09:30 were dropped
+- The pure engine's 09:30 start rejected a signal seen at 09:28 AND marked it handled, so it was never retried (4 signals on 9 Nov). Now such a
+  signal waits for the next round; the 11:30 window end counts the whole 11:30 minute.
