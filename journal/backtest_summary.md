@@ -475,3 +475,9 @@ all such movers 338 trades -Rs 583 (halves +44k / -44k). Only those that had ALR
 28 trades, 68% hit, +Rs 39,489, both halves; gainer side (PUT): 25 trades +Rs 10,097 (first half negative). Month stretched 8%+: -Rs 28,834. The #1 mover
 alone, RSI extremes: too few or one-sided. Caveats: 53 trades, worst trade -57%, the top 3 days make all the profit; the News Guard (no history) is not in it.
 Live record 19 Oct - 9 Nov: 53 trades closed the same day +Rs 29,747; 13 carried overnight -Rs 45,717 -> carry switched off.
+
+### Can the news predict the move? (user's question, 10 Nov 2026) - 164 live news ideas, 21 Oct - 6 Nov, measured on 5-minute prices
+From the idea's time to the close, in the forecast's direction. All ideas: right way 51%, avg +0.12%, best point +1.19%, worst point -1.20%.
+Results filings (44): right 64%, avg +0.66%, reached +1% in 61%, +2% in 30%, +3% in 7 of 44. Plain media news (95): right 44%, avg -0.05%.
+Policy (16): 56% right, avg -0.12%. Ratings, orders, deals, guidance: 1-2 cases each (no verdict). Confidence 70+ is a little better than under 70
+(+0.2% vs -0.1%); the priced-in label does not separate winners yet. Change: only results-backed forecasts trade; the rest is logged as intel-news.

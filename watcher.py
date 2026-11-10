@@ -384,7 +384,11 @@ def run_analyzer(cfg: dict, now: datetime) -> None:
                 _daily.setdefault("forecasts", {})[symbol] = view
             expect = check_expectations(symbol, now)
             move = reaction.typical_move(symbol) or 2.0
-            add_idea(symbol, view["direction"], view["confidence"], "intel",
+            # Only results-backed forecasts trade (10 Nov, 164 live ideas: results filings right 64%, +0.66% to the close;
+            # plain media news 44%, -0.05%; policy -0.12%). The rest is logged as "intel-news" (paused in config.yaml).
+            backed = any(symbol in (i.get("symbols") or []) and i.get("kind") == "filing" and i.get("category") == "RESULTS"
+                         for i in items)
+            add_idea(symbol, view["direction"], view["confidence"], "intel" if backed else "intel-news",
                      "Analyzer: " + "; ".join(str(r) for r in view.get("reasons", [])[:3]), expect, now,
                      expected_move_pct=round(move * (view["confidence"] / 70.0), 2))
             if move:

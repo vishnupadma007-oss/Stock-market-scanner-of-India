@@ -169,3 +169,5 @@ Past preopen and results-gap trades now count for the pre-open team.
   Movers capital Rs 1 lakh (was Rs 30,000).
 - Kept as playbooks of the one desk: spurt with the market, pre-open (order flow, gap recovery, results gap), news forecasts, movers reversal.
   Tested and rejected: buying top movers in their direction, breakout confirmation, technical-strength filters (backtest_summary.md).
+- 10 Nov: news playbook trades only forecasts with a results filing behind them (source intel); forecasts from media news/policy alone are logged
+  as intel-news and paused (config teams.news.paused_sources). Evidence: 164 live ideas, results 64% right vs media news 44%.
