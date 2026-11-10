@@ -459,3 +459,11 @@ money, avg +3.7 / +4.2 / +3.4% vs +3.5%). Right at the wall (< 1% ahead): 26 tra
 27 trades, 74% hit, +4.4% avg, +Rs 35,459 (both halves positive, but little money). Room ahead >= 1% with the level behind within 2%: 44 trades, 77% hit,
 +6.8% avg, +Rs 89,618 (both halves positive), but its opposite-direction control also earned (+Rs 17k), so part of it is volatility, not direction.
 No level filter adds money, so none is a gate; the level note (room ahead, level behind, 20-day breakout) is recorded on every spurt trade (observe only).
+
+### Top gainers/losers + volume spurt + technical strength (user's idea, 10 Nov 2026) - not adopted
+60 days x 76 stocks, entries 09:30-13:30, 15%-else-10% target, no stop-loss. Stock already among the day's top 5 movers (1-4% move) with 1.5x volume:
+buying WITH the move: 329 trades -Rs 2,72,973; + with the market: 248, -Rs 1,62,156; + daily trend agrees: 125, +Rs 2,997 (halves -43k / +46k);
++ at the day's high/low (breakout): 175, -Rs 1,19,968. Reversal (top mover turned 0.5% off its extreme, back across VWAP): 164 trades +Rs 1,215
+(halves +29k / -28k); strong stock that fell, bounced (CALL): 44 trades -Rs 22,204; weak stock that rose, fading (PUT): 86, +Rs 53,110 but all in the
+first half (+53k / +0.1k). Nothing is positive in both halves. Once a stock is a top mover the option is expensive and the move is used; the edge is the
+early quiet stage (0.2-0.5%), i.e. the spurt itself. Live spurt team (13 closed, -Rs 23,439): with the market 7 trades +Rs 7,670; against 6 trades -Rs 31,100.
