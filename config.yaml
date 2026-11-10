@@ -64,6 +64,7 @@ teams:
       targets: [15.0, 10.0]
 max_capital_per_trade: 1.0   # share of available money one trade may use (1.0 = all of it)
 max_trades_per_day: 50     # effectively no cap: trade every setup that passes the agents
+commodity_guard: true      # movers: skip a reversal when a commodity the stock depends on is moving sharply against it (Oil India case)
 stretch:                   # stretched mover (user's method, backtest 10 Nov): a top mover that had already run week_pct the same
   enabled: true            # way over the last 5 sessions gets a 15% (else 10%) target on its reversal instead of 1%.
   week_pct: 4.0            # 60 days: 53 trades, 58% hit, +Rs 49,586, both halves positive; the same entries the other way -Rs 47,610.

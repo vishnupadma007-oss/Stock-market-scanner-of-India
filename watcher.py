@@ -810,6 +810,13 @@ async def scan(im: IndMoney, trades: list[dict], now: datetime, cfg: dict, hold:
                         record_guard(now, m["symbol"], side, chart["score"], guard["notes"])
                         continue  # serious news against the trade: move on to the next stock
 
+                # Commodity guard (10 Nov, the user's Oil India lesson): crude, gold, metals... moving sharply against the
+                # reversal means the stock's move has a cause that is still running: skip it.
+                if cfg.get("commodity_guard", True):
+                    cm = commodities.assess(m["symbol"], side, ctx.get("commodities") or {}, cfg)
+                    if cm["points"] > 0:
+                        record_guard(now, m["symbol"], side, chart["score"], ["commodity guard"] + cm["notes"])
+                        continue
                 option = await im.pick_contract(m["ind_key"], side, cfg, now.date(), budget=free_now)
                 if option is None or option["contract"] in taken:
                     continue

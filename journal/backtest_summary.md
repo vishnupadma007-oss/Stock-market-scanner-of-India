@@ -489,3 +489,9 @@ but +1.04% (right 67%, n=9) when the first 15 minutes went our way and -0.65% (n
 move used). Filed during market hours (8): no instant edge (+0.26% to the close, right 38%). So the reading is right but early entry is not possible; what
 predicts the rest of the day is the first 15 minutes (the results-gap rule already requires it). Live news trades by entry hour (same-day closes): before 13:00
 17 trades +Rs 10,846; from 13:00 8 trades -Rs 13,116 -> no new news trades after 13:00.
+
+### Stretched mover: other screens and the sector (user's question, 10 Nov 2026)
+Reversal of a top-5 mover that turned 0.5%: week 4%+ (adopted) 53 trades +Rs 49,586; 10-day 6%+: 47, +Rs 21,289; 15-day 7%+: 47, -Rs 7,379; week OR 15-day: 71,
++Rs 23,532; week AND 15-day: 29, +Rs 18,675. Whole sector moving the same way (0.7%+): 36, +Rs 13,669 (first half -0.9k); stock-specific: 17, +Rs 12,266. Nifty the
+same way 0.3%+: 32, +Rs 21,629; flat/against: 32, +Rs 6,437 (second half negative). No sector or longer screen beats the plain week rule. P/E vs peers, commodity and
+geopolitical checks have no history to test: the valuation label is recorded on each trade; a commodity moving against the trade now blocks it (commodity guard).

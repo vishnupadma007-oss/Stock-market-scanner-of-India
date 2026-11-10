@@ -172,3 +172,4 @@ Past preopen and results-gap trades now count for the pre-open team.
 - 10 Nov: news playbook trades only forecasts with a results filing behind them (source intel); forecasts from media news/policy alone are logged
   as intel-news and paused (config teams.news.paused_sources). Evidence: 164 live ideas, results 64% right vs media news 44%.
 - 10 Nov: news playbook takes no new trade after 13:00 (config teams.news.entry_until). Results-timing study in backtest_summary.md.
+- 10 Nov: movers playbook gets a commodity guard (it was wired only for the news team): a reversal is skipped when crude/gold/metals move sharply against it.
