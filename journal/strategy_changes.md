@@ -161,3 +161,11 @@ Past preopen and results-gap trades now count for the pre-open team.
 ## 9 Nov 2026: fix, spurt signals before 09:30 were dropped
 - The pure engine's 09:30 start rejected a signal seen at 09:28 AND marked it handled, so it was never retried (4 signals on 9 Nov). Now such a
   signal waits for the next round; the 11:30 window end counts the whole 11:30 minute.
+
+## 10 Nov 2026: one desk (user: "rewire it, one strong team is enough")
+- Overnight carry OFF for everything (carry.enabled false): carried trades lost Rs 45,717 on 13; trades closed the same day made Rs 29,747 on 53.
+- Stretched mover (user's own method): a top mover that had already run 4%+ the same way in the previous week gets a 15% (else 10%) target on its
+  reversal instead of 1% (config `stretch`); the News Guard still skips results, regulatory, policy and strong-news stocks (the Oil India lesson).
+  Movers capital Rs 1 lakh (was Rs 30,000).
+- Kept as playbooks of the one desk: spurt with the market, pre-open (order flow, gap recovery, results gap), news forecasts, movers reversal.
+  Tested and rejected: buying top movers in their direction, breakout confirmation, technical-strength filters (backtest_summary.md).

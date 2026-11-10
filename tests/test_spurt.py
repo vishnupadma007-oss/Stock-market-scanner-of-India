@@ -281,3 +281,10 @@ def test_level_note_reports_room_and_breakout():
     note = spurt.level_note(df, "up", 105.0, date(2026, 11, 6))
     assert "room ahead" in note and "20-day range" in note
     assert spurt.level_note(df.head(3), "up", 105.0, date(2026, 11, 6)) == ""
+
+
+def test_stretch_week_pct():
+    idx = pd.bdate_range(end="2026-11-09", periods=10)
+    df = pd.DataFrame({"Close": [100, 100, 100, 100, 100, 101, 102, 103, 104, 105.0]}, index=idx)
+    assert round(watcher.stretch_week_pct(df, date(2026, 11, 10)), 1) == 5.0
+    assert watcher.stretch_week_pct(df.head(4), date(2026, 11, 10)) is None

@@ -686,6 +686,15 @@ def square_off_one(t: dict, bid: float, now: datetime, cfg: dict, note: str) -> 
     emit("EXIT", {k: t[k] for k in ("symbol", "contract", "status", "entry_ask", "exit_bid", "qty", "net_pnl")})
 
 
+STRETCH_DEFAULTS = {"enabled": True, "week_pct": 4.0, "targets": [15.0, 10.0]}
+
+
+def stretch_week_pct(daily, today) -> float | None:
+    """The stock's move over the 5 sessions before today, % (None without enough history)."""
+    closes = daily[daily.index.date < today]["Close"]
+    return None if len(closes) < 6 else float((closes.iloc[-1] / closes.iloc[-6] - 1) * 100)
+
+
 GUARD_LOG = Path(__file__).resolve().parent / "journal" / "news_guard.csv"
 
 
@@ -806,6 +815,19 @@ async def scan(im: IndMoney, trades: list[dict], now: datetime, cfg: dict, hold:
                          "max_capital_per_trade": capital_share(option, {"capital": free_now}, slots, open_now)}
                 risk = plan(option, trades_today, now, sized, sigma_per_min=intraday_sigma_per_min(intraday),
                             spread_pct=option["spread_pct"], forecast=forecast)
+                # Stretched mover (user's method, backtest 10 Nov): a top mover that had already run 4%+ the same way over
+                # the last week is over-extended; its reversal is worth a big target (15%, else 10%) instead of 1%.
+                stretch_note = ""
+                sc = {**STRETCH_DEFAULTS, **(cfg.get("stretch") or {})}
+                week = stretch_week_pct(daily, now.date())
+                if sc["enabled"] and week is not None and week * (1 if side == "gainer" else -1) >= sc["week_pct"]:
+                    for tgt in sc["targets"]:
+                        big = plan(option, trades_today, now, {**sized, "net_target_pct": tgt, "target_mode": "fixed"},
+                                   sigma_per_min=intraday_sigma_per_min(intraday), spread_pct=option["spread_pct"])
+                        if big["allowed"]:
+                            risk = big
+                            stretch_note = f"stretched mover: {week:+.1f}% over the last week before today; target {tgt:g}% net"
+                            break
                 extras = []
                 if news_votes:
                     extras.append(news.assess(m["symbol"], side, m["change_pct"], now.date(),
@@ -843,7 +865,7 @@ async def scan(im: IndMoney, trades: list[dict], now: datetime, cfg: dict, hold:
                            target_bid=risk["target_premium"], spread_pct=round(option["spread_pct"], 2),
                            hit_probability=round(risk["hit_probability"]), chart_score=chart["score"],
                            oi_type=crowd["oi_type"], strategy="reversal", valuation=value["label"],
-                           status="OPEN", notes=rolled_note(option))
+                           status="OPEN", notes="; ".join(filter(None, [rolled_note(option), stretch_note])))
                 trades.append(row)
                 taken.add(option["contract"])
                 trades_today += 1

@@ -467,3 +467,11 @@ buying WITH the move: 329 trades -Rs 2,72,973; + with the market: 248, -Rs 1,62,
 (halves +29k / -28k); strong stock that fell, bounced (CALL): 44 trades -Rs 22,204; weak stock that rose, fading (PUT): 86, +Rs 53,110 but all in the
 first half (+53k / +0.1k). Nothing is positive in both halves. Once a stock is a top mover the option is expensive and the move is used; the edge is the
 early quiet stage (0.2-0.5%), i.e. the spurt itself. Live spurt team (13 closed, -Rs 23,439): with the market 7 trades +Rs 7,670; against 6 trades -Rs 31,100.
+
+### Stretched mover reversal (user's own method, 10 Nov 2026) - adopted for the movers playbook
+Top-5 mover of the day (1.5%+), turned 0.5% off its extreme, trade the reversal with a 15%-else-10% target (60 days, entries 09:30-14:00, no stop-loss):
+all such movers 338 trades -Rs 583 (halves +44k / -44k). Only those that had ALREADY run 4%+ the same way over the previous week: 53 trades, 58% hit,
++3.1% avg, +Rs 49,586 (halves +16.5k / +33.0k; 7 of 10 weeks positive); the same entries WITH the move: -Rs 47,610. Loser side (CALL after a week of -4%):
+28 trades, 68% hit, +Rs 39,489, both halves; gainer side (PUT): 25 trades +Rs 10,097 (first half negative). Month stretched 8%+: -Rs 28,834. The #1 mover
+alone, RSI extremes: too few or one-sided. Caveats: 53 trades, worst trade -57%, the top 3 days make all the profit; the News Guard (no history) is not in it.
+Live record 19 Oct - 9 Nov: 53 trades closed the same day +Rs 29,747; 13 carried overnight -Rs 45,717 -> carry switched off.

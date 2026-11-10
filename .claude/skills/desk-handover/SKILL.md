@@ -66,6 +66,7 @@ file current: update "State" in the 15:40 review whenever something here changes
 - Observe-only agents (log, never block; AI spurt context check from 6 Nov, journal/ai_spurt_context.csv): Probability Analyzer (`journal/probability.csv`), Trade News
   Monitor (`journal/trade_news.csv`, market-news exits off), AI helper TRADE/SKIP (`journal/ai_verdicts.csv`).
 - **Free hands on logic (4 Nov):** I may change the logic of any team on my own judgment; the goal is that every team runs profitably. Change only on backtest evidence (both halves), log it in `journal/strategy_changes.md`, tell the user in one line; a team that keeps losing live gets fixed or paused, not left running.
+- **One desk (10 Nov):** the user wants one profitable desk, not a contest. Playbooks: spurt WITH the market (pure engine), pre-open, news, movers reversal with the stretched-mover big target (`stretch`). Overnight carry is OFF (it lost Rs 45.7k live). See journal/strategy_changes.md 6-10 Nov.
 - Claude credits: wake only for problems; report trades at 12:40 and 15:40; short replies; no live
   re-checks unless the user asks.
 
