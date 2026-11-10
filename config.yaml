@@ -21,6 +21,8 @@ teams:
                            # 4 Nov: news forecasts trade again (user: four teams, each judged on its own money);
                            # they lost Rs 25,965 on 18 trades up to 3 Nov - [intel] pauses them again
     min_confidence: 60     # forecast confidence needed, after the priced-in cut
+    entry_until: "13:00"   # 10 Nov: no new news trades after 13:00. Live intel trades closed the same day: 09:15-12:59 17 trades
+                           # +Rs 10,846; from 13:00 8 trades -Rs 13,116 (too little time to reach the target; carry is off).
     confirm_pct: 0.5       # the stock must already move the forecast's way by this much today
     max_move_pct: 4.0      # ...but not more (move used up)
     max_age_min: 120       # forget ideas older than this

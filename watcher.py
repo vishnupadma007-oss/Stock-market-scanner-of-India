@@ -1379,6 +1379,8 @@ async def news_team(im: IndMoney, trades: list[dict], now: datetime, cfg: dict) 
     if not cfg.get("_news_ok", True):
         return  # the news and pre-open teams are full or out of money; the spurt team had its turn above
     base = cfg.get("_base", cfg)
+    if now.time() > _t(c.get("entry_until", "15:15")):
+        return  # no new news trades late in the day (10 Nov): too little time left to reach the target without overnight carry
     # An idea whose priced-in check failed is not traded: unchecked is not "not priced in".
     ideas = sorted(((sym, i) for sym, i in (_daily.get("ideas") or {}).items()
                     if sym not in done and i["confidence"] >= c["min_confidence"] and i.get("priced_in")

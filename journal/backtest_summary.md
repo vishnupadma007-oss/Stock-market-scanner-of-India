@@ -481,3 +481,11 @@ From the idea's time to the close, in the forecast's direction. All ideas: right
 Results filings (44): right 64%, avg +0.66%, reached +1% in 61%, +2% in 30%, +3% in 7 of 44. Plain media news (95): right 44%, avg -0.05%.
 Policy (16): 56% right, avg -0.12%. Ratings, orders, deals, guidance: 1-2 cases each (no verdict). Confidence 70+ is a little better than under 70
 (+0.2% vs -0.1%); the priced-in label does not separate winners yet. Change: only results-backed forecasts trade; the rest is logged as intel-news.
+
+### Are we late on results? (user's question, 10 Nov 2026) - 29 results filings with a clear read, 19 Oct - 6 Nov
+Filed outside market hours (21): the opening gap is already +1.28% in the direction of our reading of the figures (right 71%): the market prices the result
+at the open, before any trade is possible. Buying at 09:15: -0.38% to the close; the first 15 minutes alone -0.46%. From 09:30 to the close: +0.08% overall,
+but +1.04% (right 67%, n=9) when the first 15 minutes went our way and -0.65% (n=12) when they went against. Gap already 1%+ our way: -0.44% after 09:30 (n=8,
+move used). Filed during market hours (8): no instant edge (+0.26% to the close, right 38%). So the reading is right but early entry is not possible; what
+predicts the rest of the day is the first 15 minutes (the results-gap rule already requires it). Live news trades by entry hour (same-day closes): before 13:00
+17 trades +Rs 10,846; from 13:00 8 trades -Rs 13,116 -> no new news trades after 13:00.
