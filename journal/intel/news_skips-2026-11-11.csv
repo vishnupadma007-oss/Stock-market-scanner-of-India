@@ -1,0 +1,23 @@
+time,symbol,direction,confidence,move_pct,reason
+09:15,TATASTEEL,up,98,1.05,Trend Checker 0 < 60
+09:31,TITAN,down,,-0.26,"pure spurt: against the market: spurt down, Nifty +1.37%"
+09:31,GAIL,down,,0.2,quiet spurt: live move 0.2% no longer fits
+09:31,BAJAJFINSV,up,75,1.5,Trend Checker 40 < 60
+09:42,DLF,up,,0.04,quiet spurt: live move 0.04% no longer fits
+09:42,BAJAJFINSV,up,75,1.39,Trend Checker 50 < 60
+09:42,WIPRO,down,,1.51,gap recovery: no usable option
+09:42,HEROMOTOCO,up,,0.05,quiet spurt: live move 0.05% no longer fits
+09:49,BAJAJFINSV,up,75,1.27,Trend Checker 50 < 60
+09:56,BAJAJFINSV,up,75,1.25,Trend Checker 35 < 60
+10:01,BAJAJFINSV,up,75,1.25,Trend Checker 35 < 60
+10:09,BAJAJFINSV,up,75,1.26,Trend Checker 50 < 60
+10:17,BAJAJFINSV,up,75,1.25,Trend Checker 50 < 60
+10:28,BAJAJFINSV,up,75,1.13,Trend Checker 35 < 60
+10:36,TCS,down,,-0.08,quiet spurt: live move -0.08% no longer fits
+10:36,BAJAJFINSV,up,75,1.14,Trend Checker 50 < 60
+10:43,BAJAJFINSV,up,75,1.12,Trend Checker 50 < 60
+11:03,BAJAJFINSV,up,75,1.1,Trend Checker 45 < 60
+11:24,DLF,down,75,-0.65,Trend Checker 55 < 60
+11:41,DLF,down,75,-0.75,market headwind: Nifty +1.38% (rallying)
+11:46,HINDALCO,up,,0.28,pure spurt: Outside prime institutional window (11:46 > 11:30); avoid late churn
+12:03,ICICIBANK,down,,-0.28,pure spurt: Outside prime institutional window (12:03 > 11:30); avoid late churn

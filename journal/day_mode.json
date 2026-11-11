@@ -1,11 +1,11 @@
 {
-  "date": "2026-11-09",
+  "date": "2026-11-11",
   "mode": "normal",
   "notes": [
-    "Expected Nifty open about flat (+0.04%, range -0.5 to +0.6; S&P 500 flat over the weekend, Brent -0.2%)",
-    "Results since last session: Divi's Labs, Tata Steel (both strong); Hindalco gap pending",
-    "Spurt team: revived pure engine + trades with the market (flat Nifty allows CALLs and PUTs)",
-    "PUTs are no longer carried overnight"
+    "Expected Nifty open about +0.7% (range +0.2 to +1.2; S&P 500 +1.95% and Brent -6.1% since Monday's close)",
+    "Brent down sharply: helps oil marketers, paints, aviation; hurts ONGC, Oil India (commodity guard on the movers playbook)",
+    "Results since last session: Maruti (mixed). IT stocks under pressure in the news (Infosys, HCL Tech down views)",
+    "New rules from today: no overnight carry, stretched-mover big target, news trades only results-backed and before 13:00, spurts with the market"
   ],
   "avoid": []
 }

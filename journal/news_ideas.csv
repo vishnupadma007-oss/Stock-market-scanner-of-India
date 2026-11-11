@@ -231,3 +231,19 @@ date,time,symbol,direction,confidence,source,priced_in
 2026-11-09,13:29,INFY,down,82,intel,not priced in
 2026-11-09,13:29,TCS,down,71,intel,not priced in
 2026-11-09,13:29,HCLTECH,down,82,intel,partly priced in
+2026-11-11,08:41,INFY,down,78,intel-news,some pessimism priced in
+2026-11-11,08:41,SBIN,up,91,intel-news,partly priced in
+2026-11-11,08:41,HCLTECH,down,78,intel-news,not priced in
+2026-11-11,08:41,MPHASIS,up,60,intel-news,some pessimism priced in
+2026-11-11,08:41,TATASTEEL,up,98,intel,partly priced in
+2026-11-11,08:41,POWERGRID,up,75,intel-news,not priced in
+2026-11-11,08:41,AUBANK,up,84,intel-news,some pessimism priced in
+2026-11-11,08:41,DIVISLAB,up,73,intel,largely priced in
+2026-11-11,09:15,BAJAJFINSV,up,75,preopen,NSE pre-open order imbalance
+2026-11-11,09:15,NTPC,down,75,preopen,NSE pre-open order imbalance
+2026-11-11,09:15,DLF,down,75,preopen,NSE pre-open order imbalance
+2026-11-11,10:24,HDFCBANK,up,81,intel-news,not priced in
+2026-11-11,11:48,PNB,up,85,intel-news,partly priced in
+2026-11-11,12:24,ICICIBANK,up,74,intel-news,partly priced in
+2026-11-11,12:24,AXISBANK,up,74,intel-news,some pessimism priced in
+2026-11-11,12:28,FEDERALBNK,up,75,intel-news,some pessimism priced in
