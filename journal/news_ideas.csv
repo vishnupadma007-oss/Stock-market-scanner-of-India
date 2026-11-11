@@ -247,3 +247,4 @@ date,time,symbol,direction,confidence,source,priced_in
 2026-11-11,12:24,ICICIBANK,up,74,intel-news,partly priced in
 2026-11-11,12:24,AXISBANK,up,74,intel-news,some pessimism priced in
 2026-11-11,12:28,FEDERALBNK,up,75,intel-news,some pessimism priced in
+2026-11-11,13:51,RELIANCE,up,72,intel-news,partly priced in

@@ -23,3 +23,4 @@ time,symbol,direction,confidence,move_pct,reason
 12:03,ICICIBANK,down,,-0.28,pure spurt: Outside prime institutional window (12:03 > 11:30); avoid late churn
 13:49,HINDALCO,down,,-0.29,pure spurt: Outside prime institutional window (13:49 > 11:30); avoid late churn
 13:53,NMDC,down,,-0.2,pure spurt: Outside prime institutional window (13:53 > 11:30); avoid late churn
+15:05,TATAPOWER,down,,-0.33,pure spurt: Outside prime institutional window (15:05 > 11:30); avoid late churn
