@@ -1,11 +1,8 @@
 {
-  "date": "2026-11-11",
+  "date": "2026-11-12",
   "mode": "normal",
   "notes": [
-    "Expected Nifty open about +0.7% (range +0.2 to +1.2; S&P 500 +1.95% and Brent -6.1% since Monday's close)",
-    "Brent down sharply: helps oil marketers, paints, aviation; hurts ONGC, Oil India (commodity guard on the movers playbook)",
-    "Results since last session: Maruti (mixed). IT stocks under pressure in the news (Infosys, HCL Tech down views)",
-    "New rules from today: no overnight carry, stretched-mover big target, news trades only results-backed and before 13:00, spurts with the market"
-  ],
-  "avoid": []
+    "Expected Nifty open about +0.4% (range -0.1 to +0.9; S&P 500 +1.3%, Brent +0.3%)",
+    "Results overnight: TATAPOWER (profit +33% YoY, +18% QoQ, record quarter)"
+  ]
 }
