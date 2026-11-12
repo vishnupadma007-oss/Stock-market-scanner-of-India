@@ -20,7 +20,7 @@ file current: update "State" in the 15:40 review whenever something here changes
 
 ## One-time setup in a new session (do these before anything else, then tell the user in a few lines)
 
-1. **Branch.** All desk code and the journal live on branch `ccr-259c0717-ll9dkr` (pushed). If this session's
+1. **Branch.** All desk code and the journal live on branch `ccr-85ce73d2-7j5q3g` (pushed; was ccr-259c0717-ll9dkr). If this session's
    designated branch is different: `git fetch origin ccr-259c0717-ll9dkr` and
    `git checkout -B <your branch> origin/ccr-259c0717-ll9dkr`, push (force if the remote branch is stale),
    and from then on commit to this session's branch. The checkout may be sparse: use `git add --sparse`.
@@ -28,9 +28,9 @@ file current: update "State" in the 15:40 review whenever something here changes
 2. **Scheduled tasks** fire into the session that created them. Move all three: read each with `get_trigger`,
    create the same with `create_trigger` (no `persistent_session_id`; same name, cron and prompt), then
    `delete_trigger` the old one:
-   - `trig_01Qm2H4a6KxmVmgSnDXZeFSC` checks 08:40 / 12:40 / 15:40 (morning brief, midday, evening review)
-   - `trig_01QRGKfxihGKGFFG3LN6TNLD` pre-open mover forecast 09:10
-   - `trig_01X3FsW2ErbPnF7AYDvZzjVb` watcher health checks 13:40 / 14:40 (restart if the container killed it)
+   - `trig_01LE2ceuUxbsXE4eacgVE6Sn` checks 08:40 / 12:40 / 15:40 (morning brief, midday, evening review)
+   - `trig_01Cu1LXM8Syyan9cWnpvCzhh` pre-open mover forecast 09:10
+   - `trig_01AEqT8ATkQhicgXbabm7gb2` watcher health checks 13:40 / 14:40 (restart if the container killed it)
    If a trigger id is not found, list them with `list_triggers` and move whatever "Trading desk",
    "Pre-open" and "Watcher health" tasks exist.
 3. **INDmoney login** lives in `/root/.config/indmoney/token.json`, outside the repo; a new container will not
@@ -44,7 +44,7 @@ file current: update "State" in the 15:40 review whenever something here changes
 5. `pip install -q graphifyy` (code-graph MCP in `.mcp.json`, graph in `graphify-out/`; `graphify update .`
    after code changes). Run `python -m pytest -q` once (219 tests should pass).
 6. Archive the previous conversation (`archive_session`) when the user asks; the last one was
-   `session_016quqf5PhBLMRVciw3PhMwG`.
+   `session_016quqf4AyAuNPZm2eTTmXRX` (current; the one before it is archived).
 7. Daily routine: watcher `setsid nohup python3 -u watcher.py >> <scratchpad>/watcher.log 2>&1 < /dev/null &`;
    one background `scripts/wait_event.sh <scratchpad>/watcher.log` (run_in_background, timeout 7200000;
    restart it when its 2-hour limit stops it in market hours); `scripts/journal_quiet.sh on` during the day,
