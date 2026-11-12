@@ -1362,6 +1362,11 @@ async def spurt_entries(im: IndMoney, trades: list[dict], now: datetime, cfg: di
         except (LoginRequired, RateLimited):
             raise
         except Exception as e:
+            # A data-server hiccup must not drop the spurt (11 Nov: six were lost this way): retry it
+            # in the next round, at most twice, while it is still fresh.
+            g["retries"] = g.get("retries", 0) + 1
+            if g["retries"] <= 2:
+                g["handled"] = False
             emit("ERROR", {"error": f"quiet spurt {sym}: {type(e).__name__}: {e}"})
     return False
 

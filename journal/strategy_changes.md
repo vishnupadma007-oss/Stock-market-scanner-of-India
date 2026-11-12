@@ -173,3 +173,10 @@ Past preopen and results-gap trades now count for the pre-open team.
   as intel-news and paused (config teams.news.paused_sources). Evidence: 164 live ideas, results 64% right vs media news 44%.
 - 10 Nov: news playbook takes no new trade after 13:00 (config teams.news.entry_until). Results-timing study in backtest_summary.md.
 - 10 Nov: movers playbook gets a commodity guard (it was wired only for the news team): a reversal is skipped when crude/gold/metals move sharply against it.
+
+## 12 Nov: spurt candidates retried after a data error
+- 11 Nov: 6 spurt candidates (AXISBANK, HDFCBANK, KOTAKBANK, PNB, FEDERALBNK, ETERNAL) were dropped for good on one
+  INDmoney server error. Now retried in the next round (at most twice) while fresh. Bug fix, no rule change.
+- Carry check (user asked to cut it): carry has been OFF since 10 Nov; the losses on 11 Nov were 9 Nov trades
+  opened before the switch. Carried trades so far: spurt -Rs 20.8k (5), gap recovery -Rs 44.6k (4); the same
+  playbooks squared off the same day made money. Nothing is carried any more.
