@@ -248,3 +248,8 @@ date,time,symbol,direction,confidence,source,priced_in
 2026-11-11,12:24,AXISBANK,up,74,intel-news,some pessimism priced in
 2026-11-11,12:28,FEDERALBNK,up,75,intel-news,some pessimism priced in
 2026-11-11,13:51,RELIANCE,up,72,intel-news,partly priced in
+2026-11-12,12:29,SBIN,up,100,intel-news,partly priced in
+2026-11-12,12:29,BAJFINANCE,up,93,intel-news,partly priced in
+2026-11-12,12:29,TATAPOWER,up,90,intel-news,not priced in
+2026-11-12,12:29,PNB,up,75,intel-news,largely priced in
+2026-11-12,12:36,TITAN,up,77,intel-news,partly priced in
