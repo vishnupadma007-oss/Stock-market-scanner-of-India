@@ -1,0 +1,255 @@
+date,time,symbol,direction,confidence,source,priced_in
+2026-10-21,08:53,RELIANCE,up,87,intel,partly priced in
+2026-10-21,08:53,ICICIBANK,up,77,intel,partly priced in
+2026-10-21,08:53,SBIN,down,69,intel,some pessimism priced in
+2026-10-21,08:56,AXISBANK,down,87,intel,some pessimism priced in
+2026-10-21,08:56,PNB,up,60,intel,largely priced in
+2026-10-21,08:56,PAYTM,up,58,intel,partly priced in
+2026-10-21,09:48,LT,up,71,intel,not priced in
+2026-10-21,10:08,INFY,up,72,intel,partly priced in
+2026-10-21,10:08,TCS,up,46,intel,largely priced in
+2026-10-21,10:51,ETERNAL,up,75,intel,partly priced in
+2026-10-21,10:52,VEDL,up,71,intel,not priced in
+2026-10-21,14:06,IOC,down,66,intel,not priced in
+2026-10-22,08:53,RELIANCE,up,96,intel,partly priced in
+2026-10-22,08:53,HDFCBANK,down,86,intel,some pessimism priced in
+2026-10-22,08:53,INFY,up,55,intel,largely priced in
+2026-10-22,08:53,BAJFINANCE,down,100,intel,some pessimism priced in
+2026-10-22,08:53,TECHM,up,62,intel,largely priced in
+2026-10-22,08:53,IOC,down,79,intel,some pessimism priced in
+2026-10-22,08:59,ETERNAL,up,85,intel,partly priced in
+2026-10-22,08:59,POLICYBZR,down,80,intel,some pessimism priced in
+2026-10-22,11:55,BAJAJFINSV,down,81,intel,some pessimism priced in
+2026-10-22,11:57,DLF,down,81,intel,not priced in
+2026-10-23,08:33,RELIANCE,up,85,intel,partly priced in
+2026-10-23,08:33,HDFCBANK,down,94,intel,some pessimism priced in
+2026-10-23,08:33,ITC,down,79,intel,some pessimism priced in
+2026-10-23,08:37,BAJFINANCE,down,91,intel,not priced in
+2026-10-23,08:39,DLF,down,86,intel,not priced in
+2026-10-23,08:42,ETERNAL,up,88,intel,not priced in
+2026-10-23,09:55,INFY,up,54,intel,largely priced in
+2026-10-23,10:03,TCS,up,47,intel,largely priced in
+2026-10-23,10:05,KOTAKBANK,up,60,intel,partly priced in
+2026-10-23,12:55,VEDL,down,87,intel,some pessimism priced in
+2026-10-23,13:43,TECHM,up,57,intel,largely priced in
+2026-10-23,13:50,NATIONALUM,down,56,intel,pessimism priced in
+2026-10-23,14:55,JSWSTEEL,up,67,intel,some pessimism priced in
+2026-10-26,08:41,RELIANCE,up,79,intel,partly priced in
+2026-10-26,08:41,HDFCBANK,down,97,intel,some pessimism priced in
+2026-10-26,08:41,TCS,up,56,intel,largely priced in
+2026-10-26,08:41,KOTAKBANK,up,78,intel,partly priced in
+2026-10-26,08:41,BAJFINANCE,down,100,intel,some pessimism priced in
+2026-10-26,08:41,JSWSTEEL,up,84,intel,some pessimism priced in
+2026-10-26,08:41,VEDL,down,66,intel,pessimism priced in
+2026-10-26,08:41,NATIONALUM,down,51,intel,pessimism priced in
+2026-10-26,08:41,DLF,down,82,intel,not priced in
+2026-10-26,08:41,AUBANK,up,59,intel,some pessimism priced in
+2026-10-26,08:41,ETERNAL,up,80,intel,partly priced in
+2026-10-26,08:53,INFY,up,64,intel,largely priced in
+2026-10-26,08:53,BPCL,down,59,intel,pessimism priced in
+2026-10-26,09:25,SHRIRAMFIN,down,57,intel,pessimism priced in
+2026-10-26,09:38,INDUSINDBK,down,82,intel,some pessimism priced in
+2026-10-26,09:48,INFY,down,95,intel,largely priced in
+2026-10-26,10:16,AUBANK,down,88,intel,some pessimism priced in
+2026-10-26,11:39,POWERGRID,up,67,intel,
+2026-10-27,08:41,INFY,down,100,intel,partly priced in
+2026-10-27,08:44,KOTAKBANK,up,74,intel,largely priced in
+2026-10-27,08:44,ITC,up,68,intel,not priced in
+2026-10-27,08:44,BPCL,down,85,intel,some pessimism priced in
+2026-10-27,08:44,AUBANK,down,66,intel,pessimism priced in
+2026-10-27,08:44,PAYTM,down,82,intel,largely priced in
+2026-10-27,08:44,POLICYBZR,down,72,intel,some pessimism priced in
+2026-10-27,08:44,DRREDDY,up,55,intel,largely priced in
+2026-10-27,09:15,GRASIM,down,75,preopen,NSE pre-open order imbalance
+2026-10-27,09:15,BAJAJFINSV,down,75,preopen,NSE pre-open order imbalance
+2026-10-27,09:15,MPHASIS,down,75,preopen,NSE pre-open order imbalance
+2026-10-27,09:15,JSWSTEEL,down,75,preopen,NSE pre-open order imbalance
+2026-10-27,09:43,RELIANCE,up,70,intel,partly priced in
+2026-10-27,09:43,COFORGE,up,43,intel,largely priced in
+2026-10-27,11:14,TCS,down,92,intel,largely priced in
+2026-10-27,11:14,WIPRO,down,87,intel,largely priced in
+2026-10-27,11:14,HCLTECH,down,86,intel,partly priced in
+2026-10-27,12:06,BEL,up,76,intel,not priced in
+2026-10-27,12:06,HAL,up,81,intel,not priced in
+2026-10-27,13:36,CIPLA,down,60,intel,not priced in
+2026-10-28,08:42,RELIANCE,up,79,intel,partly priced in
+2026-10-28,08:42,ICICIBANK,down,73,intel,partly priced in
+2026-10-28,08:42,INFY,down,96,intel,partly priced in
+2026-10-28,08:42,TCS,down,77,intel,largely priced in
+2026-10-28,08:42,BHARTIARTL,up,51,intel,largely priced in
+2026-10-28,08:42,SHRIRAMFIN,up,76,intel,pessimism priced in
+2026-10-28,08:42,CIPLA,down,84,intel,some pessimism priced in
+2026-10-28,08:49,LT,up,79,intel,not priced in
+2026-10-28,08:49,SAIL,up,83,intel,not priced in
+2026-10-28,09:15,BAJAJFINSV,down,75,preopen,NSE pre-open order imbalance
+2026-10-28,09:15,PERSISTENT,down,75,preopen,NSE pre-open order imbalance
+2026-10-28,09:15,WIPRO,down,75,preopen,NSE pre-open order imbalance
+2026-10-28,09:15,BANKBARODA,down,75,preopen,NSE pre-open order imbalance
+2026-10-28,09:15,ITC,down,75,preopen,NSE pre-open order imbalance
+2026-10-28,09:15,HAL,down,75,preopen,NSE pre-open order imbalance
+2026-10-28,09:15,BPCL,down,80,preopen,NSE pre-open order imbalance
+2026-10-28,09:15,ONGC,down,75,preopen,NSE pre-open order imbalance
+2026-10-28,09:15,TECHM,down,75,preopen,NSE pre-open order imbalance
+2026-10-28,09:15,HCLTECH,down,75,preopen,NSE pre-open order imbalance
+2026-10-28,09:15,COFORGE,down,75,preopen,NSE pre-open order imbalance
+2026-10-28,09:15,MPHASIS,down,75,preopen,NSE pre-open order imbalance
+2026-10-28,09:27,HDFCBANK,down,49,intel,pessimism priced in
+2026-10-28,15:03,TVSMOTOR,up,79,intel,not priced in
+2026-10-29,08:42,RELIANCE,up,98,intel,partly priced in
+2026-10-29,08:42,INFY,down,100,intel,not priced in
+2026-10-29,08:42,TCS,down,97,intel,largely priced in
+2026-10-29,08:42,BHARTIARTL,up,59,intel,largely priced in
+2026-10-29,08:42,LT,up,80,intel,not priced in
+2026-10-29,08:42,VEDL,up,82,intel,some pessimism priced in
+2026-10-29,08:42,HEROMOTOCO,up,86,intel,not priced in
+2026-10-29,08:42,TVSMOTOR,up,86,intel,partly priced in
+2026-10-29,09:15,COALINDIA,up,75,preopen,NSE pre-open order imbalance
+2026-10-29,09:15,CIPLA,down,75,preopen,NSE pre-open order imbalance
+2026-10-29,09:20,HINDUNILVR,up,65,intel,not priced in
+2026-10-29,09:50,ADANIPORTS,up,74,intel,not priced in
+2026-10-29,14:11,ASIANPAINT,up,67,intel,pessimism priced in
+2026-10-30,08:42,RELIANCE,up,100,intel,partly priced in
+2026-10-30,08:42,KOTAKBANK,up,41,intel,largely priced in
+2026-10-30,08:42,HINDUNILVR,up,94,intel,not priced in
+2026-10-30,08:42,ADANIPORTS,up,79,intel,not priced in
+2026-10-30,08:42,VEDL,up,88,intel,pessimism priced in
+2026-10-30,08:42,COALINDIA,up,84,intel,some pessimism priced in
+2026-10-30,08:42,PNB,down,83,intel,not priced in
+2026-10-30,08:42,CANBK,down,66,intel,not priced in
+2026-10-30,08:42,TRENT,up,85,intel,partly priced in
+2026-10-30,08:42,HEROMOTOCO,up,71,intel,not priced in
+2026-10-30,08:42,ASIANPAINT,up,85,intel,not priced in
+2026-10-30,09:15,GRASIM,down,75,preopen,NSE pre-open order imbalance
+2026-10-30,09:15,BHEL,down,75,preopen,NSE pre-open order imbalance
+2026-10-30,10:20,SUNPHARMA,up,82,intel,some pessimism priced in
+2026-10-30,10:53,HDFCBANK,down,45,intel,pessimism priced in
+2026-10-30,10:53,ITC,down,52,intel,not priced in
+2026-10-30,13:06,ETERNAL,up,73,intel,partly priced in
+2026-10-30,14:39,GAIL,up,69,intel,not priced in
+2026-11-02,08:43,RELIANCE,up,100,intel,partly priced in
+2026-11-02,08:43,SUNPHARMA,up,100,intel,not priced in
+2026-11-02,08:43,NTPC,up,73,intel,not priced in
+2026-11-02,08:43,GAIL,up,76,intel,not priced in
+2026-11-02,08:43,BANKBARODA,up,72,intel,not priced in
+2026-11-02,08:43,PNB,down,93,intel,not priced in
+2026-11-02,08:43,CANBK,down,69,intel,not priced in
+2026-11-02,08:43,TRENT,up,75,intel,largely priced in
+2026-11-02,08:54,BEL,up,68,intel,not priced in
+2026-11-02,08:55,COALINDIA,up,100,intel,pessimism priced in
+2026-11-02,08:55,MUTHOOTFIN,up,87,intel,pessimism priced in
+2026-11-02,08:56,POWERGRID,up,68,intel,partly priced in
+2026-11-02,09:00,ICICIBANK,down,70,intel,not priced in
+2026-11-02,09:00,SBIN,up,74,intel,partly priced in
+2026-11-02,09:15,DIVISLAB,up,75,preopen,NSE pre-open order imbalance
+2026-11-02,09:15,MUTHOOTFIN,down,80,preopen,NSE pre-open order imbalance
+2026-11-02,09:25,IOC,up,72,intel,some pessimism priced in
+2026-11-02,09:38,TATASTEEL,up,74,intel,
+2026-11-02,12:54,AUBANK,up,77,intel,some pessimism priced in
+2026-11-03,08:42,RELIANCE,up,100,intel,partly priced in
+2026-11-03,08:42,NTPC,up,81,intel,not priced in
+2026-11-03,08:42,COALINDIA,up,87,intel,not priced in
+2026-11-03,08:42,BANKBARODA,up,100,intel,not priced in
+2026-11-03,08:46,NATIONALUM,up,67,intel,some pessimism priced in
+2026-11-03,08:54,AXISBANK,up,69,intel,some pessimism priced in
+2026-11-03,09:15,ASIANPAINT,up,75,preopen,NSE pre-open order imbalance
+2026-11-03,09:15,POWERGRID,down,75,preopen,NSE pre-open order imbalance
+2026-11-03,09:44,ITC,down,64,intel,not priced in
+2026-11-03,10:32,HDFCBANK,up,65,intel,pessimism priced in
+2026-11-03,10:32,HINDUNILVR,up,86,intel,not priced in
+2026-11-03,10:36,IOC,up,72,intel,not priced in
+2026-11-03,13:20,BAJAJFINSV,up,74,intel,some pessimism priced in
+2026-11-03,13:50,SBIN,up,100,intel,partly priced in
+2026-11-04,08:41,RELIANCE,up,100,intel,partly priced in
+2026-11-04,08:41,HDFCBANK,up,84,intel,not priced in
+2026-11-04,08:41,ICICIBANK,up,70,intel,not priced in
+2026-11-04,08:41,SBIN,up,93,intel,partly priced in
+2026-11-04,08:41,AXISBANK,up,70,intel,not priced in
+2026-11-04,08:41,KOTAKBANK,down,73,intel,largely priced in
+2026-11-04,08:41,BAJAJFINSV,up,75,intel,not priced in
+2026-11-04,08:41,ASIANPAINT,up,81,intel,not priced in
+2026-11-04,09:15,BHEL,up,80,preopen,NSE pre-open order imbalance
+2026-11-04,09:15,HINDUNILVR,down,75,preopen,NSE pre-open order imbalance
+2026-11-04,09:15,TITAN,down,75,preopen,NSE pre-open order imbalance
+2026-11-04,09:15,VEDL,down,75,preopen,NSE pre-open order imbalance
+2026-11-04,09:15,HINDALCO,down,75,preopen,NSE pre-open order imbalance
+2026-11-04,09:15,SAIL,down,75,preopen,NSE pre-open order imbalance
+2026-11-05,08:42,HDFCBANK,up,77,intel,not priced in
+2026-11-05,08:42,NATIONALUM,up,77,intel,some pessimism priced in
+2026-11-05,08:42,BPCL,down,72,intel,not priced in
+2026-11-05,08:42,IOC,down,77,intel,not priced in
+2026-11-05,08:42,BEL,up,85,intel,not priced in
+2026-11-05,08:42,APOLLOHOSP,up,83,intel,not priced in
+2026-11-05,09:15,ASIANPAINT,up,75,preopen,NSE pre-open order imbalance
+2026-11-05,09:15,MUTHOOTFIN,up,75,preopen,NSE pre-open order imbalance
+2026-11-05,09:15,CHOLAFIN,up,75,preopen,NSE pre-open order imbalance
+2026-11-05,09:15,AXISBANK,up,75,preopen,NSE pre-open order imbalance
+2026-11-05,09:15,HINDALCO,up,75,preopen,NSE pre-open order imbalance
+2026-11-05,09:24,SBIN,down,89,intel,partly priced in
+2026-11-05,09:31,APOLLOHOSP,down,75,results-gap,results gap rule
+2026-11-05,11:25,HINDUNILVR,up,82,intel,not priced in
+2026-11-05,11:37,ICICIBANK,up,85,intel,not priced in
+2026-11-05,11:37,SBIN,up,94,intel,partly priced in
+2026-11-05,11:37,BAJFINANCE,up,80,intel,
+2026-11-05,13:01,M&M,up,88,intel,not priced in
+2026-11-05,15:16,COALINDIA,up,78,intel,not priced in
+2026-11-06,08:41,BHARTIARTL,up,82,intel,some pessimism priced in
+2026-11-06,08:41,BAJFINANCE,up,74,intel,partly priced in
+2026-11-06,08:41,M&M,up,93,intel,not priced in
+2026-11-06,08:41,TITAN,up,92,intel,partly priced in
+2026-11-06,08:41,COALINDIA,up,80,intel,some pessimism priced in
+2026-11-06,08:41,APOLLOHOSP,up,71,intel,not priced in
+2026-11-06,08:48,ONGC,up,88,intel,not priced in
+2026-11-06,08:48,BRITANNIA,up,91,intel,not priced in
+2026-11-06,08:48,MPHASIS,up,74,intel,not priced in
+2026-11-06,09:15,JSWSTEEL,down,75,preopen,NSE pre-open order imbalance
+2026-11-06,09:15,GRASIM,down,75,preopen,NSE pre-open order imbalance
+2026-11-06,09:15,CIPLA,down,75,preopen,NSE pre-open order imbalance
+2026-11-06,09:15,MUTHOOTFIN,down,75,preopen,NSE pre-open order imbalance
+2026-11-06,09:15,RELIANCE,down,75,preopen,NSE pre-open order imbalance
+2026-11-06,09:15,ASIANPAINT,down,75,preopen,NSE pre-open order imbalance
+2026-11-06,09:15,VEDL,down,75,preopen,NSE pre-open order imbalance
+2026-11-06,09:15,HAL,down,75,preopen,NSE pre-open order imbalance
+2026-11-06,09:15,BPCL,down,75,preopen,NSE pre-open order imbalance
+2026-11-06,09:15,BANKBARODA,down,75,preopen,NSE pre-open order imbalance
+2026-11-06,09:15,SHRIRAMFIN,down,75,preopen,NSE pre-open order imbalance
+2026-11-06,09:15,BAJFINANCE,down,75,preopen,NSE pre-open order imbalance
+2026-11-06,11:50,ICICIBANK,up,82,intel,partly priced in
+2026-11-06,13:52,HINDALCO,up,72,intel,some pessimism priced in
+2026-11-09,08:41,HDFCBANK,up,69,intel,not priced in
+2026-11-09,08:41,ICICIBANK,up,70,intel,partly priced in
+2026-11-09,08:41,BHARTIARTL,up,92,intel,partly priced in
+2026-11-09,08:41,TITAN,up,93,intel,partly priced in
+2026-11-09,08:41,MPHASIS,up,86,intel,not priced in
+2026-11-09,08:41,HINDALCO,up,78,intel,pessimism priced in
+2026-11-09,08:41,ONGC,up,88,intel,not priced in
+2026-11-09,08:41,BEL,up,78,intel,not priced in
+2026-11-09,08:41,DIVISLAB,up,79,intel,partly priced in
+2026-11-09,08:41,BRITANNIA,up,86,intel,some pessimism priced in
+2026-11-09,08:50,TATASTEEL,up,83,intel,partly priced in
+2026-11-09,11:06,PNB,up,68,intel,partly priced in
+2026-11-09,11:10,SBIN,up,90,intel,not priced in
+2026-11-09,13:29,INFY,down,82,intel,not priced in
+2026-11-09,13:29,TCS,down,71,intel,not priced in
+2026-11-09,13:29,HCLTECH,down,82,intel,partly priced in
+2026-11-11,08:41,INFY,down,78,intel-news,some pessimism priced in
+2026-11-11,08:41,SBIN,up,91,intel-news,partly priced in
+2026-11-11,08:41,HCLTECH,down,78,intel-news,not priced in
+2026-11-11,08:41,MPHASIS,up,60,intel-news,some pessimism priced in
+2026-11-11,08:41,TATASTEEL,up,98,intel,partly priced in
+2026-11-11,08:41,POWERGRID,up,75,intel-news,not priced in
+2026-11-11,08:41,AUBANK,up,84,intel-news,some pessimism priced in
+2026-11-11,08:41,DIVISLAB,up,73,intel,largely priced in
+2026-11-11,09:15,BAJAJFINSV,up,75,preopen,NSE pre-open order imbalance
+2026-11-11,09:15,NTPC,down,75,preopen,NSE pre-open order imbalance
+2026-11-11,09:15,DLF,down,75,preopen,NSE pre-open order imbalance
+2026-11-11,10:24,HDFCBANK,up,81,intel-news,not priced in
+2026-11-11,11:48,PNB,up,85,intel-news,partly priced in
+2026-11-11,12:24,ICICIBANK,up,74,intel-news,partly priced in
+2026-11-11,12:24,AXISBANK,up,74,intel-news,some pessimism priced in
+2026-11-11,12:28,FEDERALBNK,up,75,intel-news,some pessimism priced in
+2026-11-11,13:51,RELIANCE,up,72,intel-news,partly priced in
+2026-11-12,12:29,SBIN,up,100,intel-news,partly priced in
+2026-11-12,12:29,BAJFINANCE,up,93,intel-news,partly priced in
+2026-11-12,12:29,TATAPOWER,up,90,intel-news,not priced in
+2026-11-12,12:29,PNB,up,75,intel-news,largely priced in
+2026-11-12,12:36,TITAN,up,77,intel-news,partly priced in

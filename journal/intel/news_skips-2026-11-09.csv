@@ -1,0 +1,71 @@
+time,symbol,direction,confidence,move_pct,reason
+09:15,TATASTEEL,up,83,0.53,Trend Checker 0 < 60
+09:15,ICICIBANK,up,70,1.35,Trend Checker 0 < 60
+09:22,DIVISLAB,up,79,3.73,Trend Checker 35 < 60
+09:22,ICICIBANK,up,70,0.93,Trend Checker 35 < 60
+09:28,SUNPHARMA,up,,0.28,pure spurt: Too early for volume spurt (09:28 < 09:30)
+09:28,TATAPOWER,down,,-0.58,pure spurt: Too early for volume spurt (09:28 < 09:30)
+09:28,KOTAKBANK,down,,-0.36,pure spurt: Too early for volume spurt (09:28 < 09:30)
+09:28,NMDC,down,,0.31,quiet spurt: live move 0.31% no longer fits
+09:28,GRASIM,down,,-0.57,pure spurt: Too early for volume spurt (09:28 < 09:30)
+09:28,HDFCBANK,up,69,0.96,Trend Checker 35 < 60
+09:42,HDFCBANK,up,69,0.98,Trend Checker 50 < 60
+09:42,ONGC,down,,-0.35,quiet spurt: strong news up (88%) against it
+09:54,CIPLA,up,,0.29,"pure spurt: against the market: spurt up, Nifty -0.30%"
+11:10,PNB,up,68,1.94,premium Rs 3.67 under Rs 5.0
+11:14,PNB,up,68,2.18,premium Rs 3.73 under Rs 5.0
+11:17,PNB,up,68,2.02,premium Rs 3.69 under Rs 5.0
+11:22,PNB,up,68,2.15,premium Rs 3.88 under Rs 5.0
+11:25,PNB,up,68,2.34,premium Rs 3.94 under Rs 5.0
+11:27,PNB,up,68,2.29,premium Rs 3.86 under Rs 5.0
+11:30,PNB,up,68,2.26,premium Rs 3.88 under Rs 5.0
+11:30,HINDALCO,up,,0.5,pure spurt: Outside prime institutional window (11:30 > 11:30); avoid late churn
+11:30,PNB,up,68,2.43,premium Rs 3.55 under Rs 5.0
+11:36,PNB,up,68,2.59,premium Rs 3.76 under Rs 5.0
+11:36,PNB,up,90,2.7,premium Rs 3.63 under Rs 5.0
+11:39,PNB,up,90,2.78,premium Rs 3.78 under Rs 5.0
+11:42,PNB,up,90,2.75,premium Rs 3.74 under Rs 5.0
+11:43,PNB,up,90,2.65,premium Rs 3.77 under Rs 5.0
+11:49,PNB,up,90,2.72,premium Rs 3.69 under Rs 5.0
+11:50,PNB,up,90,2.73,premium Rs 3.65 under Rs 5.0
+11:52,PNB,up,90,2.7,premium Rs 3.66 under Rs 5.0
+11:54,PNB,up,90,2.75,premium Rs 3.64 under Rs 5.0
+11:56,ONGC,down,,-0.55,quiet spurt: strong news up (85%) against it
+12:03,SUNPHARMA,down,,-0.28,pure spurt: Outside prime institutional window (12:03 > 11:30); avoid late churn
+12:03,NMDC,down,,-0.28,pure spurt: Outside prime institutional window (12:03 > 11:30); avoid late churn
+12:07,PNB,up,90,2.49,premium Rs 3.4 under Rs 5.0
+12:07,PNB,up,90,2.45,premium Rs 3.41 under Rs 5.0
+12:07,DIVISLAB,up,66,2.64,Trend Checker 15 < 60
+12:17,PNB,up,90,2.47,premium Rs 3.47 under Rs 5.0
+12:17,DIVISLAB,up,66,2.73,Trend Checker 15 < 60
+12:20,PNB,up,90,2.48,premium Rs 3.44 under Rs 5.0
+12:23,PNB,up,90,2.47,premium Rs 3.41 under Rs 5.0
+12:30,PNB,up,90,2.42,premium Rs 3.4 under Rs 5.0
+12:33,PNB,up,90,2.49,premium Rs 3.42 under Rs 5.0
+12:36,PNB,up,90,2.5,premium Rs 3.42 under Rs 5.0
+12:44,PNB,up,90,2.67,premium Rs 3.65 under Rs 5.0
+12:47,PNB,up,90,2.61,premium Rs 3.65 under Rs 5.0
+12:50,PNB,up,90,2.71,premium Rs 3.69 under Rs 5.0
+12:56,PNB,up,90,2.71,premium Rs 3.68 under Rs 5.0
+12:59,PNB,up,90,2.7,premium Rs 3.68 under Rs 5.0
+13:02,PNB,up,90,2.78,premium Rs 3.73 under Rs 5.0
+13:08,PNB,up,90,2.79,premium Rs 3.88 under Rs 5.0
+13:12,PNB,up,90,2.96,premium Rs 3.84 under Rs 5.0
+13:15,PNB,up,90,2.83,premium Rs 3.55 under Rs 5.0
+13:21,PNB,up,90,2.72,premium Rs 3.59 under Rs 5.0
+13:21,HINDALCO,up,,0.4,pure spurt: Outside prime institutional window (13:21 > 11:30); avoid late churn
+13:21,PNB,up,90,2.68,premium Rs 3.6 under Rs 5.0
+13:25,PNB,up,90,2.69,premium Rs 3.62 under Rs 5.0
+13:28,PNB,up,90,2.59,premium Rs 3.54 under Rs 5.0
+13:28,PNB,up,90,2.79,premium Rs 3.69 under Rs 5.0
+13:28,INFY,down,82,-1.98,Trend Checker 20 < 60
+13:38,PNB,up,90,2.83,premium Rs 3.7 under Rs 5.0
+13:38,INFY,down,82,-2.03,Trend Checker 5 < 60
+13:38,HCLTECH,down,82,-2.5,Trend Checker 35 < 60
+13:45,PNB,up,90,2.91,premium Rs 3.89 under Rs 5.0
+13:45,INFY,down,82,-2.03,Trend Checker 20 < 60
+13:45,HCLTECH,down,82,-2.68,Trend Checker 35 < 60
+13:52,PNB,up,90,3.39,premium Rs 3.74 under Rs 5.0
+13:52,INFY,down,82,-1.85,Trend Checker 0 < 60
+13:52,HCLTECH,down,82,-2.46,Trend Checker 50 < 60
+13:52,PNB,up,90,3.34,premium Rs 3.52 under Rs 5.0

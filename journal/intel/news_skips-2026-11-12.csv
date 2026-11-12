@@ -1,0 +1,3 @@
+time,symbol,direction,confidence,move_pct,reason
+12:29,FEDERALBNK,up,,0.28,pure spurt: Outside prime institutional window (12:29 > 11:30); avoid late churn
+12:37,HINDALCO,up,,0.28,pure spurt: Outside prime institutional window (12:37 > 11:30); avoid late churn

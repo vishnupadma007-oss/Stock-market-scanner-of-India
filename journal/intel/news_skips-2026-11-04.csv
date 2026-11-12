@@ -1,0 +1,42 @@
+time,symbol,direction,confidence,move_pct,reason
+09:15,SBIN,up,93,1.1,Trend Checker 0 < 60
+09:15,HDFCBANK,up,84,0.45,"early entry: Volume 1.6x usual on a green candle; Order book: buyers 0.5x sellers; F&O activity: long build-up (OI +0.1%, price +0.3%)"
+09:15,BAJAJFINSV,up,75,0.27,"early entry: Volume 1.7x usual on a green candle; Order book: buyers 0.8x sellers; F&O activity: short covering (OI -0.2%, price +0.1%)"
+09:25,RELIANCE,up,100,0.3,"early entry: Volume 0.1x usual on a red candle; Order book: buyers 0.5x sellers; F&O activity: short build-up (OI +0.2%, price -0.3%)"
+09:25,SBIN,up,93,1.4,Trend Checker 15 < 60
+09:25,HDFCBANK,up,84,1.44,Trend Checker 45 < 60
+09:31,SBIN,up,93,1.16,Trend Checker 45 < 60
+09:31,HDFCBANK,up,84,1.83,Trend Checker 45 < 60
+09:31,BHEL,up,80,3.44,Trend Checker 30 < 60
+09:31,VEDL,down,75,-1,Trend Checker 15 < 60
+09:40,SBIN,up,93,0.84,Trend Checker 40 < 60
+09:40,KOTAKBANK,down,73,-0.68,Trend Checker 55 < 60
+09:46,SBIN,up,93,0.9,Trend Checker 15 < 60
+09:46,KOTAKBANK,down,73,-0.76,Trend Checker 55 < 60
+09:52,RELIANCE,up,100,0.22,"early entry: Volume 0.5x usual on a green candle; Order book: buyers 0.5x sellers; F&O activity: long build-up (OI +0.4%, price +0.1%)"
+09:52,SBIN,up,93,0.93,Trend Checker 15 < 60
+09:52,KOTAKBANK,down,73,-0.7,Trend Checker 45 < 60
+09:58,SBIN,up,93,0.52,Trend Checker 15 < 60
+09:58,KOTAKBANK,down,73,-0.79,Trend Checker 55 < 60
+10:04,RELIANCE,up,100,0.23,"early entry: Volume 0.0x usual on a red candle; Order book: buyers 0.5x sellers; F&O activity: long build-up (OI +0.3%, price +0.0%)"
+10:04,SBIN,up,93,0.68,Trend Checker 25 < 60
+10:04,VEDL,down,75,-0.96,Trend Checker 15 < 60
+10:04,KOTAKBANK,down,73,-0.84,Trend Checker 55 < 60
+10:10,RELIANCE,up,100,0.21,"early entry: Volume 0.2x usual on a red candle; Order book: buyers 0.4x sellers; F&O activity: long build-up (OI +0.2%, price +0.1%)"
+10:10,SBIN,up,93,0.87,Trend Checker 40 < 60
+10:10,VEDL,down,75,-0.78,Trend Checker 15 < 60
+10:10,KOTAKBANK,down,73,-0.76,Trend Checker 45 < 60
+10:16,SBIN,up,93,0.66,Trend Checker 30 < 60
+10:22,SBIN,up,93,0.36,"early entry: Volume 2.7x usual on a red candle; Order book: buyers 0.4x sellers; F&O activity: long build-up (OI +2.9%, price +0.3%)"
+10:26,M&M,down,,-0.14,quiet spurt: risk: Forecast chance of reaching the target is 59% (need 60%).
+10:34,MARUTI,up,,0.17,quiet spurt: spurt team full or out of money
+10:34,GRASIM,down,,0.11,quiet spurt: live move 0.11% no longer fits
+10:34,NATIONALUM,down,,-0.14,quiet spurt: spurt team full or out of money
+10:34,ICICIBANK,down,,-0.06,quiet spurt: live move -0.06% no longer fits
+10:34,LUPIN,down,,0.21,quiet spurt: live move 0.21% no longer fits
+10:34,SBIN,up,93,0.21,"early entry: Volume 0.8x usual on a green candle; Order book: buyers 0.4x sellers; F&O activity: short build-up (OI +3.2%, price -0.0%)"
+10:39,SBIN,up,93,0.39,"early entry: Volume 0.3x usual on a red candle; Order book: buyers 0.4x sellers; F&O activity: long build-up (OI +3.2%, price +0.2%)"
+10:49,SAIL,down,,-0.42,quiet spurt: spurt team full or out of money
+10:52,TATAPOWER,down,,-0.72,quiet spurt: spurt team full or out of money
+11:05,POWERGRID,up,,0.37,quiet spurt: spurt team full or out of money
+15:08,EICHERMOT,down,,-0.42,quiet spurt: spurt team full or out of money

@@ -1,0 +1,296 @@
+[
+ {
+  "seq_id": "159838",
+  "filed": "2024-02-07 12:37:00",
+  "pdf": "https://nsearchives.nseindia.com/corporate/BSENSECOVERINGsigned_07022024123700.pdf",
+  "figures": {},
+  "view": "unread",
+  "reaction": {
+   "reaction_day": "2024-02-07",
+   "when": "during market",
+   "gap_pct": 0.54,
+   "close_pct": 1.75,
+   "high_pct": 2.23,
+   "low_pct": -0.41,
+   "nifty_gap_pct": 0.53,
+   "nifty_close_pct": 0.01,
+   "runup_20d": -8.87,
+   "excess_close_pct": 1.74,
+   "excess_gap_pct": null
+  },
+  "profit_yoy": null,
+  "profit_surprise": null,
+  "revenue_yoy": null,
+  "revenue_surprise": null
+ },
+ {
+  "seq_id": "161141",
+  "filed": "2024-04-25 12:31:37",
+  "pdf": "https://nsearchives.nseindia.com/corporate/BSENSEFinallettersigned_25042024123137.pdf",
+  "figures": {},
+  "view": "unread",
+  "reaction": {
+   "reaction_day": "2024-04-25",
+   "when": "during market",
+   "gap_pct": 0.79,
+   "close_pct": 2.5,
+   "high_pct": 3.11,
+   "low_pct": -1.16,
+   "nifty_gap_pct": -0.38,
+   "nifty_close_pct": 0.75,
+   "runup_20d": -3.87,
+   "excess_close_pct": 1.75,
+   "excess_gap_pct": null
+  },
+  "profit_yoy": null,
+  "profit_surprise": null,
+  "revenue_yoy": null,
+  "revenue_surprise": null
+ },
+ {
+  "seq_id": "163756",
+  "filed": "2024-07-25 11:10:37",
+  "pdf": "https://nsearchives.nseindia.com/corporate/BSENSEOutcomeResultsQ125072024_25072024111037.pdf",
+  "figures": {},
+  "view": "unread",
+  "reaction": {
+   "reaction_day": "2024-07-25",
+   "when": "during market",
+   "gap_pct": 0.13,
+   "close_pct": -2.39,
+   "high_pct": 0.6,
+   "low_pct": -3.22,
+   "nifty_gap_pct": -0.75,
+   "nifty_close_pct": -0.03,
+   "runup_20d": -1.89,
+   "excess_close_pct": -2.36,
+   "excess_gap_pct": null
+  },
+  "profit_yoy": null,
+  "profit_surprise": null,
+  "revenue_yoy": null,
+  "revenue_surprise": null
+ },
+ {
+  "seq_id": "165686",
+  "filed": "2024-10-17 12:04:43",
+  "pdf": "https://nsearchives.nseindia.com/corporate/BSENSEsigned_17102024120443.pdf",
+  "figures": {},
+  "view": "unread",
+  "reaction": {
+   "reaction_day": "2024-10-17",
+   "when": "during market",
+   "gap_pct": 0.52,
+   "close_pct": -3.39,
+   "high_pct": 0.52,
+   "low_pct": -3.95,
+   "nifty_gap_pct": 0.22,
+   "nifty_close_pct": -0.89,
+   "runup_20d": -1.56,
+   "excess_close_pct": -2.5,
+   "excess_gap_pct": null
+  },
+  "profit_yoy": null,
+  "profit_surprise": null,
+  "revenue_yoy": null,
+  "revenue_surprise": null
+ },
+ {
+  "seq_id": "168904",
+  "filed": "2025-01-31 12:02:43",
+  "pdf": "https://nsearchives.nseindia.com/corporate/BSENSEOUTCOME31122024_31012025120243.pdf",
+  "figures": {},
+  "view": "unread",
+  "reaction": {
+   "reaction_day": "2025-01-31",
+   "when": "during market",
+   "gap_pct": 0.0,
+   "close_pct": 4.32,
+   "high_pct": 7.65,
+   "low_pct": -0.35,
+   "nifty_gap_pct": 0.2,
+   "nifty_close_pct": 1.11,
+   "runup_20d": 4.66,
+   "excess_close_pct": 3.21,
+   "excess_gap_pct": null
+  },
+  "profit_yoy": null,
+  "profit_surprise": null,
+  "revenue_yoy": null,
+  "revenue_surprise": null
+ },
+ {
+  "seq_id": "106310193",
+  "filed": "2025-07-24 11:43:06",
+  "pdf": "https://nsearchives.nseindia.com/corporate/NESTLEIND1_24072025113331_STXIntimationUFRs24072025signed.pdf",
+  "figures": {
+   "revenue": {
+    "quarter": 50961.6,
+    "prev_quarter": 55038.8,
+    "year_ago": 48139.5,
+    "qoq_pct": -7.4,
+    "yoy_pct": 5.9
+   },
+   "profit": {
+    "quarter": 6465.9,
+    "prev_quarter": 8734.6,
+    "year_ago": 7466.0,
+    "qoq_pct": -26.0,
+    "yoy_pct": -13.4
+   }
+  },
+  "view": "weak",
+  "reaction": {
+   "reaction_day": "2025-07-24",
+   "when": "during market",
+   "gap_pct": 0.01,
+   "close_pct": -5.32,
+   "high_pct": 0.92,
+   "low_pct": -5.81,
+   "nifty_gap_pct": 0.09,
+   "nifty_close_pct": -0.63,
+   "runup_20d": 2.1,
+   "excess_close_pct": -4.69,
+   "excess_gap_pct": null
+  },
+  "profit_yoy": -13.4,
+  "profit_surprise": null,
+  "revenue_yoy": 5.9,
+  "revenue_surprise": null
+ },
+ {
+  "seq_id": "106409404",
+  "filed": "2025-10-16 11:49:22",
+  "pdf": "https://nsearchives.nseindia.com/corporate/NESTLEIND1_16102025114753_NestleIndiaOutcomeUFRsQ2FY202526signed.pdf",
+  "figures": {},
+  "view": "unread",
+  "reaction": {
+   "reaction_day": "2025-10-16",
+   "when": "during market",
+   "gap_pct": 0.0,
+   "close_pct": 4.52,
+   "high_pct": 5.33,
+   "low_pct": -0.4,
+   "nifty_gap_pct": 0.28,
+   "nifty_close_pct": 1.03,
+   "runup_20d": 1.09,
+   "excess_close_pct": 3.49,
+   "excess_gap_pct": null
+  },
+  "profit_yoy": null,
+  "profit_surprise": null,
+  "revenue_yoy": null,
+  "revenue_surprise": null
+ },
+ {
+  "seq_id": "106512908",
+  "filed": "2026-01-30 13:50:52",
+  "pdf": "https://nsearchives.nseindia.com/corporate/NESTLEIND1_30012026134958_BSENSEOutcomeResults30012026signed.pdf",
+  "figures": {},
+  "view": "unread",
+  "reaction": {
+   "reaction_day": "2026-01-30",
+   "when": "during market",
+   "gap_pct": -0.15,
+   "close_pct": 3.46,
+   "high_pct": 4.01,
+   "low_pct": -0.38,
+   "nifty_gap_pct": -0.67,
+   "nifty_close_pct": -0.39,
+   "runup_20d": 2.0,
+   "excess_close_pct": 3.85,
+   "excess_gap_pct": null
+  },
+  "profit_yoy": null,
+  "profit_surprise": null,
+  "revenue_yoy": null,
+  "revenue_surprise": null
+ },
+ {
+  "seq_id": "106595477",
+  "filed": "2026-04-21 14:15:02",
+  "pdf": "https://nsearchives.nseindia.com/corporate/NESTLEIND1_21042026141342_AFRs31032026signed.pdf",
+  "figures": {},
+  "view": "unread",
+  "reaction": {
+   "reaction_day": "2026-04-21",
+   "when": "during market",
+   "gap_pct": 0.91,
+   "close_pct": 7.27,
+   "high_pct": 8.52,
+   "low_pct": 0.03,
+   "nifty_gap_pct": 0.04,
+   "nifty_close_pct": 0.87,
+   "runup_20d": 3.26,
+   "excess_close_pct": 6.4,
+   "excess_gap_pct": null
+  },
+  "profit_yoy": null,
+  "profit_surprise": null,
+  "revenue_yoy": null,
+  "revenue_surprise": null
+ },
+ {
+  "seq_id": "106706181",
+  "filed": "2026-07-22 11:11:18",
+  "pdf": "https://nsearchives.nseindia.com/corporate/NESTLEIND1_22072026111047_BSENSEUFRs30062026signed.pdf",
+  "figures": {
+   "revenue": {
+    "quarter": 63781.8,
+    "prev_quarter": 67477.9,
+    "year_ago": 50961.6,
+    "qoq_pct": -5.5,
+    "yoy_pct": 25.2
+   },
+   "profit": {
+    "quarter": 9586.8,
+    "prev_quarter": 11109.0,
+    "year_ago": 6465.9,
+    "qoq_pct": -13.7,
+    "yoy_pct": 48.3
+   }
+  },
+  "view": "strong",
+  "reaction": {
+   "reaction_day": "2026-07-22",
+   "when": "during market",
+   "gap_pct": 0.58,
+   "close_pct": 2.87,
+   "high_pct": 4.0,
+   "low_pct": 0.14,
+   "nifty_gap_pct": -0.15,
+   "nifty_close_pct": -0.79,
+   "runup_20d": 3.21,
+   "excess_close_pct": 3.66,
+   "excess_gap_pct": null
+  },
+  "profit_yoy": 48.3,
+  "profit_surprise": 61.7,
+  "revenue_yoy": 25.2,
+  "revenue_surprise": 19.3
+ },
+ {
+  "seq_id": "106818387",
+  "filed": "2026-10-15 12:24:54",
+  "pdf": "https://nsearchives.nseindia.com/corporate/NESTLEIND1_15102026122005_BSENSEOutcomeResults15102026signed.pdf",
+  "figures": {},
+  "view": "unread",
+  "reaction": {
+   "reaction_day": "2026-10-15",
+   "when": "during market",
+   "gap_pct": -0.23,
+   "close_pct": -7.76,
+   "high_pct": 0.2,
+   "low_pct": -8.87,
+   "nifty_gap_pct": 0.21,
+   "nifty_close_pct": 1.66,
+   "runup_20d": 3.7,
+   "excess_close_pct": -9.42,
+   "excess_gap_pct": null
+  },
+  "profit_yoy": null,
+  "profit_surprise": null,
+  "revenue_yoy": null,
+  "revenue_surprise": null
+ }
+]

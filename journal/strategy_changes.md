@@ -1,0 +1,182 @@
+# Strategy changes
+
+Each approved change to `config.yaml` or the agents. `review.py` counts paper trades after the
+latest date here before it allows a new proposal.
+
+| Date | Change | Evidence | Approved by |
+|---|---|---|---|
+| 2026-10-18 | Baseline: both sides, 1% net target, no stop-loss, chart score >= 60, forecast chance >= 60% | 60-day backtest (journal/backtest_summary.md) | User |
+| 2026-10-19 | Added News & Events, Macro and Forecast agents and the morning-brief day mode. Macro on; forecast shown only (not used to block or set the target) | Backtest in journal/backtest_summary.md: macro -0.35% -> +0.10%/trade; forecast filter/target made results worse | User asked for the agents; settings chosen from the backtest |
+| 2026-10-19 | Paper account ₹10,000, whole free amount per trade (one at a time), realised P&L reinvested, no daily trade cap (careful mode only raises the chart score) | User decision: trade every qualifying setup for 1%+ net each | User |
+| 2026-10-19 | Strike choice ITM1 -> ATM | Lot survey: with ₹10,000 only 3 of 16 ITM1 contracts fit vs 12 of 16 ATM (median ATM lot ≈ ₹8,000). Needed for the user's ₹10,000 account | User (₹10,000 capital) |
+| 2026-10-19 | Capital ₹10,000 -> ₹30,000; strike ATM -> ITM1 | User decision on capital. With ₹30,000 all surveyed ITM1 lots fit (max ≈ ₹22,700), and ITM1 backtested better (+0.10% vs +0.03%/trade, worst -29% vs -38%) | User (capital) |
+| 2026-10-20 | Watcher timing: INDmoney calls paced evenly at 450/hour (one every 8 s); entry scans back to back (~every 2 min) when no trade is open; exit checks every 15 s with a trade open | INDmoney limit 500/hour; user asked for regular, evenly spaced checks | User |
+| 2026-10-20 | Added NSE Announcements agent (live filings every 30 s; results figures read from the filing; RESULT/NEWS events), Commodities agent (MCX crude, gas, gold, silver, copper, aluminium, zinc, nickel; COMMODITY shock events), results trades via paper_trade.py (strategy=results), overnight filings in the morning brief | User asked for news/results/commodity awareness | User |
+| 2026-10-20 | Added News agent (RSS: ET, Mint, Business Standard, CNBC-TV18, Google News global/India macro/commodities), Concall agent (meets + transcripts), shared intelligence log, Data Analyzer (forecast per stock; -20 points when news flow opposes a reversal trade, +10 when it agrees; FORECAST events), intel trades via paper_trade.py | User asked for news/concall agents feeding one analyzer | User |
+| 2026-10-20 | Information agents on their own track every 30 s (NSE filings, concalls, Indian news; Google News every 2 min), independent of the market scan | User asked for 30 s news checks | User |
+| 2026-10-20 | Installed skills: earnings-preview, earnings-analysis (Anthropic), nlp-earnings-sentiment (MIT); tone reading now handles negation ("not expecting growth") and discounts hedged good news | User asked to add useful skills | User |
+| 2026-10-20 | Added Expectations agent: on each RESULT and FORECAST, checks whether the news is already priced in (4-week run-up vs Nifty, pre-event news hype, price vs average analyst target; post-results reaction against the numbers). Priced-in forecasts lose 25 confidence points; RESULT lines say what bar the numbers must clear | User asked the analyzer to check whether results/news are priced in | User |
+| 2026-10-20 | Added Valuation agent: P/E (P/B for banks/NBFCs) vs sector-peer median from Yahoo, once a day. Counts toward the priced-in score; on signals in observe mode (would be +5 for an expensive fading gainer or cheap bouncing loser, -5 the other way), logged per trade for the evening review | User asked to include stock valuations | User |
+| 2026-10-20 | Split the desk into two teams with ₹30,000 paper capital each, one trade at a time per team: Movers (top gainers/losers reversal, price-only; news/commodity/analyzer/valuation votes off) and News (results and strong forecasts become trades when the price moves 0.5-4% their way, confidence >= 60 after the priced-in cut). Evening review shows a team scoreboard | User wants both approaches run at once to see which finds more chances and makes more money |  User |
+| 2026-10-20 | Merged the user's enhancement pack (reviewed): exact 1%-net target on the NSE ₹0.05 tick (was rounded to ₹0.10), option Greeks incl. theta on plans, safer file writes, NSE session with retry, VIX regime label, decision grade, more news words (SEBI order, promoter pledge, tax notice, ED raid / bonus issue, dividend hike, order inflow). Not taken: httpx switch (breaks INDmoney), chart-reader retest rule (backtest slightly worse: -1.38% vs -1.29%/trade), parallel Yahoo downloads, delta 0.5 default, unused indicators | User sent improvements and asked for a fit check | User |
+| 2026-10-20 | Data Analyzer ages news in market hours only (half-life: news 3 h, filings/concalls 6.5 h = about one session) and reads from the previous session; watcher picks up filings since the previous close; a results filing whose first read failed is logged again once read | Found while preparing the forecast for 21 Oct: Bajaj Finance results (Mon evening, before the Dussehra holiday) were counted as stale and unread | Fix |
+| 2026-10-20 | Results Reaction analyst (agents/reaction.py) built on 869 past results days of 76 stocks. Finding: figures alone do not predict direction (49.6% right, R2 0.003); move SIZE does (median 2.3% vs ~1.2% normal; 39% move 3%+); results gap-downs of 2%+ vs Nifty kept falling 69% of the time (n=84), gap-ups ~50%. So results figures no longer create news-team trade ideas; RESULT lines give expected size, range and the gap pattern | User asked for  0.000000orecasts from history | User |
+| 2026-10-21 | INDmoney call budget 450 -> 300 per hour (by our count); scans and exit checks are paced slower | INDmoney stopped us at "500" when our count was 309: it weighs some calls more than we assumed. Keeps exits checked instead of 20-minute pauses | Claude (ops) |
+| 2026-10-21 | Fix: a scan opened two movers trades at once (WIPRO and TCS, ~Rs 56k on a Rs 30k book). After opening one trade the rest of the scan now only records setups; the TCS trade was voided | Bug found live | Fix |
+| 2026-10-21 | INDmoney usage counted per instrument for price lookups (as INDmoney does); sector/commodity moves refreshed every 10 min instead of every scan; budget back to 420/hour on that count | The 17-instrument market check every 2 min alone used ~500 INDmoney calls/hour | Fix |
+| 2026-10-21 | News team: added a Trend Checker (agents/momentum.py). Before buying, the 5-min and daily charts must back the news's direction (VWAP, 9/21 EMA, RSI 55-75, rising lows, buying volume, daily trend; minus points for chasing stretched moves); score 60+ needed | User asked for a technical view on news trades. On 21 Oct it would have taken RELIANCE (score 70, +Rs 813) and skipped PNB (score 30, -Rs 4,711); 2 trades prove little | User |
+| 2026-10-22 | NSE agent: filings titled only "Outcome of Board Meeting" are opened and treated as results when the PDF holds them; shareholder letters count as guidance; filings already logged are not reported again after a restart | ETERNAL results (21 Oct 15:22) were missed: no "financial results" in the title | Fix |
+| 2026-10-22 | NSE agent reads scanned results with OCR (Tesseract), fixes OCR digit errors, recognises more row names (income from operations, net sales, profit attributable to owners...), rejects implausible figures and pairs profit with revenue from the same table. News team: Market Context agent (Nifty move + why: geopolitical, policy, domestic, global markets, commodities, flows); no CALL into a market down 0.8%+ on bad news, no PUT into such a rally | User asked for OCR, more keywords and outside-environment awareness before trades | User |
+| 2026-10-22 | Results filings read by up to 10 parallel workers; results scored by sector (seasonal sectors on YoY, IT/telecom on QoQ) with sector KPIs; Policy Impact rulebook (RBI, SEBI, IRDAI, TRAI, GST, duties, visas, tariffs, defence, PLI...) tags stocks hit/helped, feeds the analyzer and sends POLICY events; regulators news search added; skills: policy-impact (own), analyzing-regulatory-event-impacts (CaseMark, Apache-2.0) | User asked for faster parallel results reading, policy-impact analysis (e.g. IRDAI caps: PolicyBazaar -36%) and sector-aware results | User |
+| 2026-10-22 | Movers team: News Guard (agents/news_guard.py) borrows the news team's knowledge as a safety brake. It never adds points; it skips a stock with results today, a regulatory filing/action, a policy hit (strength 2+) against the trade, or strong news from real causes (filings, policy, major events) against it. Headlines that only describe the move are ignored | User asked the technical team to borrow news knowledge (PB Fintech -36% on IRDAI caps would have trapped a bounce trade). Replay of 21 Oct: all 3 winning movers trades still pass | User |
+| 2026-10-22 | Entry window opens at 09:15 instead of 09:45 (closes 14:30 as before). In practice the charts need a few candles: the news team's Trend Checker can act from ~09:35, the movers team's Chart Reader from ~09:45 | User decision: start trading from the open | User |
+| 2026-10-22 | Trading day 09:15-15:15 for entries, square-off 15:20 (was 14:30 / 15:15). Each team decides when to trade: late entries still need the Risk agent's 60%+ chance of reaching the target before square-off; the news team's Trend Checker can act from two candles (~09:25) so overnight news can be traded early | User decision: let the teams trade the whole session and decide themselves | User |
+| 2026-10-22 | Movers team: shock-day guard (agents/shock.py). Nifty 1.5%+ with confirmation (80% of sectors same way, VIX jump/collapse 12%+, or 3+ big macro headlines): rally = no PUTs on gainers, crash = no CALLs on losers; 2.5%+ (or VIX 24%+) = stand aside. SHOCK event to Claude | User: war/ceasefire news makes market-wide moves where reversals get trapped. 6-month backtest: ordinary +-1% days were fine for reversals (13 trades), so thresholds target genuine shocks only | User |
+
+| 2026-10-22 | News team: no options under ₹5; one trade uses at most half the team's free money | The day's two big losses (PNB ₹2.06, IOC ₹1.85) were tiny premiums bought in huge quantities with almost all the capital | User |
+| 2026-10-22 | Both teams: expiry-week fallback. Within 7 days of this month's expiry, when this month's option is under ₹5 or its bid-ask gap is over 2%, take next month's contract | User idea: avoid near-expiry premium decay. Backtest on rolling early was neutral (-1.55% vs -1.61% per trade); real near-expiry gaps are wider (IOC 27-Oct 6.3% vs 23-Nov 2.8%) | User |
+| 2026-10-22 | Candlestick Patterns agent (agents/candles.py) in observe mode, 0 points | User asked for a candle-pattern skill; 60 days x 76 stocks (263,000 candles): no pattern beat chance over 30 minutes | User |
+| 2026-10-23 | Speed: NSE filings checked every 10 s on their own thread (was 30 s, shared with news and the analyzer); after the first poll only today's feed is fetched; a new news idea makes the movers scan stop between stocks so the news team acts first; RESULT/NEWS events carry lag_sec (seconds from NSE publishing to our report) | User: news and filings move stocks within seconds to minutes, the desk was reacting late. Measured: one NSE feed call covers every company in ~1 s, but a results idea could wait several minutes behind a movers scan (INDmoney calls are paced ~8 s apart) | User |
+| 2026-10-23 | News team early entry (live): from a 0.2% move the news's way (instead of waiting for 0.5%), enter when the latest 5-min candle trades 1.5x its usual volume for that time of day, closing the news's way, AND the NSE order book holds 1.5x more buyers than sellers (sellers than buyers for "down"). These entries skip the Trend Checker; the Market Context headwind check, ₹5 minimum and half-capital limit still apply. Marked "Early entry" in the notes and `entry: early` on the SIGNAL | User: waiting for a full 0.5% move gives away part of the move on intraday news. Cannot be backtested (no history of NSE order books); compare early vs confirmed entries in the evening reviews | User |
+| 2026-10-26 | News team: the half-capital limit allows exactly one lot when a single lot costs more than half the free money (and fits in all of it). Confirmed ideas that are not traded are logged with the reason (journal/intel/news_skips-<date>.csv) | Bug from the 23 Oct rule: with Rs 16,696 left, half (Rs 8,348) was below any normal lot, so the news team could not trade at all. 26 Oct: JSW Steel (idea up 84%, stock +1.4% to +3.3%, chart 60-85 from 09:25 to 10:20) was blocked this way | Claude (fix of an approved rule) |
+| 2026-10-26 | News team: half-capital limit removed; a trade may use all the team's free money (max_capital_per_trade 1.0). The Rs 5 minimum premium stays | User decision: give the team free hands to trade with the whole budget available | User |
+| 2026-10-26 | News team paper capital topped up by Rs 13,304 back to Rs 30,000 (`teams.news.top_up`). Not profit: the scoreboard still shows its real net (-Rs 13,304) and return on the original Rs 30,000 | With Rs 16,696 left, one lot of many F&O stocks (e.g. Kotak Rs 30,400) cost more than the whole account; the user gave free hands on cash | User (free hands) |
+| 2026-10-26 | Both teams: on expiry day and the day before, always take next month's contract (`expiry_fallback.always_days: 2`), even when this month's passes the premium and spread checks | Kotak CALL opened on 26 Oct with the 27-Oct contract (Rs 5.35, 4,000 qty, one day to expiry): the IOC profile. Extends the user's own expiry-week idea | Claude (extension of the user's rule) |
+| 2026-10-26 | News team: results-gap follower (agents/gapfollow.py). Stocks with results since the last close that open 1%+ away from Nifty and keep going in the first 15 minutes become ideas in the gap's direction (09:30-10:30, confidence 75, move cap 8% instead of 4%), outranking headline readings that day. Morning Mover Forecast (agents/mover_forecast.py) lists likely top movers | User asked why the news team could not forecast JSW (+3%) and AU Bank (-8%). Data: results figures give the direction 49.6% (coin flip), but results-day gaps carry on 61-75% (1 year, 76 stocks) while ordinary-day gaps reverse; option backtest (60 days, small): gap followed when the first 15 min agree 10 trades, 90% at target. On 26 Oct the morning list held 6 of the 8 biggest movers | User |
+| 2026-10-27 | Audit & enhancement pack: fixed httpx2 fallback, added results-gap to NEWS_STRATEGIES (fixing team attribution & capital book), atomic concurrent save_trades merge (preserving claude_verdict and external paper_trade.py rows), 15:20 square-off fallback when bid_price is 0, movers same-symbol loss cooldown, news-team day_mode/avoid/max_vix guards, live option IV & BS Greeks solver, crossed-quote guard, 2nd-order Delta-Gamma-Theta risk moves, Chart Reader climax volume absorption & RSI divergence, Trend Checker fade penalty & early-entry wick filter, Consolidated-first NSE results parser, and evening review Profit Factor / Max Drawdown metrics | Codebase audit: 158/158 automated tests passing | User (audit request) |
+| 2026-10-27 | News team target upgrade & NSE tools integration: 1% target removed on news team (target_mode: forecast, capturing 60% of forecasted underlying move); active early trade idea generation from NSE pre-open order flow (gap >= 1%, buy/sell ratio >= 1.35 or <= 0.75) and NSE volume spurts (3x+ volume with momentum); mover_forecast predicts expected target prices | User request: enable NSE tools for early trades and remove 1% cap for news team | User |
+| 2026-10-27 | News team pre-open rule: ideas trade only from 09:30 and only while the stock is still moving the gap's way since the open (`preopen_confirm_from`) | Replay of 26 Oct: all 8 stocks the rule picked (sell-heavy IT gap-downs) rallied after the open (Infosys +4.3%, Coforge +8.7% open to close); 1 year of data: ordinary-day gaps reverse more often than they continue | Claude (user allowed further enhancements) |
+| 2026-10-27 | Results parser | % change vs a negative base (loss to profit) now reads as a rise, not a fall (Paytm read "weak" on a turnaround) | bug fix |
+| 2026-10-27 | News Guard | Results filed after the previous session's close count as "results out today" (REC, filed 16:37 the evening before, slipped through as a movers bounce trade) | bug fix |
+| 2026-10-27 | INDmoney budget | 420 -> 380 calls/hour: the server cut us off at 401 counted calls at 12:12 (short pause) | safety |
+| 2026-10-27 | INDmoney quotes | Price requests sent in batches of 10 (the server limit): the news team asked for 12 and failed every cycle from 09:17 to 11:14, missing Paytm and AU Bank | bug fix |
+| 2026-10-27 | Error alerts | A repeating error shows again every 10 min with a count (was once an hour, which hid the 2-hour news-team outage); alert filter now includes `repeats` | visibility |
+| 2026-10-27 | News team: F&O Activity | New agents/activity.py (NSE OI spurts, all F&O stocks, every 2 min): an OI build-up the news's way allows the early entry from 0.2% and adds 15 points to the Trend Checker. Replaces NSE volume spurts as the early signal (that page never lists F&O stocks). Untested on history: snapshots saved daily to judge it | user request (news + volume cross-check, enter earlier) |
+| 2026-10-27 | Open trades per team | One trade at a time -> up to 4 open trades per team (`max_open_trades`). Each new trade sized from the free money (capital - premium in open trades) split over the empty slots; one lot when a lot costs more than that share and the free money covers it; never two open trades on one stock. 27 Oct: the TCS put blocked the news team 11:20-15:20 (missed Paytm -3%, Cipla, HAL) | user decision |
+| 2026-10-28 | Budget OTM strikes | When one lot of the usual strike costs more than the team's free money, buy the first cheaper strike further out of the money whose lot fits (premium >= Rs 5, bid-ask gap <= 2%, |delta| >= 0.15, up to 10 strikes out); option chain fetched wider (same single call). Both teams and paper_trade.py. First use: Adani Ports 1880 CALL | user request |
+| 2026-10-28 | Results reader | A results PDF not up yet (HTTP 404) is tried again for up to a minute (Chola, Adani Enterprises came back unread) | bug fix |
+| 2026-10-28 | Watcher restart memory | Filings since the previous close are reloaded into today's filings on a restart (still not reported again): after the 13:00 restart the News Guard forgot L&T's results and the movers faded it | bug fix |
+| 2026-10-28 | Watcher stop | SIGTERM now exits like Ctrl+C so the running round saves its trades; a restart right after the L&T SIGNAL (14:31) lost that movers paper trade (not in the log, not counted) | bug fix |
+| 2026-10-28 | Quiet Volume Spurt (news team) | User's strategy: every minute, all F&O stocks (Yahoo 5-min, free): volume >= 1.5x usual for the time of day at a 0.2-0.5% move, candle + VWAP agreeing -> confirmed on the live quote, skipped on strong news against it, bought with a 10% net target. Backtest +2.89%/trade (174 trades, 68% hit) vs -4.19% mirror; 1% target lost money | user strategy |
+| 2026-10-28 | Quiet Volume Spurt data | Live scan every minute on NSE's own stocks-traded page (all stocks in one free call: price, volume, value -> VWAP) instead of Yahoo; history only for the usual volume by time of day, once each morning; NSE snapshots saved daily to build our own history | user request |
+| 2026-10-29 | Quiet spurt: news-aligned target (live test) | When the news agrees with the spurt the target is 15% net (label quiet-spurt-news; 10% if 15% is out of reach before 15:20); other spurts keep 10% (quiet-spurt). The evening review compares the two labels; decide after ~30 trades | user decision |
+| 2026-10-29 | Claude credits | Watcher started detached (no 2-hour restart turns); one background event-waiter instead of 30-minute monitors (wakes only on an event); live journal files quiet during the day (scripts/journal_quiet.sh) so the commit check does not add a turn after every reply; each company's RESULT reported once a day | user request |
+| 2026-10-29 | News team paper money | Top-up to Rs 1 lakh (+Rs 68,591; total top-up Rs 81,895): on 29 Oct one TVS lot used all the money and 4 spurt signals were skipped. Not profit: the scoreboard keeps the real record. Overnight carry not adopted (backtest worse even on quiet nights); 15:20 square-off kept | user gave free hands |
+| 2026-10-30 | Grok helper (xAI) | agents/grok.py: reads results figures our parser misses (scanned/unusual filings); observe-only TRADE/SKIP view on every SIGNAL, scored in the evening review; never blocks a trade; 80 calls/day cap; key outside the repo. Off until a key is saved | user plan |
+| 2026-10-30 | AI helper switched to Google Gemini | The key given is a Google Gemini key (not xAI): agents/grok.py became agents/ai_helper.py (provider gemini, model gemini-2.5-flash; xai optional). Figures copied in the filing's own unit. First reads: Maruti and Bajaj Auto 27 Oct filings (parser had found nothing) | user key |
+| 2026-10-30 | Claude credits (2) | Claude is woken only for problems (watcher stopped, login, budget, stale data, crash, SHOCK); trades, exits and results are reported in the 12:40 and 15:40 checks; the AI helper (Gemini) gives the per-signal view instead of Claude | user request |
+
+## 2026-10-31: Probability Analyzer added in observe mode (user's request)
+
+New agent `agents/probability.py` judges each quiet-spurt trade before entry (base rate, 2,000 Monte
+Carlo futures, learned score, expected value after charges) and logs it to `journal/probability.csv`.
+It does not block trades yet (`probability.mode: observe`): the walk-forward test favoured its approved
+trades (+3.48% vs +0.17% per trade) but not in both halves of the period. Exits unchanged: target only,
+no stop-loss (early chart exit tested 30 Oct and rejected).
+
+## 2026-10-31: Trade News Monitor added in observe mode (user's request)
+
+`agents/trade_news.py` checks every open trade for news published after entry: sell on bad news (stock's own
+regulatory action, major news or policy hit against it, market shock against the trade), raise the target
+once (+5% of premium) on good news; the AI helper confirms each call. Logged to `journal/trade_news.csv`, not
+acting (`trade_news.mode: observe`): the replay of 30 paper trades lost money when market/geopolitical news
+could trigger exits (now off), and the stock's own-news part had no cases to judge.
+
+## 2026-11-03: Quiet spurt aims for 15% whenever reachable, else 10%
+
+Before: 15% only when the news agreed with the spurt, otherwise 10%. Now every spurt first tries a 15% net
+target; if the Risk agent's hit chance is below its minimum for 15%, it takes 10% as before. Backtest (60 days,
+171 trades, same entries): +Rs 1,69,440 vs +Rs 1,26,586, better in both halves and for every variant tried.
+User's standing instruction (2 Nov): keep whatever makes more profit. Labels unchanged (quiet-spurt-news =
+news agrees).
+
+## 2026-11-03: News-forecast ("intel") trades paused; money and slots go to the quiet spurt
+
+Paper record 19 Oct - 3 Nov by strategy: intel 18 trades, 44% hit, -Rs 25,965 (the team's whole loss);
+quiet spurt 8 trades -Rs 7,173 live (one bad day, 30 Oct: -Rs 15,475) but +Rs 1,69,440 in the 60-day
+backtest; results-gap +10,580 (1), preopen +6,179 (3), movers reversal +4,407 (10). User (3 Nov): if the quiet
+spurt does well, lean the strategy towards it. `teams.news.paused_sources: [intel]`: forecast ideas are still
+logged in journal/news_ideas.csv (for judging) but not traded. Undo by emptying the list.
+
+## 2026-11-03: Overnight carry switched on (user's decision)
+
+`agents/carry.py`, `config.yaml -> carry`: at 15:20 a trade short of its target is kept one night instead of
+squared off, unless the stock has results today or next session (NSE calendar), filed results or a regulatory
+action today, or the option is within 3 days of expiry. Next morning (from 09:16) it is sold at the first bid if
+results/regulatory filings or strong news against it arrived overnight; otherwise it runs to the target or to
+15:20 (never a second night). Evidence was mixed (27-30 Oct real trades: -22,225 -> about +9,800 if carried;
+60-day quiet-spurt backtest: carrying lost more), so this is a live paper test; trades carry the note
+"carried overnight" so the review can compare. Undo with `carry.enabled: false`.
+
+## 2026-11-03: Three teams (user's decision)
+
+- news: news-based trades (results-gap, pre-open, results, and quiet spurts the news agrees with,
+  label quiet-spurt-news); news-forecast (intel) trades stay paused.
+- spurt (new): plain quiet volume spurts (no strong news either way), Rs 1,00,000, 4 slots.
+- movers: top gainers/losers reversal, unchanged.
+Each team has its own money and slots; the scoreboard in the evening review shows all three. Past quiet-spurt
+trades (29 Oct - 3 Nov) count for the spurt team from now on, so its record starts at 6 trades, -Rs 9,877;
+the news team's becomes 25 trades, -Rs 7,508. Overnight carry applies to all three.
+
+## 2026-11-04: Four teams (user's decision)
+
+- preopen (new, Rs 1 lakh, 4 slots): gap recovery (new rule, backtest above), pre-open order flow, results-day gaps.
+- news: news forecasts trade again (unpaused: each team is judged on its own money), results, spurts the news
+  agrees with; forecast trades now skip a stock on its results day (SBI 3 Nov).
+- spurt: plain quiet spurts; the F&O open-interest build-up type is recorded on each trade (oi_type) for scoring.
+- movers: unchanged. Overnight carry applies to all four.
+Past preopen and results-gap trades now count for the pre-open team.
+
+## 4 Nov 2026 (evening): revived pure spurt engine (user's design)
+- Spurt TEAM now needs: no news (results within 2 days, any filing/news on the stock), pre-open gap within 1%, F&O OI not against
+  it, multi-week structure ok, window 09:30-11:30, volume 1.8x (was 1.5x), bid-ask gap <= 1%, delta 0.50-0.65. News-agreeing spurts
+  still go to the news team. Switch: config.yaml spurt.pure.enabled. Backtest of the testable gates: see backtest_summary.md.
+- Fixed in the supplied code: open-interest field is `oi_pct` (not `oi_change_pct`). Breakeven lock not built (stop-loss).
+
+## 6 Nov 2026: pure spurt news gate narrowed (user's option 2)
+- 5 Nov the spurt team took no trade: 8 of 15 signals were quarantined by "any news on the stock" (routine articles, concall
+  transcripts). Now only material news disqualifies: filings (results, regulatory, guidance, ratings...), policy hits and
+  news of impact 3+; results due within 2 days still disqualify. Routine articles and concall items no longer do.
+  Not backtestable (no news history); judged on live trades.
+
+## 6 Nov 2026: AI context check on spurt entries (observe only, user's plan)
+- Every quiet-spurt entry (spurt and news-agrees) gets a Gemini view: market-wide vs stock-specific, catalyst none/routine/material,
+  take it YES/NO (agents/ai_helper.py, journal/ai_spurt_context.csv). It never blocks a trade. The evening review scores YES vs NO.
+  It earns a gate only after 30+ trades with NO clearly worse than YES in both halves.
+
+## 6 Nov 2026 (evening): PUTs are no longer carried overnight
+- Live record of carried trades: PUTs 5 trades, 1 win, net -Rs 37,200 (ASIANPAINT -9.6k, HINDALCO -8.9k, ASIANPAINT +10.7k, HDFCBANK -19.3k,
+  KOTAKBANK -10.1k); CALLs 5 trades +Rs 26,000. The 29 Oct / 2 Nov backtests also found carrying lost overall. Small sample, user's free hands.
+  Switch: config.yaml carry.carry_puts (false). The PUTs already carried (LT, GRASIM) are squared off at tomorrow's 15:20 as before.
+
+## 7 Nov 2026: spurt trades WITH the market (user's question: why is the spurt team not profitable?)
+- A spurt (spurt team) is taken only if the Nifty's move today (vs yesterday's close) points the same way (config spurt.pure.with_market).
+  Backtest: revived rules +Rs 91k -> +Rs 117k, hit 62% -> 74%, both halves positive; live: with-market spurts +Rs 6.1k, against -Rs 16.9k.
+  Breakout-confirmation variants (ORB, yesterday's high/low) were tested and removed the edge. See backtest_summary.md.
+
+## 7 Nov 2026: support / resistance on spurts (observe only)
+- Tested (backtest_summary.md): no support/resistance/breakout filter added money on top of the market rule. Spurt trades now carry a level note
+  (room ahead, level behind, 20-day breakout) in their notes so live trades can confirm or reject it.
+
+## 9 Nov 2026: fix, spurt signals before 09:30 were dropped
+- The pure engine's 09:30 start rejected a signal seen at 09:28 AND marked it handled, so it was never retried (4 signals on 9 Nov). Now such a
+  signal waits for the next round; the 11:30 window end counts the whole 11:30 minute.
+
+## 10 Nov 2026: one desk (user: "rewire it, one strong team is enough")
+- Overnight carry OFF for everything (carry.enabled false): carried trades lost Rs 45,717 on 13; trades closed the same day made Rs 29,747 on 53.
+- Stretched mover (user's own method): a top mover that had already run 4%+ the same way in the previous week gets a 15% (else 10%) target on its
+  reversal instead of 1% (config `stretch`); the News Guard still skips results, regulatory, policy and strong-news stocks (the Oil India lesson).
+  Movers capital Rs 1 lakh (was Rs 30,000).
+- Kept as playbooks of the one desk: spurt with the market, pre-open (order flow, gap recovery, results gap), news forecasts, movers reversal.
+  Tested and rejected: buying top movers in their direction, breakout confirmation, technical-strength filters (backtest_summary.md).
+- 10 Nov: news playbook trades only forecasts with a results filing behind them (source intel); forecasts from media news/policy alone are logged
+  as intel-news and paused (config teams.news.paused_sources). Evidence: 164 live ideas, results 64% right vs media news 44%.
+- 10 Nov: news playbook takes no new trade after 13:00 (config teams.news.entry_until). Results-timing study in backtest_summary.md.
+- 10 Nov: movers playbook gets a commodity guard (it was wired only for the news team): a reversal is skipped when crude/gold/metals move sharply against it.
+
+## 12 Nov: spurt candidates retried after a data error
+- 11 Nov: 6 spurt candidates (AXISBANK, HDFCBANK, KOTAKBANK, PNB, FEDERALBNK, ETERNAL) were dropped for good on one
+  INDmoney server error. Now retried in the next round (at most twice) while fresh. Bug fix, no rule change.
+- Carry check (user asked to cut it): carry has been OFF since 10 Nov; the losses on 11 Nov were 9 Nov trades
+  opened before the switch. Carried trades so far: spurt -Rs 20.8k (5), gap recovery -Rs 44.6k (4); the same
+  playbooks squared off the same day made money. Nothing is carried any more.

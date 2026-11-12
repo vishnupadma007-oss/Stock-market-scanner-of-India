@@ -1,0 +1,456 @@
+[
+ {
+  "seq_id": "156835",
+  "filed": "2023-10-25 16:00:39",
+  "pdf": "https://nsearchives.nseindia.com/corporate/AxisBank_Q2FY24_25102023160039.pdf",
+  "figures": {
+   "revenue": {
+    "quarter": 3166026.0,
+    "prev_quarter": 3064404.0,
+    "year_ago": 2409433.0,
+    "qoq_pct": 3.3,
+    "yoy_pct": 31.4
+   }
+  },
+  "view": "good",
+  "reaction": {
+   "reaction_day": "2023-10-26",
+   "when": "after close",
+   "gap_pct": 0.06,
+   "close_pct": 1.74,
+   "high_pct": 2.05,
+   "low_pct": -0.28,
+   "nifty_gap_pct": -0.5,
+   "nifty_close_pct": -1.39,
+   "runup_20d": -3.42,
+   "excess_close_pct": 3.13,
+   "excess_gap_pct": 0.56
+  },
+  "profit_yoy": null,
+  "profit_surprise": null,
+  "revenue_yoy": 31.4,
+  "revenue_surprise": null
+ },
+ {
+  "seq_id": "159123",
+  "filed": "2024-01-23 16:01:24",
+  "pdf": "https://nsearchives.nseindia.com/corporate/Axisresults_Q3FY24_23012024160124.pdf",
+  "figures": {
+   "revenue": {
+    "quarter": 3513683.0,
+    "prev_quarter": 3312223.0,
+    "year_ago": 2799034.0,
+    "qoq_pct": 6.1,
+    "yoy_pct": 25.5
+   },
+   "profit": {
+    "quarter": 607110.0,
+    "prev_quarter": 586356.0,
+    "year_ago": 585307.0,
+    "qoq_pct": 3.5,
+    "yoy_pct": 3.7
+   }
+  },
+  "view": "good",
+  "reaction": {
+   "reaction_day": "2024-01-24",
+   "when": "after close",
+   "gap_pct": -5.0,
+   "close_pct": -2.76,
+   "high_pct": -1.47,
+   "low_pct": -6.27,
+   "nifty_gap_pct": -0.25,
+   "nifty_close_pct": 1.01,
+   "runup_20d": 0.61,
+   "excess_close_pct": -3.77,
+   "excess_gap_pct": -4.75
+  },
+  "profit_yoy": 3.7,
+  "profit_surprise": null,
+  "revenue_yoy": 25.5,
+  "revenue_surprise": -5.9
+ },
+ {
+  "seq_id": "161119",
+  "filed": "2024-04-24 16:25:23",
+  "pdf": "https://nsearchives.nseindia.com/corporate/resultsaxisbank_24042024162523.pdf",
+  "figures": {
+   "revenue": {
+    "quarter": 3599033.0,
+    "prev_quarter": 3351596.0,
+    "year_ago": 2875756.0,
+    "qoq_pct": 7.4,
+    "yoy_pct": 25.2
+   },
+   "profit": {
+    "quarter": 761355.0,
+    "prev_quarter": 649336.0,
+    "year_ago": -5371.18,
+    "qoq_pct": 17.3,
+    "yoy_pct": -14274.8
+   }
+  },
+  "view": "mixed",
+  "reaction": {
+   "reaction_day": "2024-04-25",
+   "when": "after close",
+   "gap_pct": 3.46,
+   "close_pct": 6.0,
+   "high_pct": 6.65,
+   "low_pct": 2.15,
+   "nifty_gap_pct": -0.38,
+   "nifty_close_pct": 0.75,
+   "runup_20d": 0.9,
+   "excess_close_pct": 5.25,
+   "excess_gap_pct": 3.84
+  },
+  "profit_yoy": -100.0,
+  "profit_surprise": -103.7,
+  "revenue_yoy": 25.2,
+  "revenue_surprise": -3.2
+ },
+ {
+  "seq_id": "163723",
+  "filed": "2024-07-24 15:48:22",
+  "pdf": "https://nsearchives.nseindia.com/corporate/AxisbankresultQ1FY25_24072024154822.pdf",
+  "figures": {
+   "revenue": {
+    "quarter": 3779588.0,
+    "prev_quarter": 3783610.0,
+    "year_ago": 3189420.0,
+    "qoq_pct": -0.1,
+    "yoy_pct": 18.5
+   },
+   "profit": {
+    "quarter": 603464.0,
+    "prev_quarter": 712967.0,
+    "year_ago": 579710.0,
+    "qoq_pct": -15.4,
+    "yoy_pct": 4.1
+   }
+  },
+  "view": "mixed",
+  "reaction": {
+   "reaction_day": "2024-07-25",
+   "when": "after close",
+   "gap_pct": -3.17,
+   "close_pct": -5.11,
+   "high_pct": -3.17,
+   "low_pct": -6.76,
+   "nifty_gap_pct": -0.75,
+   "nifty_close_pct": -0.03,
+   "runup_20d": -5.45,
+   "excess_close_pct": -5.08,
+   "excess_gap_pct": -2.42
+  },
+  "profit_yoy": 4.1,
+  "profit_surprise": 52.2,
+  "revenue_yoy": 18.5,
+  "revenue_surprise": -7.0
+ },
+ {
+  "seq_id": "165699",
+  "filed": "2024-10-17 15:43:12",
+  "pdf": "https://nsearchives.nseindia.com/corporate/ResultsQ2FY25_17102024154312.pdf",
+  "figures": {
+   "revenue": {
+    "quarter": 3714171.0,
+    "prev_quarter": 3584422.0,
+    "year_ago": 3166026.0,
+    "qoq_pct": 3.6,
+    "yoy_pct": 17.3
+   },
+   "profit": {
+    "quarter": 740890.0,
+    "prev_quarter": 645003.0,
+    "year_ago": 621768.0,
+    "qoq_pct": 14.9,
+    "yoy_pct": 19.2
+   }
+  },
+  "view": "strong",
+  "reaction": {
+   "reaction_day": "2024-10-18",
+   "when": "after close",
+   "gap_pct": 2.31,
+   "close_pct": 5.74,
+   "high_pct": 6.36,
+   "low_pct": 2.14,
+   "nifty_gap_pct": -0.34,
+   "nifty_close_pct": 0.42,
+   "runup_20d": -6.28,
+   "excess_close_pct": 5.32,
+   "excess_gap_pct": 2.65
+  },
+  "profit_yoy": 19.2,
+  "profit_surprise": 15.5,
+  "revenue_yoy": 17.3,
+  "revenue_surprise": -8.1
+ },
+ {
+  "seq_id": "168332",
+  "filed": "2025-01-16 15:42:18",
+  "pdf": "https://nsearchives.nseindia.com/corporate/Results_Q3FY25_Axis_16012025154218.pdf",
+  "figures": {
+   "revenue": {
+    "quarter": 3692614.0,
+    "prev_quarter": 3714171.0,
+    "year_ago": 3351596.0,
+    "qoq_pct": -0.6,
+    "yoy_pct": 10.2
+   }
+  },
+  "view": "mixed",
+  "reaction": {
+   "reaction_day": "2025-01-17",
+   "when": "after close",
+   "gap_pct": -3.66,
+   "close_pct": -4.52,
+   "high_pct": -2.53,
+   "low_pct": -6.11,
+   "nifty_gap_pct": -0.15,
+   "nifty_close_pct": -0.47,
+   "runup_20d": -3.84,
+   "excess_close_pct": -4.05,
+   "excess_gap_pct": -3.51
+  },
+  "profit_yoy": null,
+  "profit_surprise": null,
+  "revenue_yoy": 10.2,
+  "revenue_surprise": -11.7
+ },
+ {
+  "seq_id": "106302942",
+  "filed": "2025-07-17 15:39:12",
+  "pdf": "https://nsearchives.nseindia.com/corporate/AXISBANK1_17072025153857_Signed_UFR_and_Audit_report_Q1FY26.pdf",
+  "figures": {
+   "revenue": {
+    "quarter": 38321.57,
+    "prev_quarter": 38022.03,
+    "year_ago": 35844.22,
+    "qoq_pct": 0.8,
+    "yoy_pct": 6.9
+   },
+   "profit": {
+    "quarter": 6260.17,
+    "prev_quarter": 7489.71,
+    "year_ago": 6450.03,
+    "qoq_pct": -16.4,
+    "yoy_pct": -2.9
+   }
+  },
+  "view": "weak",
+  "reaction": {
+   "reaction_day": "2025-07-18",
+   "when": "after close",
+   "gap_pct": -6.02,
+   "close_pct": -5.22,
+   "high_pct": -3.79,
+   "low_pct": -6.36,
+   "nifty_gap_pct": -0.01,
+   "nifty_close_pct": -0.57,
+   "runup_20d": -6.02,
+   "excess_close_pct": -4.65,
+   "excess_gap_pct": -6.01
+  },
+  "profit_yoy": -2.9,
+  "profit_surprise": -7.0,
+  "revenue_yoy": 6.9,
+  "revenue_surprise": -11.0
+ },
+ {
+  "seq_id": "106408425",
+  "filed": "2025-10-15 15:36:43",
+  "pdf": "https://nsearchives.nseindia.com/corporate/AXISBANK1_15102025153623_Signed_UFR_and_Audit_report_Q2FY26.pdf",
+  "figures": {
+   "revenue": {
+    "quarter": 37594.81,
+    "prev_quarter": 38321.57,
+    "year_ago": 37141.71,
+    "qoq_pct": -1.9,
+    "yoy_pct": 1.2
+   },
+   "profit": {
+    "quarter": 5557.51,
+    "prev_quarter": 6260.17,
+    "year_ago": 7408.9,
+    "qoq_pct": -11.2,
+    "yoy_pct": -25.0
+   }
+  },
+  "view": "weak",
+  "reaction": {
+   "reaction_day": "2025-10-16",
+   "when": "after close",
+   "gap_pct": 4.0,
+   "close_pct": 2.28,
+   "high_pct": 4.04,
+   "low_pct": 1.34,
+   "nifty_gap_pct": 0.28,
+   "nifty_close_pct": 1.03,
+   "runup_20d": 3.98,
+   "excess_close_pct": 1.25,
+   "excess_gap_pct": 3.72
+  },
+  "profit_yoy": -25.0,
+  "profit_surprise": -29.1,
+  "revenue_yoy": 1.2,
+  "revenue_surprise": -12.6
+ },
+ {
+  "seq_id": "106507517",
+  "filed": "2026-01-26 13:14:18",
+  "pdf": "https://nsearchives.nseindia.com/corporate/AXISBANK1_26012026131344_UFR_and_Audit_report_Q3FY26.pdf",
+  "figures": {
+   "revenue": {
+    "quarter": 38500.06,
+    "prev_quarter": 37594.81,
+    "year_ago": 36926.14,
+    "qoq_pct": 2.4,
+    "yoy_pct": 4.3
+   },
+   "profit": {
+    "quarter": 7044.42,
+    "prev_quarter": 5557.51,
+    "year_ago": 6763.1,
+    "qoq_pct": 26.8,
+    "yoy_pct": 4.2
+   }
+  },
+  "view": "mixed",
+  "reaction": {
+   "reaction_day": "2026-01-27",
+   "when": "after close",
+   "gap_pct": 2.45,
+   "close_pct": 4.59,
+   "high_pct": 5.98,
+   "low_pct": 1.62,
+   "nifty_gap_pct": 0.06,
+   "nifty_close_pct": 0.51,
+   "runup_20d": 6.61,
+   "excess_close_pct": 4.08,
+   "excess_gap_pct": 2.39
+  },
+  "profit_yoy": 4.2,
+  "profit_surprise": 7.1,
+  "revenue_yoy": 4.3,
+  "revenue_surprise": -4.3
+ },
+ {
+  "seq_id": "106600311",
+  "filed": "2026-04-25 12:58:44",
+  "pdf": "https://nsearchives.nseindia.com/corporate/AXISBANK1_25042026125818_AFRQ4FY26.pdf",
+  "figures": {
+   "revenue": {
+    "quarter": 38746.64,
+    "prev_quarter": 38500.06,
+    "year_ago": 38022.03,
+    "qoq_pct": 0.6,
+    "yoy_pct": 1.9
+   },
+   "profit": {
+    "quarter": 7631.72,
+    "prev_quarter": 7044.42,
+    "year_ago": 7489.71,
+    "qoq_pct": 8.3,
+    "yoy_pct": 1.9
+   }
+  },
+  "view": "mixed",
+  "reaction": {
+   "reaction_day": "2026-04-27",
+   "when": "after close",
+   "gap_pct": -2.99,
+   "close_pct": -3.05,
+   "high_pct": -2.83,
+   "low_pct": -4.83,
+   "nifty_gap_pct": 0.2,
+   "nifty_close_pct": 0.81,
+   "runup_20d": 10.53,
+   "excess_close_pct": -3.86,
+   "excess_gap_pct": -3.19
+  },
+  "profit_yoy": 1.9,
+  "profit_surprise": 4.8,
+  "revenue_yoy": 1.9,
+  "revenue_surprise": -3.7
+ },
+ {
+  "seq_id": "106702409",
+  "filed": "2026-07-18 11:24:12",
+  "pdf": "https://nsearchives.nseindia.com/corporate/AXISBANK1_18072026112345_Axis_Bank_Q1FY27_results.pdf",
+  "figures": {
+   "revenue": {
+    "quarter": 40721.05,
+    "prev_quarter": 38746.64,
+    "year_ago": 38321.57,
+    "qoq_pct": 5.1,
+    "yoy_pct": 6.3
+   },
+   "profit": {
+    "quarter": 7656.51,
+    "prev_quarter": 7631.72,
+    "year_ago": 6260.17,
+    "qoq_pct": 0.3,
+    "yoy_pct": 22.3
+   }
+  },
+  "view": "strong",
+  "reaction": {
+   "reaction_day": "2026-07-20",
+   "when": "after close",
+   "gap_pct": -4.03,
+   "close_pct": -5.46,
+   "high_pct": -3.35,
+   "low_pct": -5.98,
+   "nifty_gap_pct": -0.59,
+   "nifty_close_pct": -0.39,
+   "runup_20d": -3.01,
+   "excess_close_pct": -5.07,
+   "excess_gap_pct": -3.44
+  },
+  "profit_yoy": 22.3,
+  "profit_surprise": 22.8,
+  "revenue_yoy": 6.3,
+  "revenue_surprise": 3.2
+ },
+ {
+  "seq_id": "106821005",
+  "filed": "2026-10-17 12:52:57",
+  "pdf": "https://nsearchives.nseindia.com/corporate/AXISBANK1_17102026125236_AxisBank_Q2FY27_results.pdf",
+  "figures": {
+   "revenue": {
+    "quarter": 42949.32,
+    "prev_quarter": 40721.05,
+    "year_ago": 37594.81,
+    "qoq_pct": 5.5,
+    "yoy_pct": 14.2
+   },
+   "profit": {
+    "quarter": 7649.7,
+    "prev_quarter": 7656.51,
+    "year_ago": 5557.51,
+    "qoq_pct": -0.1,
+    "yoy_pct": 37.6
+   }
+  },
+  "view": "strong",
+  "reaction": {
+   "reaction_day": "2026-10-19",
+   "when": "after close",
+   "gap_pct": -1.95,
+   "close_pct": -4.19,
+   "high_pct": -1.95,
+   "low_pct": -5.02,
+   "nifty_gap_pct": 0.02,
+   "nifty_close_pct": -1.11,
+   "runup_20d": 4.57,
+   "excess_close_pct": -3.08,
+   "excess_gap_pct": -1.97
+  },
+  "profit_yoy": 37.6,
+  "profit_surprise": 34.6,
+  "revenue_yoy": 14.2,
+  "revenue_surprise": 11.1
+ }
+]

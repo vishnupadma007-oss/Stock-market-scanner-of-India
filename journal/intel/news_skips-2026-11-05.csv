@@ -1,0 +1,24 @@
+time,symbol,direction,confidence,move_pct,reason
+09:15,BEL,up,85,1.26,Trend Checker 0 < 60
+09:15,HDFCBANK,up,77,2.38,Trend Checker 0 < 60
+09:15,NATIONALUM,up,77,1.75,Trend Checker 35 < 60
+09:24,HDFCBANK,up,77,2.55,Trend Checker 5 < 60
+09:24,NATIONALUM,up,77,0.66,Trend Checker 35 < 60
+09:31,BPCL,down,,5.02,gap recovery: risk: Forecast chance of reaching the target is 60% (need 60%).
+09:31,BHARTIARTL,up,,-0.11,quiet spurt: live move -0.11% no longer fits
+09:31,BAJAJ-AUTO,down,,0.12,quiet spurt: live move 0.12% no longer fits
+09:31,GAIL,down,,-0.39,pure spurt: Recent news/catalyst (concall): GAIL concall transcript: GAIL (India) Limited has informed t
+09:31,CIPLA,down,,-0.39,pure spurt: bid-ask gap 29.62% > 1.0%
+09:31,HAL,up,,0.4,"pure spurt: Recent news/catalyst (news): Beyond HAL, BEL: Apollo Micro Systems, MTAR, Data Patterns, "
+09:31,HDFCBANK,up,77,2.42,Trend Checker 20 < 60
+09:41,KOTAKBANK,down,,0.28,quiet spurt: live move 0.28% no longer fits
+09:41,BHEL,down,,-0.37,"pure spurt: Recent news/catalyst (news): BHEL share price target: Already up 50% in 1 year, should yo"
+09:41,MPHASIS,up,,0.92,quiet spurt: live move 0.92% no longer fits
+09:41,ITC,up,,0.36,pure spurt: Recent news/catalyst (news): How ITC shares are performing after Q2 results? Should you b
+09:41,NTPC,down,,-0.3,"pure spurt: Recent news/catalyst (news): NTPC shares jump 4% after Q2 profit rises 14%, power generat"
+09:41,APOLLOHOSP,down,75,-2.74,market headwind: Nifty +1.85% (rallying)
+09:41,DIVISLAB,down,,-0.52,pure spurt: Results due in next 48h; pre-results positioning noise
+10:04,DIVISLAB,up,,0.41,pure spurt: Results due in next 48h; pre-results positioning noise
+10:04,FEDERALBNK,up,,-0.04,quiet spurt: live move -0.04% no longer fits
+10:28,POWERGRID,down,,-0.1,pure spurt: Recent news/catalyst (concall): POWERGRID: Power Grid Corporation of India Limited has infor
+10:34,TATASTEEL,down,,0.12,quiet spurt: live move 0.12% no longer fits
