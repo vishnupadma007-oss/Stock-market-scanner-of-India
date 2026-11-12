@@ -75,7 +75,8 @@ Order the user wants: **Inspection report (signed) → photographs → machinery
 2. "Details to be printed in RCMC Certificate": list current vs proposed and wait for approval.
    - New registration: Membership Category **New Member**; Issue Date = date of processing (today); Valid Upto = issue date + 3 years − 1 day (user's rule: 27/10/2026 → 26/10/2029).
    - Amendment: Membership Category **Amendment**; keep the **existing RCMC's issue and expiry dates** (Basic Details → RCMC Details table) – the amendment does not extend validity.
-   - Description of goods: leave as filled unless the user asks.
+   - Description of goods: always set to **SPICES AND SPICE PRODUCTS** (user's standing rule: uniform for all applications).
+   - Remark for a file inspected by a deputed official: name them, e.g. `UNIT INSPECTED ON DD-MM-YYYY BY SHRI <NAME>, <DESIGNATION>, <OFFICE>. INSPECTION REPORT WITH ENCLOSURES UPLOADED. RECOMMENDED FOR ISSUE OF RCMC AS MANUFACTURER EXPORTER.`
    - Tick declaration → Save certificate details.
 3. Send → **reji k,Administrator**, remark e.g. `UNIT INSPECTED ON DD-MM-YYYY. INSPECTION REPORT WITH ENCLOSURES UPLOADED. RECOMMENDED FOR ISSUE OF RCMC AS MANUFACTURER EXPORTER.` (or "…FOR AMENDMENT OF RCMC AS MANUFACTURER EXPORTER."). Verify in file history.
 
