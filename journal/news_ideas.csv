@@ -253,3 +253,14 @@ date,time,symbol,direction,confidence,source,priced_in
 2026-11-12,12:29,TATAPOWER,up,90,intel-news,not priced in
 2026-11-12,12:29,PNB,up,75,intel-news,largely priced in
 2026-11-12,12:36,TITAN,up,77,intel-news,partly priced in
+2026-11-13,08:41,HDFCBANK,down,88,intel-news,not priced in
+2026-11-13,08:41,SBIN,up,97,intel-news,partly priced in
+2026-11-13,08:41,TITAN,up,79,intel-news,partly priced in
+2026-11-13,08:41,NMDC,down,49,intel,pessimism priced in
+2026-11-13,08:41,TATAPOWER,up,100,intel,not priced in
+2026-11-13,08:41,PNB,up,73,intel-news,largely priced in
+2026-11-13,09:15,MPHASIS,down,75,preopen,NSE pre-open order imbalance
+2026-11-13,09:15,NATIONALUM,down,75,preopen,NSE pre-open order imbalance
+2026-11-13,09:15,MUTHOOTFIN,down,75,preopen,NSE pre-open order imbalance
+2026-11-13,09:15,ASIANPAINT,down,75,preopen,NSE pre-open order imbalance
+2026-11-13,09:15,BAJFINANCE,down,75,preopen,NSE pre-open order imbalance
