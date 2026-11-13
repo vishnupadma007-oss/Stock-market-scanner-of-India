@@ -495,3 +495,21 @@ Reversal of a top-5 mover that turned 0.5%: week 4%+ (adopted) 53 trades +Rs 49,
 +Rs 23,532; week AND 15-day: 29, +Rs 18,675. Whole sector moving the same way (0.7%+): 36, +Rs 13,669 (first half -0.9k); stock-specific: 17, +Rs 12,266. Nifty the
 same way 0.3%+: 32, +Rs 21,629; flat/against: 32, +Rs 6,437 (second half negative). No sector or longer screen beats the plain week rule. P/E vs peers, commodity and
 geopolitical checks have no history to test: the valuation label is recorded on each trade; a commodity moving against the trade now blocks it (commodity guard).
+
+### Movers "exhaustion reversal" proposal (user, 13 Nov 2026): `backtest_movers_exhaust.py`
+Proposal: 2.0-3.8% mover (gap <= 1.5%, range <= 4.5%), 1%+ from VWAP, 2.5x volume spike on a new-extreme wick candle, entry on its break;
+0.5% spot / +5% premium / VWAP target, -3.5% stop, 15-minute time exit. Yahoo 5-minute data, 42 days (10 Sep - 12 Nov), 76 stocks, ITM1,
+Rs 25k per trade, one per stock per day. Base = every top-5 mover turned 0.5% off its extreme 09:30-14:00, desk exits (15% if week stretched, else 1% net).
+| Variant | Trades | Hit | Avg | Net | Half 1 / Half 2 |
+|---|---|---|---|---|---|
+| Base (movers entry, desk exits) | 398 | 77% | -0.68% | -Rs 67,730 | +14.6k / -82.3k |
+| + move 2.0-3.8%, gap/range caps | 249 | 76% | -0.62% | -Rs 38,392 | +41.3k / -79.7k |
+| + 1%+ from VWAP | 79 | 65% | -2.64% | -Rs 52,021 | -4.3k / -47.7k |
+| + both | 37 | 70% | -1.43% | -Rs 13,246 | +2.8k / -16.1k |
+| Exhaustion-candle entry, desk exits | 59 | 75% | -3.89% | -Rs 57,443 | -23.0k / -34.5k |
+| Full proposal entry, desk exits | 8 | 75% | -4.69% | -Rs 9,385 | +2.6k / -12.0k |
+| Full proposal entry + its own exits | 8 | 50% | -0.75% | -Rs 1,496 | -0.9k / -0.6k |
+| Exhaustion entry + proposal exits | 48 | 23% | -2.86% | -Rs 34,210 | -14.8k / -19.4k |
+Verdict: no variant makes money in both halves; the exhaustion candle and VWAP stretch make entries worse, the scalp exits lose (stops). Not adopted.
+Order flow / depth / minute futures OI: no history, not testable. Note: this plain base (no hit-chance filter, no news guard, all top-5 bars) also lost
+in the last month (Oct-Nov), so the live movers record is the judge for the current playbook.
