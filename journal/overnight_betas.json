@@ -12,22 +12,25 @@
    "resid_sd": 0.491
   },
   "HDFCBANK": {
-   "const": -0.0914,
-   "beta": 1.152,
-   "crude": -0.0204,
-   "resid_sd": 0.547
+   "const": -0.0869,
+   "beta": 1.036,
+   "crude": -0.0064,
+   "resid_sd": 0.517,
+   "adr": 0.1223
   },
   "ICICIBANK": {
-   "const": -0.0324,
-   "beta": 0.934,
-   "crude": -0.0202,
-   "resid_sd": 0.41
+   "const": -0.0347,
+   "beta": 0.875,
+   "crude": -0.0126,
+   "resid_sd": 0.401,
+   "adr": 0.0745
   },
   "INFY": {
-   "const": -0.042,
-   "beta": 1.174,
-   "crude": 0.0246,
-   "resid_sd": 0.96
+   "const": -0.0043,
+   "beta": 0.791,
+   "crude": 0.0304,
+   "resid_sd": 0.709,
+   "adr": 0.3181
   },
   "TCS": {
    "const": 0.0129,
@@ -120,10 +123,11 @@
    "resid_sd": 0.517
   },
   "WIPRO": {
-   "const": 0.0267,
-   "beta": 1.025,
-   "crude": 0.0012,
-   "resid_sd": 0.92
+   "const": 0.0413,
+   "beta": 0.855,
+   "crude": 0.0169,
+   "resid_sd": 0.821,
+   "adr": 0.1842
   },
   "HCLTECH": {
    "const": -0.0403,
@@ -390,10 +394,11 @@
    "resid_sd": 0.521
   },
   "DRREDDY": {
-   "const": -0.005,
-   "beta": 0.92,
-   "crude": 0.0131,
-   "resid_sd": 0.768
+   "const": -0.007,
+   "beta": 0.798,
+   "crude": 0.0221,
+   "resid_sd": 0.707,
+   "adr": 0.1914
   },
   "DIVISLAB": {
    "const": 0.0831,

@@ -27,6 +27,9 @@ import pandas as pd
 ROOT = Path(__file__).resolve().parent.parent
 BETAS = ROOT / "journal" / "overnight_betas.json"
 OUT = ROOT / "journal" / "overnight"
+# US-listed shares (ADRs) of our stocks trade while India sleeps (14 Nov test, last 6 months: direction right when the forecast
+# is 0.5%+ -> INFY 45% -> 88%, WIPRO 61 -> 81, ICICIBANK 58 -> 80, HDFCBANK 71 -> 78, DRREDDY 57 -> 69).
+ADRS = {"INFY": "INFY", "WIPRO": "WIT", "HDFCBANK": "HDB", "ICICIBANK": "IBN", "DRREDDY": "RDY"}
 
 
 def _daily(tickers: list[str], years: int = 2) -> dict[str, pd.DataFrame]:
@@ -44,13 +47,14 @@ def _daily(tickers: list[str], years: int = 2) -> dict[str, pd.DataFrame]:
 def gap_table(universe: list[str], years: int = 2) -> pd.DataFrame:
     """Rows = Indian trading days; columns: each stock's opening gap %, Nifty's gap %, S&P 500 and Brent moves
     since India's previous close (their last close before the Indian day)."""
-    data = _daily([s + ".NS" for s in universe] + ["^NSEI", "^GSPC", "BZ=F"], years)
+    adrs = [ADRS[s] for s in universe if s in ADRS]
+    data = _daily([s + ".NS" for s in universe] + ["^NSEI", "^GSPC", "BZ=F"] + adrs, years)
     nifty = data["^NSEI"]
     tab = pd.DataFrame(index=nifty.index)
     for tk, d in data.items():
         if tk.endswith(".NS") or tk == "^NSEI":
             tab[tk.removesuffix(".NS")] = (d["Open"] / d["Close"].shift(1) - 1) * 100
-    for tk, name in (("^GSPC", "spx"), ("BZ=F", "brent")):
+    for tk, name in [("^GSPC", "spx"), ("BZ=F", "brent")] + [(a, "adr_" + s) for s, a in ADRS.items() if a in data]:
         c = data[tk]["Close"]
         # move from its last close before India's previous session to its last close before today
         prev_day = pd.Series(nifty.index, index=nifty.index).shift(1)
@@ -69,25 +73,28 @@ def fit(tab: pd.DataFrame, universe: list[str]) -> dict:
     for s in universe:
         if s not in tab:
             continue
-        d = tab[[s, "^NSEI", "brent"]].dropna()
+        adr = "adr_" + s if "adr_" + s in tab else None
+        d = tab[[s, "^NSEI", "brent"] + ([adr] if adr else [])].dropna()
         d = d[d[s].abs() < 15]  # splits / bonus days
         if len(d) < 100:
             continue
-        X = np.column_stack([np.ones(len(d)), d["^NSEI"], d["brent"]])
+        X = np.column_stack([np.ones(len(d)), d["^NSEI"], d["brent"]] + ([d[adr]] if adr else []))
         c, *_ = np.linalg.lstsq(X, d[s].values, rcond=None)
         resid = d[s].values - X @ c
         out["stocks"][s] = {"const": round(c[0], 4), "beta": round(c[1], 3), "crude": round(c[2], 4),
                             "resid_sd": round(float(resid.std()), 3)}
+        if adr:
+            out["stocks"][s]["adr"] = round(c[3], 4)
     return out
 
 
-def predict_gap(sym: str, model: dict, spx: float, brent: float) -> float | None:
+def predict_gap(sym: str, model: dict, spx: float, brent: float, adr: float | None = None) -> float | None:
     st = model["stocks"].get(sym)
     if not st:
         return None
     n = model["nifty"]
     nifty_gap = n["const"] + n["spx"] * spx + n["brent"] * brent
-    return st["const"] + st["beta"] * nifty_gap + st["crude"] * brent
+    return st["const"] + st["beta"] * nifty_gap + st["crude"] * brent + st.get("adr", 0.0) * (adr or 0.0)
 
 
 def evaluate(universe: list[str]) -> str:
@@ -101,7 +108,7 @@ def evaluate(universe: list[str]) -> str:
         for day, r in test.iterrows():
             if pd.isna(r.get(s)) or abs(r[s]) >= 15:
                 continue
-            p = predict_gap(s, model, r["spx"], r["brent"])
+            p = predict_gap(s, model, r["spx"], r["brent"], r.get("adr_" + s))
             rows.append({"sym": s, "pred": p, "actual": r[s], "brent": r["brent"]})
     df = pd.DataFrame(rows)
     big = df[df["pred"].abs() >= 0.5]
@@ -133,14 +140,24 @@ def forecast(now: datetime, universe: list[str]) -> dict:
         BETAS.write_text(json.dumps(model, indent=1))
     mkt = reaction.expected_market_gap()
     spx, brent = mkt["spx_change_pct"], mkt["brent_change_pct"]
+    adr_moves = {}
+    for s, a in ADRS.items():
+        try:
+            c = reaction.prices(a)["Close"]
+            last_close = reaction.prices("^NSEI").index[-1]
+            adr_moves[s] = (float(c.iloc[-1]) / float(c[c.index < last_close].iloc[-1]) - 1) * 100
+        except Exception:
+            pass
     items = analyzer.recent_items(now)
     reported = mover_forecast.results_since_last_close(now)
     stocks = {}
     for s in universe:
-        g = predict_gap(s, model, spx, brent)
+        g = predict_gap(s, model, spx, brent, adr_moves.get(s))
         if g is None:
             continue
         parts = [f"market {g:+.2f}%"]
+        if s in adr_moves and model["stocks"][s].get("adr"):
+            parts.append(f"US-listed shares {adr_moves[s]:+.1f}%")
         oil = model["stocks"][s]["crude"] * brent
         if abs(oil) >= 0.2:
             parts.append(f"oil {oil:+.2f}% (Brent {brent:+.1f}%)")

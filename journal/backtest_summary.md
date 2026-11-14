@@ -535,3 +535,7 @@ After the open (open -> close, in the forecast's direction; halves): priced in (
 under-reacted -0.08% (-0.20/+0.03); opposite -0.13%; as expected -0.09%. So the overnight news is in the opening price: following it
 after the open has no edge, and a priced-in gap drifts back a little. Used as a gauge: shown in the morning brief, and a news-backed
 spurt WITH a priced-in gap aims for 10% instead of 15%.
+Added 14 Nov: US-listed shares (ADRs) of INFY, WIPRO, HDFCBANK, ICICIBANK, DRREDDY. Last 6 months, direction right when the forecast is
+0.5%+: INFY 45% -> 88%, WIPRO 61 -> 81, ICICIBANK 58 -> 80, HDFCBANK 71 -> 78, DRREDDY 57 -> 69. Nasdaq for the other IT stocks: little
+gain (TCS 55 -> 70 on 10 cases, HCLTECH/TECHM none). Whole model now 76% (1,165 cases). Not testable on free data: GIFT Nifty, Asian
+markets at 09:00, US futures at 09:00 (Yahoo has daily closes only, after India's open).
