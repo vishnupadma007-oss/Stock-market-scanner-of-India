@@ -547,3 +547,17 @@ Daily, last 12 months: the GAP is right 83% when the forecast is 0.5%+ (235 case
 Options bought at 09:30 (Rs 25k, no stop-loss, 15:20 exit), 60 days: 5% target, with the forecast: 71% hit, -Rs 66,454 (both halves -);
 against: -Rs 96,187. 10% target with: -Rs 71,406; against: -Rs 11,436 (halves +43k/-55k). Every version loses: the forecast is right
 about the open, and the open is where the move already happened. The 5% wins are too small for the losing days held to 15:20.
+
+### Support/resistance range trading, 1% net target (user, 14 Nov 2026): `backtest_range_sr.py` - not adopted
+Calm days only (Nifty within 0.5%), the 25 most volatile F&O stocks, CALL on a bounce off support / PUT on a turn at resistance,
+1% net target, re-entry after each exit (max 3 per stock per day), no stop-loss, 15:20 square-off, 60 days, Rs 25k per trade.
+| Levels | Bet | Trades | Hit 1% | Avg | Worst | Net | Halves |
+|---|---|---|---|---|---|---|---|
+| prev day high/low | fade the level | 1,146 | 82% | -1.77% | -65% | -Rs 5.06 lakh | -248k / -258k |
+| prev day high/low | breakout | 1,167 | 81% | -2.05% | -86% | -Rs 5.96 lakh | -341k / -256k |
+| pivot S1/R1 | fade | 1,148 | 83% | -1.74% | -62% | -Rs 4.97 lakh | -290k / -207k |
+| pivot S1/R1 | breakout | 1,137 | 79% | -2.36% | -86% | -Rs 6.70 lakh | -433k / -236k |
+| first-30-min range | fade | 2,111 | 82% | -1.84% | -65% | -Rs 9.68 lakh | -587k / -381k |
+| first-30-min range | breakout | 1,985 | 84% | -1.66% | -58% | -Rs 8.21 lakh | -347k / -474k |
+Verdict: 8 in 10 trades reach +1%, but the 2 in 10 that do not are held to 15:20 and lose 15-65%: one miss wipes out ~20 wins.
+Fading the level and breaking it lose about the same, so the levels themselves carry no edge on our data.
