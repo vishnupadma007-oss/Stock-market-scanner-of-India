@@ -94,6 +94,9 @@ file current: update "State" in the 15:40 review whenever something here changes
   https://mcp.nseindia.in/cmmkt/mcp (backup quotes/Nifty; field names unverified until a market day: check the first live use).
 - 13 Nov: the watcher died twice (10:15 and ~14:20); two trades squared off by hand after the close. Asked the user about a 15:10 check.
 - Movers exhaustion-scalp proposal backtested and rejected (13 Nov).
+- 14 Nov evening: no time windows (news to 15:15, spurts all day; Risk agent's hit chance still gates late entries); overnight gap
+  forecast per stock (`agents/overnight.py`, in mover_forecast output, journal/overnight/<date>.json, betas in
+  journal/overnight_betas.json; refit monthly: `python -m agents.overnight fit`); commodity guard on news+spurt.
 
 ## State on 12 Nov 2026 (evening)
 

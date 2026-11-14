@@ -526,3 +526,12 @@ Today's spurt rule (0.2-0.5% move, candle/VWAP its way, with the Nifty, gap <= 1
 | 11:35-14:00, last 5-min candle 4x usual (new trades) | 4 | 75% | +4.77% | +Rs 5,714 | +3.1k / +2.6k |
 Verdict: the day's total volume rarely reaches 3x by midday; a single 5-minute burst of 3x+ is the version that adds money in both halves.
 Switched on (spurt.pure.late_burst_x 3.0, until 14:00). Small sample (6 trades): judge it live; trade notes say "late burst Nx".
+
+### Overnight gap forecast per stock (user, 14 Nov 2026): `agents/overnight.py`
+Model: stock gap = beta x expected Nifty gap (S&P 500 + Brent since India's close) + the stock's own oil sensitivity x Brent. Fitted on
+18 months, tested on the last 6 (9,348 stock-days): direction right 74% when the forecast is 0.5%+ (1,056 cases), 60% on big oil nights;
+size barely better than "no change" (0.51% vs 0.52% error). Oil-hurt: IOC, BPCL, ASIANPAINT; oil-helped: ONGC, BEL, NATIONALUM.
+After the open (open -> close, in the forecast's direction; halves): priced in (gap >= forecast) -0.17%, 43% right (-0.18/-0.15);
+under-reacted -0.08% (-0.20/+0.03); opposite -0.13%; as expected -0.09%. So the overnight news is in the opening price: following it
+after the open has no edge, and a priced-in gap drifts back a little. Used as a gauge: shown in the morning brief, and a news-backed
+spurt WITH a priced-in gap aims for 10% instead of 15%.

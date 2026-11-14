@@ -30,7 +30,7 @@ from datetime import date, datetime, time, timedelta
 from pathlib import Path
 from zoneinfo import ZoneInfo
 
-from agents import (activity, analyzer, newsspurt, nse_mcp, announcements, ai_helper, candles, carry, probability, trade_news, commodities, concalls, daymode, expectations,
+from agents import (activity, analyzer, newsspurt, nse_mcp, overnight, announcements, ai_helper, candles, carry, probability, trade_news, commodities, concalls, daymode, expectations,
                     gapfollow, holidays, intel, macro, news, news_guard, newsfeed, policy, preopen,
                     psychology, reaction, shock, spurt, valuation)
 from agents.chart_reader import read_chart
@@ -444,6 +444,15 @@ def poll_exchange(cfg: dict, now: datetime) -> None:
     reset_daily(now.date().isoformat())
     if now.time() >= time(9, 8) and preopen.load("preopen", now.date()) is None:
         preopen.save("preopen", now.date(), preopen.fetch_preopen(cfg["universe"]))
+    if now.time() >= time(9, 8) and not _daily.get("overnight_done"):
+        _daily["overnight_done"] = True  # overnight gap forecast vs the pre-open (agents/overnight.py), once a day
+        def _overnight():
+            try:
+                fc = overnight.load(now.date()) or overnight.forecast(now.replace(tzinfo=None), cfg["universe"])
+                overnight.save(overnight.compare(fc, preopen.load("preopen", now.date()) or {}))
+            except Exception as e:
+                emit("ERROR", {"error": f"overnight forecast: {type(e).__name__}: {e}"})
+        threading.Thread(target=_overnight, daemon=True).start()
     if market_open(now) and clock.time() - _daily.get("spurts_at", 0) >= 300:
         _daily["spurts_at"] = clock.time()
         spurts = preopen.fetch_spurts(cfg["universe"])
@@ -1299,12 +1308,22 @@ async def spurt_entries(im: IndMoney, trades: list[dict], now: datetime, cfg: di
                 run5 = (float(dc.iloc[-1]) / float(dc.iloc[-6]) - 1) * 100 if len(dc) >= 6 else None
             except Exception:
                 run5 = None
-            ns = newsspurt.classify(sym, g["direction"], items, now, _daily.get("results") or {}, run5)
+            ns = newsspurt.classify(sym, g["direction"], items, now, _daily.get("results") or {}, run5,
+                                    overnight.stock_note(now.date(), sym))
             if ns["verdict"] in ("against", "pending"):
                 log_skip(now, sym, idea, float(move), f"news+spurt: {ns['why']}")
                 continue
             backed = ns["verdict"] == "backed"
             news_note = ns["why"]
+            # Commodities (user, 14 Nov): crude, gold, metals moving sharply against the stock today -> skip (same guard as movers).
+            ck, ch = _daily.get("commodity_keys") or {}, _daily.get("changes") or {}
+            cm = commodities.assess(sym, "loser" if g["direction"] == "up" else "gainer",
+                                    {name: ch.get(k) for name, k in ck.items()}, cfg)
+            if cm["points"] < 0:
+                log_skip(now, sym, idea, float(move), "news+spurt: " + "; ".join(cm["notes"])[:150])
+                continue
+            if cm["notes"]:
+                news_note += "; " + "; ".join(cm["notes"])
             # F&O Activity cross-check (open interest + price): noted on the trade so its value can be measured.
             act = (_daily.get("activity") or {}).get(sym)
             if act:

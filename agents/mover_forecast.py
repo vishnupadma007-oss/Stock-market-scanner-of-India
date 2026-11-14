@@ -103,6 +103,21 @@ def main() -> None:
         tgt = f"target {r['expected_target_price']}  " if r.get("expected_target_price") else ""
         print(f"{r['symbol']:11} ~{r['expected_move_pct']:.1f}%  {pre}{tgt}{r['direction']:40} {r['why'][:65]}"
               + (f"  [news reads {r['news_view']}]" if r["news_view"] else ""))
+    try:  # overnight gap forecast per stock (agents/overnight.py): market, oil and results since the last close
+        from datetime import datetime as _dt
+        from zoneinfo import ZoneInfo
+        from . import overnight
+        now = _dt.now(ZoneInfo("Asia/Kolkata")).replace(tzinfo=None)
+        universe = load_config()["universe"]
+        fc = overnight.compare(overnight.load(now.date()) or overnight.forecast(now, universe), preopen_gaps(now))
+        overnight.save(fc)
+        print(f"\nOvernight: expected Nifty gap {fc['expected_nifty_gap_pct']:+.2f}% (S&P {fc['spx_change_pct']:+.2f}%, "
+              f"Brent {fc['brent_change_pct']:+.2f}%). Biggest expected stock gaps:")
+        for sym, f in sorted(fc["stocks"].items(), key=lambda kv: -abs(kv[1]["expected_gap_pct"]))[:6]:
+            pre = f", pre-open {f['preopen_gap_pct']:+.1f}% ({f['label']})" if "label" in f else ""
+            print(f"  {sym:11} {f['expected_gap_pct']:+.2f}%  {f['why']}{pre}")
+    except Exception as e:
+        print(f"overnight forecast unavailable: {type(e).__name__}: {e}")
 
 
 if __name__ == "__main__":

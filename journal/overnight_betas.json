@@ -1,0 +1,467 @@
+{
+ "nifty": {
+  "const": 0.011390211564562304,
+  "spx": 0.2791510496304009,
+  "brent": -0.02333880119906455
+ },
+ "stocks": {
+  "RELIANCE": {
+   "const": 0.0106,
+   "beta": 1.035,
+   "crude": 0.0087,
+   "resid_sd": 0.491
+  },
+  "HDFCBANK": {
+   "const": -0.0914,
+   "beta": 1.152,
+   "crude": -0.0204,
+   "resid_sd": 0.547
+  },
+  "ICICIBANK": {
+   "const": -0.0324,
+   "beta": 0.934,
+   "crude": -0.0202,
+   "resid_sd": 0.41
+  },
+  "INFY": {
+   "const": -0.042,
+   "beta": 1.174,
+   "crude": 0.0246,
+   "resid_sd": 0.96
+  },
+  "TCS": {
+   "const": 0.0129,
+   "beta": 0.962,
+   "crude": 0.0139,
+   "resid_sd": 0.725
+  },
+  "SBIN": {
+   "const": 0.068,
+   "beta": 1.079,
+   "crude": 0.0038,
+   "resid_sd": 0.413
+  },
+  "AXISBANK": {
+   "const": -0.0427,
+   "beta": 1.038,
+   "crude": -0.0015,
+   "resid_sd": 0.604
+  },
+  "KOTAKBANK": {
+   "const": -0.0444,
+   "beta": 0.884,
+   "crude": 0.003,
+   "resid_sd": 0.648
+  },
+  "BHARTIARTL": {
+   "const": 0.0573,
+   "beta": 0.75,
+   "crude": -0.006,
+   "resid_sd": 0.56
+  },
+  "LT": {
+   "const": 0.1012,
+   "beta": 1.188,
+   "crude": 0.0081,
+   "resid_sd": 0.512
+  },
+  "ITC": {
+   "const": 0.0357,
+   "beta": 0.703,
+   "crude": 0.0071,
+   "resid_sd": 0.457
+  },
+  "HINDUNILVR": {
+   "const": 0.0231,
+   "beta": 0.61,
+   "crude": 0.0046,
+   "resid_sd": 0.456
+  },
+  "BAJFINANCE": {
+   "const": -0.0425,
+   "beta": 1.23,
+   "crude": 0.0002,
+   "resid_sd": 0.722
+  },
+  "BAJAJFINSV": {
+   "const": 0.0157,
+   "beta": 0.881,
+   "crude": -0.0203,
+   "resid_sd": 0.442
+  },
+  "MARUTI": {
+   "const": 0.0536,
+   "beta": 1.0,
+   "crude": -0.0117,
+   "resid_sd": 0.484
+  },
+  "M&M": {
+   "const": 0.0357,
+   "beta": 1.25,
+   "crude": -0.0132,
+   "resid_sd": 0.684
+  },
+  "SUNPHARMA": {
+   "const": 0.0503,
+   "beta": 0.559,
+   "crude": 0.0065,
+   "resid_sd": 0.661
+  },
+  "TITAN": {
+   "const": -0.049,
+   "beta": 0.831,
+   "crude": -0.0029,
+   "resid_sd": 0.513
+  },
+  "ULTRACEMCO": {
+   "const": -0.0007,
+   "beta": 0.82,
+   "crude": -0.0107,
+   "resid_sd": 0.517
+  },
+  "WIPRO": {
+   "const": 0.0267,
+   "beta": 1.025,
+   "crude": 0.0012,
+   "resid_sd": 0.92
+  },
+  "HCLTECH": {
+   "const": -0.0403,
+   "beta": 1.036,
+   "crude": -0.0095,
+   "resid_sd": 0.788
+  },
+  "TECHM": {
+   "const": -0.0261,
+   "beta": 1.011,
+   "crude": -0.0088,
+   "resid_sd": 0.737
+  },
+  "PERSISTENT": {
+   "const": 0.0014,
+   "beta": 1.252,
+   "crude": 0.0199,
+   "resid_sd": 0.871
+  },
+  "COFORGE": {
+   "const": 0.1467,
+   "beta": 1.314,
+   "crude": -0.0047,
+   "resid_sd": 0.998
+  },
+  "MPHASIS": {
+   "const": 0.0705,
+   "beta": 1.262,
+   "crude": 0.0178,
+   "resid_sd": 0.899
+  },
+  "ADANIENT": {
+   "const": 0.1752,
+   "beta": 1.326,
+   "crude": 0.0286,
+   "resid_sd": 0.774
+  },
+  "ADANIPORTS": {
+   "const": 0.1208,
+   "beta": 1.379,
+   "crude": 0.0117,
+   "resid_sd": 0.778
+  },
+  "TATASTEEL": {
+   "const": 0.0556,
+   "beta": 1.195,
+   "crude": 0.0039,
+   "resid_sd": 0.594
+  },
+  "JSWSTEEL": {
+   "const": 0.0553,
+   "beta": 0.935,
+   "crude": 0.0119,
+   "resid_sd": 0.606
+  },
+  "HINDALCO": {
+   "const": 0.0285,
+   "beta": 1.11,
+   "crude": 0.0217,
+   "resid_sd": 0.794
+  },
+  "VEDL": {
+   "const": 0.1442,
+   "beta": 1.197,
+   "crude": 0.0143,
+   "resid_sd": 0.746
+  },
+  "SAIL": {
+   "const": 0.0037,
+   "beta": 1.234,
+   "crude": 0.0089,
+   "resid_sd": 0.613
+  },
+  "NMDC": {
+   "const": 0.1481,
+   "beta": 1.051,
+   "crude": 0.0012,
+   "resid_sd": 0.582
+  },
+  "NATIONALUM": {
+   "const": 0.052,
+   "beta": 1.25,
+   "crude": 0.0438,
+   "resid_sd": 0.991
+  },
+  "ONGC": {
+   "const": 0.0765,
+   "beta": 0.475,
+   "crude": 0.0961,
+   "resid_sd": 0.758
+  },
+  "NTPC": {
+   "const": 0.0126,
+   "beta": 0.897,
+   "crude": 0.018,
+   "resid_sd": 0.455
+  },
+  "POWERGRID": {
+   "const": 0.0173,
+   "beta": 0.703,
+   "crude": -0.0012,
+   "resid_sd": 0.61
+  },
+  "COALINDIA": {
+   "const": 0.0748,
+   "beta": 0.802,
+   "crude": 0.047,
+   "resid_sd": 0.605
+  },
+  "BPCL": {
+   "const": 0.0511,
+   "beta": 1.278,
+   "crude": -0.0562,
+   "resid_sd": 0.697
+  },
+  "IOC": {
+   "const": 0.0389,
+   "beta": 1.157,
+   "crude": -0.0513,
+   "resid_sd": 0.622
+  },
+  "GAIL": {
+   "const": -0.0336,
+   "beta": 1.157,
+   "crude": 0.0187,
+   "resid_sd": 0.67
+  },
+  "TATAPOWER": {
+   "const": -0.0206,
+   "beta": 0.999,
+   "crude": -0.0043,
+   "resid_sd": 0.63
+  },
+  "DLF": {
+   "const": 0.0721,
+   "beta": 1.242,
+   "crude": 0.0069,
+   "resid_sd": 0.554
+  },
+  "INDUSINDBK": {
+   "const": -0.0655,
+   "beta": 1.016,
+   "crude": 0.0179,
+   "resid_sd": 0.81
+  },
+  "BANKBARODA": {
+   "const": -0.0013,
+   "beta": 1.077,
+   "crude": -0.0007,
+   "resid_sd": 0.546
+  },
+  "PNB": {
+   "const": 0.071,
+   "beta": 1.116,
+   "crude": 0.0113,
+   "resid_sd": 0.493
+  },
+  "CANBK": {
+   "const": 0.0849,
+   "beta": 1.299,
+   "crude": 0.0048,
+   "resid_sd": 0.516
+  },
+  "IDFCFIRSTB": {
+   "const": -0.0468,
+   "beta": 1.125,
+   "crude": -0.0082,
+   "resid_sd": 0.766
+  },
+  "FEDERALBNK": {
+   "const": 0.0527,
+   "beta": 0.879,
+   "crude": -0.0034,
+   "resid_sd": 0.501
+  },
+  "AUBANK": {
+   "const": 0.02,
+   "beta": 0.951,
+   "crude": -0.004,
+   "resid_sd": 0.804
+  },
+  "SHRIRAMFIN": {
+   "const": 0.087,
+   "beta": 1.423,
+   "crude": 0.0004,
+   "resid_sd": 0.695
+  },
+  "CHOLAFIN": {
+   "const": 0.0367,
+   "beta": 1.173,
+   "crude": -0.0325,
+   "resid_sd": 0.757
+  },
+  "MUTHOOTFIN": {
+   "const": 0.0472,
+   "beta": 1.214,
+   "crude": 0.0134,
+   "resid_sd": 1.028
+  },
+  "RECLTD": {
+   "const": 0.0887,
+   "beta": 1.202,
+   "crude": 0.0223,
+   "resid_sd": 0.538
+  },
+  "PFC": {
+   "const": 0.0859,
+   "beta": 1.174,
+   "crude": 0.0116,
+   "resid_sd": 0.518
+  },
+  "BEL": {
+   "const": 0.1312,
+   "beta": 1.066,
+   "crude": 0.0458,
+   "resid_sd": 0.566
+  },
+  "HAL": {
+   "const": 0.1244,
+   "beta": 0.993,
+   "crude": 0.031,
+   "resid_sd": 0.688
+  },
+  "BHEL": {
+   "const": 0.0782,
+   "beta": 1.177,
+   "crude": 0.0199,
+   "resid_sd": 0.706
+  },
+  "TRENT": {
+   "const": 0.0874,
+   "beta": 1.254,
+   "crude": 0.021,
+   "resid_sd": 0.906
+  },
+  "ETERNAL": {
+   "const": -0.0582,
+   "beta": 1.33,
+   "crude": 0.0097,
+   "resid_sd": 1.045
+  },
+  "PAYTM": {
+   "const": 0.0515,
+   "beta": 0.975,
+   "crude": -0.0137,
+   "resid_sd": 0.883
+  },
+  "POLICYBZR": {
+   "const": -0.0312,
+   "beta": 1.117,
+   "crude": -0.0028,
+   "resid_sd": 0.918
+  },
+  "DIXON": {
+   "const": 0.144,
+   "beta": 1.379,
+   "crude": 0.0198,
+   "resid_sd": 0.647
+  },
+  "CIPLA": {
+   "const": -0.0273,
+   "beta": 0.634,
+   "crude": 0.0061,
+   "resid_sd": 0.521
+  },
+  "DRREDDY": {
+   "const": -0.005,
+   "beta": 0.92,
+   "crude": 0.0131,
+   "resid_sd": 0.768
+  },
+  "DIVISLAB": {
+   "const": 0.0831,
+   "beta": 0.758,
+   "crude": 0.0269,
+   "resid_sd": 0.752
+  },
+  "LUPIN": {
+   "const": 0.0879,
+   "beta": 0.782,
+   "crude": 0.0086,
+   "resid_sd": 0.666
+  },
+  "APOLLOHOSP": {
+   "const": -0.0069,
+   "beta": 0.623,
+   "crude": 0.0149,
+   "resid_sd": 0.596
+  },
+  "EICHERMOT": {
+   "const": 0.0367,
+   "beta": 0.968,
+   "crude": 0.0018,
+   "resid_sd": 0.585
+  },
+  "HEROMOTOCO": {
+   "const": 0.1368,
+   "beta": 0.871,
+   "crude": -0.0165,
+   "resid_sd": 0.533
+  },
+  "BAJAJ-AUTO": {
+   "const": 0.0655,
+   "beta": 0.894,
+   "crude": -0.0171,
+   "resid_sd": 0.48
+  },
+  "TVSMOTOR": {
+   "const": 0.0931,
+   "beta": 1.166,
+   "crude": 0.0165,
+   "resid_sd": 0.52
+  },
+  "ASIANPAINT": {
+   "const": -0.0375,
+   "beta": 1.068,
+   "crude": -0.0425,
+   "resid_sd": 0.577
+  },
+  "NESTLEIND": {
+   "const": -0.0099,
+   "beta": 0.603,
+   "crude": -0.0027,
+   "resid_sd": 0.471
+  },
+  "BRITANNIA": {
+   "const": 0.0306,
+   "beta": 0.725,
+   "crude": 0.0111,
+   "resid_sd": 0.604
+  },
+  "GRASIM": {
+   "const": 0.0164,
+   "beta": 0.732,
+   "crude": -0.0016,
+   "resid_sd": 0.473
+  }
+ },
+ "fitted_on": "2024-11-19 - 2026-11-13",
+ "days": 491
+}

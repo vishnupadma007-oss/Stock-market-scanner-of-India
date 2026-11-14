@@ -200,3 +200,12 @@ Not backtestable (no intraday news history): judged live. Evidence caveat: news 
 -Rs 13,116); backed spurts after 13:00 are allowed at the user's request, the review will show them by hour.
 NSE's own MCP servers (agents/nse_mcp.py) are now the backup data source: live stock quotes when NSE's website or INDmoney fails
 (spurt scan, spurt confirmation), Nifty's move for the with-market rule; daily bhavcopy history for backtests.
+
+## 14 Nov 2026 (evening): no time limits, overnight gauge, commodity guard on news+spurt (user)
+- No time window: news trades until the last entry (was 13:00), spurts all day (was 09:30-11:30); the Risk agent's hit chance before
+  15:20 still applies. The 4 Nov spurt backtest had more money without the window (+118.6k vs +90.4k); news after 13:00 lost before
+  (8 trades -Rs 13,116): watch it in the review by entry hour.
+- Overnight gap forecast per stock (agents/overnight.py: market, oil, results) vs the pre-open at 09:08: label priced in /
+  under-reacted / opposite, in the morning brief (mover_forecast) and on each spurt trade; a news-backed spurt with a priced-in
+  gap its way aims for 10% (2-year test: no follow-through after the open, priced-in gaps drift back).
+- Commodity guard (as movers): a spurt is skipped when crude / gold / metals move sharply against the stock today.

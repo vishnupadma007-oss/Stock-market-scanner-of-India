@@ -23,7 +23,8 @@ teams:
                            # 4 Nov: news forecasts trade again (user: four teams, each judged on its own money);
                            # they lost Rs 25,965 on 18 trades up to 3 Nov - [intel] pauses them again
     min_confidence: 60     # forecast confidence needed, after the priced-in cut
-    entry_until: "13:00"   # 10 Nov: no new news trades after 13:00. Live intel trades closed the same day: 09:15-12:59 17 trades
+    entry_until: "15:15"   # 14 Nov (user): news trades at any time; the Risk agent still needs a fair chance of the target before 15:20.
+                           # was "13:00" from 10 Nov: no new news trades after 13:00. Live intel trades closed the same day: 09:15-12:59 17 trades
                            # +Rs 10,846; from 13:00 8 trades -Rs 13,116 (too little time to reach the target; carry is off).
     confirm_pct: 0.5       # the stock must already move the forecast's way by this much today
     max_move_pct: 4.0      # ...but not more (move used up)
@@ -205,7 +206,8 @@ spurt:                     # Quiet Volume Spurt (user's strategy, 28 Oct; agents
   poll_seconds: 60
   pure:                    # user's revived pure engine (4 Nov, agents/spurt.py): spurt TEAM trades only stocks with no news,
     enabled: true          # calm pre-open (gap <= 1%), F&O OI not against it, sound multi-week structure, 09:30-11:30,
-    window_until: "11:30"  # bid-ask gap <= 1% and delta 0.50-0.65. News-agreeing spurts still go to the news team.
+    window_until: "15:15"  # 14 Nov (user): no time window, spurts all day (backtest 4 Nov: the 11:30 window cut money, +118.6k -> +90.4k).
+                           # was "11:30": bid-ask gap <= 1% and delta 0.50-0.65. News-agreeing spurts still go to the news team.
     preopen_max_gap_pct: 1.0   # Backtest of the testable gates (volume 1.8x, window, calm pre-open): 83 trades, +Rs 97k vs
     min_oi_pct: 2.0            # +Rs 156k for the old rule; news, OI and delta/spread limits cannot be backtested (no history).
     max_spread_pct: 1.0
