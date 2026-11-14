@@ -539,3 +539,11 @@ Added 14 Nov: US-listed shares (ADRs) of INFY, WIPRO, HDFCBANK, ICICIBANK, DRRED
 0.5%+: INFY 45% -> 88%, WIPRO 61 -> 81, ICICIBANK 58 -> 80, HDFCBANK 71 -> 78, DRREDDY 57 -> 69. Nasdaq for the other IT stocks: little
 gain (TCS 55 -> 70 on 10 cases, HCLTECH/TECHM none). Whole model now 76% (1,165 cases). Not testable on free data: GIFT Nifty, Asian
 markets at 09:00, US futures at 09:00 (Yahoo has daily closes only, after India's open).
+
+### ADR-stocks team idea (user, 14 Nov 2026): `backtest_adr_team.py` - not adopted
+Only INFY, WIPRO, HDFCBANK, ICICIBANK, DRREDDY, using their overnight forecast (market + oil + US-listed shares).
+Daily, last 12 months: the GAP is right 83% when the forecast is 0.5%+ (235 cases), but after the open the stock goes the same way only
+55% (avg +0.21%), 51% on all days. Typical day range 1.8% (2%+ on 40% of days).
+Options bought at 09:30 (Rs 25k, no stop-loss, 15:20 exit), 60 days: 5% target, with the forecast: 71% hit, -Rs 66,454 (both halves -);
+against: -Rs 96,187. 10% target with: -Rs 71,406; against: -Rs 11,436 (halves +43k/-55k). Every version loses: the forecast is right
+about the open, and the open is where the move already happened. The 5% wins are too small for the losing days held to 15:20.
