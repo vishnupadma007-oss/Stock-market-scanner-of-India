@@ -209,6 +209,8 @@ spurt:                     # Quiet Volume Spurt (user's strategy, 28 Oct; agents
     max_spread_pct: 1.0
     min_delta: 0.50
     max_delta: 0.65
+    late_until: "14:00"    # 14 Nov (user): after window_until a spurt still trades until late_until when the last 5-min candle
+    late_burst_x: 3.0      # alone has 3x+ its usual volume. Backtest (backtest_spurt_late.py): 6 new trades, 67% hit, +Rs 9,633, both halves +.
     with_market: true      # 7 Nov: only trade WITH the market (Nifty's move today in the spurt's direction). Backtest 60 days:
     market_flat_band_pct: 0.15  # flat market (|Nifty| < 0.15%): both CALLs and PUTs allowed (backtest: both profitable)
     market_min_pct: 0.0    # revived rules +Rs 91k -> +Rs 117k, hit 62% -> 74%, both halves positive; against-the-market entries lose.

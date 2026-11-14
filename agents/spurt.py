@@ -372,7 +372,31 @@ def check_institutional_timing(now: datetime, entry_from: str = "09:30",
 
 PURE_DEFAULTS = {"enabled": True, "window_until": "11:30", "preopen_max_gap_pct": 1.0, "min_oi_pct": 2.0,
                  "max_spread_pct": 1.0, "min_delta": 0.50, "max_delta": 0.65,
-                 "with_market": True, "market_min_pct": 0.0, "market_flat_band_pct": 0.15}
+                 "with_market": True, "market_min_pct": 0.0, "market_flat_band_pct": 0.15,
+                 "late_until": "14:00", "late_burst_x": 3.0}
+
+
+def bar_burst(vol_now: float, vol_before: float | None, curve: pd.Series | None, minutes: float) -> float | None:
+    """The last 5 minutes' volume vs the usual volume in the same 5 minutes of the day (from the usual
+    cumulative curve): 3.0 = three times the usual for this slot."""
+    if vol_before is None or curve is None or minutes < 20:
+        return None
+    a, b = usual_now(curve, minutes - 5), usual_now(curve, minutes)
+    if not a or not b or b <= a:
+        return None
+    return round((vol_now - vol_before) / (b - a), 2)
+
+
+def late_burst_ok(now: datetime, burst_x: float | None, pure: dict) -> tuple[bool, str]:
+    """After the 09:30-11:30 window (user's idea, 14 Nov): a spurt still trades until `late_until` when the
+    last 5-minute candle alone has `late_burst_x` times its usual volume (backtest: 6 new trades, +Rs 9.6k, both halves)."""
+    p = {**PURE_DEFAULTS, **(pure or {})}
+    t = now.time()
+    if (t.hour, t.minute) > tuple(int(x) for x in p["late_until"].split(":")):
+        return False, f"after {p['late_until']}: too late even for a big burst"
+    if burst_x is None or burst_x < p["late_burst_x"]:
+        return False, f"after {p['window_until']}: last 5-min volume {burst_x or 0:.1f}x usual, needs {p['late_burst_x']:g}x"
+    return True, f"late burst: last 5-min volume {burst_x:.1f}x usual"
 
 
 def check_option_limits(option: dict, pure: dict) -> str:

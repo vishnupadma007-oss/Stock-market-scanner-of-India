@@ -288,3 +288,16 @@ def test_stretch_week_pct():
     df = pd.DataFrame({"Close": [100, 100, 100, 100, 100, 101, 102, 103, 104, 105.0]}, index=idx)
     assert round(watcher.stretch_week_pct(df, date(2026, 11, 10)), 1) == 5.0
     assert watcher.stretch_week_pct(df.head(4), date(2026, 11, 10)) is None
+
+
+def test_bar_burst_and_late_window():
+    from datetime import datetime
+    import pandas as pd
+    from agents import spurt
+    curve = pd.Series([i * 200.0 for i in range(0, 400, 5)], index=list(range(0, 400, 5)))  # 1,000 per 5 minutes
+    assert spurt.bar_burst(13000, 10000, curve, 200) == 3.0
+    assert spurt.bar_burst(13000, None, curve, 200) is None
+    pure = {"window_until": "11:30", "late_until": "14:00", "late_burst_x": 3.0}
+    assert spurt.late_burst_ok(datetime(2026, 11, 16, 12, 30), 3.2, pure)[0]
+    assert not spurt.late_burst_ok(datetime(2026, 11, 16, 12, 30), 2.5, pure)[0]
+    assert not spurt.late_burst_ok(datetime(2026, 11, 16, 14, 5), 5.0, pure)[0]

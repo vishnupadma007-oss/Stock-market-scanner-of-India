@@ -502,18 +502,26 @@ def spurt_track(cfg: dict) -> None:
                 tick = clock.time()
                 for sym, r in rows.items():
                     q = state["prices"].setdefault(sym, deque(maxlen=30))
-                    earlier = next((p for t, p in reversed(q) if tick - t >= 270), None)
-                    q.append((tick, r["price"]))
+                    before = next(((p, v) for t, p, v in reversed(q) if tick - t >= 270), (None, None))
+                    earlier = before[0]
+                    q.append((tick, r["price"], r.get("volume")))
                     if now.time() < _t(c["from"]) or now.time() > _t(cfg["entry_end"]):
                         continue
                     sig = spurt.live_signal(r, earlier, spurt.usual_now(state["curves"].get(sym), minutes),
                                             minutes, c)
                     if not sig:
                         continue
+                    sig["burst_x"] = spurt.bar_burst(r.get("volume") or 0, before[1], state["curves"].get(sym), minutes)
+                    pure = {**spurt.PURE_DEFAULTS, **(c.get("pure") or {})}
+                    late = now.time() > _t(pure["window_until"])
                     with _daily_lock:
                         seen = _daily.setdefault("spurt_signals", {})
                         if sym in seen:
-                            continue
+                            # a late big burst (user, 14 Nov) gets one fresh look if the earlier signal was a morning one
+                            old = seen[sym]
+                            if not (late and not old.get("late") and spurt.late_burst_ok(now, sig["burst_x"], pure)[0]):
+                                continue
+                        sig["late"] = late
                         seen[sym] = {**sig, "time": pd.Timestamp(now), "found": now}
                     news_pending.set()
             except Exception as e:  # NSE or Yahoo hiccup: try again next minute
@@ -1198,10 +1206,13 @@ def probability_report(intraday, option: dict, risk: dict, spot, now: datetime, 
         return None
 
 
-async def pure_spurt_gate(im: IndMoney, sym: str, key: str, direction: str, now: datetime, pure: dict) -> str:
+async def pure_spurt_gate(im: IndMoney, sym: str, key: str, direction: str, now: datetime, pure: dict,
+                          burst_x: float | None = None) -> str:
     """Revived pure spurt gates (user's design 4 Nov, agents/spurt.py): prime window, zero-news quarantine,
     calm pre-open, F&O open-interest confirmation, multi-week structure. Returns why it fails, "" if it passes."""
     ok, why = spurt.check_institutional_timing(now, "09:30", pure["window_until"])
+    if not ok and now.time() > _t(pure["window_until"]):
+        ok, why = spurt.late_burst_ok(now, burst_x, pure)
     if not ok:
         return why
     quarantined, why = spurt.check_news_quarantine(sym, now, {}, [], analyzer.recent_items(now), _daily.get("results") or {})
@@ -1265,12 +1276,14 @@ async def spurt_entries(im: IndMoney, trades: list[dict], now: datetime, cfg: di
             if act:
                 agrees = activity.confirms(act, g["direction"], c.get("activity_min_oi_pct", 5.0))
                 news_note += f"; {activity.note(act)}{' agrees' if agrees else ''}"
+            if g.get("late"):
+                news_note += f"; late burst {g.get('burst_x') or 0:.1f}x"
             # Which team trades it (user, 3 Nov): the news team when the news agrees, else the spurt team.
             news_agrees = view["strong"] and view["direction"] == g["direction"]
             team = "news" if news_agrees else "spurt"
             pure = {**spurt.PURE_DEFAULTS, **(s.get("pure") or {})}
             if team == "spurt" and pure["enabled"]:  # revived pure engine (user, 4 Nov): every gate must pass
-                why = await pure_spurt_gate(im, sym, key, g["direction"], now, pure)
+                why = await pure_spurt_gate(im, sym, key, g["direction"], now, pure, g.get("burst_x"))
                 if why:
                     log_skip(now, sym, idea, float(move), "pure spurt: " + why)
                     continue

@@ -180,3 +180,8 @@ Past preopen and results-gap trades now count for the pre-open team.
 - Carry check (user asked to cut it): carry has been OFF since 10 Nov; the losses on 11 Nov were 9 Nov trades
   opened before the switch. Carried trades so far: spurt -Rs 20.8k (5), gap recovery -Rs 44.6k (4); the same
   playbooks squared off the same day made money. Nothing is carried any more.
+
+## 14 Nov 2026: spurt team trades big late bursts (user's idea)
+After the 09:30-11:30 window, a spurt still trades until 14:00 when its last 5-minute candle alone has 3x+ the usual volume for that time
+of day (all other pure-engine gates unchanged; not on a stock already traded today). Backtest: 6 new trades, 67% hit, +Rs 9,633, both halves
+positive (a 2x burst and a whole-day 2-4x rule did not pass). Small sample: judge on live trades (notes "late burst Nx").

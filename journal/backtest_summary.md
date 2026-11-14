@@ -513,3 +513,16 @@ Rs 25k per trade, one per stock per day. Base = every top-5 mover turned 0.5% of
 Verdict: no variant makes money in both halves; the exhaustion candle and VWAP stretch make entries worse, the scalp exits lose (stops). Not adopted.
 Order flow / depth / minute futures OI: no history, not testable. Note: this plain base (no hit-chance filter, no news guard, all top-5 bars) also lost
 in the last month (Oct-Nov), so the live movers record is the judge for the current playbook.
+
+### Spurt after 11:30 when the volume is huge (user, 14 Nov 2026): `backtest_spurt_late.py`
+Today's spurt rule (0.2-0.5% move, candle/VWAP its way, with the Nifty, gap <= 1%), 15%-else-10% target, no stop-loss, 60 days x 76 stocks.
+| Variant | Trades | Hit | Avg | Net | Half 1 / Half 2 |
+|---|---|---|---|---|---|
+| Morning 09:30-11:30, 1.8x (current) | 33 | 64% | +5.47% | +Rs 53,974 | +45.1k / +8.9k |
+| 11:35-14:00, day volume 1.8x / 2x | 17 / 13 | 71 / 77% | +3.8 / +3.7% | +19.4k / +14.4k | (new trades only: first half negative) |
+| 11:35-14:00, day volume 3x / 4x | 1 / 1 | - | - | +4.6k | never happens at a 0.2-0.5% move |
+| 11:35-14:00, last 5-min candle 2x usual (new trades) | 7 | 57% | +0.29% | +Rs 608 | -6.5k / +7.1k |
+| **11:35-14:00, last 5-min candle 3x usual (new trades)** | **6** | **67%** | **+5.35%** | **+Rs 9,633** | **+2.5k / +7.1k** |
+| 11:35-14:00, last 5-min candle 4x usual (new trades) | 4 | 75% | +4.77% | +Rs 5,714 | +3.1k / +2.6k |
+Verdict: the day's total volume rarely reaches 3x by midday; a single 5-minute burst of 3x+ is the version that adds money in both halves.
+Switched on (spurt.pure.late_burst_x 3.0, until 14:00). Small sample (6 trades): judge it live; trade notes say "late burst Nx".
