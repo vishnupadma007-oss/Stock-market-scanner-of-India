@@ -252,9 +252,9 @@
     "semantic_hash": ""
   },
   "agents/mover_forecast.py": {
-    "mtime": 1794498912.8816023,
-    "seen": 1794653727.5592246,
-    "ast_hash": "1867c46b406814fd751b6bdb22e57efd",
+    "mtime": 1794656113.494698,
+    "seen": 1794656154.6879237,
+    "ast_hash": "d687a33f65e9253890ed942af8d17110",
     "semantic_hash": ""
   },
   "agents/news.py": {
@@ -420,9 +420,9 @@
     "semantic_hash": ""
   },
   "config.yaml": {
-    "mtime": 1794655525.0256488,
-    "seen": 1794655576.4341233,
-    "ast_hash": "a3cd707b889f5e4660f9a2f70c6f78ce",
+    "mtime": 1794656091.980888,
+    "seen": 1794656154.6880355,
+    "ast_hash": "f14770c23fd46a3d26f1b40ac338fca9",
     "semantic_hash": ""
   },
   "journal/day_mode.json": {
@@ -1242,9 +1242,9 @@
     "semantic_hash": ""
   },
   "watcher.py": {
-    "mtime": 1794655508.1391456,
-    "seen": 1794655576.4343972,
-    "ast_hash": "c4c61a6318abf35414a2487010b1e778",
+    "mtime": 1794656113.4941494,
+    "seen": 1794656154.6883354,
+    "ast_hash": "eb9de2483ddab8c8090a33e3c1361014",
     "semantic_hash": ""
   },
   ".claude/skills/THIRD_PARTY.md": {
@@ -1272,9 +1272,9 @@
     "semantic_hash": ""
   },
   ".claude/skills/desk-handover/SKILL.md": {
-    "mtime": 1794655572.1544213,
-    "seen": 1794655576.4344056,
-    "ast_hash": "03508d76e0eb630dc48ad31d5b055931",
+    "mtime": 1794656150.8187265,
+    "seen": 1794656154.6883445,
+    "ast_hash": "86ea5d6ee69eed0ccadd70b58357e547",
     "semantic_hash": ""
   },
   ".claude/skills/earnings-analysis/SKILL.md": {
@@ -1590,9 +1590,9 @@
     "semantic_hash": ""
   },
   "journal/backtest_summary.md": {
-    "mtime": 1794653720.2277644,
-    "seen": 1794653727.559511,
-    "ast_hash": "ba378e4e9129d53209d270c22656c641",
+    "mtime": 1794656150.79847,
+    "seen": 1794656154.6884377,
+    "ast_hash": "6dbf211be9f17b0a24154387b45d6b97",
     "semantic_hash": ""
   },
   "journal/reviews/2026-10-19.md": {
@@ -1668,9 +1668,9 @@
     "semantic_hash": ""
   },
   "journal/strategy_changes.md": {
-    "mtime": 1794655572.1369057,
-    "seen": 1794655576.434529,
-    "ast_hash": "3cade6cd24caa5fcf6cdf3c37cc91091",
+    "mtime": 1794656150.8024702,
+    "seen": 1794656154.688474,
+    "ast_hash": "7a03d3b515f2ab55df92fd33790244d8",
     "semantic_hash": ""
   },
   "requirements.txt": {
@@ -1866,15 +1866,33 @@
     "semantic_hash": ""
   },
   "agents/newsspurt.py": {
-    "mtime": 1794655426.842427,
-    "seen": 1794655576.4340682,
-    "ast_hash": "5213133cb30df0af29fb11b0064cb352",
+    "mtime": 1794656091.9804773,
+    "seen": 1794656154.687935,
+    "ast_hash": "7d857de6775a06eba137a37ab699635b",
     "semantic_hash": ""
   },
   "journal/reviews/2026-11-14.md": {
     "mtime": 1794655552.29203,
     "seen": 1794655576.4345272,
     "ast_hash": "fca67e0b771642df4a03544ef19e3f09",
+    "semantic_hash": ""
+  },
+  "agents/overnight.py": {
+    "mtime": 1794656030.178463,
+    "seen": 1794656154.6879473,
+    "ast_hash": "22d41a4ca2942dab6ff9c1bde7a09e62",
+    "semantic_hash": ""
+  },
+  "journal/overnight_betas.json": {
+    "mtime": 1794656119.6022544,
+    "seen": 1794656154.688101,
+    "ast_hash": "5622a51d4d978731207f7a9ed87d23dc",
+    "semantic_hash": ""
+  },
+  "tests/test_overnight.py": {
+    "mtime": 1794656146.58647,
+    "seen": 1794656154.6883154,
+    "ast_hash": "a153dc364b95f87288a40147832a1e23",
     "semantic_hash": ""
   }
 }
