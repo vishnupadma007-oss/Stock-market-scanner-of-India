@@ -3,10 +3,10 @@
 - Bhavcopy server (`BHAVCOPY_URL`): official NSE daily prices for ~5,000 stocks, 5 years, plus index
   history, market mood/breadth, corporate actions. Prices are NOT adjusted for splits/bonuses: check
   `corporate_actions` before using a long history.
-- Live server (`LIVE_URL`, set it in config.yaml -> nse_mcp.live_url once known): live gainers/losers
+- Live server (`LIVE_URL`): live gainers/losers
   (every 5 min) and index values (every minute) - a backup for the NSE website reads.
 
-Usage: python -m agents.nse_mcp tools | history SYMBOL [MONTHS] | mood | call TOOL '{"arg": 1}'
+Usage: python -m agents.nse_mcp tools | history SYMBOL [MONTHS] | mood | live | call TOOL '{"arg": 1}'
 """
 import asyncio
 import json
@@ -22,7 +22,7 @@ except ImportError:  # pragma: no cover
     ClientSession = streamable_http_client = None
 
 BHAVCOPY_URL = "https://mcp.nseindia.in/bhavcopy/cm/mcp"
-LIVE_URL = None
+LIVE_URL = "https://mcp.nseindia.in/cmmkt/mcp"
 logging.getLogger("mcp.client.streamable_http").setLevel(logging.ERROR)  # NSE answers "termination 501": harmless
 
 
@@ -90,6 +90,20 @@ def daily_history(symbol: str, months: int = 12) -> pd.DataFrame:
     return history_frame(rows).loc[lambda d: ~d.index.duplicated()]
 
 
+def live_movers(limit: int = 20) -> dict:
+    """Live top gainers/losers across all NSE stocks (refreshed every 5 min; empty outside market hours)."""
+    return call("nse_get_market_movers", {"indexName": "", "limit": limit}, LIVE_URL)
+
+
+def live_quote(symbol: str) -> dict:
+    """Live NSE cash quote (LTP, open/high/low, volume), refreshed every minute."""
+    return call("cm_get_stock_quote", {"symbol": symbol.upper()}, LIVE_URL)
+
+
+def live_index(name: str = "NIFTY 50") -> dict:
+    return call("cm_get_index_quote", {"indexName": name}, LIVE_URL)
+
+
 def market_mood(date: str = "today") -> dict:
     return call("get_market_mood", {"date": date})
 
@@ -100,6 +114,8 @@ if __name__ == "__main__":
         print(list_tools())
     elif cmd == "history":
         print(daily_history(sys.argv[2], int(sys.argv[3]) if len(sys.argv) > 3 else 3).tail(10))
+    elif cmd == "live":
+        print(json.dumps(live_movers(5), indent=1)[:3000])
     elif cmd == "mood":
         print(json.dumps(market_mood(), indent=1)[:3000])
     elif cmd == "call":
