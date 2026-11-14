@@ -100,6 +100,66 @@ def live_quote(symbol: str) -> dict:
     return call("cm_get_stock_quote", {"symbol": symbol.upper()}, LIVE_URL)
 
 
+def _f(d: dict, *keys):
+    for k in keys:
+        v = d.get(k)
+        if v not in (None, "", "-"):
+            try:
+                return float(str(v).replace(",", ""))
+            except ValueError:
+                continue
+    return None
+
+
+def parse_quote(q) -> dict | None:
+    """A live quote in the spurt engine's shape {price, prev_close, move_pct, volume, vwap}; None if unusable.
+    Field names are read defensively (the server's exact names were not published)."""
+    if not isinstance(q, dict) or q.get("error"):
+        return None
+    d = q.get("data") if isinstance(q.get("data"), dict) else q
+    price = _f(d, "ltp", "lastPrice", "last_price", "LTP", "last")
+    prev = _f(d, "prevClose", "previousClose", "prev_price", "previous_close")
+    move = _f(d, "pChange", "perChange", "percChange", "pchange", "changePct", "percentChange")
+    if price is None:
+        return None
+    if move is None and prev:
+        move = (price / prev - 1) * 100
+    return {"price": price, "prev_close": prev, "move_pct": round(move or 0.0, 2),
+            "volume": _f(d, "volume", "totalTradedVolume", "trade_quantity", "tradedVolume") or 0.0,
+            "vwap": _f(d, "vwap", "averagePrice", "avgPrice")}
+
+
+def live_rows(symbols, concurrency: int = 8, timeout: float = 45) -> dict[str, dict]:
+    """Live quotes for many stocks over ONE session (backup for NSE's stocks-traded page and INDmoney)."""
+    async def go():
+        out = {}
+        async with streamable_http_client(LIVE_URL) as (read, write):
+            async with ClientSession(read, write) as s:
+                await s.initialize()
+                sem = asyncio.Semaphore(concurrency)
+
+                async def one(sym):
+                    async with sem:
+                        try:
+                            r = parse_quote(_parse(await s.call_tool("cm_get_stock_quote", {"symbol": sym})))
+                            if r:
+                                out[sym] = r
+                        except Exception:
+                            pass
+                await asyncio.gather(*(one(x) for x in symbols))
+        return out
+    return asyncio.run(asyncio.wait_for(go(), timeout))
+
+
+def nifty_move() -> float | None:
+    """Nifty 50's % change today from NSE's live index feed (None when unavailable)."""
+    try:
+        q = live_index("NIFTY 50")
+    except Exception:
+        return None
+    return _f(q if isinstance(q, dict) else {}, "percChange", "pChange", "changePct", "perChange")
+
+
 def live_index(name: str = "NIFTY 50") -> dict:
     return call("cm_get_index_quote", {"indexName": name}, LIVE_URL)
 

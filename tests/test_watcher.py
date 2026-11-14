@@ -364,7 +364,7 @@ def test_strategies_map_to_the_four_teams_everywhere():
     assert watcher.team_of(trade) == "preopen"
     assert watcher.has_open([trade], "preopen") and not watcher.has_open([trade], "news")
     s = pd.Series(["reversal", "results", "intel", "results-gap", "gap-recovery", "quiet-spurt", "quiet-spurt-news"])
-    assert list(review.team_of(s)) == ["movers", "news", "news", "preopen", "preopen", "spurt", "news"]
+    assert list(review.team_of(s)) == ["movers", "news", "news", "preopen", "preopen", "news", "news"]
     assert [watcher.team_of({"strategy": x}) for x in s] == list(review.team_of(s))
 
 

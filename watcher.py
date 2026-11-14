@@ -30,7 +30,7 @@ from datetime import date, datetime, time, timedelta
 from pathlib import Path
 from zoneinfo import ZoneInfo
 
-from agents import (activity, analyzer, announcements, ai_helper, candles, carry, probability, trade_news, commodities, concalls, daymode, expectations,
+from agents import (activity, analyzer, newsspurt, nse_mcp, announcements, ai_helper, candles, carry, probability, trade_news, commodities, concalls, daymode, expectations,
                     gapfollow, holidays, intel, macro, news, news_guard, newsfeed, policy, preopen,
                     psychology, reaction, shock, spurt, valuation)
 from agents.chart_reader import read_chart
@@ -493,7 +493,17 @@ def spurt_track(cfg: dict) -> None:
             try:
                 if state.get("day") != now.date():
                     state = {"day": now.date(), "curves": None, "prices": {}}
-                rows = spurt.fetch_nse(cfg["universe"])
+                try:
+                    rows = spurt.fetch_nse(cfg["universe"])
+                except Exception as e:
+                    rows, why = {}, f"{type(e).__name__}: {e}"
+                if len(rows) < len(cfg["universe"]) // 2:  # NSE website blocked: NSE's own live MCP as the backup (14 Nov)
+                    try:
+                        backup = nse_mcp.live_rows(cfg["universe"])
+                        if len(backup) > len(rows):
+                            rows = {**backup, **rows}
+                    except Exception as e:
+                        emit("ERROR", {"error": f"spurt scan: NSE MCP backup: {type(e).__name__}: {e}"})
                 spurt.save_snapshot(now.date(), now.strftime("%H:%M:%S"), rows)
                 if state["curves"] is None:  # once a day (Yahoo history); retried next minute on failure
                     state["curves"] = {s: spurt.usual_curve(f, now.date(), c["baseline_days"])
@@ -1229,7 +1239,14 @@ async def pure_spurt_gate(im: IndMoney, sym: str, key: str, direction: str, now:
         return why
     if pure.get("with_market", True):  # trade with the market (backtest 7 Nov): the Nifty's move today must agree
         if clock.time() - _daily.get("nifty_at", 0) > 60:
-            _daily["nifty_move"] = (await im.day_changes([NIFTY_KEY])).get(NIFTY_KEY)
+            try:
+                _daily["nifty_move"] = (await im.day_changes([NIFTY_KEY])).get(NIFTY_KEY)
+            except (LoginRequired, RateLimited):
+                raise
+            except Exception:
+                _daily["nifty_move"] = None
+            if _daily["nifty_move"] is None:  # INDmoney hiccup: NSE's live index feed (14 Nov)
+                _daily["nifty_move"] = await asyncio.to_thread(nse_mcp.nifty_move)
             _daily["nifty_at"] = clock.time()
         ok, why = spurt.check_market_alignment(direction, _daily.get("nifty_move"), pure.get("market_min_pct", 0.0),
                                                   pure.get("market_flat_band_pct", 0.15))
@@ -1262,15 +1279,32 @@ async def spurt_entries(im: IndMoney, trades: list[dict], now: datetime, cfg: di
             key = _stock_keys[sym]
             stats = ((await im.quotes([key])).get(key) or {}).get("entity_stats") or {}
             move = stats.get("day_change_percentage")
+            if move is None:  # INDmoney gave no price: NSE's live quote as the backup (14 Nov)
+                q = (await asyncio.to_thread(nse_mcp.live_rows, [sym])).get(sym)
+                if q:
+                    move = q["move_pct"]
+                    stats = {**stats, "live_price": stats.get("live_price") or q["price"]}
             if move is None or not s.get("live_min_move_pct", 0.1) <= sign * float(move) <= s.get("live_max_move_pct", 0.8):
                 log_skip(now, sym, idea, float(move or 0), f"quiet spurt: live move {move}% no longer fits")
                 continue
-            view = analyzer.stock_view(sym, analyzer.recent_items(now), now, cfg)
+            items = analyzer.recent_items(now)
+            view = analyzer.stock_view(sym, items, now, cfg)
             if view["strong"] and view["direction"] != g["direction"]:
                 log_skip(now, sym, idea, float(move), f"quiet spurt: strong news {view['direction']} ({view['confidence']}%) against it")
                 continue
-            news_note = (f"news agrees ({view['confidence']}%): " + "; ".join(view.get("reasons", [])[:1])[:120]
-                         if view["strong"] else "no strong news either way")
+            # News + Spurt team (user, 14 Nov): the spurt gives the direction, the news says why (agents/newsspurt.py).
+            try:
+                dc = (await daily_candles(im, key, now.date()))["Close"]
+                dc = dc[[x.date() < now.date() if hasattr(x, "date") else True for x in dc.index]]
+                run5 = (float(dc.iloc[-1]) / float(dc.iloc[-6]) - 1) * 100 if len(dc) >= 6 else None
+            except Exception:
+                run5 = None
+            ns = newsspurt.classify(sym, g["direction"], items, now, _daily.get("results") or {}, run5)
+            if ns["verdict"] in ("against", "pending"):
+                log_skip(now, sym, idea, float(move), f"news+spurt: {ns['why']}")
+                continue
+            backed = ns["verdict"] == "backed"
+            news_note = ns["why"]
             # F&O Activity cross-check (open interest + price): noted on the trade so its value can be measured.
             act = (_daily.get("activity") or {}).get(sym)
             if act:
@@ -1278,11 +1312,10 @@ async def spurt_entries(im: IndMoney, trades: list[dict], now: datetime, cfg: di
                 news_note += f"; {activity.note(act)}{' agrees' if agrees else ''}"
             if g.get("late"):
                 news_note += f"; late burst {g.get('burst_x') or 0:.1f}x"
-            # Which team trades it (user, 3 Nov): the news team when the news agrees, else the spurt team.
-            news_agrees = view["strong"] and view["direction"] == g["direction"]
-            team = "news" if news_agrees else "spurt"
+            news_agrees = backed
+            team = "news"  # one News + Spurt team since 14 Nov (was: news team if the news agreed, else the spurt team)
             pure = {**spurt.PURE_DEFAULTS, **(s.get("pure") or {})}
-            if team == "spurt" and pure["enabled"]:  # revived pure engine (user, 4 Nov): every gate must pass
+            if not backed and pure["enabled"]:  # no catalyst: the pure spurt rules (window, calm pre-open, OI, Nifty)
                 why = await pure_spurt_gate(im, sym, key, g["direction"], now, pure, g.get("burst_x"))
                 if why:
                     log_skip(now, sym, idea, float(move), "pure spurt: " + why)
@@ -1298,7 +1331,7 @@ async def spurt_entries(im: IndMoney, trades: list[dict], now: datetime, cfg: di
             if option is None or option["ask"] < c["min_premium"]:
                 log_skip(now, sym, idea, float(move), "quiet spurt: no usable option")
                 continue
-            if team == "spurt" and pure["enabled"]:
+            if pure["enabled"]:  # spread / delta limits for every spurt trade
                 why = spurt.check_option_limits(option, pure)
                 if why:
                     log_skip(now, sym, idea, float(move), "pure spurt: " + why)
@@ -1312,6 +1345,8 @@ async def spurt_entries(im: IndMoney, trades: list[dict], now: datetime, cfg: di
             # Every spurt aims for 15% when the Risk agent's hit chance allows it, else 10% (backtest 3 Nov:
             # +Rs 1,69,440 vs +Rs 1,26,586 for 10% only, better in both halves; 15% alone has too few trades).
             targets = [s.get("target_news_net_pct", 15.0), s["target_net_pct"]]
+            if backed and ns.get("priced_in"):
+                targets = [s["target_net_pct"]]
             for tgt in targets:
                 sized = {**cfg, "capital": free, "net_target_pct": tgt, "target_mode": "fixed",
                          "max_capital_per_trade": share}
@@ -1604,12 +1639,12 @@ def has_open(trades: list[dict], team: str | None = None) -> bool:
 # Two teams trade side by side, each with its own paper capital, so their results can be compared:
 #   movers  top gainers/losers reversal, read from price, charts and options (strategy "reversal")
 #   news    NSE filings, results, concalls, news forecasts, pre-open imbalances, volume spurts, and results-gap rule
-TEAMS = ("movers", "news", "spurt", "preopen")
+TEAMS = ("movers", "news", "preopen")
 # Four teams (user, 3-4 Nov): news (news forecasts, results, spurts the news agrees with), spurt (plain quiet
 # volume spurts), preopen (opening session: gap recovery, pre-open order flow, results-day gaps) and movers
 # (top gainers/losers reversal), each with its own capital and slots.
-NEWS_STRATEGIES = ("results", "intel", "news", "spurt", "quiet-spurt-news")
-SPURT_STRATEGIES = ("quiet-spurt",)
+NEWS_STRATEGIES = ("results", "intel", "news", "spurt", "quiet-spurt-news", "quiet-spurt")  # News + Spurt merged 14 Nov
+SPURT_STRATEGIES = ()
 PREOPEN_STRATEGIES = ("preopen", "results-gap", "gap-recovery")
 
 

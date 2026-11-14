@@ -78,7 +78,7 @@ def test_fresh_spurt_is_confirmed_live_and_bought_with_a_10pct_target(capsys):
     c = {**watcher.NEWS_DEFAULTS, **watcher.team_cfg(cfg, "news")}
     assert asyncio.run(watcher.spurt_entries(Live(), trades, now, cfg, c, set()))
     t = trades[0]
-    assert t["strategy"] == "quiet-spurt" and watcher.team_of(t) == "spurt" and t["side"] == "loser"
+    assert t["strategy"] == "quiet-spurt" and watcher.team_of(t) == "news" and t["side"] == "loser"
     assert float(t["target_bid"]) >= 20.0 * 1.10  # a 10% net target, not 1%
     assert "SIGNAL" in capsys.readouterr().out
     # Handled once: the next round does not buy it again.
@@ -126,8 +126,11 @@ def test_nse_live_page_and_live_signal():
 def test_spurt_with_agreeing_news_aims_for_15pct_under_its_own_label(monkeypatch):
     now = datetime(2026, 10, 29, 10, 30, tzinfo=IST)
     setup(now)
-    monkeypatch.setattr(watcher.analyzer, "stock_view", lambda *a, **k: {
-        "strong": True, "direction": "up", "confidence": 80, "reasons": ["Order win"]})
+    # a results filing that agrees backs the spurt (media alone does not: agents/newsspurt.py)
+    monkeypatch.setattr(watcher.analyzer, "recent_items", lambda *a, **k: [
+        {"symbols": ["TCS"], "kind": "filing", "category": "RESULTS", "sentiment": 1.0, "impact": 3,
+         "headline": "TCS results: profit +20% YoY", "time": "2026-10-29 08:00:00",
+         "sectors": [], "scope": "stock", "source": "NSE filing", "id": "f1"}])
     cfg = {**load_config(), "capital": 30000}
     c = {**watcher.NEWS_DEFAULTS, **watcher.team_cfg(cfg, "news")}
     trades = []
@@ -301,3 +304,19 @@ def test_bar_burst_and_late_window():
     assert spurt.late_burst_ok(datetime(2026, 11, 16, 12, 30), 3.2, pure)[0]
     assert not spurt.late_burst_ok(datetime(2026, 11, 16, 12, 30), 2.5, pure)[0]
     assert not spurt.late_burst_ok(datetime(2026, 11, 16, 14, 5), 5.0, pure)[0]
+
+
+def test_newsspurt_verdicts():
+    from agents import newsspurt
+    now = datetime(2026, 11, 16, 12, 0, tzinfo=IST)
+    res = {"symbols": ["TCS"], "kind": "filing", "category": "RESULTS", "sentiment": 1.0, "impact": 3, "headline": "TCS results"}
+    media = {"symbols": ["TCS"], "kind": "news", "sentiment": 0.8, "impact": 3, "headline": "TCS rallies"}
+    bad = {"symbols": ["TCS"], "kind": "news", "sentiment": -0.9, "impact": 3, "headline": "SEBI probe into TCS"}
+    assert newsspurt.classify("TCS", "up", [res], now)["verdict"] == "backed"
+    assert newsspurt.classify("TCS", "up", [res], now)["target"] == 15.0
+    assert newsspurt.classify("TCS", "up", [res], now, run_5d_pct=6.0)["target"] == 10.0
+    assert newsspurt.classify("TCS", "down", [res], now)["verdict"] == "against"
+    assert newsspurt.classify("TCS", "up", [media], now)["verdict"] == "none"
+    assert newsspurt.classify("TCS", "up", [media, bad], now)["verdict"] == "against"
+    assert newsspurt.classify("TCS", "up", [], now, {"TCS": ["2026-11-16"]})["verdict"] == "pending"
+    assert newsspurt.classify("TCS", "up", [], now)["verdict"] == "none"

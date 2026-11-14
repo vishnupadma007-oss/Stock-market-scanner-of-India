@@ -11,3 +11,11 @@ def test_history_frame_orders_and_renames():
 
 def test_history_frame_empty():
     assert history_frame([]).empty
+
+
+def test_parse_quote_reads_common_field_names():
+    from agents.nse_mcp import parse_quote
+    q = parse_quote({"symbol": "TCS", "ltp": "2,407.5", "prevClose": 2442.4, "volume": 3344738})
+    assert q["price"] == 2407.5 and q["move_pct"] == -1.43 and q["volume"] == 3344738
+    assert parse_quote({"data": {"lastPrice": 100, "pChange": 0.3}})["move_pct"] == 0.3
+    assert parse_quote({"error": "No allstocks data available."}) is None

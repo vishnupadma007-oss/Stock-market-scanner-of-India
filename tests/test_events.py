@@ -110,7 +110,8 @@ def test_paper_trade_rules():
     assert "closed" in paper_trade.check_rules([], at(11, 0, 20), CFG)  # Dussehra
     assert "window" in paper_trade.check_rules([], at(9, 10), CFG)  # before the 09:15 open
     assert paper_trade.check_rules([], at(9, 20), CFG) is None
-    assert "already open" in paper_trade.check_rules(open_row, at(11, 0), {**CFG, "max_open_trades": 1})
+    assert "already open" in paper_trade.check_rules(open_row, at(11, 0), {**CFG, "max_open_trades": 1,
+                                   "teams": {**CFG["teams"], "news": {**CFG["teams"]["news"], "max_open_trades": 1}}})
     assert paper_trade.check_rules(open_row, at(11, 0), {**CFG, "max_open_trades": 2}) is None
     held = [{"status": "OPEN", "strategy": "results", "symbol": "TCS"}]
     assert "TCS" in paper_trade.check_rules(held, at(11, 0), {**CFG, "max_open_trades": 2}, symbol="TCS")

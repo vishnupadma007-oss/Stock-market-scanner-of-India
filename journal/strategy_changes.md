@@ -185,3 +185,18 @@ Past preopen and results-gap trades now count for the pre-open team.
 After the 09:30-11:30 window, a spurt still trades until 14:00 when its last 5-minute candle alone has 3x+ the usual volume for that time
 of day (all other pure-engine gates unchanged; not on a stock already traded today). Backtest: 6 new trades, 67% hit, +Rs 9,633, both halves
 positive (a 2x burst and a whole-day 2-4x rule did not pass). Small sample: judge on live trades (notes "late burst Nx").
+
+## 14 Nov 2026: News + Spurt merged into one team (user)
+The spurt gives the direction, the news says why (`agents/newsspurt.py`). Every spurt is checked against the stock's own news since
+the previous session:
+- against (filing / results / policy the other way, or severe media news: impact 3+, strong tone) -> skip;
+- results due today and not out yet -> skip;
+- backed (filing / results / policy agrees) -> trade at ANY time up to the last entry (no 09:30-11:30 window, no Nifty-direction
+  rule; the Risk agent's hit chance before 15:20 still applies), 15% target, 10% when it looks priced in (5%+ run in 5 sessions);
+- no catalyst -> the pure spurt rules as before (09:30-11:30 + late 3x bursts to 14:00, calm pre-open, OI, with the Nifty).
+Media headlines alone never back a spurt (live: 44% right vs 64% for results filings), they are noted only.
+One team: news money + the spurt team's Rs 1 lakh (top_up 181,895), 6 slots; labels quiet-spurt / quiet-spurt-news kept for the review.
+Not backtestable (no intraday news history): judged live. Evidence caveat: news trades opened after 13:00 lost before (8 trades
+-Rs 13,116); backed spurts after 13:00 are allowed at the user's request, the review will show them by hour.
+NSE's own MCP servers (agents/nse_mcp.py) are now the backup data source: live stock quotes when NSE's website or INDmoney fails
+(spurt scan, spurt confirmation), Nifty's move for the with-market rule; daily bhavcopy history for backtests.

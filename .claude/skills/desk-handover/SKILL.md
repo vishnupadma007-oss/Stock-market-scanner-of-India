@@ -86,6 +86,15 @@ file current: update "State" in the 15:40 review whenever something here changes
 - Brings ideas, code and articles (Quantpedia, research); check them against our data before adopting.
 - Never claim a real order; never commit tokens or keys; no model names in commits.
 
+## Changes 13-14 Nov 2026
+- 14 Nov: News + Spurt merged into ONE team (news key in config, 6 slots, Rs 1 lakh spurt money added as top_up): spurt = direction,
+  news = why (`agents/newsspurt.py`): against/results-pending -> skip; filing/results/policy agrees -> trade any time, 15% (10% if
+  priced in); no catalyst -> pure spurt rules. Late 3x 5-min bursts allowed 11:30-14:00 for no-news spurts.
+- NSE MCP servers (no login) wired in `agents/nse_mcp.py`: bhavcopy history https://mcp.nseindia.in/bhavcopy/cm/mcp, live
+  https://mcp.nseindia.in/cmmkt/mcp (backup quotes/Nifty; field names unverified until a market day: check the first live use).
+- 13 Nov: the watcher died twice (10:15 and ~14:20); two trades squared off by hand after the close. Asked the user about a 15:10 check.
+- Movers exhaustion-scalp proposal backtested and rejected (13 Nov).
+
 ## State on 12 Nov 2026 (evening)
 
 - Scoreboard (net so far): news 36 trades +Rs 14,532; movers 11 +Rs 2,974; preopen 14 -Rs 5,707;
