@@ -56,6 +56,8 @@ Intraday mover-reversal options strategy on NSE F&O stocks, run by a team of age
   watcher opens its trades when the price confirms and the Trend Checker, `agents/momentum.py`,
   scores the chart 60+; ideas logged in `journal/news_ideas.csv`).
   `review.py` keeps a team scoreboard. The user will pick the best team once each has 30+ trades.
+- ADR team (15 Nov, `agents/adr_team.py`, strategy `adr-fade`): INFY, WIPRO, HDFCBANK, ICICIBANK, DRREDDY; regime from the overnight
+  ADR move; at 10:15 fades a stock catalyst or a 1.2%+ Nifty gap (`backtest_adr_regimes.py`).
 - `paper_trade.py`: Claude opens news-team paper trades with it; the watcher manages exits.
 - Run tests with `python -m pytest -q`.
 

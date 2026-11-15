@@ -65,6 +65,14 @@ teams:
       min_gap_pct: 1.5
       min_bounce_pct: 1.0
       targets: [15.0, 10.0]
+  adr:                     # user, 15 Nov: ADR team (agents/adr_team.py): INFY, WIPRO, HDFCBANK, ICICIBANK, DRREDDY. Regime from the
+    capital: 100000        # overnight ADR move; trades at 10:15 only the two rules the 2-year test supports, both FADE the
+    max_open_trades: 4     # overnight move: stock catalyst (ADR 2%+ on 1.5x US volume) and a 1.2%+ Nifty gap once the first
+    auto_trade: true       # hour has turned. 10% target, no stop-loss. backtest_adr_regimes.py.
+    enabled: true
+    from: "10:15"
+    until: "10:45"
+    targets: [10.0]
 max_capital_per_trade: 1.0   # share of available money one trade may use (1.0 = all of it)
 max_trades_per_day: 50     # effectively no cap: trade every setup that passes the agents
 commodity_guard: true      # movers: skip a reversal when a commodity the stock depends on is moving sharply against it (Oil India case)

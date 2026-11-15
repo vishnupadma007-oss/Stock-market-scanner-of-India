@@ -116,6 +116,12 @@ def main() -> None:
         for sym, f in sorted(fc["stocks"].items(), key=lambda kv: -abs(kv[1]["expected_gap_pct"]))[:6]:
             pre = f", pre-open {f['preopen_gap_pct']:+.1f}% ({f['label']})" if "label" in f else ""
             print(f"  {sym:11} {f['expected_gap_pct']:+.2f}%  {f['why']}{pre}")
+        from . import adr_team  # ADR team's regimes (the Nifty's expected gap stands in until the open)
+        ctx = {**adr_team.overnight_context(now.date()), "nifty_gap_pct": fc["expected_nifty_gap_pct"]}
+        print("ADR team (trades at 10:15: fades a stock catalyst, or a 1.2%+ Nifty gap once the first hour turns):")
+        for sym in adr_team.PAIRS:
+            g = adr_team.classify_regime(sym, ctx)
+            print(f"  {sym:11} ADR {ctx['adr_pct'].get(sym) or 0:+.1f}% on {ctx['adr_vol_x'].get(sym) or 0:.1f}x volume -> {g['name']}")
     except Exception as e:
         print(f"overnight forecast unavailable: {type(e).__name__}: {e}")
 

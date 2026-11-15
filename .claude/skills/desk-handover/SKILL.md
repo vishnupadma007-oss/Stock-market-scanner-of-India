@@ -98,6 +98,12 @@ file current: update "State" in the 15:40 review whenever something here changes
   forecast per stock (`agents/overnight.py`, in mover_forecast output, journal/overnight/<date>.json, betas in
   journal/overnight_betas.json; refit monthly: `python -m agents.overnight fit`); commodity guard on news+spurt.
 
+- 15 Nov: ADR team added (config teams.adr, `agents/adr_team.py`, label adr-fade): 5 ADR stocks, trades at 10:15 only the two
+  fade rules the 2-year test supports (journal/strategy_changes.md 15 Nov). First live day 16 Nov: check journal/adr/<date>.json
+  is written and the Nifty opening gap was read. Rejected on backtests 13-15 Nov: movers exhaustion scalp, ADR stocks with the
+  overnight direction (5%/10%), support/resistance range trading with a 1% target.
+- Open question to the user: add a 15:10 watcher health check (13 Nov square-off was missed).
+
 ## State on 12 Nov 2026 (evening)
 
 - Scoreboard (net so far): news 36 trades +Rs 14,532; movers 11 +Rs 2,974; preopen 14 -Rs 5,707;

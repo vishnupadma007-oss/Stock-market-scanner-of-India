@@ -561,3 +561,31 @@ Calm days only (Nifty within 0.5%), the 25 most volatile F&O stocks, CALL on a b
 | first-30-min range | breakout | 1,985 | 84% | -1.66% | -58% | -Rs 8.21 lakh | -347k / -474k |
 Verdict: 8 in 10 trades reach +1%, but the 2 in 10 that do not are held to 15:20 and lose 15-65%: one miss wipes out ~20 wins.
 Fading the level and breaking it lose about the same, so the levels themselves carry no edge on our data.
+
+### ADR team: regime-switching plan (user, 15 Nov 2026): `backtest_adr_regimes.py`, `agents/adr_team.py`
+Five stocks (INFY, WIPRO, HDFCBANK, ICICIBANK, DRREDDY). Regimes from the overnight ADR move, US volume, rupee, Brent and the Nifty's
+opening gap (GIFT Nifty has no free history). 2 years, 491 days x 5 stocks:
+| Regime | Share of stock-days | Gap the regime's way | After the open the same way | Avg open->close |
+|---|---|---|---|---|
+| 1 macro shock, Nifty gap 1.2%+ | 5% | 96% | 35% | -0.55% (both halves -) |
+| 1 macro shock, oil / rupee only | 14% | 71% | 48% | +0.05% |
+| 2 sector catalyst | 7% | 84% | 54% | +0.20% |
+| 3 stock catalyst (ADR 2%+ on 1.5x volume) | 2% | 83% | 63% | +0.30% |
+| 4 normal | 41% | - | - | day range 0.8% |
+Options bought at 10:15 (hourly bars, 2 years, 10% target, no stop-loss, Rs 25k):
+| Rule | Trades | Hit | Net | Halves |
+|---|---|---|---|---|
+| 3 stock catalyst WITH the ADR (the plan) | 50 | 48% | -Rs 45,747 | -18.6k / -27.1k |
+| **3 stock catalyst AGAINST the ADR (fade)** | **50** | **70%** | **+Rs 30,537** | **+24.0k / +6.5k** |
+| 1 macro gap WITH the gap (the plan) | 115 | 49% | -Rs 78,817 | -18.1k / -60.7k |
+| 1 macro gap AGAINST, plain | 115 | 53% | +Rs 6,322 | +11.0k / -4.7k |
+| **1 macro gap AGAINST, first hour already turned** | **67 (22 days)** | **61%** | **+Rs 36,250** | **+20.6k / +15.6k** |
+| 2 sector WITH, first hour agreeing | 95 | 58% | +Rs 11,438 | -10.8k / +22.2k |
+| 2 sector plain / fade; oil-rupee shocks either way | - | - | all negative | - |
+60 days of 5-minute data: regime 3 ORB with 2x opening volume: 2 trades, both lost; regime 2 VWAP pullback: 33 trades, +Rs 805
+(+11.2k / -10.4k); regime 4 exhaustion -> VWAP: 1+ checks 65 trades +Rs 750 (+13.0k / -12.3k); 2+ checks 11 trades +Rs 5,648 (both
+halves +, far too few); the 1.25 ATR stop changed nothing. Not tested: credit spreads / option selling (desk buys only), order-book
+delta, OI walls (no history).
+Verdict: the overnight move is fully in the opening price; going with it after the open loses, fading it wins. Team switched on with the
+two bold rules only. Caveats: hourly bars, modelled option prices (no IV change), the macro rule's 67 trades come from 22 days and its
+first-hour filter was chosen after seeing the plain fade.

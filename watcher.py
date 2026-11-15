@@ -30,7 +30,7 @@ from datetime import date, datetime, time, timedelta
 from pathlib import Path
 from zoneinfo import ZoneInfo
 
-from agents import (activity, analyzer, newsspurt, nse_mcp, overnight, announcements, ai_helper, candles, carry, probability, trade_news, commodities, concalls, daymode, expectations,
+from agents import (activity, adr_team, analyzer, newsspurt, nse_mcp, overnight, announcements, ai_helper, candles, carry, probability, trade_news, commodities, concalls, daymode, expectations,
                     gapfollow, holidays, intel, macro, news, news_guard, newsfeed, policy, preopen,
                     psychology, reaction, shock, spurt, valuation)
 from agents.chart_reader import read_chart
@@ -1203,6 +1203,99 @@ async def gap_recovery_entries(im: IndMoney, trades: list[dict], now: datetime, 
     return False
 
 
+async def adr_entries(im: IndMoney, trades: list[dict], now: datetime, cfg: dict) -> bool:
+    """ADR team (user's design, 15 Nov; agents/adr_team.py): INFY, WIPRO, HDFCBANK, ICICIBANK, DRREDDY. Each morning the
+    overnight ADR move, US volume, rupee, Brent and the Nifty's opening gap give each stock a regime; at 10:15 the two
+    rules the 2-year test supports are traded (both FADE the overnight move): a stock catalyst (ADR 2%+ on 1.5x volume),
+    and a 1.2%+ Nifty gap once the stock's first hour has turned. 10% target, no stop-loss. Returns True on a trade."""
+    a = {**adr_team.TEAM_DEFAULTS, **team_cfg(cfg, "adr")}
+    if not a["enabled"] or not (_t(a["from"]) <= now.time() <= _t(a["until"])) or _daily.get("adr_done"):
+        return False
+    if daymode.load(now.date())["mode"] == "no_trade":
+        return False
+    _daily["adr_done"] = True  # judged once a day
+    today = now.date().isoformat()
+    ctx = await asyncio.to_thread(adr_team.overnight_context, now.date())
+    nst = ((await im.quotes([NIFTY_KEY])).get(NIFTY_KEY) or {}).get("entity_stats") or {}
+    try:
+        ctx["nifty_gap_pct"] = round((float(nst["day_open"]) / float(nst["prev_close"]) - 1) * 100, 2)
+    except (KeyError, TypeError, ValueError, ZeroDivisionError):
+        ctx["nifty_gap_pct"] = await asyncio.to_thread(adr_team.nifty_gap_fallback, now.date())
+    if ctx["nifty_gap_pct"] is None:
+        emit("ERROR", {"error": "adr team: no Nifty opening gap, standing aside today"})
+        return False
+    syms = [s for s in adr_team.PAIRS if s in set(cfg["universe"])]
+    for sym in syms:
+        if sym not in _stock_keys:
+            _stock_keys[sym] = await expectations.stock_key(im, sym)
+    quotes = await im.quotes([_stock_keys[s] for s in syms])
+    if "results" not in _daily:
+        _daily["results"] = news.results_calendar()
+    done = {t["symbol"] for t in trades if t["date"] == today}
+    log, opened = {"context": ctx, "stocks": {}}, False
+    for sym in syms:
+        regime = adr_team.classify_regime(sym, ctx)
+        st = (quotes.get(_stock_keys[sym]) or {}).get("entity_stats") or {}
+        try:
+            first_hour = (float(st["live_price"]) / float(st["day_open"]) - 1) * 100
+        except (KeyError, TypeError, ValueError, ZeroDivisionError):
+            first_hour = None
+        dec = adr_team.fade_decision(sym, regime, first_hour)
+        log["stocks"][sym] = {"regime": regime, "first_hour_pct": first_hour, "decision": dec}
+        if not dec or sym in done or opened:
+            continue
+        idea = {"direction": dec["direction"], "confidence": "", "source": "adr-fade"}
+        if today in {str(x) for x in (_daily.get("results") or {}).get(sym, [])}:
+            log_skip(now, sym, idea, first_hour or 0.0, "adr team: results due today")
+            continue
+        if not team_can_trade(trades, cfg, "adr"):
+            log_skip(now, sym, idea, first_hour or 0.0, "adr team: full or out of money")
+            continue
+        try:
+            free = account(trades, cfg, "adr")[1]
+            side = "loser" if dec["direction"] == "up" else "gainer"
+            option = await im.pick_contract(_stock_keys[sym], side, cfg, now.date(), budget=float(free))
+            if option is None or option["ask"] < a["min_premium"]:
+                log_skip(now, sym, idea, first_hour or 0.0, "adr team: no usable option")
+                continue
+            intraday = await im.candles(_stock_keys[sym], "5minute", "7d")
+            c = team_cfg(cfg, "adr")
+            share = capital_share(option, {**cfg, "capital": free},
+                                  {**c, "max_open_trades": max_open(cfg, "adr"),
+                                   "max_capital_per_trade": c.get("max_capital_per_trade", 1.0)}, open_count(trades, "adr"))
+            n_today = sum(t["date"] == today and team_of(t) == "adr" for t in trades)
+            for tgt in a["targets"]:
+                risk = plan(option, n_today, now, {**cfg, "capital": free, "net_target_pct": tgt, "target_mode": "fixed",
+                                                   "max_capital_per_trade": share},
+                            sigma_per_min=intraday_sigma_per_min(intraday), spread_pct=option["spread_pct"])
+                if risk["allowed"]:
+                    break
+            if not risk["allowed"]:
+                log_skip(now, sym, idea, first_hour or 0.0, "adr team: risk: " + "; ".join(risk["blocks"])[:150])
+                continue
+            reason = f"ADR team, {dec['rule']}: {dec['why']}; buying {dec['direction']}; target {tgt:g}% net"
+            row = {f: "" for f in FIELDS}
+            row.update(date=today, opened=now.strftime("%H:%M"), symbol=sym, side=side, contract=option["contract"],
+                       underlying_key=_stock_keys[sym], derivative_id=option["derivative_id"], qty=risk["qty"],
+                       entry_ask=option["ask"], target_bid=risk["target_premium"], spread_pct=round(option["spread_pct"], 2),
+                       hit_probability=round(risk["hit_probability"]), status="OPEN",
+                       notes="; ".join(filter(None, [rolled_note(option), reason])), strategy="adr-fade",
+                       valuation=valuation_view(sym).get("label", ""))
+            trades.append(row)
+            emit("SIGNAL", {"team": "adr", "symbol": sym, "direction": dec["direction"], "source": "adr-fade",
+                            "contract": option["contract"], "qty": risk["qty"], "entry_ask": option["ask"],
+                            "target_bid": risk["target_premium"], "target_net_pct": tgt, "reason": reason,
+                            "square_off": cfg["square_off_time"]})
+            opened = True
+            _daily["adr_done"] = False  # look again next round for the other stocks
+        except (LoginRequired, RateLimited):
+            raise
+        except Exception as e:
+            emit("ERROR", {"error": f"adr team {sym}: {type(e).__name__}: {e}"})
+    adr_team.save(now.date(), log)
+    return opened
+
+
 def probability_report(intraday, option: dict, risk: dict, spot, now: datetime, cfg: dict, sig: dict) -> dict | None:
     """Probability Analyzer (agents/probability.py, user's design 31 Oct): base rate, 2,000 Monte Carlo
     futures, learned score and expected value for a quiet-spurt trade, logged to journal/probability.csv.
@@ -1658,7 +1751,8 @@ def has_open(trades: list[dict], team: str | None = None) -> bool:
 # Two teams trade side by side, each with its own paper capital, so their results can be compared:
 #   movers  top gainers/losers reversal, read from price, charts and options (strategy "reversal")
 #   news    NSE filings, results, concalls, news forecasts, pre-open imbalances, volume spurts, and results-gap rule
-TEAMS = ("movers", "news", "preopen")
+TEAMS = ("movers", "news", "preopen", "adr")
+ADR_STRATEGIES = ("adr-fade",)
 # Four teams (user, 3-4 Nov): news (news forecasts, results, spurts the news agrees with), spurt (plain quiet
 # volume spurts), preopen (opening session: gap recovery, pre-open order flow, results-day gaps) and movers
 # (top gainers/losers reversal), each with its own capital and slots.
@@ -1669,7 +1763,7 @@ PREOPEN_STRATEGIES = ("preopen", "results-gap", "gap-recovery")
 
 def team_of(trade: dict) -> str:
     s = trade.get("strategy")
-    return ("spurt" if s in SPURT_STRATEGIES else "preopen" if s in PREOPEN_STRATEGIES
+    return ("adr" if s in ADR_STRATEGIES else "spurt" if s in SPURT_STRATEGIES else "preopen" if s in PREOPEN_STRATEGIES
             else "news" if s in NEWS_STRATEGIES else "movers")
 
 
@@ -1688,12 +1782,18 @@ async def cycle(cfg: dict) -> None:
             if _t(cfg["entry_start"]) <= now.time() <= _t(cfg["entry_end"]):
                 # News first: results, filings, preopen and spurts move stocks within minutes, so the news team
                 # acts before the movers' scan, and the scan stops for any idea that arrives meanwhile.
-                news_free = any(team_can_trade(trades, cfg, t) for t in ("news", "spurt", "preopen"))
+                news_free = any(team_can_trade(trades, cfg, t) for t in ("news", "preopen", "adr"))
 
                 async def run_news():
                     news_pending.clear()
                     if team_can_trade(trades, cfg, "preopen"):
                         await gap_recovery_entries(im, trades, now, cfg)
+                    try:
+                        await adr_entries(im, trades, now, cfg)
+                    except (LoginRequired, RateLimited):
+                        raise
+                    except Exception as e:
+                        emit("ERROR", {"error": f"adr team: {type(e).__name__}: {e}"})
                     ok = team_can_trade(trades, cfg, "news") or team_can_trade(trades, cfg, "preopen")
                     await news_team(im, trades, now, {**cfg, "capital": account(trades, cfg, "news")[1],
                                                       "_base": cfg, "_news_ok": ok})

@@ -209,3 +209,11 @@ NSE's own MCP servers (agents/nse_mcp.py) are now the backup data source: live s
   under-reacted / opposite, in the morning brief (mover_forecast) and on each spurt trade; a news-backed spurt with a priced-in
   gap its way aims for 10% (2-year test: no follow-through after the open, priced-in gaps drift back).
 - Commodity guard (as movers): a spurt is skipped when crude / gold / metals move sharply against the stock today.
+
+## 15 Nov 2026: ADR team (user's regime plan), fifth book
+New team "adr" (Rs 1 lakh, 4 slots): INFY, WIPRO, HDFCBANK, ICICIBANK, DRREDDY. Each morning the regime of each stock is set from the
+overnight ADR move, US volume, rupee, Brent and the Nifty's opening gap (agents/adr_team.py). At 10:15 it trades only what the 2-year
+test supports, both AGAINST the overnight move: (a) stock catalyst: ADR 2%+ on 1.5x US volume; (b) Nifty gap 1.2%+ and the stock's first
+hour already turning. 10% target, no stop-loss, 15:20 square-off, label adr-fade. The plan's with-the-move rules (macro debit, ORB,
+VWAP pullback) lost in the test and are not traded; regime 4 exhaustion reversal had too few cases (11); credit spreads are outside
+the desk's buy-only rule. Expect few trades: (a) about 2% of stock-days, (b) about 23 days in 2 years.
