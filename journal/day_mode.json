@@ -1,9 +1,10 @@
 {
-  "date": "2026-11-13",
+  "date": "2026-11-16",
   "mode": "normal",
   "notes": [
-    "Expected Nifty open about -0.1% (range -0.6 to +0.4; S&P 500 -0.35%, Brent +3.0%: commodity guard watches oil-linked trades)",
-    "Results overnight: NMDC (profit -1.7% YoY, -17% QoQ, weak); HAL results since last session"
+    "Expected Nifty open about -0.05% (range -0.6 to +0.5; S&P 500 -0.4%, Brent -1.1%)",
+    "Results since last session: GRASIM (mixed read), EICHERMOT (profit +9.7% YoY, revenue +21% YoY)",
+    "ADR team: all five stocks normal regime (no ADR move over 0.5%)"
   ],
   "avoid": []
 }
