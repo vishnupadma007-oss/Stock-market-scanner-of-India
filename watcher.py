@@ -1209,21 +1209,31 @@ async def adr_entries(im: IndMoney, trades: list[dict], now: datetime, cfg: dict
     rules the 2-year test supports are traded (both FADE the overnight move): a stock catalyst (ADR 2%+ on 1.5x volume),
     and a 1.2%+ Nifty gap once the stock's first hour has turned. 10% target, no stop-loss. Returns True on a trade."""
     a = {**adr_team.TEAM_DEFAULTS, **team_cfg(cfg, "adr")}
-    if not a["enabled"] or not (_t(a["from"]) <= now.time() <= _t(a["until"])) or _daily.get("adr_done"):
+    if not a["enabled"]:
+        return False
+    # Two moments (16 Nov test): at the open, a stock catalyst is bought WITH the ADR (the first hour carries on);
+    # at 10:15, the fades (the rest of the day gives back).
+    phase = "open" if _t(a["open_from"]) <= now.time() <= _t(a["open_until"]) else \
+        "fade" if _t(a["from"]) <= now.time() <= _t(a["until"]) else None
+    if phase is None or _daily.get(f"adr_done_{phase}"):
         return False
     if daymode.load(now.date())["mode"] == "no_trade":
         return False
-    _daily["adr_done"] = True  # judged once a day
+    _daily[f"adr_done_{phase}"] = True  # judged once per phase
     today = now.date().isoformat()
-    ctx = await asyncio.to_thread(adr_team.overnight_context, now.date())
-    nst = ((await im.quotes([NIFTY_KEY])).get(NIFTY_KEY) or {}).get("entity_stats") or {}
-    try:
-        ctx["nifty_gap_pct"] = round((float(nst["day_open"]) / float(nst["prev_close"]) - 1) * 100, 2)
-    except (KeyError, TypeError, ValueError, ZeroDivisionError):
-        ctx["nifty_gap_pct"] = await asyncio.to_thread(adr_team.nifty_gap_fallback, now.date())
-    if ctx["nifty_gap_pct"] is None:
-        emit("ERROR", {"error": "adr team: no Nifty opening gap, standing aside today"})
-        return False
+    if "adr_ctx" not in _daily:
+        ctx = await asyncio.to_thread(adr_team.overnight_context, now.date())
+        nst = ((await im.quotes([NIFTY_KEY])).get(NIFTY_KEY) or {}).get("entity_stats") or {}
+        try:
+            ctx["nifty_gap_pct"] = round((float(nst["day_open"]) / float(nst["prev_close"]) - 1) * 100, 2)
+        except (KeyError, TypeError, ValueError, ZeroDivisionError):
+            ctx["nifty_gap_pct"] = await asyncio.to_thread(adr_team.nifty_gap_fallback, now.date())
+        if ctx["nifty_gap_pct"] is None:
+            emit("ERROR", {"error": "adr team: no Nifty opening gap, standing aside"})
+            _daily[f"adr_done_{phase}"] = False  # try again next round
+            return False
+        _daily["adr_ctx"] = ctx
+    ctx = _daily["adr_ctx"]
     syms = [s for s in adr_team.PAIRS if s in set(cfg["universe"])]
     for sym in syms:
         if sym not in _stock_keys:
@@ -1231,8 +1241,9 @@ async def adr_entries(im: IndMoney, trades: list[dict], now: datetime, cfg: dict
     quotes = await im.quotes([_stock_keys[s] for s in syms])
     if "results" not in _daily:
         _daily["results"] = news.results_calendar()
-    done = {t["symbol"] for t in trades if t["date"] == today}
-    log, opened = {"context": ctx, "stocks": {}}, False
+    done = {t["symbol"] for t in trades if t["status"] == "OPEN"} | \
+        ({t["symbol"] for t in trades if t["date"] == today} if phase == "open" else set())
+    log, opened = {"context": ctx, "phase": phase, "stocks": {}}, False
     for sym in syms:
         regime = adr_team.classify_regime(sym, ctx)
         st = (quotes.get(_stock_keys[sym]) or {}).get("entity_stats") or {}
@@ -1240,11 +1251,12 @@ async def adr_entries(im: IndMoney, trades: list[dict], now: datetime, cfg: dict
             first_hour = (float(st["live_price"]) / float(st["day_open"]) - 1) * 100
         except (KeyError, TypeError, ValueError, ZeroDivisionError):
             first_hour = None
-        dec = adr_team.fade_decision(sym, regime, first_hour)
+        dec = adr_team.open_decision(sym, regime) if phase == "open" else adr_team.fade_decision(sym, regime, first_hour)
         log["stocks"][sym] = {"regime": regime, "first_hour_pct": first_hour, "decision": dec}
         if not dec or sym in done or opened:
             continue
-        idea = {"direction": dec["direction"], "confidence": "", "source": "adr-fade"}
+        label = "adr-open" if phase == "open" else "adr-fade"
+        idea = {"direction": dec["direction"], "confidence": "", "source": label}
         if today in {str(x) for x in (_daily.get("results") or {}).get(sym, [])}:
             log_skip(now, sym, idea, first_hour or 0.0, "adr team: results due today")
             continue
@@ -1279,15 +1291,15 @@ async def adr_entries(im: IndMoney, trades: list[dict], now: datetime, cfg: dict
                        underlying_key=_stock_keys[sym], derivative_id=option["derivative_id"], qty=risk["qty"],
                        entry_ask=option["ask"], target_bid=risk["target_premium"], spread_pct=round(option["spread_pct"], 2),
                        hit_probability=round(risk["hit_probability"]), status="OPEN",
-                       notes="; ".join(filter(None, [rolled_note(option), reason])), strategy="adr-fade",
+                       notes="; ".join(filter(None, [rolled_note(option), reason])), strategy=label,
                        valuation=valuation_view(sym).get("label", ""))
             trades.append(row)
-            emit("SIGNAL", {"team": "adr", "symbol": sym, "direction": dec["direction"], "source": "adr-fade",
+            emit("SIGNAL", {"team": "adr", "symbol": sym, "direction": dec["direction"], "source": label,
                             "contract": option["contract"], "qty": risk["qty"], "entry_ask": option["ask"],
                             "target_bid": risk["target_premium"], "target_net_pct": tgt, "reason": reason,
                             "square_off": cfg["square_off_time"]})
             opened = True
-            _daily["adr_done"] = False  # look again next round for the other stocks
+            _daily[f"adr_done_{phase}"] = False  # look again next round for the other stocks
         except (LoginRequired, RateLimited):
             raise
         except Exception as e:
@@ -1752,7 +1764,7 @@ def has_open(trades: list[dict], team: str | None = None) -> bool:
 #   movers  top gainers/losers reversal, read from price, charts and options (strategy "reversal")
 #   news    NSE filings, results, concalls, news forecasts, pre-open imbalances, volume spurts, and results-gap rule
 TEAMS = ("movers", "news", "preopen", "adr")
-ADR_STRATEGIES = ("adr-fade",)
+ADR_STRATEGIES = ("adr-fade", "adr-open")
 # Four teams (user, 3-4 Nov): news (news forecasts, results, spurts the news agrees with), spurt (plain quiet
 # volume spurts), preopen (opening session: gap recovery, pre-open order flow, results-day gaps) and movers
 # (top gainers/losers reversal), each with its own capital and slots.

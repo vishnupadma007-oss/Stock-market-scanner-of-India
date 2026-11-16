@@ -154,7 +154,8 @@ from datetime import date, timedelta
 from pathlib import Path
 
 OUT = Path(__file__).resolve().parent.parent / "journal" / "adr"
-TEAM_DEFAULTS = {"enabled": True, "from": "10:15", "until": "10:45", "targets": [10.0], "min_premium": 5.0}
+TEAM_DEFAULTS = {"enabled": True, "open_from": "09:16", "open_until": "09:30", "from": "10:15", "until": "10:45",
+                 "targets": [10.0], "min_premium": 5.0}
 
 
 def overnight_context(today: date) -> dict:
@@ -202,6 +203,15 @@ def nifty_gap_fallback(today: date) -> float | None:
             return round((float(d["Open"].iloc[-1]) / float(d["Close"].iloc[-2]) - 1) * 100, 2)
     except Exception:
         pass
+    return None
+
+
+def open_decision(sym: str, regime: dict) -> dict | None:
+    """At the open (16 Nov test, 2 years, hourly bars): on a stock catalyst the first hour carries on the ADR's way:
+    buying WITH the ADR at the 09:15 open, 10% target: 50 trades, 82% hit, +Rs 40,430 (+20.0k / +20.4k). The same buy at
+    10:15 lost Rs 45,262. (Macro gaps at the open: with the gap lost Rs 1.92 lakh; against it +Rs 70.9k but the first half lost.)"""
+    if regime["regime"] == 3 and regime.get("direction"):
+        return {"direction": regime["direction"], "rule": "stock-catalyst open", "why": regime["why"]}
     return None
 
 

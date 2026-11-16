@@ -70,7 +70,9 @@ teams:
     max_open_trades: 4     # overnight move: stock catalyst (ADR 2%+ on 1.5x US volume) and a 1.2%+ Nifty gap once the first
     auto_trade: true       # hour has turned. 10% target, no stop-loss. backtest_adr_regimes.py.
     enabled: true
-    from: "10:15"
+    open_from: "09:16"     # 16 Nov: stock catalyst bought WITH the ADR at the open (2 years: 50 trades, 82% hit, +Rs 40.4k, both halves)
+    open_until: "09:30"
+    from: "10:15"          # the fades
     until: "10:45"
     targets: [10.0]
 max_capital_per_trade: 1.0   # share of available money one trade may use (1.0 = all of it)

@@ -217,3 +217,7 @@ test supports, both AGAINST the overnight move: (a) stock catalyst: ADR 2%+ on 1
 hour already turning. 10% target, no stop-loss, 15:20 square-off, label adr-fade. The plan's with-the-move rules (macro debit, ORB,
 VWAP pullback) lost in the test and are not traded; regime 4 exhaustion reversal had too few cases (11); credit spreads are outside
 the desk's buy-only rule. Expect few trades: (a) about 2% of stock-days, (b) about 23 days in 2 years.
+
+## 16 Nov 2026: ADR team also trades at the open (user's question)
+Stock catalyst (ADR 2%+ on 1.5x US volume): buy WITH the ADR at 09:16-09:30 (2 years: 82% hit, +Rs 40.4k, both halves), label adr-open.
+The 10:15 fades stay. A 15:10 watcher check was added before the 15:20 square-off (user: "take the best decision").

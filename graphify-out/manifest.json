@@ -420,9 +420,9 @@
     "semantic_hash": ""
   },
   "config.yaml": {
-    "mtime": 1794709711.890649,
-    "seen": 1794709787.6416643,
-    "ast_hash": "e9ce9beacaead3a688f7875860339c61",
+    "mtime": 1794790198.8003848,
+    "seen": 1794790221.2590768,
+    "ast_hash": "52ea6ed86b2202aa232e742ddbae7dae",
     "semantic_hash": ""
   },
   "journal/day_mode.json": {
@@ -1074,9 +1074,9 @@
     "semantic_hash": ""
   },
   "review.py": {
-    "mtime": 1794709711.8900313,
-    "seen": 1794709787.641865,
-    "ast_hash": "bfffaaf1d003c901f72bfac95b71fb6b",
+    "mtime": 1794790198.7990286,
+    "seen": 1794790221.2592611,
+    "ast_hash": "4ec3355003ea1fa6634fe394303902c0",
     "semantic_hash": ""
   },
   "scripts/journal_quiet.sh": {
@@ -1242,9 +1242,9 @@
     "semantic_hash": ""
   },
   "watcher.py": {
-    "mtime": 1794709742.7169297,
-    "seen": 1794709787.6419148,
-    "ast_hash": "5fd90e9203ce1e44473740a9c3592a03",
+    "mtime": 1794790198.798471,
+    "seen": 1794790221.2593043,
+    "ast_hash": "45c9a8c41c7e9e49070d7d65d68d4a41",
     "semantic_hash": ""
   },
   ".claude/skills/THIRD_PARTY.md": {
@@ -1590,9 +1590,9 @@
     "semantic_hash": ""
   },
   "journal/backtest_summary.md": {
-    "mtime": 1794709779.4652383,
-    "seen": 1794709787.6420357,
-    "ast_hash": "19e6658b502d88a31fb0053410551b57",
+    "mtime": 1794790217.1447916,
+    "seen": 1794790221.2593796,
+    "ast_hash": "9aa7d9d75c7d6dd30cb4b9881ce57ad0",
     "semantic_hash": ""
   },
   "journal/reviews/2026-10-19.md": {
@@ -1668,9 +1668,9 @@
     "semantic_hash": ""
   },
   "journal/strategy_changes.md": {
-    "mtime": 1794709779.4689822,
-    "seen": 1794709787.64208,
-    "ast_hash": "1bafefa15efc9d846c4cac3fe8451a31",
+    "mtime": 1794790217.1447916,
+    "seen": 1794790221.259406,
+    "ast_hash": "fb595dcbd177e766e486637444d3395e",
     "semantic_hash": ""
   },
   "requirements.txt": {
@@ -1896,9 +1896,9 @@
     "semantic_hash": ""
   },
   "agents/adr_team.py": {
-    "mtime": 1794709742.715622,
-    "seen": 1794709787.6415522,
-    "ast_hash": "e9220e439e178671b996b2cf9fd1ed85",
+    "mtime": 1794790198.7999616,
+    "seen": 1794790221.2589824,
+    "ast_hash": "2aa8e4588e576bfeb17d82d93891f71d",
     "semantic_hash": ""
   },
   "backtest_adr_regimes.py": {
@@ -1920,9 +1920,15 @@
     "semantic_hash": ""
   },
   "tests/test_adr_team.py": {
-    "mtime": 1794709742.7216363,
-    "seen": 1794709787.641874,
-    "ast_hash": "2320a42c28359ca4bbf9b32840ada2de",
+    "mtime": 1794790198.8003848,
+    "seen": 1794790221.2592688,
+    "ast_hash": "63e595516edc3b1921d2e2edae5625af",
+    "semantic_hash": ""
+  },
+  "backtest_adr_timing.py": {
+    "mtime": 1794790217.1447916,
+    "seen": 1794790221.2590613,
+    "ast_hash": "c4cc2ca62dda776123bf829fbdf017d1",
     "semantic_hash": ""
   }
 }

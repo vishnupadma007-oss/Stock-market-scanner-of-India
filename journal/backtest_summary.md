@@ -589,3 +589,18 @@ delta, OI walls (no history).
 Verdict: the overnight move is fully in the opening price; going with it after the open loses, fading it wins. Team switched on with the
 two bold rules only. Caveats: hourly bars, modelled option prices (no IV change), the macro rule's 67 trades come from 22 days and its
 first-hour filter was chosen after seeing the plain fade.
+
+### ADR team timing: at the open or at 10:15? (user, 16 Nov 2026): `backtest_adr_timing.py`
+2 years, hourly bars, 10% target, no stop-loss, Rs 25k:
+| Regime | Direction | Entry | Trades | Hit | Net | Halves |
+|---|---|---|---|---|---|---|
+| stock catalyst | **WITH the ADR** | **09:15 open** | **50** | **82%** | **+Rs 40,430** | **+20.0k / +20.4k** |
+| stock catalyst | WITH | 10:15 | 50 | 48% | -Rs 45,262 | -0.1k / -45.1k |
+| stock catalyst | **AGAINST** | **10:15** | **50** | **72%** | **+Rs 32,734** | **+25.3k / +7.4k** |
+| stock catalyst | AGAINST | 09:15 open | 50 | 54% | -Rs 85,958 | -66.4k / -19.6k |
+| macro gap 1.2%+ | WITH | 09:15 open | 115 | 57% | -Rs 1,91,889 | -17.9k / -174.0k |
+| macro gap 1.2%+ | AGAINST | 09:15 open | 115 | 75% | +Rs 70,937 | -10.2k / +81.1k |
+| macro gap 1.2%+ | AGAINST | 10:15 | 115 | 54% | +Rs 10,392 | +11.1k / -0.7k |
+Stock-news days have two phases: the first hour carries on the ADR's way, then the rest of the day gives back. Switched on: buy WITH
+the ADR at the open (09:16-09:30, label adr-open), then the 10:15 fades as before. Caveat: the test buys at the exact opening price;
+live fills in the first minutes (wide spreads, rich option prices) will be worse. The macro-gap fade at the open fails one half: not used.

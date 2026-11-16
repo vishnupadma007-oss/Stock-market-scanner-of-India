@@ -32,3 +32,9 @@ def test_implied_price_and_signal():
     assert A.expected_gap_pct(1.0, 0.2) == 1.2
     sig = A.generate_trade_signal("INFY", {"regime": 3, "name": "stock catalyst", "direction": "up", "why": "x"}, 1502.0, step=20)
     assert sig["option"] == "CE" and sig["strike"] == 1500
+
+
+def test_open_decision_buys_with_a_stock_catalyst_only():
+    assert A.open_decision("DRREDDY", {"regime": 3, "direction": "down", "why": "x"})["direction"] == "down"
+    assert A.open_decision("INFY", {"regime": 1, "direction": "up", "trigger": "gap", "why": "x"}) is None
+    assert A.open_decision("INFY", {"regime": 4, "direction": None}) is None

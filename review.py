@@ -94,7 +94,7 @@ NEWS_STRATEGIES = ("results", "intel", "news", "spurt", "quiet-spurt-news", "qui
 SPURT_STRATEGIES = ()
 PREOPEN_STRATEGIES = ("preopen", "results-gap", "gap-recovery")
 TEAMS = ("movers", "news", "preopen", "adr")
-ADR_STRATEGIES = ("adr-fade",)
+ADR_STRATEGIES = ("adr-fade", "adr-open")
 
 
 def team_of(strategy: pd.Series) -> pd.Series:
