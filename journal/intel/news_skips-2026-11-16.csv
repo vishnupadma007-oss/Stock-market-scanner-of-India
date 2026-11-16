@@ -1,0 +1,9 @@
+time,symbol,direction,confidence,move_pct,reason
+09:15,EICHERMOT,up,85,2.86,Trend Checker 0 < 60
+09:20,EICHERMOT,up,85,3.17,Trend Checker 50 < 60
+09:26,EICHERMOT,up,85,2.52,Trend Checker 30 < 60
+09:34,EICHERMOT,down,,1.73,gap recovery: results day (results-gap rule's stock)
+09:34,GRASIM,up,,0.38,pure spurt: Material news/catalyst (filing): GRASIM results: Unaudited Financial Results (Standalone & Co
+09:34,EICHERMOT,up,85,0.54,Trend Checker 45 < 60
+09:40,EICHERMOT,up,85,0.59,Trend Checker 55 < 60
+09:43,POLICYBZR,down,,0.03,quiet spurt: live move 0.03% no longer fits
