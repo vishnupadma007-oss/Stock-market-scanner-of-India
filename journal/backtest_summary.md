@@ -604,3 +604,12 @@ first-hour filter was chosen after seeing the plain fade.
 Stock-news days have two phases: the first hour carries on the ADR's way, then the rest of the day gives back. Switched on: buy WITH
 the ADR at the open (09:16-09:30, label adr-open), then the 10:15 fades as before. Caveat: the test buys at the exact opening price;
 live fills in the first minutes (wide spreads, rich option prices) will be worse. The macro-gap fade at the open fails one half: not used.
+
+### Divergence recovery: Nifty opens one way, the stock the other (user, 16 Nov 2026): `backtest_divergence.py` - not adopted
+Buy the stock's recovery in the Nifty's direction (Nifty gap 0.3%+, stock gap 0.5%+ the other way), 2 years of hourly bars, 10% target,
+no stop-loss. Five ADR stocks (39 trades): every version loses (open: -Rs 26.3k / -Rs 18.6k; 10:15: -Rs 15.2k / -Rs 4.9k).
+All 76 F&O stocks: stock gap 0.5-1.5% at the open +Rs 14.5k (+57.8k / -43.3k), at 10:15 -Rs 3.31 lakh; stock gap 1.5%+ at the open
+-Rs 1.0 lakh, at 10:15 +Rs 4.4k (-23.8k / +28.1k), at 10:15 with the first hour already recovering 45 trades, 62% hit, +Rs 25.1k
+(+11.2k / +14.0k): the only positive cell of 12, i.e. likely luck of the search. The preopen team's live gap-recovery rule (gap 1.5%+,
+back 1%+ from the early extreme and past the open by 09:30; 60-day backtest +Rs 33.6k, live same-day 3/3 at target) already trades
+this recovery without needing the Nifty to disagree.
