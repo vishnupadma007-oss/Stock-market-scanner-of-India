@@ -19,7 +19,7 @@
   "brent_pct": -1.02,
   "nifty_gap_pct": 0.25
  },
- "phase": "open",
+ "phase": "fade",
  "stocks": {
   "INFY": {
    "regime": {
@@ -28,7 +28,7 @@
     "direction": null,
     "why": "ADR +0.0%, Nifty gap +0.25%, first-15-min volume n/ax"
    },
-   "first_hour_pct": -0.008695652173906776,
+   "first_hour_pct": 0.06956521739129862,
    "decision": null
   },
   "WIPRO": {
@@ -38,7 +38,7 @@
     "direction": null,
     "why": "ADR -0.5%, Nifty gap +0.25%, first-15-min volume n/ax"
    },
-   "first_hour_pct": 0.532759592234,
+   "first_hour_pct": -0.1895394703140263,
    "decision": null
   },
   "HDFCBANK": {
@@ -48,7 +48,7 @@
     "direction": null,
     "why": "ADR +0.5%, Nifty gap +0.25%, first-15-min volume n/ax"
    },
-   "first_hour_pct": 0.04975124378108209,
+   "first_hour_pct": 0.590796019900508,
    "decision": null
   },
   "ICICIBANK": {
@@ -58,7 +58,7 @@
     "direction": null,
     "why": "ADR +0.4%, Nifty gap +0.25%, first-15-min volume n/ax"
    },
-   "first_hour_pct": 0.245948161695142,
+   "first_hour_pct": 0.3973008765844721,
    "decision": null
   },
   "DRREDDY": {
@@ -68,7 +68,7 @@
     "direction": null,
     "why": "ADR +0.1%, Nifty gap +0.25%, first-15-min volume n/ax"
    },
-   "first_hour_pct": 0.3398409255242152,
+   "first_hour_pct": 0.7809110629067195,
    "decision": null
   }
  }
