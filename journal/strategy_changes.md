@@ -221,3 +221,10 @@ the desk's buy-only rule. Expect few trades: (a) about 2% of stock-days, (b) abo
 ## 16 Nov 2026: ADR team also trades at the open (user's question)
 Stock catalyst (ADR 2%+ on 1.5x US volume): buy WITH the ADR at 09:16-09:30 (2 years: 82% hit, +Rs 40.4k, both halves), label adr-open.
 The 10:15 fades stay. A 15:10 watcher check was added before the 15:20 square-off (user: "take the best decision").
+
+## 16 Nov 2026: news trades skip a stock that has already turned against the news (EICHERMOT lesson)
+EICHERMOT (strong results, call at 09:48) lost Rs 11.2k: by then it had given back 2.6% from the day's high and sat under VWAP.
+The same shape caused the biggest news-team losses (MPHASIS -25.9k, DIVISLAB -17.2k, SBIN -7.2k; -61k together, no winner had it).
+2 years of results days (`backtest_results_fade.py`, 1,161 entries): bought WITH the news after giving back 1.5%+ from the day's
+extreme or 0.5%+ the wrong side of VWAP -> -0.07% / -0.12% to the close, 43% / 39% up (both halves); otherwise +0.17% / +0.17%, 56% / 57%.
+Now every news idea is skipped in that state (`agents/momentum.faded`, watcher `fade_give_back_pct` 1.5, `fade_vwap_pct` 0.5).

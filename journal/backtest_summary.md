@@ -613,3 +613,15 @@ All 76 F&O stocks: stock gap 0.5-1.5% at the open +Rs 14.5k (+57.8k / -43.3k), a
 (+11.2k / +14.0k): the only positive cell of 12, i.e. likely luck of the search. The preopen team's live gap-recovery rule (gap 1.5%+,
 back 1%+ from the early extreme and past the open by 09:30; 60-day backtest +Rs 33.6k, live same-day 3/3 at target) already trades
 this recovery without needing the Nifty to disagree.
+
+### Results day: buying WITH the news after the stock has faded (16 Nov 2026): `backtest_results_fade.py` - adopted as a skip rule
+76 F&O stocks, results days with a 1%+ gap, ~2 years hourly bars, entry at the first three hourly closes, hold to 15:15.
+Faded (gave back 1.5%+ from the extreme, or 0.5%+ wrong side of VWAP): 470 entries, avg -0.09% to the close, 41% up (halves -0.07/-0.12).
+Not faded: 691 entries, avg +0.17%, 57% up (halves +0.17/+0.17). Live paper trades in the faded state: 4 of 4 lost, -Rs 61.4k.
+
+### ADR stocks' daily swing: fade the usual stretch from the open, 2-3% target, many trades (user, 16 Nov 2026): `backtest_adr_swing.py` - not adopted
+INFY, WIPRO, HDFCBANK, ICICIBANK, DRREDDY, 5-minute bars (60 days), PUT when up k x the 20-day median high-from-open (CALL mirror) and
+the candle turns, 2% or 3% net target, one trade at a time per stock, no stop-loss, 15:20 square-off; with/without an ADR filter.
+All 16 versions lose in both halves: e.g. k 1.0, 2%: 453 trades, 75% hit, -Rs 2.46 lakh (avg win +533, avg loss -4,066);
+best k 1.3, 2%, ADR filter: 233 trades, 76% hit, -Rs 1.06 lakh (-54.7k / -51.3k). A 2-3% target needs ~85-90% hits to pay for the
+losers held to 15:20 without a stop; the pullback comes 3 times in 4, and the 4th day the trend runs.

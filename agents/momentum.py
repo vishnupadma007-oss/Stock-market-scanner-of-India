@@ -14,6 +14,29 @@ from .chart_reader import _mirror, _today
 from .indicators import ema, rsi, vwap
 
 
+def faded(intraday: pd.DataFrame, direction: str, give_back_pct: float = 1.5, vwap_pct: float = 0.5) -> str | None:
+    """Has the stock already turned against the news today? (16 Nov 2026, EICHERMOT lesson)
+    Two years of results days (backtest_results_fade.py): bought WITH the news after the stock had given back
+    1.5%+ from the day's high (low for a PUT), or sat 0.5%+ the wrong side of VWAP, it closed lower on average
+    (-0.1%, 41% up) in both halves; otherwise +0.17%, 57%. Live: EICHERMOT, MPHASIS, DIVISLAB, SBIN, -61k together.
+    Returns the reason to skip, or None."""
+    if intraday.empty:
+        return None
+    t = _today(intraday.assign(vwap=vwap(intraday)))
+    if t.empty:
+        return None
+    d = 1 if direction == "up" else -1
+    px = float(t["Close"].iloc[-1])
+    ext = float(t["High"].max()) if d > 0 else float(t["Low"].min())
+    gave = (ext / px - 1) * 100 * d
+    if gave >= give_back_pct:
+        return f"already gave back {gave:.1f}% from the day's {'high' if d > 0 else 'low'}"
+    wrong = (px / float(t["vwap"].iloc[-1]) - 1) * 100 * d
+    if wrong <= -vwap_pct:
+        return f"{-wrong:.1f}% the wrong side of VWAP"
+    return None
+
+
 def read_trend(intraday: pd.DataFrame, profile: dict, direction: str) -> dict:
     """direction "up" (buying a CALL) or "down" (buying a PUT)."""
     # Two 5-minute candles (09:25) are enough to act on overnight news: averages and RSI also use

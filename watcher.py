@@ -42,7 +42,7 @@ from agents.indicators import intraday_sigma_per_min
 from agents.indmoney import (IndMoney, LoginRequired, RateLimited, calls_last_hour,
                              set_hourly_budget)
 from agents.market import context as market_context_view, headwind
-from agents.momentum import early_signals, read_trend
+from agents.momentum import early_signals, faded, read_trend
 from agents.regime import assess
 from agents.risk import hit_probability, plan
 from agents.scanner import stock_profile
@@ -1079,6 +1079,8 @@ NEWS_DEFAULTS = {
     "confirm_pct": 0.5,     # the stock must already be moving the forecast's way by this much today
     "max_move_pct": 4.0,    # ...but not so far that the move is used up
     "max_age_min": 120,     # ideas older than this are dropped
+    "fade_give_back_pct": 1.5,  # skip a news trade once the stock gave back this much from the day's extreme
+    "fade_vwap_pct": 0.5,       # ... or sits this far the wrong side of VWAP (backtest_results_fade.py)
     "min_trend_score": 60,  # Trend Checker: the chart must back the news's direction
     "trend_recheck_min": 5,  # a stock whose chart failed is looked at again after this long
     "target_mode": "forecast",  # user decision: 1% target removed; forecast how far the stock can move based on news
@@ -1637,6 +1639,11 @@ async def news_team(im: IndMoney, trades: list[dict], now: datetime, cfg: dict) 
                 continue
             daily = await daily_candles(im, _stock_keys[sym], now.date())
             intraday = await im.candles(_stock_keys[sym], "5minute", "7d")
+            fade = faded(intraday, idea["direction"], c["fade_give_back_pct"], c["fade_vwap_pct"])
+            if fade:  # the market has already turned against the news (backtest_results_fade.py)
+                _daily["trend_failed"][sym] = now
+                log_skip(now, sym, idea, move, "faded: " + fade)
+                continue
             # F&O Activity: derivatives traders building positions the news's way (agents/activity.py)
             act = (_daily.get("activity") or {}).get(sym)
             act_ok = c.get("activity_rule") and activity.confirms(act, idea["direction"], c["activity_min_oi_pct"])
