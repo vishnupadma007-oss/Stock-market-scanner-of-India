@@ -164,6 +164,9 @@ def run_trade(sym, side, option, risk, intra, t, day, cfg, half_spread):
         today = intra[intra.index.date == day]
         typical = (today["High"] + today["Low"] + today["Close"]) / 3
         vwap = (typical * today["Volume"]).cumsum() / today["Volume"].cumsum().replace(0, float("nan"))
+        e9 = intra["Close"].ewm(span=9, adjust=False).mean(); e21 = intra["Close"].ewm(span=21, adjust=False).mean()
+    prev_bar = before.iloc[-1] if len(before) else None
+    min_hold = pd.Timedelta(minutes=cfg.get("early_exit_after_min", 0))
     prev_vol = float(before["Volume"].iloc[-1]) if len(before) else 0.0
     stop = entry * (1 - cfg["stop_loss_pct"] / 100) if cfg.get("stop_loss_pct") else None  # tests only: the desk has none
     for ts, bar in after.iterrows():
@@ -182,8 +185,18 @@ def run_trade(sym, side, option, risk, intra, t, day, cfg, half_spread):
         elif rule == "vwap":
             broken = (close - float(vwap.get(ts, close))) * d < 0 and float(bar["Volume"]) > prev_vol \
                 and (close - float(bar["Open"])) * d < 0
+        elif rule == "turn":
+            # user's idea (17 Nov): the candles say the move is over -> under/over VWAP, 9-EMA crossed the 21-EMA the
+            # wrong way, and a reversal candle (engulfing the previous candle, or a 2nd close in a row against us)
+            p_o, p_c = (float(prev_bar["Open"]), float(prev_bar["Close"])) if prev_bar is not None else (close, close)
+            o = float(bar["Open"])
+            engulf = (close - o) * d < 0 and (p_c - p_o) * d > 0 and (close - p_o) * d < 0 and (o - p_c) * d >= 0
+            two = (close - o) * d < 0 and (p_c - p_o) * d < 0 and (close - p_c) * d < 0
+            broken = ts - t >= min_hold and (close - float(vwap.get(ts, close))) * d < 0 \
+                and (float(e9.get(ts, 0)) - float(e21.get(ts, 0))) * d < 0 and (engulf or two)
         else:
             broken = False
+        prev_bar = bar
         prev_vol = float(bar["Volume"])
         if broken:  # sold at the bar's close
             exit_bid, status, closed = option_mid(option, close, ts + pd.Timedelta(minutes=5), cfg) * (1 - half_spread), "CHART_EXIT", ts

@@ -42,7 +42,7 @@ from agents.indicators import intraday_sigma_per_min
 from agents.indmoney import (IndMoney, LoginRequired, RateLimited, calls_last_hour,
                              set_hourly_budget)
 from agents.market import context as market_context_view, headwind
-from agents.momentum import early_signals, faded, read_trend
+from agents.momentum import chart_turn, early_signals, faded, read_trend
 from agents.regime import assess
 from agents.risk import hit_probability, plan
 from agents.scanner import stock_profile
@@ -639,6 +639,52 @@ def watch_news(t: dict, bid: float, now: datetime, cfg: dict) -> bool:
 
 
 TRADE_NEWS_LOG = Path(__file__).resolve().parent / "journal" / "trade_news.csv"
+CHART_EXIT_LOG = Path(__file__).resolve().parent / "journal" / "chart_exit.csv"
+
+
+async def watch_chart(im: IndMoney, t: dict, bid: float, now: datetime, cfg: dict) -> bool:
+    """Candle exit (user's idea 17 Nov, agents/momentum.chart_turn): watch the stock's 5-minute candles while the
+    trade is open. Observe mode (default) logs the first time the candles turn against the trade, with the real
+    bid then, to journal/chart_exit.csv; the review compares that bid with how the trade ended. Act mode sells.
+    True when it sold the trade."""
+    cc = cfg.get("chart_exit") or {}
+    if not cc.get("enabled", True) or not t.get("underlying_key"):
+        return False
+    seen = _daily.setdefault("chart_exit_seen", set())
+    key = (t["date"], t["symbol"], t["opened"])
+    if key in seen:
+        return False
+    bucket = (now.hour * 60 + now.minute) // 5  # one candle read per stock per 5-minute candle
+    cache = _daily.setdefault("chart_exit_bucket", {})
+    if cache.get(key) == bucket:
+        return False
+    cache[key] = bucket
+    try:
+        intraday = await im.candles(t["underlying_key"], "5minute", "7d")
+    except Exception:
+        return False
+    if intraday.empty:
+        return False
+    done = intraday
+    if (now - done.index[-1].to_pydatetime()).total_seconds() < 300:
+        done = done.iloc[:-1]  # the last candle is still forming
+    since = datetime.combine(now.date(), _t(t["opened"]), now.tzinfo)
+    why = chart_turn(done, "up" if str(t["contract"]).endswith("CALL") else "down", since)
+    if not why:
+        return False
+    seen.add(key)
+    mode = cc.get("mode", "observe")
+    new = not CHART_EXIT_LOG.exists()
+    with open(CHART_EXIT_LOG, "a", newline="", encoding="utf-8") as f:
+        w = csv.writer(f)
+        if new:
+            w.writerow(["date", "time", "symbol", "contract", "opened", "entry_ask", "bid", "target_bid", "mode", "reason"])
+        w.writerow([t["date"], now.strftime("%H:%M"), t["symbol"], t["contract"], t["opened"], t["entry_ask"], bid,
+                    t["target_bid"], mode, why])
+    if mode != "act":
+        return False
+    square_off_one(t, bid, now, cfg, f"candle exit: {why}")
+    return True
 
 
 def _news_items(now: datetime) -> list[dict]:
@@ -700,6 +746,8 @@ async def manage_open_trades(im: IndMoney, trades: list[dict], now: datetime, cf
                 t["notes"] = f"{t.get('notes', '')}; carry not allowed: {why}"
         if not square_off and bid < float(t["target_bid"]) and watch_news(t, bid, now, cfg):
             continue  # sold on bad news
+        if not square_off and bid < float(t["target_bid"]) and await watch_chart(im, t, bid, now, cfg):
+            continue  # sold on the candle exit (act mode only)
         if bid >= float(t["target_bid"]) or square_off:
             qty, entry = int(t["qty"]), float(t["entry_ask"])
             charges = round_trip_charges(entry, bid, qty, cfg["charges"])["total"]

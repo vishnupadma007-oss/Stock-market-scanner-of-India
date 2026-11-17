@@ -37,6 +37,37 @@ def faded(intraday: pd.DataFrame, direction: str, give_back_pct: float = 1.5, vw
     return None
 
 
+def chart_turn(intraday: pd.DataFrame, direction: str, since=None) -> str | None:
+    """Candle exit check for an open trade (user, 17 Nov 2026): has the stock's move turned against us?
+    All three on the last closed 5-minute candle: price the wrong side of VWAP, 9-EMA crossed the 21-EMA the wrong
+    way, and a reversal candle (engulfing the previous candle, or a 2nd close in a row against us).
+    Observe mode only: 60 days of spurt backtests lose with it (+Rs 41k -> -23k), live paper trades gain (see
+    journal/backtest_summary.md). Returns the reason, or None."""
+    if intraday.empty or len(intraday) < 22:
+        return None
+    full = intraday.assign(ema9=ema(intraday["Close"], 9), ema21=ema(intraday["Close"], 21), vwap=vwap(intraday))
+    t = _today(full)
+    if since is not None:
+        t_all = t
+        t = t[t.index >= since]
+        if t.empty:
+            return None
+        prev_idx = t_all.index.get_loc(t.index[-1]) - 1
+        prev = t_all.iloc[prev_idx] if prev_idx >= 0 else None
+    else:
+        prev = t.iloc[-2] if len(t) >= 2 else None
+    if prev is None:
+        return None
+    b = t.iloc[-1]; d = 1 if direction == "up" else -1
+    c, o, pc, po = float(b["Close"]), float(b["Open"]), float(prev["Close"]), float(prev["Open"])
+    engulf = (c - o) * d < 0 and (pc - po) * d > 0 and (c - po) * d < 0
+    two = (c - o) * d < 0 and (pc - po) * d < 0 and (c - pc) * d < 0
+    if (c - float(b["vwap"])) * d < 0 and (float(b["ema9"]) - float(b["ema21"])) * d < 0 and (engulf or two):
+        side = "under" if d > 0 else "over"
+        return f"{side} VWAP, 9-EMA crossed the 21-EMA, {'engulfing' if engulf else 'second'} candle against the trade"
+    return None
+
+
 def read_trend(intraday: pd.DataFrame, profile: dict, direction: str) -> dict:
     """direction "up" (buying a CALL) or "down" (buying a PUT)."""
     # Two 5-minute candles (09:25) are enough to act on overnight news: averages and RSI also use

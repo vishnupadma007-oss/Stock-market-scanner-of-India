@@ -215,6 +215,30 @@ def ai_context_scorecard(df: pd.DataFrame) -> str:
     return "\n".join(lines)
 
 
+def chart_exit_scorecard(df: pd.DataFrame) -> str:
+    """Candle exit (journal/chart_exit.csv, observe mode, user's idea 17 Nov): net had we sold at the real bid when
+    the candles turned, against how the trades really ended. Switch on only if it wins clearly over 20+ trades."""
+    path = ROOT / "journal" / "chart_exit.csv"
+    if not path.exists() or df.empty:
+        return ""
+    v = pd.read_csv(path, dtype=str).fillna("")
+    m = v.merge(df[["date", "contract", "opened", "qty", "net_pnl", "status"]], on=["date", "contract", "opened"], how="inner")
+    if m.empty:
+        return ""
+    from agents.config import load_config
+    from agents.costs import round_trip_charges
+    ch = load_config()["charges"]
+    e, b, q = m["entry_ask"].astype(float), m["bid"].astype(float), m["qty"].astype(float).astype(int)
+    m["if_sold"] = [(bb - ee) * qq - round_trip_charges(ee, bb, qq, ch)["total"] for ee, bb, qq in zip(e, b, q)]
+    lines = [f"\n## Candle exit (observe only): fired on {len(m)} of {len(df)} closed trades\n",
+             f"- Held as now: net ₹{m['net_pnl'].sum():,.0f}; sold at the candle exit: net ₹{m['if_sold'].sum():,.0f} "
+             f"(difference ₹{m['if_sold'].sum() - m['net_pnl'].sum():+,.0f})"]
+    for st, g in m.groupby("status"):
+        lines.append(f"- trades that ended {st}: {len(g)}, held ₹{g['net_pnl'].sum():,.0f} vs sold ₹{g['if_sold'].sum():,.0f}")
+    lines.append("\nSwitch it on (config chart_exit.mode: act) only if selling wins clearly over 20+ fired trades.\n")
+    return "\n".join(lines)
+
+
 def main() -> None:
     ap = argparse.ArgumentParser()
     ap.add_argument("--date", default=date.today().isoformat())
@@ -251,6 +275,7 @@ def main() -> None:
                  + "\n")
     text += ai_scorecard(df)
     text += ai_context_scorecard(df)
+    text += chart_exit_scorecard(df)
     REVIEWS.mkdir(parents=True, exist_ok=True)
     (REVIEWS / f"{args.date}.md").write_text(text, encoding="utf-8")
     if not df.empty and "strategy" in df:

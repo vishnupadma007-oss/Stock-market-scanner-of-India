@@ -358,6 +358,10 @@ probability:               # Probability Analyzer (user's design, 31 Oct; agents
   reject_share: 0.33       # rejects the weakest third, by the cut saved in journal/probability_model.json
   # Walk-forward test, 60 days: approved +3.48%/trade (87) vs rejected +0.17% (46), but the first half of
   # the period showed the opposite; ~9% chance it is luck. Switch to gate only after live trades agree.
+chart_exit:                # Candle exit (user's idea, 17 Nov; agents/momentum.chart_turn) on every open trade
+  enabled: true
+  mode: observe            # observe: log the bid when the candles turn to journal/chart_exit.csv (scored in review.py);
+                           # act: sell then. 60-day spurt backtest says no (+Rs 41k -> -23k), live paper trades say yes
 trade_news:                # Trade News Monitor (user's request, 31 Oct; agents/trade_news.py) on every open trade
   enabled: true
   mode: observe            # observe: log to journal/trade_news.csv; act: sell on bad news, raise the target on good news

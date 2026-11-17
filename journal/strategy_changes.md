@@ -228,3 +228,9 @@ The same shape caused the biggest news-team losses (MPHASIS -25.9k, DIVISLAB -17
 2 years of results days (`backtest_results_fade.py`, 1,161 entries): bought WITH the news after giving back 1.5%+ from the day's
 extreme or 0.5%+ the wrong side of VWAP -> -0.07% / -0.12% to the close, 43% / 39% up (both halves); otherwise +0.17% / +0.17%, 56% / 57%.
 Now every news idea is skipped in that state (`agents/momentum.faded`, watcher `fade_give_back_pct` 1.5, `fade_vwap_pct` 0.5).
+
+## 17 Nov 2026: candle exit in observe mode (user's idea)
+While a trade is open the watcher reads the stock's 5-minute candles; when they turn against the trade (VWAP, 9/21-EMA cross,
+reversal candle) it logs the real option bid to journal/chart_exit.csv. No trade is sold yet (`chart_exit.mode: observe`):
+the 60-day backtest loses with it, the live paper trades gain. The review shows "held vs sold"; switch to `act` after 20+ fired
+trades only if selling clearly wins. No stop-loss rule otherwise.

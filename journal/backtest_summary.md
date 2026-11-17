@@ -625,3 +625,13 @@ the candle turns, 2% or 3% net target, one trade at a time per stock, no stop-lo
 All 16 versions lose in both halves: e.g. k 1.0, 2%: 453 trades, 75% hit, -Rs 2.46 lakh (avg win +533, avg loss -4,066);
 best k 1.3, 2%, ADR filter: 233 trades, 76% hit, -Rs 1.06 lakh (-54.7k / -51.3k). A 2-3% target needs ~85-90% hits to pay for the
 losers held to 15:20 without a stop; the pullback comes 3 times in 4, and the 4th day the trend runs.
+
+### Candle exit: sell when the stock's candles turn against the trade (user, 17 Nov 2026) - observe mode
+Rule (`agents/momentum.chart_turn`): last 5-minute close the wrong side of VWAP, 9-EMA crossed the 21-EMA the wrong way, and a
+reversal candle (engulfing, or a 2nd close in a row against the trade). Stricter than the 30 Oct `entry_bar`/`vwap` exits.
+60 days x 76 stocks (`backtest_spurt.py` / `backtest_reversal.py --set early_exit=turn`):
+quiet spurt 10% target +Rs 41.0k -> -Rs 22.7k (hit 63% -> 54%), 15% target +Rs 59.8k -> +Rs 1.5k; movers 1% target avg -0.74% -> -0.90%;
+waiting 30 min before it may fire: no better. Live paper trades (82, Oct 21 - Nov 17, Black-Scholes at the implied vol of the real
+entry, same pricing for both): fired on 37 (30 of the 40 losers, 7 of the 43 winners); +Rs 30.8k -> +Rs 62.2k, but by half
+-Rs 3.9k -> -Rs 6.8k and +Rs 34.7k -> +Rs 69.0k; movers worse (+3.3k -> -1.0k). Fails the both-halves rule and the larger
+backtest, so it runs in observe mode: the watcher logs the real bid when it fires (journal/chart_exit.csv) and review.py scores it.
