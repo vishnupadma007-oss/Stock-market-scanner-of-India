@@ -1,10 +1,11 @@
 {
-  "date": "2026-11-16",
+  "date": "2026-11-17",
   "mode": "normal",
   "notes": [
-    "Expected Nifty open about -0.05% (range -0.6 to +0.5; S&P 500 -0.4%, Brent -1.1%)",
-    "Results since last session: GRASIM (mixed read), EICHERMOT (profit +9.7% YoY, revenue +21% YoY)",
-    "ADR team: all five stocks normal regime (no ADR move over 0.5%)"
+    "Expected Nifty open about -0.4% (range -0.9 to +0.1; S&P 500 -1.9%, Brent -4.3%)",
+    "Results since last session: BAJAJ-AUTO (results-gap rule at the open)",
+    "Filings: BHARTIARTL and CIPLA regulatory actions, BAJFINANCE QIP outcome",
+    "ADR team: HDFCBANK ADR +1.8% (1.0x volume), others under 0.5%; Brent -4.3% sets the macro regime"
   ],
   "avoid": []
 }
