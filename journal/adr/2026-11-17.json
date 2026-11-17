@@ -16,64 +16,59 @@
    "DRREDDY": 0.42
   },
   "usdinr_pct": 0.22,
-  "brent_pct": -4.32,
+  "brent_pct": -3.55,
   "nifty_gap_pct": -0.05
  },
  "phase": "fade",
  "stocks": {
   "INFY": {
    "regime": {
-    "regime": 1,
-    "name": "macro shock",
-    "direction": "down",
-    "trigger": "oil-fx",
-    "why": "Nifty gap -0.05%, VIX +0.0%, Brent -4.3%, USD-INR +0.22%"
+    "regime": 4,
+    "name": "normal",
+    "direction": null,
+    "why": "ADR +0.2%, Nifty gap -0.05%, first-15-min volume n/ax"
    },
-   "first_hour_pct": -0.17528483786152238,
+   "first_hour_pct": -0.07011393514461117,
    "decision": null
   },
   "WIPRO": {
    "regime": {
-    "regime": 1,
-    "name": "macro shock",
-    "direction": "down",
-    "trigger": "oil-fx",
-    "why": "Nifty gap -0.05%, VIX +0.0%, Brent -4.3%, USD-INR +0.22%"
+    "regime": 4,
+    "name": "normal",
+    "direction": null,
+    "why": "ADR -0.5%, Nifty gap -0.05%, first-15-min volume n/ax"
    },
-   "first_hour_pct": 0.05202913631634498,
+   "first_hour_pct": 0.18210197710719633,
    "decision": null
   },
   "HDFCBANK": {
    "regime": {
-    "regime": 1,
-    "name": "macro shock",
-    "direction": "down",
-    "trigger": "oil-fx",
-    "why": "Nifty gap -0.05%, VIX +0.0%, Brent -4.3%, USD-INR +0.22%"
+    "regime": 0,
+    "name": "unclear",
+    "direction": null,
+    "why": "ADR +1.8% without a clear driver: no trade"
    },
-   "first_hour_pct": 1.0604192355117226,
+   "first_hour_pct": 0.6720098643649974,
    "decision": null
   },
   "ICICIBANK": {
    "regime": {
-    "regime": 1,
-    "name": "macro shock",
-    "direction": "down",
-    "trigger": "oil-fx",
-    "why": "Nifty gap -0.05%, VIX +0.0%, Brent -4.3%, USD-INR +0.22%"
+    "regime": 4,
+    "name": "normal",
+    "direction": null,
+    "why": "ADR -0.3%, Nifty gap -0.05%, first-15-min volume n/ax"
    },
-   "first_hour_pct": 0.6750788643533179,
+   "first_hour_pct": 0.8012618296530105,
    "decision": null
   },
   "DRREDDY": {
    "regime": {
-    "regime": 1,
-    "name": "macro shock",
-    "direction": "down",
-    "trigger": "oil-fx",
-    "why": "Nifty gap -0.05%, VIX +0.0%, Brent -4.3%, USD-INR +0.22%"
+    "regime": 4,
+    "name": "normal",
+    "direction": null,
+    "why": "ADR -0.3%, Nifty gap -0.05%, first-15-min volume n/ax"
    },
-   "first_hour_pct": -0.2904865649963728,
+   "first_hour_pct": 0.10167029774874603,
    "decision": null
   }
  }
