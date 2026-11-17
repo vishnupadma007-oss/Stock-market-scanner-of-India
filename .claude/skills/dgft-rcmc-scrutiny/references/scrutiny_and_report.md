@@ -84,6 +84,30 @@ Order the user wants: **Inspection report (signed) → photographs → machinery
 
 Attachments larger than ~40 KB cannot be added reliably through the Gmail tool: create the draft, send the PDF to the user with SendUserFile and tell them to attach it.
 
+### C0. Documents for unit inspection – to the EXPORTER (default when the file is sent for inspection)
+To: the **Authorised Representative's email from the application** ("Authorised Representative / Departments Head / Contact Persons" table). Cc: `sundaresan.n@spicesboard.gov.in`. Attach the application PDF (Gmail file reference `sha256:<hash>:<abs path>` works). Subject: `Submission of Documents for Unit Inspection`
+```
+Sir,
+
+Kindly submit the following documents for conducting the unit inspection:
+
+1. MSME/Udyam/Udyog Aadhaar Registration Certificate (Code 10795 – Grinding and Processing of Spices).
+2. FSSAI Licence (State/Central, as applicable) along with Product Annexure/Form C covering spices and spice products.
+3. Proof of ownership/lease of the premises.
+4. List of machinery installed in the unit.
+5. Water Test Report (if potable water is being used in the processing activities).
+6. Self-Sealing and Self-Stuffing Permission issued by Customs.
+7. Details and copies of certifications, if available, such as ISO, HACCP, HALAL, KOSHER, NPOP/NSOP, etc.
+8. Copy of the Consent/Authorization issued by the State Pollution Control Board concerned.
+
+Kindly submit the above documents at the earliest to facilitate the inspection process.
+
+Regards,
+
+Bengaluru Regional Office
+```
+Use C1 (deputation to Mr. Sundaresan) only when the user asks for it for a unit far from Bengaluru.
+
 ### C1. Deputation of a nearby official
 Subject: `Request to Depute an Official for Unit Inspection – M/s <FIRM>, <PLACE>`
 ```
