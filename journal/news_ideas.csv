@@ -269,3 +269,13 @@ date,time,symbol,direction,confidence,source,priced_in
 2026-11-16,08:41,BEL,up,72,intel-news,not priced in
 2026-11-16,08:41,EICHERMOT,up,85,intel,not priced in
 2026-11-16,09:15,VEDL,down,75,preopen,NSE pre-open order imbalance
+2026-11-17,08:41,DIVISLAB,down,78,intel-news,largely priced in
+2026-11-17,08:41,EICHERMOT,up,99,intel,partly priced in
+2026-11-17,10:34,SBIN,up,85,intel-news,partly priced in
+2026-11-17,10:34,PNB,up,68,intel-news,largely priced in
+2026-11-17,10:34,CANBK,up,85,intel-news,not priced in
+2026-11-17,10:49,HDFCBANK,up,74,intel-news,not priced in
+2026-11-17,11:25,M&M,up,86,intel-news,not priced in
+2026-11-17,11:25,TECHM,up,66,intel-news,not priced in
+2026-11-17,11:28,BHARTIARTL,up,96,intel-news,partly priced in
+2026-11-17,12:14,AXISBANK,up,89,intel-news,not priced in
