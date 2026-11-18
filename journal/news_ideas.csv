@@ -279,3 +279,20 @@ date,time,symbol,direction,confidence,source,priced_in
 2026-11-17,11:25,TECHM,up,66,intel-news,not priced in
 2026-11-17,11:28,BHARTIARTL,up,96,intel-news,partly priced in
 2026-11-17,12:14,AXISBANK,up,89,intel-news,not priced in
+2026-11-18,08:41,HDFCBANK,up,92,intel-news,not priced in
+2026-11-18,08:41,SBIN,up,89,intel-news,partly priced in
+2026-11-18,08:41,AXISBANK,up,91,intel-news,not priced in
+2026-11-18,08:41,BHARTIARTL,up,93,intel-news,partly priced in
+2026-11-18,08:41,M&M,up,92,intel-news,not priced in
+2026-11-18,08:41,TECHM,up,79,intel-news,not priced in
+2026-11-18,08:41,PNB,up,72,intel-news,largely priced in
+2026-11-18,08:41,CANBK,up,83,intel-news,partly priced in
+2026-11-18,08:41,CIPLA,down,82,intel-news,some pessimism priced in
+2026-11-18,08:41,EICHERMOT,up,100,intel-news,partly priced in
+2026-11-18,09:15,WIPRO,down,75,preopen,NSE pre-open order imbalance
+2026-11-18,09:15,IDFCFIRSTB,down,75,preopen,NSE pre-open order imbalance
+2026-11-18,09:15,HINDALCO,down,75,preopen,NSE pre-open order imbalance
+2026-11-18,09:15,MPHASIS,down,75,preopen,NSE pre-open order imbalance
+2026-11-18,09:15,MUTHOOTFIN,down,75,preopen,NSE pre-open order imbalance
+2026-11-18,09:15,NATIONALUM,down,75,preopen,NSE pre-open order imbalance
+2026-11-18,09:15,BAJFINANCE,down,75,preopen,NSE pre-open order imbalance
