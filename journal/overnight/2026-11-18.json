@@ -9,532 +9,684 @@
    "sd": 0.491,
    "news": "",
    "results": false,
-   "why": "market -0.28%"
+   "why": "market -0.28%",
+   "preopen_gap_pct": -0.29,
+   "label": "as expected"
   },
   "HDFCBANK": {
    "expected_gap_pct": -0.4,
    "sd": 0.517,
    "news": "up 88%",
    "results": false,
-   "why": "market -0.40%; US-listed shares -0.1%"
+   "why": "market -0.40%; US-listed shares -0.1%",
+   "preopen_gap_pct": -0.1,
+   "label": "under-reacted"
   },
   "ICICIBANK": {
    "expected_gap_pct": -0.2,
    "sd": 0.401,
    "news": "",
    "results": false,
-   "why": "market -0.20%; US-listed shares +1.1%"
+   "why": "market -0.20%; US-listed shares +1.1%",
+   "preopen_gap_pct": 0.08,
+   "label": "as expected"
   },
   "INFY": {
    "expected_gap_pct": -0.84,
    "sd": 0.709,
    "news": "",
    "results": false,
-   "why": "market -0.84%; US-listed shares -1.9%"
+   "why": "market -0.84%; US-listed shares -1.9%",
+   "preopen_gap_pct": -0.8,
+   "label": "as expected"
   },
   "TCS": {
    "expected_gap_pct": -0.26,
    "sd": 0.725,
    "news": "",
    "results": false,
-   "why": "market -0.26%"
+   "why": "market -0.26%",
+   "preopen_gap_pct": -0.77,
+   "label": "news-driven gap"
   },
   "SBIN": {
    "expected_gap_pct": -0.24,
    "sd": 0.413,
    "news": "up 89%",
    "results": false,
-   "why": "market -0.24%"
+   "why": "market -0.24%",
+   "preopen_gap_pct": 0.06,
+   "label": "as expected"
   },
   "AXISBANK": {
    "expected_gap_pct": -0.34,
    "sd": 0.604,
    "news": "up 82%",
    "results": false,
-   "why": "market -0.34%"
+   "why": "market -0.34%",
+   "preopen_gap_pct": -0.01,
+   "label": "under-reacted"
   },
   "KOTAKBANK": {
    "expected_gap_pct": -0.29,
    "sd": 0.648,
    "news": "",
    "results": false,
-   "why": "market -0.29%"
+   "why": "market -0.29%",
+   "preopen_gap_pct": 0.33,
+   "label": "as expected"
   },
   "BHARTIARTL": {
    "expected_gap_pct": -0.16,
    "sd": 0.56,
    "news": "",
    "results": false,
-   "why": "market -0.16%"
+   "why": "market -0.16%",
+   "preopen_gap_pct": -0.15,
+   "label": "as expected"
   },
   "LT": {
    "expected_gap_pct": -0.23,
    "sd": 0.512,
    "news": "",
    "results": false,
-   "why": "market -0.23%"
+   "why": "market -0.23%",
+   "preopen_gap_pct": -0.01,
+   "label": "as expected"
   },
   "ITC": {
    "expected_gap_pct": -0.16,
    "sd": 0.457,
    "news": "",
    "results": false,
-   "why": "market -0.16%"
+   "why": "market -0.16%",
+   "preopen_gap_pct": -0.44,
+   "label": "as expected"
   },
   "HINDUNILVR": {
    "expected_gap_pct": -0.15,
    "sd": 0.456,
    "news": "",
    "results": false,
-   "why": "market -0.15%"
+   "why": "market -0.15%",
+   "preopen_gap_pct": -0.49,
+   "label": "as expected"
   },
   "BAJFINANCE": {
    "expected_gap_pct": -0.39,
    "sd": 0.722,
    "news": "",
    "results": false,
-   "why": "market -0.39%"
+   "why": "market -0.39%",
+   "preopen_gap_pct": -2.24,
+   "label": "priced in"
   },
   "BAJAJFINSV": {
    "expected_gap_pct": -0.24,
    "sd": 0.442,
    "news": "",
    "results": false,
-   "why": "market -0.24%"
+   "why": "market -0.24%",
+   "preopen_gap_pct": -1.38,
+   "label": "news-driven gap"
   },
   "MARUTI": {
    "expected_gap_pct": -0.23,
    "sd": 0.484,
    "news": "",
    "results": false,
-   "why": "market -0.23%"
+   "why": "market -0.23%",
+   "preopen_gap_pct": 0.16,
+   "label": "as expected"
   },
   "M&M": {
    "expected_gap_pct": -0.32,
    "sd": 0.684,
    "news": "",
    "results": false,
-   "why": "market -0.32%"
+   "why": "market -0.32%",
+   "preopen_gap_pct": -0.09,
+   "label": "under-reacted"
   },
   "SUNPHARMA": {
    "expected_gap_pct": -0.11,
    "sd": 0.661,
    "news": "",
    "results": false,
-   "why": "market -0.11%"
+   "why": "market -0.11%",
+   "preopen_gap_pct": 0.0,
+   "label": "as expected"
   },
   "TITAN": {
    "expected_gap_pct": -0.28,
    "sd": 0.513,
    "news": "",
    "results": false,
-   "why": "market -0.28%"
+   "why": "market -0.28%",
+   "preopen_gap_pct": -0.64,
+   "label": "news-driven gap"
   },
   "ULTRACEMCO": {
    "expected_gap_pct": -0.24,
    "sd": 0.517,
    "news": "",
    "results": false,
-   "why": "market -0.24%"
+   "why": "market -0.24%",
+   "preopen_gap_pct": -0.53,
+   "label": "news-driven gap"
   },
   "WIPRO": {
    "expected_gap_pct": -0.72,
    "sd": 0.821,
    "news": "",
    "results": false,
-   "why": "market -0.72%; US-listed shares -2.8%"
+   "why": "market -0.72%; US-listed shares -2.8%",
+   "preopen_gap_pct": -1.0,
+   "label": "priced in"
   },
   "HCLTECH": {
    "expected_gap_pct": -0.34,
    "sd": 0.788,
    "news": "",
    "results": false,
-   "why": "market -0.34%"
+   "why": "market -0.34%",
+   "preopen_gap_pct": -0.49,
+   "label": "priced in"
   },
   "TECHM": {
    "expected_gap_pct": -0.31,
    "sd": 0.737,
    "news": "",
    "results": false,
-   "why": "market -0.31%"
+   "why": "market -0.31%",
+   "preopen_gap_pct": -0.82,
+   "label": "priced in"
   },
   "PERSISTENT": {
    "expected_gap_pct": -0.35,
    "sd": 0.871,
    "news": "",
    "results": false,
-   "why": "market -0.35%"
+   "why": "market -0.35%",
+   "preopen_gap_pct": -0.02,
+   "label": "under-reacted"
   },
   "COFORGE": {
    "expected_gap_pct": -0.23,
    "sd": 0.998,
    "news": "",
    "results": false,
-   "why": "market -0.23%"
+   "why": "market -0.23%",
+   "preopen_gap_pct": 0.0,
+   "label": "as expected"
   },
   "MPHASIS": {
    "expected_gap_pct": -0.28,
    "sd": 0.899,
    "news": "",
    "results": false,
-   "why": "market -0.28%"
+   "why": "market -0.28%",
+   "preopen_gap_pct": -1.64,
+   "label": "news-driven gap"
   },
   "ADANIENT": {
    "expected_gap_pct": -0.19,
    "sd": 0.774,
    "news": "",
    "results": false,
-   "why": "market -0.19%"
+   "why": "market -0.19%",
+   "preopen_gap_pct": -0.04,
+   "label": "as expected"
   },
   "ADANIPORTS": {
    "expected_gap_pct": -0.27,
    "sd": 0.778,
    "news": "",
    "results": false,
-   "why": "market -0.27%"
+   "why": "market -0.27%",
+   "preopen_gap_pct": -0.31,
+   "label": "as expected"
   },
   "TATASTEEL": {
    "expected_gap_pct": -0.28,
    "sd": 0.594,
    "news": "",
    "results": false,
-   "why": "market -0.28%"
+   "why": "market -0.28%",
+   "preopen_gap_pct": -0.41,
+   "label": "as expected"
   },
   "JSWSTEEL": {
    "expected_gap_pct": -0.21,
    "sd": 0.606,
    "news": "",
    "results": false,
-   "why": "market -0.21%"
+   "why": "market -0.21%",
+   "preopen_gap_pct": -0.23,
+   "label": "as expected"
   },
   "HINDALCO": {
    "expected_gap_pct": -0.28,
    "sd": 0.794,
    "news": "",
    "results": false,
-   "why": "market -0.28%"
+   "why": "market -0.28%",
+   "preopen_gap_pct": -1.37,
+   "label": "news-driven gap"
   },
   "VEDL": {
    "expected_gap_pct": -0.19,
    "sd": 0.746,
    "news": "",
    "results": false,
-   "why": "market -0.19%"
+   "why": "market -0.19%",
+   "preopen_gap_pct": -0.84,
+   "label": "news-driven gap"
   },
   "SAIL": {
    "expected_gap_pct": -0.34,
    "sd": 0.613,
    "news": "",
    "results": false,
-   "why": "market -0.34%"
+   "why": "market -0.34%",
+   "preopen_gap_pct": -0.53,
+   "label": "priced in"
   },
   "NMDC": {
    "expected_gap_pct": -0.15,
    "sd": 0.582,
    "news": "",
    "results": false,
-   "why": "market -0.15%"
+   "why": "market -0.15%",
+   "preopen_gap_pct": -0.07,
+   "label": "as expected"
   },
   "NATIONALUM": {
    "expected_gap_pct": -0.29,
    "sd": 0.991,
    "news": "",
    "results": false,
-   "why": "market -0.29%"
+   "why": "market -0.29%",
+   "preopen_gap_pct": -2.15,
+   "label": "news-driven gap"
   },
   "ONGC": {
    "expected_gap_pct": -0.03,
    "sd": 0.758,
    "news": "",
    "results": false,
-   "why": "market -0.03%"
+   "why": "market -0.03%",
+   "preopen_gap_pct": 0.04,
+   "label": "as expected"
   },
   "NTPC": {
    "expected_gap_pct": -0.24,
    "sd": 0.455,
    "news": "",
    "results": false,
-   "why": "market -0.24%"
+   "why": "market -0.24%",
+   "preopen_gap_pct": -0.56,
+   "label": "news-driven gap"
   },
   "POWERGRID": {
    "expected_gap_pct": -0.18,
    "sd": 0.61,
    "news": "",
    "results": false,
-   "why": "market -0.18%"
+   "why": "market -0.18%",
+   "preopen_gap_pct": -0.85,
+   "label": "news-driven gap"
   },
   "COALINDIA": {
    "expected_gap_pct": -0.14,
    "sd": 0.605,
    "news": "",
    "results": false,
-   "why": "market -0.14%"
+   "why": "market -0.14%",
+   "preopen_gap_pct": 0.18,
+   "label": "as expected"
   },
   "BPCL": {
    "expected_gap_pct": -0.33,
    "sd": 0.697,
    "news": "",
    "results": false,
-   "why": "market -0.33%"
+   "why": "market -0.33%",
+   "preopen_gap_pct": -0.39,
+   "label": "priced in"
   },
   "IOC": {
    "expected_gap_pct": -0.3,
    "sd": 0.622,
    "news": "",
    "results": false,
-   "why": "market -0.30%"
+   "why": "market -0.30%",
+   "preopen_gap_pct": -0.38,
+   "label": "priced in"
   },
   "GAIL": {
    "expected_gap_pct": -0.36,
    "sd": 0.67,
    "news": "",
    "results": false,
-   "why": "market -0.36%"
+   "why": "market -0.36%",
+   "preopen_gap_pct": -0.63,
+   "label": "priced in"
   },
   "TATAPOWER": {
    "expected_gap_pct": -0.3,
    "sd": 0.63,
    "news": "",
    "results": false,
-   "why": "market -0.30%"
+   "why": "market -0.30%",
+   "preopen_gap_pct": -0.23,
+   "label": "as expected"
   },
   "DLF": {
    "expected_gap_pct": -0.28,
    "sd": 0.554,
    "news": "",
    "results": false,
-   "why": "market -0.28%"
+   "why": "market -0.28%",
+   "preopen_gap_pct": -0.22,
+   "label": "as expected"
   },
   "INDUSINDBK": {
    "expected_gap_pct": -0.35,
    "sd": 0.81,
    "news": "",
    "results": false,
-   "why": "market -0.35%"
+   "why": "market -0.35%",
+   "preopen_gap_pct": -0.64,
+   "label": "priced in"
   },
   "BANKBARODA": {
    "expected_gap_pct": -0.31,
    "sd": 0.546,
    "news": "",
    "results": false,
-   "why": "market -0.31%"
+   "why": "market -0.31%",
+   "preopen_gap_pct": -0.32,
+   "label": "priced in"
   },
   "PNB": {
    "expected_gap_pct": -0.24,
    "sd": 0.493,
    "news": "up 95%",
    "results": false,
-   "why": "market -0.24%"
+   "why": "market -0.24%",
+   "preopen_gap_pct": 0.5,
+   "label": "news-driven gap"
   },
   "CANBK": {
    "expected_gap_pct": -0.28,
    "sd": 0.516,
    "news": "",
    "results": false,
-   "why": "market -0.28%"
+   "why": "market -0.28%",
+   "preopen_gap_pct": 0.07,
+   "label": "as expected"
   },
   "IDFCFIRSTB": {
    "expected_gap_pct": -0.37,
    "sd": 0.766,
    "news": "",
    "results": false,
-   "why": "market -0.37%"
+   "why": "market -0.37%",
+   "preopen_gap_pct": -1.3,
+   "label": "priced in"
   },
   "FEDERALBNK": {
    "expected_gap_pct": -0.2,
    "sd": 0.501,
    "news": "",
    "results": false,
-   "why": "market -0.20%"
+   "why": "market -0.20%",
+   "preopen_gap_pct": -0.94,
+   "label": "news-driven gap"
   },
   "AUBANK": {
    "expected_gap_pct": -0.25,
    "sd": 0.804,
    "news": "",
    "results": false,
-   "why": "market -0.25%"
+   "why": "market -0.25%",
+   "preopen_gap_pct": -0.33,
+   "label": "as expected"
   },
   "SHRIRAMFIN": {
    "expected_gap_pct": -0.32,
    "sd": 0.695,
    "news": "",
    "results": false,
-   "why": "market -0.32%"
+   "why": "market -0.32%",
+   "preopen_gap_pct": -0.29,
+   "label": "as expected"
   },
   "CHOLAFIN": {
    "expected_gap_pct": -0.3,
    "sd": 0.757,
    "news": "",
    "results": false,
-   "why": "market -0.30%"
+   "why": "market -0.30%",
+   "preopen_gap_pct": -0.62,
+   "label": "priced in"
   },
   "MUTHOOTFIN": {
    "expected_gap_pct": -0.29,
    "sd": 1.028,
    "news": "",
    "results": false,
-   "why": "market -0.29%"
+   "why": "market -0.29%",
+   "preopen_gap_pct": -1.78,
+   "label": "news-driven gap"
   },
   "RECLTD": {
    "expected_gap_pct": -0.24,
    "sd": 0.538,
    "news": "",
    "results": false,
-   "why": "market -0.24%"
+   "why": "market -0.24%",
+   "preopen_gap_pct": -0.1,
+   "label": "as expected"
   },
   "PFC": {
    "expected_gap_pct": -0.24,
    "sd": 0.518,
    "news": "",
    "results": false,
-   "why": "market -0.24%"
+   "why": "market -0.24%",
+   "preopen_gap_pct": -0.11,
+   "label": "as expected"
   },
   "BEL": {
    "expected_gap_pct": -0.16,
    "sd": 0.566,
    "news": "",
    "results": false,
-   "why": "market -0.16%"
+   "why": "market -0.16%",
+   "preopen_gap_pct": -0.5,
+   "label": "as expected"
   },
   "HAL": {
    "expected_gap_pct": -0.15,
    "sd": 0.688,
    "news": "",
    "results": false,
-   "why": "market -0.15%"
+   "why": "market -0.15%",
+   "preopen_gap_pct": 0.49,
+   "label": "as expected"
   },
   "BHEL": {
    "expected_gap_pct": -0.25,
    "sd": 0.706,
    "news": "",
    "results": false,
-   "why": "market -0.25%"
+   "why": "market -0.25%",
+   "preopen_gap_pct": -0.15,
+   "label": "as expected"
   },
   "TRENT": {
    "expected_gap_pct": -0.26,
    "sd": 0.906,
    "news": "",
    "results": false,
-   "why": "market -0.26%"
+   "why": "market -0.26%",
+   "preopen_gap_pct": -0.04,
+   "label": "as expected"
   },
   "ETERNAL": {
    "expected_gap_pct": -0.43,
    "sd": 1.045,
    "news": "",
    "results": false,
-   "why": "market -0.43%"
+   "why": "market -0.43%",
+   "preopen_gap_pct": -0.01,
+   "label": "under-reacted"
   },
   "PAYTM": {
    "expected_gap_pct": -0.23,
    "sd": 0.883,
    "news": "",
    "results": false,
-   "why": "market -0.23%"
+   "why": "market -0.23%",
+   "preopen_gap_pct": -0.55,
+   "label": "as expected"
   },
   "POLICYBZR": {
    "expected_gap_pct": -0.35,
    "sd": 0.918,
    "news": "",
    "results": false,
-   "why": "market -0.35%"
+   "why": "market -0.35%",
+   "preopen_gap_pct": -0.49,
+   "label": "priced in"
   },
   "DIXON": {
    "expected_gap_pct": -0.24,
    "sd": 0.647,
    "news": "",
    "results": false,
-   "why": "market -0.24%"
+   "why": "market -0.24%",
+   "preopen_gap_pct": 0.15,
+   "label": "as expected"
   },
   "CIPLA": {
    "expected_gap_pct": -0.2,
    "sd": 0.521,
    "news": "",
    "results": false,
-   "why": "market -0.20%"
+   "why": "market -0.20%",
+   "preopen_gap_pct": 0.14,
+   "label": "as expected"
   },
   "DRREDDY": {
    "expected_gap_pct": -0.11,
    "sd": 0.707,
    "news": "",
    "results": false,
-   "why": "market -0.11%; US-listed shares +0.6%"
+   "why": "market -0.11%; US-listed shares +0.6%",
+   "preopen_gap_pct": -0.54,
+   "label": "as expected"
   },
   "DIVISLAB": {
    "expected_gap_pct": -0.12,
    "sd": 0.752,
    "news": "",
    "results": false,
-   "why": "market -0.12%"
+   "why": "market -0.12%",
+   "preopen_gap_pct": 0.27,
+   "label": "as expected"
   },
   "LUPIN": {
    "expected_gap_pct": -0.13,
    "sd": 0.666,
    "news": "",
    "results": false,
-   "why": "market -0.13%"
+   "why": "market -0.13%",
+   "preopen_gap_pct": 0.72,
+   "label": "news-driven gap"
   },
   "APOLLOHOSP": {
    "expected_gap_pct": -0.18,
    "sd": 0.596,
    "news": "",
    "results": false,
-   "why": "market -0.18%"
+   "why": "market -0.18%",
+   "preopen_gap_pct": 1.23,
+   "label": "news-driven gap"
   },
   "EICHERMOT": {
    "expected_gap_pct": -0.24,
    "sd": 0.585,
    "news": "",
    "results": false,
-   "why": "market -0.24%"
+   "why": "market -0.24%",
+   "preopen_gap_pct": -0.42,
+   "label": "as expected"
   },
   "HEROMOTOCO": {
    "expected_gap_pct": -0.11,
    "sd": 0.533,
    "news": "",
    "results": false,
-   "why": "market -0.11%"
+   "why": "market -0.11%",
+   "preopen_gap_pct": -0.23,
+   "label": "as expected"
   },
   "BAJAJ-AUTO": {
    "expected_gap_pct": -0.19,
    "sd": 0.48,
    "news": "",
    "results": false,
-   "why": "market -0.19%"
+   "why": "market -0.19%",
+   "preopen_gap_pct": -0.29,
+   "label": "as expected"
   },
   "TVSMOTOR": {
    "expected_gap_pct": -0.23,
    "sd": 0.52,
    "news": "",
    "results": false,
-   "why": "market -0.23%"
+   "why": "market -0.23%",
+   "preopen_gap_pct": 0.49,
+   "label": "as expected"
   },
   "ASIANPAINT": {
    "expected_gap_pct": -0.35,
    "sd": 0.577,
    "news": "",
    "results": false,
-   "why": "market -0.35%"
+   "why": "market -0.35%",
+   "preopen_gap_pct": -0.76,
+   "label": "priced in"
   },
   "NESTLEIND": {
    "expected_gap_pct": -0.18,
    "sd": 0.471,
    "news": "",
    "results": false,
-   "why": "market -0.18%"
+   "why": "market -0.18%",
+   "preopen_gap_pct": -0.5,
+   "label": "news-driven gap"
   },
   "BRITANNIA": {
    "expected_gap_pct": -0.17,
    "sd": 0.604,
    "news": "",
    "results": false,
-   "why": "market -0.17%"
+   "why": "market -0.17%",
+   "preopen_gap_pct": 0.15,
+   "label": "as expected"
   },
   "GRASIM": {
    "expected_gap_pct": -0.19,
    "sd": 0.473,
    "news": "",
    "results": false,
-   "why": "market -0.19%"
+   "why": "market -0.19%",
+   "preopen_gap_pct": -0.81,
+   "label": "news-driven gap"
   }
  }
 }
