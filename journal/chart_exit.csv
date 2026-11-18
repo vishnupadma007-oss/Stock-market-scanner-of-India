@@ -1,0 +1,2 @@
+date,time,symbol,contract,opened,entry_ask,bid,target_bid,mode,reason
+2026-11-18,10:49,MUTHOOTFIN,MUTHOOTFIN-23-NOV-2600-CALL,10:36,78.8,76.5,87.05,observe,"under VWAP, 9-EMA crossed the 21-EMA, engulfing candle against the trade"
