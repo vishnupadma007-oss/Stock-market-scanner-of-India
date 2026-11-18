@@ -296,3 +296,4 @@ date,time,symbol,direction,confidence,source,priced_in
 2026-11-18,09:15,MUTHOOTFIN,down,75,preopen,NSE pre-open order imbalance
 2026-11-18,09:15,NATIONALUM,down,75,preopen,NSE pre-open order imbalance
 2026-11-18,09:15,BAJFINANCE,down,75,preopen,NSE pre-open order imbalance
+2026-11-18,13:37,TITAN,down,67,intel-news,partly priced in
