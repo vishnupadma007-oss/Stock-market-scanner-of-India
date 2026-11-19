@@ -5,3 +5,7 @@ date,time,symbol,contract,opened,entry_ask,bid,target_bid,mode,reason
 2026-11-18,13:30,MUTHOOTFIN,MUTHOOTFIN-23-NOV-2600-CALL,10:36,78.8,67.85,87.05,observe,"under VWAP, 9-EMA crossed the 21-EMA, second candle against the trade"
 2026-11-18,14:29,MPHASIS,MPHASIS-23-NOV-2450-PUT,09:31,70.8,69.05,91.8,observe,"over VWAP, 9-EMA crossed the 21-EMA, second candle against the trade"
 2026-11-19,10:27,PAYTM,PAYTM-23-NOV-1760-CALL,09:51,50.85,39.45,51.55,observe,"under VWAP, 9-EMA crossed the 21-EMA, second candle against the trade"
+2026-11-19,11:04,MUTHOOTFIN,MUTHOOTFIN-23-NOV-2550-CALL,09:32,68.85,64.45,79.5,observe,"under VWAP, 9-EMA crossed the 21-EMA, second candle against the trade"
+2026-11-19,11:49,TECHM,TECHM-23-NOV-1740-PUT,09:32,37.75,32.65,53.4,observe,"over VWAP, 9-EMA crossed the 21-EMA, engulfing candle against the trade"
+2026-11-19,12:01,INFY,INFY-23-NOV-1094-PUT,09:42,23.45,21.95,32.6,observe,"over VWAP, 9-EMA crossed the 21-EMA, engulfing candle against the trade"
+2026-11-19,12:21,INFY,INFY-23-NOV-1074-CALL,10:55,20.1,17.65,23.25,observe,"under VWAP, 9-EMA crossed the 21-EMA, second candle against the trade"

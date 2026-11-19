@@ -297,3 +297,19 @@ date,time,symbol,direction,confidence,source,priced_in
 2026-11-18,09:15,NATIONALUM,down,75,preopen,NSE pre-open order imbalance
 2026-11-18,09:15,BAJFINANCE,down,75,preopen,NSE pre-open order imbalance
 2026-11-18,13:37,TITAN,down,67,intel-news,partly priced in
+2026-11-19,08:41,ICICIBANK,down,66,intel-news,not priced in
+2026-11-19,08:41,TITAN,down,93,intel-news,not priced in
+2026-11-19,08:41,MUTHOOTFIN,down,92,intel-news,some pessimism priced in
+2026-11-19,09:15,ASIANPAINT,down,75,preopen,NSE pre-open order imbalance
+2026-11-19,09:15,INFY,down,75,preopen,NSE pre-open order imbalance
+2026-11-19,09:15,SAIL,down,75,preopen,NSE pre-open order imbalance
+2026-11-19,09:15,TECHM,down,75,preopen,NSE pre-open order imbalance
+2026-11-19,09:15,WIPRO,down,75,preopen,NSE pre-open order imbalance
+2026-11-19,09:15,NATIONALUM,down,80,preopen,NSE pre-open order imbalance
+2026-11-19,09:15,PAYTM,down,75,preopen,NSE pre-open order imbalance
+2026-11-19,10:31,PNB,down,77,intel-news,largely priced in
+2026-11-19,10:38,EICHERMOT,up,90,intel-news,partly priced in
+2026-11-19,10:47,POLICYBZR,down,76,intel-news,some pessimism priced in
+2026-11-19,10:53,MARUTI,up,87,intel-news,partly priced in
+2026-11-19,10:53,M&M,up,86,intel-news,not priced in
+2026-11-19,12:23,SBIN,up,58,intel-news,largely priced in
