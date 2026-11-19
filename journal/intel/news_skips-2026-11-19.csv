@@ -1,0 +1,16 @@
+time,symbol,direction,confidence,move_pct,reason
+09:32,COALINDIA,down,,-0.1,pure spurt: Material news/catalyst (news): Mahanadi Coalfields IPO GMP today at  ₹3 vs  ₹136 price band
+09:32,GAIL,up,,0.47,"pure spurt: against the market: spurt up, Nifty -0.19%"
+09:32,CIPLA,down,,-0.3,pure spurt: bid-ask gap 2.23% > 1.0%
+09:32,INFY,down,75,-2.62,Trend Checker 45 < 60
+09:42,INDUSINDBK,down,,-0.27,pure spurt: Material news/catalyst (news): IndusInd Bank Share Price Live Updates: IndusInd Bank  Marke
+09:42,TITAN,up,,0.36,quiet spurt: strong news down (93%) against it
+09:42,AXISBANK,up,,0.35,pure spurt: Material news/catalyst (news): BlackRock raises its stake in Axis Bank to 5%
+09:51,BAJAJ-AUTO,up,,0.22,"pure spurt: Material news/catalyst (policy): RBI repo rate hike: talk, not yet action: costlier vehicle l"
+10:50,WIPRO,down,75,-1.65,Trend Checker 30 < 60
+10:55,WIPRO,down,75,-1.38,Trend Checker 15 < 60
+11:04,WIPRO,down,75,-0.99,faded: already gave back 1.6% from the day's low
+11:12,WIPRO,down,75,-1.13,faded: already gave back 1.6% from the day's low
+11:19,WIPRO,down,75,-1.2,faded: 0.5% the wrong side of VWAP
+11:28,WIPRO,down,75,-1.06,faded: already gave back 1.6% from the day's low
+11:35,WIPRO,down,75,-1.1,faded: already gave back 1.6% from the day's low

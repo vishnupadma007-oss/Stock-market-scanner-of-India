@@ -313,3 +313,6 @@ date,time,symbol,direction,confidence,source,priced_in
 2026-11-19,10:53,MARUTI,up,87,intel-news,partly priced in
 2026-11-19,10:53,M&M,up,86,intel-news,not priced in
 2026-11-19,12:23,SBIN,up,58,intel-news,largely priced in
+2026-11-19,13:04,HDFCBANK,up,77,intel-news,not priced in
+2026-11-19,13:04,BHARTIARTL,up,77,intel-news,partly priced in
+2026-11-19,13:04,ETERNAL,up,49,intel-news,largely priced in

@@ -19,3 +19,4 @@ date,time,symbol,contract,action,bid,target_bid,mode,reason
 2026-11-13,12:43,MUTHOOTFIN,MUTHOOTFIN-23-NOV-2900-PUT,exit,88.3,105.3,observe,policy hit: RBI repo rate cut: lower borrowing costs widen NBFC spreads and lift loan demand | RBI sets the cut-
 2026-11-16,10:36,EICHERMOT,EICHERMOT-23-NOV-7600-CALL,raise,181.5,237.0,observe,"good news for the trade: Eicher Motors shares vroom like its Bullet, stock price jumps over 3%; what brokerages say post Q2; "
 2026-11-19,10:35,PAYTM,PAYTM-23-NOV-1760-CALL,exit,35.9,51.55,observe,"bad news for the trade: Paytm share price crash: Payment stock slides 7% on UPI MDR rollout delay; Pine Labs, One Mobikwik S"
+2026-11-19,13:09,POLICYBZR,POLICYBZR-29-DEC-980-CALL,exit,89.3,90.65,observe,bad news for the trade: PB Fintech shares slide over 6% after co-founder Alok Bansal steps down
