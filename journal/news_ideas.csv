@@ -316,3 +316,31 @@ date,time,symbol,direction,confidence,source,priced_in
 2026-11-19,13:04,HDFCBANK,up,77,intel-news,not priced in
 2026-11-19,13:04,BHARTIARTL,up,77,intel-news,partly priced in
 2026-11-19,13:04,ETERNAL,up,49,intel-news,largely priced in
+2026-11-20,08:41,HDFCBANK,up,73,intel-news,partly priced in
+2026-11-20,08:41,SBIN,up,61,intel-news,largely priced in
+2026-11-20,08:41,BHARTIARTL,up,69,intel-news,partly priced in
+2026-11-20,08:41,MARUTI,up,100,intel-news,partly priced in
+2026-11-20,08:41,M&M,up,87,intel-news,partly priced in
+2026-11-20,08:41,TITAN,down,80,intel-news,not priced in
+2026-11-20,08:41,COALINDIA,up,70,intel-news,some pessimism priced in
+2026-11-20,08:41,MUTHOOTFIN,down,72,intel-news,some pessimism priced in
+2026-11-20,08:41,ETERNAL,up,50,intel-news,largely priced in
+2026-11-20,08:41,PAYTM,down,82,intel-news,not priced in
+2026-11-20,08:41,POLICYBZR,down,63,intel-news,pessimism priced in
+2026-11-20,09:03,BEL,up,70,intel-news,not priced in
+2026-11-20,09:03,HAL,up,70,intel-news,some pessimism priced in
+2026-11-20,09:15,BANKBARODA,down,80,preopen,NSE pre-open order imbalance
+2026-11-20,09:15,DRREDDY,down,75,preopen,NSE pre-open order imbalance
+2026-11-20,09:15,LT,down,75,preopen,NSE pre-open order imbalance
+2026-11-20,09:15,BHEL,down,75,preopen,NSE pre-open order imbalance
+2026-11-20,09:15,RECLTD,down,75,preopen,NSE pre-open order imbalance
+2026-11-20,09:15,SAIL,down,75,preopen,NSE pre-open order imbalance
+2026-11-20,09:15,INDUSINDBK,down,75,preopen,NSE pre-open order imbalance
+2026-11-20,09:15,HINDALCO,down,75,preopen,NSE pre-open order imbalance
+2026-11-20,09:15,NATIONALUM,down,75,preopen,NSE pre-open order imbalance
+2026-11-20,09:15,VEDL,down,75,preopen,NSE pre-open order imbalance
+2026-11-20,09:30,BANKBARODA,up,77,intel-news,partly priced in
+2026-11-20,09:30,PNB,up,75,intel-news,largely priced in
+2026-11-20,09:30,IDFCFIRSTB,up,71,intel-news,not priced in
+2026-11-20,11:45,APOLLOHOSP,up,62,intel-news,not priced in
+2026-11-20,12:25,ICICIBANK,up,87,intel-news,partly priced in
