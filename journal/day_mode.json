@@ -1,10 +1,10 @@
 {
-  "date": "2026-11-19",
+  "date": "2026-11-20",
   "mode": "normal",
   "notes": [
-    "Expected Nifty open about +0.07% (S&P 500 -0.2%, Brent -4.3%)",
-    "No results since last session; PNB regulatory action filed, POLICYBZR management exit",
-    "News views: TITAN and jewellers down on gold; IT weak on ADRs (INFY -2.4%, WIPRO -1.5%)"
+    "Expected Nifty open about -0.48% (S&P 500 -2.0%, Brent -2.0%)",
+    "No results since last session; PAYTM acquisition filings, PNB rating revision, BRITANNIA director exit",
+    "News views: POLICYBZR and TITAN down; MARUTI and SBIN (PSU banks) up"
   ],
   "avoid": []
 }
