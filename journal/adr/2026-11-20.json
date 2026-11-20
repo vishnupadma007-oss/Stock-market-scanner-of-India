@@ -1,0 +1,75 @@
+{
+ "context": {
+  "date": "2026-11-20",
+  "adr_pct": {
+   "INFY": -1.1,
+   "WIPRO": 0.0,
+   "HDFCBANK": 0.08,
+   "ICICIBANK": 0.03,
+   "DRREDDY": -1.0
+  },
+  "adr_vol_x": {
+   "INFY": 0.64,
+   "WIPRO": 0.58,
+   "HDFCBANK": 1.84,
+   "ICICIBANK": 1.28,
+   "DRREDDY": 0.7
+  },
+  "usdinr_pct": -0.01,
+  "brent_pct": -2.16,
+  "nifty_gap_pct": -0.57
+ },
+ "phase": "fade",
+ "stocks": {
+  "INFY": {
+   "regime": {
+    "regime": 0,
+    "name": "unclear",
+    "direction": null,
+    "why": "ADR -1.1% without a clear driver: no trade"
+   },
+   "first_hour_pct": 2.143514259429624,
+   "decision": null
+  },
+  "WIPRO": {
+   "regime": {
+    "regime": 0,
+    "name": "unclear",
+    "direction": null,
+    "why": "ADR +0.0% without a clear driver: no trade"
+   },
+   "first_hour_pct": 2.6850828729281906,
+   "decision": null
+  },
+  "HDFCBANK": {
+   "regime": {
+    "regime": 0,
+    "name": "unclear",
+    "direction": null,
+    "why": "ADR +0.1% without a clear driver: no trade"
+   },
+   "first_hour_pct": 1.7964438994481968,
+   "decision": null
+  },
+  "ICICIBANK": {
+   "regime": {
+    "regime": 0,
+    "name": "unclear",
+    "direction": null,
+    "why": "ADR +0.0% without a clear driver: no trade"
+   },
+   "first_hour_pct": 0.48064918851435934,
+   "decision": null
+  },
+  "DRREDDY": {
+   "regime": {
+    "regime": 0,
+    "name": "unclear",
+    "direction": null,
+    "why": "ADR -1.0% without a clear driver: no trade"
+   },
+   "first_hour_pct": 0.5835734870316855,
+   "decision": null
+  }
+ }
+}
