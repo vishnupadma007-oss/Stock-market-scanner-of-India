@@ -1,0 +1,31 @@
+time,symbol,direction,confidence,move_pct,reason
+09:30,NATIONALUM,up,,-2.57,gap recovery: risk: Forecast chance of reaching the target is 56% (need 60%).
+09:30,AXISBANK,down,,0.12,quiet spurt: live move 0.12% no longer fits
+09:30,BAJAJ-AUTO,down,,-0.18,"pure spurt: Material news/catalyst (policy): RBI repo rate hike: talk, not yet action: costlier vehicle l"
+09:30,TVSMOTOR,down,,-0.32,"pure spurt: Material news/catalyst (policy): RBI repo rate hike: talk, not yet action: costlier vehicle l"
+09:30,KOTAKBANK,up,,0.2,pure spurt: Material news/catalyst (news): Kotak Bank Share Price Live Updates: Kotak Bank Stock Detail
+09:42,HDFCBANK,up,,0.56,pure spurt: Material news/catalyst (news): HDFC Bank Share Price Highlights: HDFC Bank Stock Price Hist
+09:42,CIPLA,up,,0.13,news+spurt: policy against the spurt: Regulatory action on a named company: regulator acting against the company | Cipla's InvaG
+09:42,SAIL,down,75,-2.19,faded: 0.7% the wrong side of VWAP
+09:42,VEDL,down,75,-3.92,faded: 0.6% the wrong side of VWAP
+09:49,BHEL,down,75,-1.62,Trend Checker 55 < 60
+09:49,SAIL,down,75,-2.12,Trend Checker 45 < 60
+09:49,VEDL,down,75,-3.65,faded: 0.6% the wrong side of VWAP
+09:49,BANKBARODA,down,,-0.5,quiet spurt: strong news up (76%) against it
+09:57,SAIL,down,75,-1.54,faded: already gave back 1.8% from the day's low
+09:57,VEDL,down,75,-3.29,faded: 0.6% the wrong side of VWAP
+09:57,COALINDIA,down,,-0.31,quiet spurt: strong news up (64%) against it
+10:04,VEDL,down,75,-3.4,Trend Checker 45 < 60
+10:12,VEDL,down,75,-3.08,faded: already gave back 1.8% from the day's low
+10:24,VEDL,down,75,-3,faded: already gave back 1.8% from the day's low
+10:49,VEDL,down,75,-3.03,faded: already gave back 1.8% from the day's low
+10:57,VEDL,down,75,-3.29,"risk: One lot costs ₹7,716, above the ₹0 per-trade budget."
+11:03,VEDL,down,75,-3.59,"risk: One lot costs ₹8,176, above the ₹0 per-trade budget."
+11:07,VEDL,down,75,-3.83,"risk: One lot costs ₹8,694, above the ₹0 per-trade budget."
+11:11,VEDL,down,75,-3.62,"risk: One lot costs ₹8,096, above the ₹0 per-trade budget."
+11:11,NESTLEIND,up,,0.58,pure spurt: bid-ask gap 1.32% > 1.0%
+11:11,VEDL,down,75,-3.45,"risk: One lot costs ₹7,521, above the ₹0 per-trade budget."
+11:21,VEDL,down,75,-3.42,faded: already gave back 1.6% from the day's low
+11:32,VEDL,down,75,-3.25,faded: already gave back 1.6% from the day's low
+11:38,VEDL,down,75,-3.39,faded: already gave back 1.6% from the day's low
+12:18,BRITANNIA,down,,-0.38,pure spurt: Material news/catalyst (filing): BRITANNIA management: Britannia Industries Limited has infor

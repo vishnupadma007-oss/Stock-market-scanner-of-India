@@ -344,3 +344,5 @@ date,time,symbol,direction,confidence,source,priced_in
 2026-11-20,09:30,IDFCFIRSTB,up,71,intel-news,not priced in
 2026-11-20,11:45,APOLLOHOSP,up,62,intel-news,not priced in
 2026-11-20,12:25,ICICIBANK,up,87,intel-news,partly priced in
+2026-11-20,13:36,AXISBANK,up,68,intel-news,not priced in
+2026-11-20,15:00,INDUSINDBK,up,71,intel-news,not priced in
