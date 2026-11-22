@@ -646,3 +646,8 @@ Only strict versions came near even: hour-long tight box (n 12, tight 0.5), lead
 and 9/21-EMA filters. With a 15% target: 280 trades (7.6 a day), 19% hit, 55% right way, +Rs 55.1k (halves +6.5k / +48.6k);
 45-min box (n 9, lead 3): 562 trades, +Rs 35.3k (+28.1k / +7.2k). 5% target loses (-1.3k, -68.4k); 25% similar to 15%.
 Caveat: picked from ~60 tries, thin edge (+0.8% a trade), so the team runs on paper and is judged after 30+ live trades.
+Squeeze, small targets and option choice (22 Nov, same 280 trades): 1% target 80% winners but -Rs 62.9k (wins ~Rs 286 vs losses
+~Rs 2,223); 2% -47.5k; 3% -38.0k; 5% -1.3k. Strike at the 15% target (Black-Scholes repriced every bar, so delta, gamma and theta
+are in the result): ITM2 (delta 0.67, theta -2.8%/day) +49.4k; ITM1 (0.59, -4.0%) +55.1k; ATM (0.50, -5.7%) +70.0k (+9.8k/+60.1k);
+OTM1 (0.41, -8.1%) +75.4k (+17.3k/+58.1k). Next month's expiry (33 days, theta -1.4%/day): only +8.2k (the premium barely moves).
+Caveat: one fixed 0.8% spread for all strikes; real OTM spreads are wider.
