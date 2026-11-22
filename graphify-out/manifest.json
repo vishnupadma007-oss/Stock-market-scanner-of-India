@@ -246,9 +246,9 @@
     "semantic_hash": ""
   },
   "agents/momentum.py": {
-    "mtime": 1794498912.8816023,
-    "seen": 1794653727.5592225,
-    "ast_hash": "8ed83b5f775b97be3b7a362c0b2c1e51",
+    "mtime": 1794927022.1791427,
+    "seen": 1795353545.7427006,
+    "ast_hash": "ca1bb3f31a6dcba5f4f1c15769e21bbe",
     "semantic_hash": ""
   },
   "agents/mover_forecast.py": {
@@ -390,9 +390,9 @@
     "semantic_hash": ""
   },
   "backtest_reversal.py": {
-    "mtime": 1794498912.8836167,
-    "seen": 1794653727.5592582,
-    "ast_hash": "45fb5dc1823548d81cbab0dc1b70a71a",
+    "mtime": 1794926327.8713267,
+    "seen": 1795353545.7427485,
+    "ast_hash": "8c6b0e5e2293f12c30aa3dd00511a86b",
     "semantic_hash": ""
   },
   "backtest_spurt.py": {
@@ -420,15 +420,15 @@
     "semantic_hash": ""
   },
   "config.yaml": {
-    "mtime": 1794790198.8003848,
-    "seen": 1794790221.2590768,
-    "ast_hash": "52ea6ed86b2202aa232e742ddbae7dae",
+    "mtime": 1795353475.6514297,
+    "seen": 1795353545.7427645,
+    "ast_hash": "b4cdb2bdd0788e53a89a9618be4da474",
     "semantic_hash": ""
   },
   "journal/day_mode.json": {
-    "mtime": 1794539472.856793,
-    "seen": 1794653727.5592668,
-    "ast_hash": "46f6cba66b953dff6137b38bad9c0e9d",
+    "mtime": 1795144305.9214344,
+    "seen": 1795353545.7427711,
+    "ast_hash": "f227475fe10a015ec43b9d04b8e83588",
     "semantic_hash": ""
   },
   "journal/intel/preopen-2026-10-26.json": {
@@ -1074,9 +1074,9 @@
     "semantic_hash": ""
   },
   "review.py": {
-    "mtime": 1794790198.7990286,
-    "seen": 1794790221.2592611,
-    "ast_hash": "4ec3355003ea1fa6634fe394303902c0",
+    "mtime": 1795353475.65093,
+    "seen": 1795353545.7429228,
+    "ast_hash": "b30b506800d5b86040aeed1fc17fee05",
     "semantic_hash": ""
   },
   "scripts/journal_quiet.sh": {
@@ -1242,9 +1242,9 @@
     "semantic_hash": ""
   },
   "watcher.py": {
-    "mtime": 1794790198.798471,
-    "seen": 1794790221.2593043,
-    "ast_hash": "45c9a8c41c7e9e49070d7d65d68d4a41",
+    "mtime": 1795353462.0688148,
+    "seen": 1795353545.742955,
+    "ast_hash": "37fd6572ca488fa41fac195d439b7b66",
     "semantic_hash": ""
   },
   ".claude/skills/THIRD_PARTY.md": {
@@ -1566,9 +1566,9 @@
     "semantic_hash": ""
   },
   "CLAUDE.md": {
-    "mtime": 1794709779.4855783,
-    "seen": 1794709787.6420264,
-    "ast_hash": "2345c28f34e3b8fa4c75c83814487cc5",
+    "mtime": 1795353541.077762,
+    "seen": 1795353545.7430053,
+    "ast_hash": "1bf56cdbdd851bfe3fdc5c0fccd41ac0",
     "semantic_hash": ""
   },
   "FLOWCHART.html": {
@@ -1590,9 +1590,9 @@
     "semantic_hash": ""
   },
   "journal/backtest_summary.md": {
-    "mtime": 1794790217.1447916,
-    "seen": 1794790221.2593796,
-    "ast_hash": "9aa7d9d75c7d6dd30cb4b9881ce57ad0",
+    "mtime": 1795353541.058871,
+    "seen": 1795353545.7430093,
+    "ast_hash": "bde61db43e677bb0526792624852712b",
     "semantic_hash": ""
   },
   "journal/reviews/2026-10-19.md": {
@@ -1668,9 +1668,9 @@
     "semantic_hash": ""
   },
   "journal/strategy_changes.md": {
-    "mtime": 1794790217.1447916,
-    "seen": 1794790221.259406,
-    "ast_hash": "fb595dcbd177e766e486637444d3395e",
+    "mtime": 1795353541.062871,
+    "seen": 1795353545.743034,
+    "ast_hash": "895ed8929c10e7be8ef2c647bc2c9288",
     "semantic_hash": ""
   },
   "requirements.txt": {
@@ -1929,6 +1929,228 @@
     "mtime": 1794790217.1447916,
     "seen": 1794790221.2590613,
     "ast_hash": "c4cc2ca62dda776123bf829fbdf017d1",
+    "semantic_hash": ""
+  },
+  "agents/squeeze.py": {
+    "mtime": 1795353354.94286,
+    "seen": 1795353545.7427287,
+    "ast_hash": "a8481d1d329d5b07441c557ac3fda487",
+    "semantic_hash": ""
+  },
+  "backtest_adr_swing.py": {
+    "mtime": 1794845796.7892282,
+    "seen": 1795353545.742736,
+    "ast_hash": "eea9337f14facb7ed2ac44de200837ae",
+    "semantic_hash": ""
+  },
+  "backtest_divergence.py": {
+    "mtime": 1794791675.372369,
+    "seen": 1795353545.7427406,
+    "ast_hash": "470c74b9c772529c8e1a3fe98daa9577",
+    "semantic_hash": ""
+  },
+  "backtest_results_fade.py": {
+    "mtime": 1794845980.1614397,
+    "seen": 1795353545.7427468,
+    "ast_hash": "980c9e21c842acb038a683fbcb7bc0d6",
+    "semantic_hash": ""
+  },
+  "backtest_squeeze.py": {
+    "mtime": 1795353362.447383,
+    "seen": 1795353545.7427552,
+    "ast_hash": "04de456eed55f169731666bcacf04c82",
+    "semantic_hash": ""
+  },
+  "journal/adr/2026-11-16.json": {
+    "mtime": 1794804352.2852237,
+    "seen": 1795353545.7427657,
+    "ast_hash": "f42343cfed3dca7c83f7febe927df9d3",
+    "semantic_hash": ""
+  },
+  "journal/adr/2026-11-17.json": {
+    "mtime": 1794892320.590536,
+    "seen": 1795353545.7427666,
+    "ast_hash": "f6af586639a1fdd1595c3caccc2b843f",
+    "semantic_hash": ""
+  },
+  "journal/adr/2026-11-18.json": {
+    "mtime": 1794977493.9754515,
+    "seen": 1795353545.7427678,
+    "ast_hash": "52b8c050628bf287d264d9060e97689e",
+    "semantic_hash": ""
+  },
+  "journal/adr/2026-11-19.json": {
+    "mtime": 1795064028.568927,
+    "seen": 1795353545.7427685,
+    "ast_hash": "9831552e6938865be83a199ec5eff659",
+    "semantic_hash": ""
+  },
+  "journal/adr/2026-11-20.json": {
+    "mtime": 1795150067.2629175,
+    "seen": 1795353545.74277,
+    "ast_hash": "8f2bc244afb6e6c9510e76349a75a3b9",
+    "semantic_hash": ""
+  },
+  "journal/intel/preopen-2026-11-16.json": {
+    "mtime": 1794800310.9239345,
+    "seen": 1795353545.7427917,
+    "ast_hash": "f3606563cff92544d22c9f585789b3bc",
+    "semantic_hash": ""
+  },
+  "journal/intel/preopen-2026-11-17.json": {
+    "mtime": 1794886681.5132391,
+    "seen": 1795353545.7427926,
+    "ast_hash": "70b5baf3a11e1bfd032feb199b57444a",
+    "semantic_hash": ""
+  },
+  "journal/intel/preopen-2026-11-18.json": {
+    "mtime": 1794973096.5834665,
+    "seen": 1795353545.742794,
+    "ast_hash": "51f9a39a486e8cd2a22b2e6e90e7ced3",
+    "semantic_hash": ""
+  },
+  "journal/intel/preopen-2026-11-19.json": {
+    "mtime": 1795059509.5482235,
+    "seen": 1795353545.7427948,
+    "ast_hash": "d7268919ed91de7d071d9dca7d26f236",
+    "semantic_hash": ""
+  },
+  "journal/intel/preopen-2026-11-20.json": {
+    "mtime": 1795145892.736481,
+    "seen": 1795353545.7427957,
+    "ast_hash": "8f0190c749c0abe8c1760afba732765a",
+    "semantic_hash": ""
+  },
+  "journal/intel/spurts-2026-11-16.json": {
+    "mtime": 1794823032.70912,
+    "seen": 1795353545.7428117,
+    "ast_hash": "99914b932bd37a50b983c5e7c90ae93b",
+    "semantic_hash": ""
+  },
+  "journal/intel/spurts-2026-11-17.json": {
+    "mtime": 1794909408.330074,
+    "seen": 1795353545.7428126,
+    "ast_hash": "99914b932bd37a50b983c5e7c90ae93b",
+    "semantic_hash": ""
+  },
+  "journal/intel/spurts-2026-11-18.json": {
+    "mtime": 1794995896.0208685,
+    "seen": 1795353545.7428133,
+    "ast_hash": "99914b932bd37a50b983c5e7c90ae93b",
+    "semantic_hash": ""
+  },
+  "journal/intel/spurts-2026-11-19.json": {
+    "mtime": 1795082219.7507405,
+    "seen": 1795353545.7428145,
+    "ast_hash": "99914b932bd37a50b983c5e7c90ae93b",
+    "semantic_hash": ""
+  },
+  "journal/intel/spurts-2026-11-20.json": {
+    "mtime": 1795168801.4629984,
+    "seen": 1795353545.7428155,
+    "ast_hash": "99914b932bd37a50b983c5e7c90ae93b",
+    "semantic_hash": ""
+  },
+  "journal/overnight/2026-11-16.json": {
+    "mtime": 1794813158.7988536,
+    "seen": 1795353545.7428212,
+    "ast_hash": "f9fc3ab32807760942af0ae8569d2f70",
+    "semantic_hash": ""
+  },
+  "journal/overnight/2026-11-17.json": {
+    "mtime": 1794892788.7389092,
+    "seen": 1795353545.7428222,
+    "ast_hash": "d1f1f712040642f19153a76d9fc7401c",
+    "semantic_hash": ""
+  },
+  "journal/overnight/2026-11-18.json": {
+    "mtime": 1794989232.4477432,
+    "seen": 1795353545.742823,
+    "ast_hash": "8bc00c8b19c50772e75a49b711611e8f",
+    "semantic_hash": ""
+  },
+  "journal/overnight/2026-11-19.json": {
+    "mtime": 1795059666.974984,
+    "seen": 1795353545.7428238,
+    "ast_hash": "3761a6d7dff4cf96843a3a0fd48cef48",
+    "semantic_hash": ""
+  },
+  "journal/overnight/2026-11-20.json": {
+    "mtime": 1795146066.5191479,
+    "seen": 1795353545.7428248,
+    "ast_hash": "e48b8cc757ce686be8a3ee8e4974ccd3",
+    "semantic_hash": ""
+  },
+  "journal/valuations/2026-11-16.json": {
+    "mtime": 1794798755.6161122,
+    "seen": 1795353545.7429173,
+    "ast_hash": "07d2a1b73a9fe1aa8f01cf08bc9730d4",
+    "semantic_hash": ""
+  },
+  "journal/valuations/2026-11-17.json": {
+    "mtime": 1794885136.442494,
+    "seen": 1795353545.7429185,
+    "ast_hash": "08d0543cc397bfcdd0b91caf4c13d3d0",
+    "semantic_hash": ""
+  },
+  "journal/valuations/2026-11-18.json": {
+    "mtime": 1794971532.1999402,
+    "seen": 1795353545.7429192,
+    "ast_hash": "3cbe98e599b50253d535134244564507",
+    "semantic_hash": ""
+  },
+  "journal/valuations/2026-11-19.json": {
+    "mtime": 1795057954.2931426,
+    "seen": 1795353545.7429202,
+    "ast_hash": "7e7dc21201aa6d8154a0261c9d08c72a",
+    "semantic_hash": ""
+  },
+  "journal/valuations/2026-11-20.json": {
+    "mtime": 1795144364.5906706,
+    "seen": 1795353545.7429209,
+    "ast_hash": "d7f66238da44e9786ed1fd65233ce174",
+    "semantic_hash": ""
+  },
+  "tests/test_momentum.py": {
+    "mtime": 1794927036.5573518,
+    "seen": 1795353545.7429378,
+    "ast_hash": "e4fa843cca81633cc6903812452a14f1",
+    "semantic_hash": ""
+  },
+  "tests/test_squeeze.py": {
+    "mtime": 1795353501.852127,
+    "seen": 1795353545.742951,
+    "ast_hash": "a3c8c81fb1550f1a719c7ce331aea8e0",
+    "semantic_hash": ""
+  },
+  "journal/reviews/2026-11-16.md": {
+    "mtime": 1794823828.9936988,
+    "seen": 1795353545.7430294,
+    "ast_hash": "6af2ca958a1e318e5ce6043dbac9a2b5",
+    "semantic_hash": ""
+  },
+  "journal/reviews/2026-11-17.md": {
+    "mtime": 1794910242.595353,
+    "seen": 1795353545.74303,
+    "ast_hash": "18f46fc9de9f517516e1f67aa5232e0f",
+    "semantic_hash": ""
+  },
+  "journal/reviews/2026-11-18.md": {
+    "mtime": 1794996658.3523853,
+    "seen": 1795353545.743031,
+    "ast_hash": "3673d9bdb935c4686fc407dbd0bb8460",
+    "semantic_hash": ""
+  },
+  "journal/reviews/2026-11-19.md": {
+    "mtime": 1795083040.8148665,
+    "seen": 1795353545.7430317,
+    "ast_hash": "68fb4138c778c5e74ad3a56145a7a3d8",
+    "semantic_hash": ""
+  },
+  "journal/reviews/2026-11-20.md": {
+    "mtime": 1795169439.980674,
+    "seen": 1795353545.7430327,
+    "ast_hash": "bf8b5fefda198765cabc614f3fe7ed43",
     "semantic_hash": ""
   }
 }

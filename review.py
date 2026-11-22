@@ -93,12 +93,13 @@ def _breakdown(df: pd.DataFrame, title: str, key) -> list[str]:
 NEWS_STRATEGIES = ("results", "intel", "news", "spurt", "quiet-spurt-news", "quiet-spurt")  # News + Spurt merged 14 Nov
 SPURT_STRATEGIES = ()
 PREOPEN_STRATEGIES = ("preopen", "results-gap", "gap-recovery")
-TEAMS = ("movers", "news", "preopen", "adr")
+TEAMS = ("movers", "news", "preopen", "adr", "squeeze")
 ADR_STRATEGIES = ("adr-fade", "adr-open")
+SQUEEZE_STRATEGIES = ("squeeze",)
 
 
 def team_of(strategy: pd.Series) -> pd.Series:
-    return strategy.map(lambda s: "adr" if s in ADR_STRATEGIES else "spurt" if s in SPURT_STRATEGIES else "preopen" if s in PREOPEN_STRATEGIES
+    return strategy.map(lambda s: "squeeze" if s in SQUEEZE_STRATEGIES else "adr" if s in ADR_STRATEGIES else "spurt" if s in SPURT_STRATEGIES else "preopen" if s in PREOPEN_STRATEGIES
                         else "news" if s in NEWS_STRATEGIES else "movers")
 
 
@@ -256,7 +257,8 @@ def main() -> None:
     opened_teams = team_of(opened["strategy"]) if "strategy" in opened else pd.Series("movers", index=opened.index)
     chances = {"movers": int((opened_teams == "movers").sum()) + len(held),
                "news": int((ideas["date"] == args.date).sum()) if "date" in ideas.columns else 0,
-               "adr": int((opened_teams == "adr").sum()), "preopen": int((opened_teams == "preopen").sum())}
+               "adr": int((opened_teams == "adr").sum()), "preopen": int((opened_teams == "preopen").sum()),
+               "squeeze": int((opened_teams == "squeeze").sum())}
     capitals = {team: (cfg.get("teams") or {}).get(team, {}).get("capital", cfg["capital"])
                 + float((cfg.get("teams") or {}).get(team, {}).get("top_up", 0)) for team in TEAMS}  # top-ups count as money in
     text = review(df, args.date, last_change_date(), capitals, chances)

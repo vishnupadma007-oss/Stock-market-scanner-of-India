@@ -1,22 +1,23 @@
-# Graph Report - Stock-market-scanner-of-India  (2026-11-16)
+# Graph Report - Stock-market-scanner-of-India  (2026-11-22)
 
 ## Corpus Check
-- 319 files · ~286,955 words
+- 356 files · ~323,315 words
 - Verdict: corpus is large enough that graph structure adds value.
-- Unclassified: 74 file(s) not represented in the graph (top: .jsonl 41, .csv 30, (none) 3)
+- Unclassified: 95 file(s) not represented in the graph (top: .jsonl 56, .csv 36, (none) 3)
+- WARNING: 95 of 454 files seen (21%) have no supported extractor and are missing from this graph entirely. It may look complete while representing only part of the codebase.
 
 ## Summary
-- 2522 nodes · 5151 edges · 175 communities (155 shown, 20 thin omitted)
-- Extraction: 99% EXTRACTED · 1% INFERRED · 0% AMBIGUOUS · INFERRED: 58 edges (avg confidence: 0.87)
+- 2670 nodes · 5494 edges · 189 communities (168 shown, 21 thin omitted)
+- Extraction: 99% EXTRACTED · 1% INFERRED · 0% AMBIGUOUS · INFERRED: 64 edges (avg confidence: 0.87)
 - Token cost: 0 input · 0 output
 
 ## Graph Freshness
-- Built from commit: `d4822ced`
+- Built from commit: `2ac2bb21`
 - Run `git rev-parse HEAD` and compare to check if the graph is stale.
 - Run `graphify update .` after code changes (no API cost).
 
 ## Community Hubs (Navigation)
-- probability.py
+- numpy
 - announcements.py
 - activity.py
 - load_config
@@ -26,11 +27,11 @@
 - news_team
 - Market Event Patterns and Market Reactions
 - pandas
-- test_gapfollow.py
+- reset_daily
 - config.yaml
 - scan
-- math
-- agents/__init__.py
+- nse_mcp.py
+- plan
 - Data Fetching
 - Corporate News Impact Analysis Framework
 - Geopolitical Events and Commodity Correlations
@@ -42,7 +43,7 @@
 - Quiet volume spurt (user's idea, 28 Oct 2026)
 - test_intel.py
 - holidays.py
-- monte_carlo
+- cycle
 - overnight.py
 - test_teams.py
 - analyzer.py
@@ -57,20 +58,21 @@
 - FakeIndMoney
 - Market News Analyst
 - test_policy.py
+- vectorbt-expert/SKILL.md
 - adr_team.py
 - US Market Transaction Costs
 - trade_news.py
 - check
-- indicators.py
+- read_chart
 - pathlib
 - Creating Indicators & Signals
 - daymode.py
 - market.py
 - re
-- orderflow.py
+- usual_curve
 - expectations.py
 - DuckDB Direct Data Loading
-- time
+- newsfeed.py
 - chain
 - Equity Research Earnings Update
 - Steps
@@ -87,7 +89,7 @@
 - Performance Analysis
 - Plotting
 - VectorBT Simulation Modes
-- change_pct
+- history_frame
 - figures_from_text
 - Best Practices, Examples, and Quality Guidelines
 - Detailed Workflow for Earnings Updates
@@ -129,7 +131,7 @@
 - macro
 - shock
 - Evening review: 2026-11-11
-- early_signals
+- intraday
 - Critical Requirements
 - High-Level Workflow
 - Agent Roster
@@ -153,7 +155,7 @@
 - quick-stats/SKILL.md
 - strategy-compare/SKILL.md
 - commodities
-- load_config
+- squeeze.py
 - valuation
 - conftest.py
 - Evening review: 2026-11-12
@@ -166,71 +168,85 @@
 - Evening review: 2026-11-13
 - spurt.py
 - Evening review: 2026-11-05
-- numpy
+- sys
 - commodities.py
 - Long + Short Backtesting
 - stretch
-- prices
-- Futures Backtesting (Lot Size)
+- Trading desk
+- day_signals
 - graphify
 - offline
-- check_expectations
+- RateLimited
 - candles
 - psychology
+- squeeze
 - mover_forecast.py
 - adr
-- backtest/SKILL.md
+- Evening review: 2026-11-19
+- is_trading_day
+- Evening review: 2026-11-18
 - adjust_forecast
 - as_extra
+- Evening review: 2026-11-20
+- Evening review: 2026-11-16
+- Evening review: 2026-11-17
+- results_summary
+- parse_nse
+- SnapshotBars
+- nifty_gap_fallback
+- overnight_context
+- prepare
+- check_fo_activity
+- chart_exit
 
 ## God Nodes (most connected - your core abstractions)
-1. `load_config()` - 79 edges
+1. `load_config()` - 85 edges
 2. `scan()` - 53 edges
-3. `news_team()` - 50 edges
-4. `plan()` - 44 edges
-5. `spurt_entries()` - 43 edges
-6. `IndMoney` - 42 edges
-7. `suggest_contract()` - 35 edges
-8. `news` - 32 edges
-9. `Quiet volume spurt (user's idea, 28 Oct 2026)` - 32 edges
-10. `gap_recovery_entries()` - 31 edges
+3. `news_team()` - 51 edges
+4. `plan()` - 45 edges
+5. `IndMoney` - 44 edges
+6. `spurt_entries()` - 43 edges
+7. `suggest_contract()` - 41 edges
+8. `hist_vol()` - 37 edges
+9. `Quiet volume spurt (user's idea, 28 Oct 2026)` - 36 edges
+10. `option_mid()` - 33 edges
 
 ## Surprising Connections (you probably didn't know these)
-- `Available Strategies` --references--> `rsi()`  [INFERRED]
-  .claude/skills/backtest/SKILL.md → agents/indicators.py
 - `Evening review` --references--> `score()`  [INFERRED]
   .claude/skills/trading-desk/SKILL.md → agents/sector_results.py
-- `Overnight carry (user, 3 Nov)` --references--> `should_carry()`  [INFERRED]
-  .claude/skills/trading-desk/SKILL.md → agents/carry.py
+- `Available Strategies` --references--> `rsi()`  [INFERRED]
+  .claude/skills/backtest/SKILL.md → agents/indicators.py
 - `On a RESULT line (a company in our list just filed results on NSE)` --references--> `highlights()`  [INFERRED]
   .claude/skills/trading-desk/SKILL.md → agents/announcements.py
-- `4.2 News team, step by step (`watcher.news_team`)` --references--> `news_team()`  [INFERRED]
+- `Overnight carry (user, 3 Nov)` --references--> `should_carry()`  [INFERRED]
+  .claude/skills/trading-desk/SKILL.md → agents/carry.py
+- `4.1 Movers team, step by step (`watcher.scan`)` --references--> `scan()`  [INFERRED]
   GUIDE.md → watcher.py
 
 ## Import Cycles
 - 2-file cycle: `agents/mover_forecast.py -> agents/overnight.py -> agents/mover_forecast.py`
 
-## Communities (175 total, 20 thin omitted)
+## Communities (189 total, 21 thin omitted)
 
-### Community 0 - "probability.py"
-Cohesion: 0.16
-Nodes (18): assess(), base_rate(), _bucket(), features(), fit(), _mc_of(), ml_score(), save_model() (+10 more)
+### Community 0 - "numpy"
+Cohesion: 0.08
+Nodes (34): assess(), base_rate(), bs_price(), _bucket(), _charges_fast(), features(), fit(), load_model() (+26 more)
 
 ### Community 1 - "announcements.py"
-Cohesion: 0.12
-Nodes (13): _download(), fetch_feed(), get_nse_session(), highlights(), main(), _ocr_page(), ocr_text(), pdf_text() (+5 more)
+Cohesion: 0.13
+Nodes (10): change_pct(), _extract_table(), _numbers(), _ocr_page(), ocr_text(), pdf_text(), plausible(), _row() (+2 more)
 
 ### Community 2 - "activity.py"
-Cohesion: 0.20
-Nodes (8): confirms(), fetch(), kind(), main(), parse(), save(), test_confirms_needs_rising_oi_and_price_the_news_way(), test_parse_reads_build_ups_for_our_stocks_only()
+Cohesion: 0.21
+Nodes (6): confirms(), kind(), parse(), save(), test_confirms_needs_rising_oi_and_price_the_news_way(), test_parse_reads_build_ups_for_our_stocks_only()
 
 ### Community 3 - "load_config"
-Cohesion: 0.13
-Nodes (22): hist_vol(), intraday_sigma_per_min(), suggest_contract(), plan(), prepare(), simulate(), replay(), summary() (+14 more)
+Cohesion: 0.11
+Nodes (16): load_config(), intraday_sigma_per_min(), main(), report(), simulate(), change_at(), load(), load_macro() (+8 more)
 
 ### Community 4 - "watcher.py"
 Cohesion: 0.08
-Nodes (27): set_hourly_budget(), load(), test_ideas_are_logged_once_per_direction(), test_restart_does_not_log_the_same_idea_twice(), test_preopen_and_volume_spurt_ideas_generation(), add_idea(), emit(), exits_only() (+19 more)
+Nodes (31): recent_items(), set_hourly_budget(), append(), live_rows(), fetch_nse(), test_result_reported_once_per_company_unless_figures_arrive_later(), test_forecast_event_carries_priced_in(), emit() (+23 more)
 
 ### Community 5 - "ai_helper.py"
 Cohesion: 0.12
@@ -241,36 +257,36 @@ Cohesion: 0.04
 Nodes (44): Barron's, Best Practices, Bloomberg, Central Bank Researchers, Central Banks and Government Agencies, China-Specific, CNBC, Commodity Markets (+36 more)
 
 ### Community 7 - "news_team"
-Cohesion: 0.11
-Nodes (33): note(), stock_key(), results_calendar(), check_rules(), main(), open_trade(), test_fresh_spurt_is_confirmed_live_and_bought_with_a_10pct_target(), test_spurt_with_agreeing_news_aims_for_15pct_under_its_own_label() (+25 more)
+Cohesion: 0.13
+Nodes (29): note(), load(), stock_key(), results_calendar(), check_rules(), open_trade(), test_each_team_has_its_own_book(), test_strategies_map_to_the_four_teams_everywhere() (+21 more)
 
 ### Community 8 - "Market Event Patterns and Market Reactions"
 Cohesion: 0.05
 Nodes (40): 2008 Financial Crisis, 2022 Inflation Shock, Bank of Japan (BOJ), Banking Sector Earnings, Central Bank Monetary Policy Events, Commodity-Specific Events, Corporate Defaults / Distress, Corporate Earnings Events (+32 more)
 
 ### Community 9 - "pandas"
-Cohesion: 0.13
-Nodes (13): load(), log(), trades_on(), context_table(), candidates(), day_frame(), load(), main() (+5 more)
+Cohesion: 0.08
+Nodes (19): vwap_bands(), atr(), load(), log(), trades_on(), black_scholes(), _npdf(), _pct() (+11 more)
 
-### Community 10 - "test_gapfollow.py"
-Cohesion: 0.16
-Nodes (8): assess(), Quotes, test_gap_read(), test_mover_forecast_adds_preopen_gap_fade_candidates(), test_mover_forecast_lists_results_stocks_first(), test_preopen_idea_needs_the_move_to_continue_after_the_open(), __init__(), test_results_gap_becomes_an_idea_that_news_cannot_overwrite()
+### Community 10 - "reset_daily"
+Cohesion: 0.07
+Nodes (21): fetch(), main(), assess(), load(), main(), test_quotes_are_sent_in_batches_of_ten(), Quotes, test_gap_read() (+13 more)
 
 ### Community 11 - "config.yaml"
 Cohesion: 0.06
 Nodes (33): assumed_spread_pct, capital, commodity_guard, entry_end, entry_start, exit_check_seconds, filings_poll_seconds, forecast_capture (+25 more)
 
 ### Community 12 - "scan"
-Cohesion: 0.09
-Nodes (16): IndMoney, check(), _wait_turn(), 4.1 Movers team, step by step (`watcher.scan`), 4.2 News team, step by step (`watcher.news_team`), 4. The two teams, find_key(), test_calls_are_paced_evenly() (+8 more)
-
-### Community 13 - "math"
 Cohesion: 0.11
-Nodes (10): black_scholes(), BSResult, implied_volatility(), last_tuesday(), monthly_expiry(), _ncdf(), _npdf(), strike_step() (+2 more)
+Nodes (9): main(), go(), IndMoney, check(), find_key(), check_expectations(), go(), market_context() (+1 more)
 
-### Community 14 - "agents/__init__.py"
-Cohesion: 0.11
-Nodes (13): exit_for_net_target(), round_trip_charges(), _gamma_adjusted_move(), hit_probability(), _t(), ctx_of(), daily(), part_b() (+5 more)
+### Community 13 - "nse_mcp.py"
+Cohesion: 0.14
+Nodes (10): acall(), go(), call(), go(), list_tools(), go(), live_movers(), live_quote() (+2 more)
+
+### Community 14 - "plan"
+Cohesion: 0.08
+Nodes (33): exit_for_net_target(), round_trip_charges(), hist_vol(), suggest_contract(), _gamma_adjusted_move(), hit_probability(), plan(), _t() (+25 more)
 
 ### Community 15 - "Data Fetching"
 Cohesion: 0.06
@@ -289,60 +305,60 @@ Cohesion: 0.06
 Nodes (32): activity_min_oi_pct, activity_rule, auto_trade, capital, confirm_pct, early_book_x, early_entry, early_pct (+24 more)
 
 ### Community 19 - "reaction.py"
-Cohesion: 0.11
-Nodes (18): add_surprises(), _clip(), dataset(), features_for(), fit(), forecast(), load_history(), load_model() (+10 more)
+Cohesion: 0.09
+Nodes (24): add_surprises(), build_history(), _clip(), dataset(), expected_market_gap(), features_for(), fit(), forecast() (+16 more)
 
 ### Community 20 - "NLP Earnings Sentiment"
 Cohesion: 0.07
 Nodes (24): Beyond Sentiment, Earnings Call Structure Matters, FinBERT and Financial NLP Models, Usage Pattern, Validation, Why Domain Models, Caveats, Documented Red-Flag Patterns (research-backed) (+16 more)
 
 ### Community 21 - "review.py"
-Cohesion: 0.05
-Nodes (42): nifty_gap_fallback(), acall(), go(), call(), daily_history(), go(), _f(), history_frame() (+34 more)
+Cohesion: 0.14
+Nodes (20): ai_context_scorecard(), ai_scorecard(), _breakdown(), chart_exit_scorecard(), last_change_date(), load(), main(), review() (+12 more)
 
 ### Community 22 - "plan"
-Cohesion: 0.09
-Nodes (18): decide(), reversal_target(), assess(), _ret(), test_contract_side(), test_decision_keeps_extras_with_ai(), test_decision_respects_regime_and_ai_veto(), test_hit_probability_forecast() (+10 more)
+Cohesion: 0.05
+Nodes (26): decide(), reversal_target(), BSResult, last_tuesday(), monthly_expiry(), _ncdf(), strike_step(), assess() (+18 more)
 
 ### Community 23 - "Quiet volume spurt (user's idea, 28 Oct 2026)"
-Cohesion: 0.05
-Nodes (39): ADR-stocks team idea (user, 14 Nov 2026): `backtest_adr_team.py` - not adopted, ADR team: regime-switching plan (user, 15 Nov 2026): `backtest_adr_regimes.py`, `agents/adr_team.py`, ADR team timing: at the open or at 10:15? (user, 16 Nov 2026): `backtest_adr_timing.py`, Are we late on results? (user's question, 10 Nov 2026) - 29 results filings with a clear read, 19 Oct - 6 Nov, ATM vs one-strike-ITM (2026-10-19, macro on, same 60 days), Backtest: mover-reversal options, 2026-08 to 2026-10 (60 trading days), Can the news predict the move? (user's question, 10 Nov 2026) - 164 live news ideas, 21 Oct - 6 Nov, measured on 5-minute prices, Early chart exit (user's idea, 30 Oct 2026) (+31 more)
+Cohesion: 0.04
+Nodes (44): 22 Nov 2026: Squeeze team (user's idea): quiet patch + candle vote + breakout (`backtest_squeeze.py`), ADR stocks' daily swing: fade the usual stretch from the open, 2-3% target, many trades (user, 16 Nov 2026): `backtest_adr_swing.py` - not adopted, ADR-stocks team idea (user, 14 Nov 2026): `backtest_adr_team.py` - not adopted, ADR team: regime-switching plan (user, 15 Nov 2026): `backtest_adr_regimes.py`, `agents/adr_team.py`, ADR team timing: at the open or at 10:15? (user, 16 Nov 2026): `backtest_adr_timing.py`, Are we late on results? (user's question, 10 Nov 2026) - 29 results filings with a clear read, 19 Oct - 6 Nov, ATM vs one-strike-ITM (2026-10-19, macro on, same 60 days), Backtest: mover-reversal options, 2026-08 to 2026-10 (60 trading days) (+36 more)
 
 ### Community 24 - "test_intel.py"
-Cohesion: 0.18
-Nodes (17): to_intel(), make_item(), tone(), item(), test_analyzer_accepts_ist_aware_time(), test_analyzer_needs_agreement_and_fades_old_news(), test_linking_and_tone(), test_market_noise_does_not_swamp_a_stock() (+9 more)
+Cohesion: 0.17
+Nodes (18): to_intel(), make_item(), symbols_in(), tone(), item(), test_analyzer_accepts_ist_aware_time(), test_analyzer_needs_agreement_and_fades_old_news(), test_gst_input_tax_credit_is_not_itc_ltd() (+10 more)
 
 ### Community 25 - "holidays.py"
-Cohesion: 0.09
-Nodes (17): holiday_name(), is_trading_day(), load(), previous_trading_day(), refresh(), assess(), headline_date(), next_session() (+9 more)
+Cohesion: 0.11
+Nodes (13): daily_bars(), intraday_bars(), nse_lot_sizes(), yahoo_symbol(), load(), refresh(), assess(), headline_date() (+5 more)
 
-### Community 26 - "monte_carlo"
-Cohesion: 0.16
-Nodes (9): _charges_fast(), load_model(), log(), monte_carlo(), recent_returns(), sigma_ratio(), _years_to_expiry(), test_sigma_ratio_is_one_on_an_ordinary_day() (+1 more)
+### Community 26 - "cycle"
+Cohesion: 0.21
+Nodes (9): test_save_trades_preserves_concurrent_verdicts_and_external_trades(), test_watcher_signals_then_exits(), cycle(), exits_only(), load_trades(), record_guard(), record_held(), save_trades() (+1 more)
 
 ### Community 27 - "overnight.py"
-Cohesion: 0.17
+Cohesion: 0.16
 Nodes (14): compare(), _daily(), evaluate(), fit(), forecast(), gap_table(), load(), load_model() (+6 more)
 
 ### Community 28 - "test_teams.py"
-Cohesion: 0.10
-Nodes (25): intraday(), test_chart_reader_mirrors_for_losers(), test_chart_reader_retest_of_the_high_is_a_fresh_high(), test_chart_reader_sees_fading_gainer(), test_news_agent_uses_nse_filings(), test_volume_spike_is_sudden_pressure(), FakeIndMoney, idea() (+17 more)
+Cohesion: 0.16
+Nodes (16): FakeIndMoney, idea(), test_free_money_is_split_over_the_empty_slots(), test_news_team_enters_early_on_volume_and_order_book(), quotes(), test_news_team_skips_ideas_whose_priced_in_check_failed(), test_news_team_skips_when_the_chart_disagrees(), test_news_team_trades_when_price_confirms() (+8 more)
 
 ### Community 29 - "analyzer.py"
-Cohesion: 0.19
-Nodes (12): main(), market_hours_between(), market_mood(), _mean_tone(), _parse_time(), recent_items(), stock_view(), _top() (+4 more)
+Cohesion: 0.24
+Nodes (10): main(), market_hours_between(), market_mood(), _mean_tone(), _parse_time(), stock_view(), _top(), _trading_day() (+2 more)
 
 ### Community 30 - "candles.py"
 Cohesion: 0.17
 Nodes (11): as_extra(), detect(), main(), _parts(), recent(), test(), frame(), test_bearish_engulfing_after_a_rise() (+3 more)
 
 ### Community 31 - "carry.py"
-Cohesion: 0.08
-Nodes (26): expiry_of(), is_carried(), market_open(), overnight_exit(), _own_filings(), should_carry(), Backtesting, Evening review (+18 more)
+Cohesion: 0.16
+Nodes (14): expiry_of(), is_carried(), market_open(), overnight_exit(), _own_filings(), should_carry(), Overnight carry (user, 3 Nov), filing() (+6 more)
 
 ### Community 32 - "indmoney.py"
-Cohesion: 0.14
-Nodes (14): access_token(), _client_auth(), finish_login(), _load(), LoginRequired, main(), _parse(), RateLimited (+6 more)
+Cohesion: 0.20
+Nodes (11): access_token(), _client_auth(), finish_login(), _load(), LoginRequired, main(), refresh(), _save() (+3 more)
 
 ### Community 33 - "sector_of"
 Cohesion: 0.16
@@ -353,8 +369,8 @@ Cohesion: 0.10
 Nodes (20): Common Signal Pipeline, Complete Indicator Catalog (100+), crossover / crossunder / cross, exrem - Remove Excess Signals (CRITICAL), flip - Regime Detection, Hybrid (7), Momentum (9), NEVER Do This (+12 more)
 
 ### Community 35 - "Trading Desk: Complete Guide (27 Oct 2026)"
-Cohesion: 0.12
-Nodes (16): 10. Scoreboard (paper, to 26 Oct 2026), 11. Set it up again, 12. Known limits, 1. The user's rules (never changed without the user's OK), 2. The big picture, 3. A trading day, minute by minute (IST), 5. Every agent, 6. Contract choice and exits (+8 more)
+Cohesion: 0.10
+Nodes (19): 10. Scoreboard (paper, to 26 Oct 2026), 11. Set it up again, 12. Known limits, 1. The user's rules (never changed without the user's OK), 2. The big picture, 3. A trading day, minute by minute (IST), 4.1 Movers team, step by step (`watcher.scan`), 4.2 News team, step by step (`watcher.news_team`) (+11 more)
 
 ### Community 36 - "Report Structure and Templates"
 Cohesion: 0.11
@@ -365,20 +381,24 @@ Cohesion: 0.11
 Nodes (19): Best Practices, COIN-Margined Futures, Cost Comparison Across Markets, Crypto Market Transaction Costs, Crypto-Specific VectorBT Settings, Crypto Spot (Base Tier), Crypto Spot (BNB Discount), Data Source for Crypto Markets (+11 more)
 
 ### Community 38 - "FakeIndMoney"
-Cohesion: 0.08
-Nodes (23): candles_frame(), FakeIndMoney, signals(), test_account_reinvests_profit_and_reserves_open_trades(), test_busy_desk_holds_new_setups(), test_candles_frame(), test_carry_keeps_a_trade_overnight_and_sells_it_next_day(), test_fresh_news_behind_the_move_blocks_the_fade() (+15 more)
+Cohesion: 0.07
+Nodes (25): candles_frame(), FakeIndMoney, signals(), test_account_reinvests_profit_and_reserves_open_trades(), test_busy_desk_holds_new_setups(), test_calls_are_paced_evenly(), three(), test_candles_frame() (+17 more)
 
 ### Community 39 - "Market News Analyst"
 Cohesion: 0.11
 Nodes (17): Analysis Workflow, Common Pitfalls to Avoid, Important Notes, Key Analysis Principles, Market News Analyst, Output, Overview, Prerequisites (+9 more)
 
 ### Community 40 - "test_policy.py"
-Cohesion: 0.14
-Nodes (19): _one_per_story(), symbols_in(), assess(), main(), to_intel(), test_gst_input_tax_credit_is_not_itc_ltd(), test_lookalike_company_names(), hits() (+11 more)
+Cohesion: 0.16
+Nodes (16): _one_per_story(), assess(), main(), to_intel(), hits(), test_delay_or_softening_is_mild_relief(), test_economists_expectations_are_talk(), test_irdai_commission_caps_hit_policybazaar_hardest() (+8 more)
+
+### Community 41 - "vectorbt-expert/SKILL.md"
+Cohesion: 0.24
+Nodes (3): Futures Backtesting (Lot Size), Futures Fee Structure, Index Futures & Options Lot Sizes (SEBI Revised, Effective 31 Dec 2025)
 
 ### Community 42 - "adr_team.py"
-Cohesion: 0.07
-Nodes (13): atr14(), detect_exhaustion(), expected_gap_pct(), fade_decision(), generate_trade_signal(), open_decision(), overnight_context(), move() (+5 more)
+Cohesion: 0.10
+Nodes (9): atr14(), classify_regime(), detect_exhaustion(), expected_gap_pct(), fade_decision(), generate_trade_signal(), open_decision(), Pair (+1 more)
 
 ### Community 43 - "US Market Transaction Costs"
 Cohesion: 0.12
@@ -392,33 +412,29 @@ Nodes (13): ai_helper_cfg(), ai_judge(), check(), raised_target(), _when(), walk
 Cohesion: 0.23
 Nodes (10): check(), irdai_items(), test_headlines_describing_the_move_do_not_block(), test_policybazaar_bounce_is_blocked(), test_quiet_stock_passes(), test_results_and_regulatory_filings_block_any_side(), test_results_due_today_blocks_both_sides(), test_same_news_does_not_block_a_put() (+2 more)
 
-### Community 46 - "indicators.py"
-Cohesion: 0.09
-Nodes (18): candle_png(), _mirror(), read_chart(), _today(), daily_bars(), intraday_bars(), nse_lot_sizes(), yahoo_symbol() (+10 more)
+### Community 46 - "read_chart"
+Cohesion: 0.07
+Nodes (28): candle_png(), _mirror(), read_chart(), _today(), ema(), rsi(), vwap(), chart_turn() (+20 more)
 
 ### Community 47 - "pathlib"
-Cohesion: 0.13
-Nodes (3): load(), calc_cagr(), run_ema_backtest()
+Cohesion: 0.09
+Nodes (9): candidates(), day_frame(), load(), main(), run(), summary(), load(), calc_cagr() (+1 more)
 
 ### Community 48 - "Creating Indicators & Signals"
 Cohesion: 0.14
 Nodes (14): ATR (Average True Range), Bollinger Bands Strategy (Default: OpenAlgo ta), Complete OpenAlgo ta Indicator Reference (Default), Creating Indicators & Signals, CRITICAL RULE: OpenAlgo ta by Default, TA-Lib Only on Request, EMA Crossover Strategy (Default: OpenAlgo ta), Fallback: Standalone DuckDB Without OpenAlgo Installed, MACD Strategy (Default: OpenAlgo ta) (+6 more)
-
-### Community 49 - "daymode.py"
-Cohesion: 0.29
-Nodes (3): apply(), load(), test_day_mode()
 
 ### Community 50 - "market.py"
 Cohesion: 0.24
 Nodes (7): context(), headwind(), main(), theme_of(), item(), test_headwind_blocks_trades_against_a_strong_market(), test_themes_and_why()
 
 ### Community 51 - "re"
-Cohesion: 0.19
-Nodes (8): commentary(), is_meet(), items_from_rows(), append(), load(), _negated(), path_for(), sectors_in()
+Cohesion: 0.20
+Nodes (8): commentary(), is_meet(), items_from_rows(), load(), _negated(), path_for(), sectors_in(), test_intel_new_words_and_damaged_log()
 
-### Community 52 - "orderflow.py"
-Cohesion: 0.27
-Nodes (7): features(), latest(), signals(), days(), test_latest_needs_history(), test_spring_and_upthrust(), test_squeeze_breakout_with_volume_gives_a_call()
+### Community 52 - "usual_curve"
+Cohesion: 0.18
+Nodes (8): check_multiweek_context(), level_note(), main(), save_snapshot(), scan(), usual_curve(), test_level_note_reports_room_and_breakout(), test_pure_spurt_multiweek_context()
 
 ### Community 53 - "expectations.py"
 Cohesion: 0.20
@@ -428,13 +444,13 @@ Nodes (6): analysts(), day_move(), for_symbol(), hype(), run_up(), test_analysts
 Cohesion: 0.15
 Nodes (13): 1. Custom DuckDB (User-Created), 2. OpenAlgo Historify DuckDB, Auto-Detection: Which Format?, Best Practices, DuckDB Direct Data Loading, DuckDB Pivot for Wide Format (Memory Efficient), Indicators and Signal Utilities Without openalgo.ta, load_from_custom_duckdb (+5 more)
 
-### Community 55 - "time"
-Cohesion: 0.21
-Nodes (8): calls_last_hour(), record_call(), _usage(), build_history(), one(), results_filings(), test_call_budget_counts_rolling_hour(), test_details_calls_cost_one_per_instrument()
+### Community 55 - "newsfeed.py"
+Cohesion: 0.22
+Nodes (5): fetch_all(), _fetch_one(), parse(), _when(), test_rss_parsing()
 
 ### Community 56 - "chain"
-Cohesion: 0.12
-Nodes (15): affordable_option(), _fails(), lot_cost(), needs_next_month(), pick_option(), _chain(), test_budget_steps_out_of_the_money_until_one_lot_fits(), test_quotes_are_sent_in_batches_of_ten() (+7 more)
+Cohesion: 0.13
+Nodes (16): affordable_option(), _fails(), lot_cost(), needs_next_month(), pick_option(), implied_volatility(), _chain(), test_budget_steps_out_of_the_money_until_one_lot_fits() (+8 more)
 
 ### Community 57 - "Equity Research Earnings Update"
 Cohesion: 0.18
@@ -461,20 +477,20 @@ Cohesion: 0.08
 Nodes (25): enabled, late_burst_x, late_until, market_flat_band_pct, market_min_pct, max_delta, max_spread_pct, min_delta (+17 more)
 
 ### Community 63 - "valuation.py"
-Cohesion: 0.19
-Nodes (9): main(), go(), assess(), fetch(), main(), _metric(), path_for(), snapshot() (+1 more)
+Cohesion: 0.22
+Nodes (7): assess(), fetch(), main(), _metric(), path_for(), snapshot(), test_valuation_against_sector_peers()
 
 ### Community 64 - "test_events.py"
-Cohesion: 0.20
-Nodes (13): classify(), material(), contract_expiry(), filing(), test_board_meeting_outcome_is_opened_for_results(), test_classify_real_filing_shapes(), test_contract_expiry_from_name(), test_material_filters_universe_and_date() (+5 more)
+Cohesion: 0.24
+Nodes (11): classify(), material(), contract_expiry(), filing(), test_board_meeting_outcome_is_opened_for_results(), test_classify_real_filing_shapes(), test_contract_expiry_from_name(), test_material_filters_universe_and_date() (+3 more)
 
 ### Community 65 - "Evening review: 2026-11-14"
 Cohesion: 0.20
 Nodes (9): AI context check on spurt entries (observe only): 2 closed trades, AI helper's views (observe only): 51 closed trades, All paper trades so far, Evening review: 2026-11-14, Ready to change the strategy?, Rules only vs Claude-confirmed, Team scoreboard: movers vs news+spurt vs preopen, Today (+1 more)
 
 ### Community 66 - "preopen.py"
-Cohesion: 0.30
-Nodes (9): fetch_preopen(), fetch_spurts(), _get(), main(), parse_preopen(), parse_spurts(), path(), save() (+1 more)
+Cohesion: 0.23
+Nodes (11): _download(), get_nse_session(), fetch_preopen(), fetch_spurts(), _get(), main(), parse_preopen(), parse_spurts() (+3 more)
 
 ### Community 67 - "Trading desk handover (updated 4 Nov 2026, end of the second long conversation)"
 Cohesion: 0.18
@@ -496,9 +512,9 @@ Nodes (10): Available Subplots, Best Practices, Candlestick Chart (Plotly with C
 Cohesion: 0.18
 Nodes (10): 1. from_signals (Signal-Based) - Most Common, 2. from_orders (Order-Based) - Direct Orders, 3. from_order_func (Custom Callback) - Most Powerful, 4. from_holding (Buy-and-Hold Benchmark), Direction, Key Parameters Reference, Random Signal Baseline, Save/Load Portfolio (+2 more)
 
-### Community 72 - "change_pct"
-Cohesion: 0.22
-Nodes (6): change_pct(), _extract_table(), _numbers(), plausible(), _row(), test_change_pct_reads_loss_to_profit_as_a_rise()
+### Community 72 - "history_frame"
+Cohesion: 0.21
+Nodes (8): daily_history(), history_frame(), go(), one(), parse_quote(), test_history_frame_empty(), test_history_frame_orders_and_renames(), test_parse_quote_reads_common_field_names()
 
 ### Community 73 - "figures_from_text"
 Cohesion: 0.33
@@ -517,7 +533,7 @@ Cohesion: 0.20
 Nodes (10): Best Practices, Delivery Equity (CNC), Detailed Breakdown Formulas, F&O Futures, F&O Options, Fee Summary by Segment, Indian Market Transaction Costs, Intraday Equity (+2 more)
 
 ### Community 77 - "Robustness Testing"
-Cohesion: 0.22
+Cohesion: 0.20
 Nodes (9): 1. Monte Carlo Simulation (Trade Shuffling), 2. Noise Test (Price Perturbation), 3. Parameter Sensitivity (Neighbor Test), 4. Entry/Exit Delay Test, 5. Cross-Symbol Validation, 6. Time Period Stability, Best Practices, Robustness Scorecard (+1 more)
 
 ### Community 78 - "Evening review: 2026-10-27"
@@ -529,16 +545,16 @@ Cohesion: 0.20
 Nodes (9): AI helper's views (observe only): 17 closed trades, All paper trades so far, Evening review: 2026-11-03, Movers setups stopped by the News Guard: 1, Ready to change the strategy?, Rules only vs Claude-confirmed, Team scoreboard: movers vs news vs spurt, Today (+1 more)
 
 ### Community 80 - "Strategy changes"
-Cohesion: 0.09
-Nodes (22): 10 Nov 2026: one desk (user: "rewire it, one strong team is enough"), 12 Nov: spurt candidates retried after a data error, 14 Nov 2026 (evening): no time limits, overnight gauge, commodity guard on news+spurt (user), 14 Nov 2026: News + Spurt merged into one team (user), 14 Nov 2026: spurt team trades big late bursts (user's idea), 15 Nov 2026: ADR team (user's regime plan), fifth book, 16 Nov 2026: ADR team also trades at the open (user's question), 2026-10-31: Probability Analyzer added in observe mode (user's request) (+14 more)
+Cohesion: 0.08
+Nodes (25): 10 Nov 2026: one desk (user: "rewire it, one strong team is enough"), 12 Nov: spurt candidates retried after a data error, 14 Nov 2026 (evening): no time limits, overnight gauge, commodity guard on news+spurt (user), 14 Nov 2026: News + Spurt merged into one team (user), 14 Nov 2026: spurt team trades big late bursts (user's idea), 15 Nov 2026: ADR team (user's regime plan), fifth book, 16 Nov 2026: ADR team also trades at the open (user's question), 16 Nov 2026: news trades skip a stock that has already turned against the news (EICHERMOT lesson) (+17 more)
 
 ### Community 81 - "test_expectations.py"
-Cohesion: 0.20
-Nodes (9): assess(), as_extra(), closes(), test_assess_labels(), test_forecast_event_carries_priced_in(), test_hype_counts_news_before_the_event(), test_run_up_measures_against_nifty_before_the_event(), test_valuation_extra_observe_and_score() (+1 more)
+Cohesion: 0.22
+Nodes (8): assess(), as_extra(), closes(), test_assess_labels(), test_hype_counts_news_before_the_event(), test_run_up_measures_against_nifty_before_the_event(), test_valuation_extra_observe_and_score(), test_valuation_feeds_priced_in()
 
 ### Community 82 - "json"
-Cohesion: 0.43
-Nodes (3): available(), _parse(), review()
+Cohesion: 0.23
+Nodes (8): available(), _parse(), review(), calls_last_hour(), record_call(), _usage(), test_call_budget_counts_rolling_hour(), test_details_calls_cost_one_per_instrument()
 
 ### Community 83 - "Workflow"
 Cohesion: 0.22
@@ -637,7 +653,7 @@ Cohesion: 0.29
 Nodes (6): Best Practices, CSV Data Loading & Resampling, Load from DuckDB and Resample, Load Minute-Level CSV Data, OpenAlgo Historify DuckDB Format, Resample to Different Timeframes
 
 ### Community 107 - "Stop Loss & Take Profit"
-Cohesion: 0.33
+Cohesion: 0.29
 Nodes (6): Best Practices, Combined: Trailing Stop + Take Profit, Fixed Stop Loss + Take Profit, Stop Loss & Take Profit, Stop Loss Variations Summary, Trailing Stop Loss
 
 ### Community 108 - "VectorBT Backtesting Expert Skill"
@@ -664,9 +680,9 @@ Nodes (7): shock, breadth_share, extreme_pct, move_pct, news_count, news_hours, 
 Cohesion: 0.20
 Nodes (9): AI context check on spurt entries (observe only): 2 closed trades, AI helper's views (observe only): 51 closed trades, All paper trades so far, Evening review: 2026-11-11, Ready to change the strategy?, Rules only vs Claude-confirmed, Team scoreboard: movers vs news vs spurt vs preopen, Today (+1 more)
 
-### Community 114 - "early_signals"
-Cohesion: 0.33
-Nodes (4): early_signals(), _candles(), test_early_signals_need_volume_and_the_order_book(), test_chart_reader_climax_absorption_and_momentum_fade()
+### Community 114 - "intraday"
+Cohesion: 0.16
+Nodes (10): early_signals(), intraday(), test_chart_reader_mirrors_for_losers(), test_chart_reader_sees_fading_gainer(), _candles(), test_early_signals_need_volume_and_the_order_book(), candles(), candles() (+2 more)
 
 ### Community 115 - "Critical Requirements"
 Cohesion: 0.33
@@ -760,9 +776,9 @@ Nodes (3): Arguments, Example Usage, Instructions
 Cohesion: 0.50
 Nodes (4): commodities, move_pct, points, shock_pct
 
-### Community 138 - "load_config"
-Cohesion: 0.14
-Nodes (15): load_config(), main(), report(), main(), change_at(), load(), load_macro(), main() (+7 more)
+### Community 138 - "squeeze.py"
+Cohesion: 0.23
+Nodes (6): fetch(), live_signal(), main(), save(), usual_range(), why()
 
 ### Community 139 - "valuation"
 Cohesion: 0.50
@@ -773,24 +789,24 @@ Cohesion: 0.20
 Nodes (9): AI context check on spurt entries (observe only): 2 closed trades, AI helper's views (observe only): 51 closed trades, All paper trades so far, Evening review: 2026-11-12, Ready to change the strategy?, Rules only vs Claude-confirmed, Team scoreboard: movers vs news vs spurt vs preopen, Today (+1 more)
 
 ### Community 142 - "test_spurt.py"
-Cohesion: 0.11
-Nodes (14): analyzing-regulatory-event-impacts (CaseMark/skills, Apache-2.0), Third-party skills, days_of_candles(), gap_setup(), Gapped, Live, setup(), test_gap_recovery_buys_the_bounce_on_the_preopen_team() (+6 more)
+Cohesion: 0.09
+Nodes (18): check_market_alignment(), check_option_limits(), analyzing-regulatory-event-impacts (CaseMark/skills, Apache-2.0), Third-party skills, gap_setup(), Gapped, Live, setup() (+10 more)
 
 ### Community 149 - "Evening review: 2026-11-13"
 Cohesion: 0.20
 Nodes (9): AI context check on spurt entries (observe only): 2 closed trades, AI helper's views (observe only): 51 closed trades, All paper trades so far, Evening review: 2026-11-13, Ready to change the strategy?, Rules only vs Claude-confirmed, Team scoreboard: movers vs news vs spurt vs preopen, Today (+1 more)
 
 ### Community 150 - "spurt.py"
-Cohesion: 0.05
-Nodes (33): bar_burst(), check_fo_activity(), check_institutional_timing(), check_market_alignment(), check_multiweek_context(), check_news_quarantine(), check_option_limits(), check_preopen_profile() (+25 more)
+Cohesion: 0.17
+Nodes (8): bar_burst(), check_institutional_timing(), check_news_quarantine(), late_burst_ok(), usual_now(), test_bar_burst_and_late_window(), test_news_quarantine_ignores_routine_news(), test_pure_spurt_news_quarantine()
 
 ### Community 151 - "Evening review: 2026-11-05"
 Cohesion: 0.22
 Nodes (8): AI helper's views (observe only): 28 closed trades, All paper trades so far, Evening review: 2026-11-05, Ready to change the strategy?, Rules only vs Claude-confirmed, Team scoreboard: movers vs news vs spurt vs preopen, Today, Where it wins and loses
 
-### Community 152 - "numpy"
-Cohesion: 0.23
-Nodes (7): bs_price(), _ncdf(), part_a(), bootstrap_sharpe(), main(), perf(), test_ncdf_matches_math_erf()
+### Community 152 - "sys"
+Cohesion: 0.43
+Nodes (3): bootstrap_sharpe(), main(), perf()
 
 ### Community 153 - "commodities.py"
 Cohesion: 0.40
@@ -804,53 +820,105 @@ Nodes (4): Best Practices, Compare Long-Only vs Short-Only vs Both, Long + Short
 Cohesion: 0.50
 Nodes (4): stretch, enabled, targets, week_pct
 
-### Community 156 - "prices"
-Cohesion: 0.29
-Nodes (4): expected_market_gap(), market_gap_model(), prices(), results_reaction()
+### Community 156 - "Trading desk"
+Cohesion: 0.15
+Nodes (12): Backtesting, Evening review, Morning brief (about 09:00-09:15 IST, before starting the watcher), On a COMMODITY line (a commodity moved 3% or more today), On a FORECAST line (the Data Analyzer's outlook for a stock turned strong), On a NEWS line (a material NSE filing: rating, order, deal, regulatory, management, guidance), On a POLICY line (a regulator or the government changed the rules), On a SHOCK line (a market-wide rally or crash on big news) (+4 more)
 
-### Community 157 - "Futures Backtesting (Lot Size)"
-Cohesion: 0.67
-Nodes (3): Futures Backtesting (Lot Size), Futures Fee Structure, Index Futures & Options Lot Sizes (SEBI Revised, Effective 31 Dec 2025)
-
-### Community 160 - "check_expectations"
+### Community 157 - "day_signals"
 Cohesion: 0.33
-Nodes (3): check_expectations(), go(), leaf_errors()
+Nodes (9): day_signals(), day(), test_box_too_wide_for_usual_range(), test_down_signal_mirror(), test_live_signal_only_on_last_closed_candle(), test_no_breakout_no_signal(), test_split_vote_no_signal(), test_up_signal_on_breakout() (+1 more)
+
+### Community 160 - "RateLimited"
+Cohesion: 0.20
+Nodes (5): _parse(), RateLimited, test_leaf_errors_unwraps_groups(), test_rate_limit_reply_raises(), leaf_errors()
+
+### Community 164 - "squeeze"
+Cohesion: 0.17
+Nodes (12): auto_trade, capital, enabled, from, max_open_trades, n, targets, tight (+4 more)
 
 ### Community 167 - "mover_forecast.py"
-Cohesion: 0.24
-Nodes (7): classify_regime(), forecast(), main(), preopen_gaps(), results_move(), results_since_last_close(), typical_move()
+Cohesion: 0.30
+Nodes (6): forecast(), main(), preopen_gaps(), results_move(), results_since_last_close(), typical_move()
 
 ### Community 168 - "adr"
 Cohesion: 0.20
 Nodes (10): auto_trade, capital, enabled, from, max_open_trades, open_from, open_until, targets (+2 more)
 
-### Community 169 - "backtest/SKILL.md"
-Cohesion: 0.33
-Nodes (5): Arguments, Available Strategies, Benchmark Rules, Example Usage, Instructions
+### Community 169 - "Evening review: 2026-11-19"
+Cohesion: 0.17
+Nodes (11): AI context check on spurt entries (observe only): 2 closed trades, AI helper's views (observe only): 51 closed trades, All paper trades so far, Candle exit (observe only): fired on 10 of 96 closed trades, Evening review: 2026-11-19, Movers setups stopped by the News Guard: 1, Ready to change the strategy?, Rules only vs Claude-confirmed (+3 more)
+
+### Community 170 - "is_trading_day"
+Cohesion: 0.27
+Nodes (7): holiday_name(), is_trading_day(), previous_trading_day(), next_session(), previous_session(), test_holidays_and_expiry(), _next_session()
+
+### Community 171 - "Evening review: 2026-11-18"
+Cohesion: 0.18
+Nodes (10): AI context check on spurt entries (observe only): 2 closed trades, AI helper's views (observe only): 51 closed trades, All paper trades so far, Candle exit (observe only): fired on 5 of 88 closed trades, Evening review: 2026-11-18, Ready to change the strategy?, Rules only vs Claude-confirmed, Team scoreboard: movers vs news+spurt vs preopen vs adr (+2 more)
 
 ### Community 172 - "adjust_forecast"
 Cohesion: 0.33
 Nodes (4): adjust_forecast(), reaction(), On a RESULT line (a company in our list just filed results on NSE), test_reaction_and_forecast_adjustment()
 
+### Community 174 - "Evening review: 2026-11-20"
+Cohesion: 0.18
+Nodes (10): AI context check on spurt entries (observe only): 2 closed trades, AI helper's views (observe only): 51 closed trades, All paper trades so far, Candle exit (observe only): fired on 13 of 101 closed trades, Evening review: 2026-11-20, Ready to change the strategy?, Rules only vs Claude-confirmed, Team scoreboard: movers vs news+spurt vs preopen vs adr (+2 more)
+
+### Community 176 - "Evening review: 2026-11-16"
+Cohesion: 0.20
+Nodes (9): AI context check on spurt entries (observe only): 2 closed trades, AI helper's views (observe only): 51 closed trades, All paper trades so far, Evening review: 2026-11-16, Ready to change the strategy?, Rules only vs Claude-confirmed, Team scoreboard: movers vs news+spurt vs preopen vs adr, Today (+1 more)
+
+### Community 177 - "Evening review: 2026-11-17"
+Cohesion: 0.20
+Nodes (9): AI context check on spurt entries (observe only): 2 closed trades, AI helper's views (observe only): 51 closed trades, All paper trades so far, Evening review: 2026-11-17, Ready to change the strategy?, Rules only vs Claude-confirmed, Team scoreboard: movers vs news+spurt vs preopen vs adr, Today (+1 more)
+
+### Community 179 - "results_summary"
+Cohesion: 0.25
+Nodes (6): fetch_feed(), highlights(), main(), results_summary(), score_results(), test_results_figures_and_read()
+
+### Community 180 - "parse_nse"
+Cohesion: 0.25
+Nodes (5): live_signal(), _num(), parse_nse(), test_nse_live_page_and_live_signal(), test_parse_nse_reads_numbers_with_units()
+
+### Community 182 - "nifty_gap_fallback"
+Cohesion: 0.40
+Nodes (4): nifty_gap_fallback(), _f(), live_index(), nifty_move()
+
+### Community 183 - "overnight_context"
+Cohesion: 0.40
+Nodes (4): overnight_context(), move(), series(), save()
+
+### Community 184 - "prepare"
+Cohesion: 0.40
+Nodes (4): prepare(), days_of_candles(), test_quiet_spurt_fires_on_heavy_volume_and_a_small_move(), test_quiet_spurt_needs_the_volume_and_a_small_move()
+
+### Community 185 - "check_fo_activity"
+Cohesion: 0.40
+Nodes (3): check_fo_activity(), check_preopen_profile(), test_pure_spurt_preopen_and_fo_activity()
+
+### Community 187 - "chart_exit"
+Cohesion: 0.67
+Nodes (3): chart_exit, enabled, mode
+
 ## Knowledge Gaps
 - **1 isolated node(s):** `python`
-  These have ≤1 connection - possible missing edges or undocumented components. (Counts symbols only; 1345 node(s) total have ≤1 connection when file, concept and rationale nodes are included.)
-- **20 thin communities (<3 nodes) omitted from report** — run `graphify query` to explore isolated nodes.
+  These have ≤1 connection - possible missing edges or undocumented components. (Counts symbols only; 1435 node(s) total have ≤1 connection when file, concept and rationale nodes are included.)
+- **21 thin communities (<3 nodes) omitted from report** — run `graphify query` to explore isolated nodes.
 
 ## Suggested Questions
 _Questions this graph is uniquely positioned to answer:_
 
-- **Why does `load_config()` connect `load_config` to `probability.py`, `announcements.py`, `activity.py`, `load_config`, `watcher.py`, `ai_helper.py`, `news_team`, `pandas`, `test_gapfollow.py`, `agents/__init__.py`, `test_spurt.py`, `reaction.py`, `review.py`, `spurt.py`, `plan`, `test_intel.py`, `overnight.py`, `test_teams.py`, `analyzer.py`, `candles.py`, `FakeIndMoney`, `mover_forecast.py`, `indicators.py`, `expectations.py`, `valuation.py`, `test_events.py`, `preopen.py`?**
-  _High betweenness centrality (0.026) - this node is a cross-community bridge._
+- **Why does `load_config()` connect `load_config` to `numpy`, `announcements.py`, `activity.py`, `watcher.py`, `ai_helper.py`, `news_team`, `pandas`, `reset_daily`, `scan`, `plan`, `test_spurt.py`, `reaction.py`, `review.py`, `spurt.py`, `plan`, `test_intel.py`, `overnight.py`, `test_teams.py`, `analyzer.py`, `candles.py`, `FakeIndMoney`, `mover_forecast.py`, `pathlib`, `results_summary`, `usual_curve`, `expectations.py`, `valuation.py`, `test_events.py`, `preopen.py`?**
+  _High betweenness centrality (0.029) - this node is a cross-community bridge._
+- **Are the 6 inferred relationships involving `scan()` (e.g. with `4.1 Movers team, step by step (`watcher.scan`)` and `.candles()`) actually correct?**
+  _`scan()` has 6 INFERRED edges - model-reasoned connections that need verification._
 - **What connects `python` to the rest of the system?**
   _1 weakly-connected nodes found - possible documentation gaps or missing edges._
+- **Should `numpy` be split into smaller, more focused modules?**
+  _Cohesion score 0.08215488215488216 - nodes in this community are weakly interconnected._
+- **Why does `FakeIndMoney` connect `FakeIndMoney` to `chain`, `intraday`, `cycle`, `test_teams.py`?**
+  _High betweenness centrality (0.013) - this node is a cross-community bridge._
 - **Should `announcements.py` be split into smaller, more focused modules?**
-  _Cohesion score 0.11692307692307692 - nodes in this community are weakly interconnected._
-- **Why does `scan()` connect `scan` to `load_config`, `watcher.py`, `news_team`, `test_spurt.py`, `plan`, `holidays.py`, `commodities.py`, `analyzer.py`, `candles.py`, `sector_of`, `FakeIndMoney`, `as_extra`, `indicators.py`, `check`, `pathlib`, `daymode.py`, `Trading desk handover (updated 4 Nov 2026, end of the second long conversation)`, `shock.py`, `test_expectations.py`?**
-  _High betweenness centrality (0.024) - this node is a cross-community bridge._
-- **Should `load_config` be split into smaller, more focused modules?**
-  _Cohesion score 0.12858464384828863 - nodes in this community are weakly interconnected._
-- **Why does `news_team()` connect `news_team` to `activity.py`, `load_config`, `watcher.py`, `mover_forecast.py`, `test_gapfollow.py`, `scan`, `indicators.py`, `agents/__init__.py`, `pathlib`, `daymode.py`, `market.py`, `early_signals`, `test_teams.py`, `analyzer.py`?**
-  _High betweenness centrality (0.008) - this node is a cross-community bridge._
-- **Should `watcher.py` be split into smaller, more focused modules?**
-  _Cohesion score 0.0841813135985199 - nodes in this community are weakly interconnected._
+  _Cohesion score 0.12857142857142856 - nodes in this community are weakly interconnected._
+- **Why does `news_team()` connect `news_team` to `activity.py`, `Trading Desk: Complete Guide (27 Oct 2026)`, `watcher.py`, `load_config`, `mover_forecast.py`, `pandas`, `reset_daily`, `scan`, `read_chart`, `plan`, `market.py`, `intraday`, `test_teams.py`?**
+  _High betweenness centrality (0.012) - this node is a cross-community bridge._

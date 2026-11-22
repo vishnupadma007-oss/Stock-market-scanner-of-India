@@ -24,6 +24,7 @@ from agents.config import load_config
 from agents.costs import exit_for_net_target, round_trip_charges
 from agents.indicators import hist_vol
 from agents.options import suggest_contract
+from agents.squeeze import day_signals
 from backtest_reversal import IST, option_mid
 
 CAPITAL = 25000
@@ -48,52 +49,6 @@ def load(symbols):
     return out
 
 
-def signals(bars: pd.DataFrame, n: int, tight: float, vote: int, entry: str, filt: bool, use_vote: bool = True):
-    """Yield (bar index, direction +1/-1) for one stock-day. bars: today's 5-min bars, with 'typ' (usual bar range)."""
-    o, h, l, c, v = (bars[k].to_numpy(float) for k in ("Open", "High", "Low", "Close", "Volume"))
-    tp = (h + l + c) / 3
-    vwap = np.cumsum(tp * v) / np.maximum(np.cumsum(v), 1)
-    e9 = pd.Series(c).ewm(span=9, adjust=False).mean().to_numpy()
-    e21 = pd.Series(c).ewm(span=21, adjust=False).mean().to_numpy()
-    hm = bars.index.strftime("%H:%M")
-    typ = float(bars["typ"].iloc[0])
-    k = n
-    while k < len(bars):
-        lo_i = k - n
-        box_hi, box_lo = h[lo_i:k].max(), l[lo_i:k].min()
-        if box_hi - box_lo > tight * typ * n ** 0.5:  # quiet patch: range small for its length
-            k += 1; continue
-        green = c[lo_i:k] > o[lo_i:k]; red = c[lo_i:k] < o[lo_i:k]
-        g, r = int(green.sum()), int(red.sum())
-        vg, vr = v[lo_i:k][green].sum(), v[lo_i:k][red].sum()
-        if use_vote:
-            if g - r >= vote and vg > vr:
-                d = 1
-            elif r - g >= vote and vr > vg:
-                d = -1
-            else:
-                k += 1; continue
-        else:
-            d = 0  # baseline: take whichever side breaks
-        avg_v = v[lo_i:k].mean()
-        j = None
-        if entry == "box":
-            j, dd = k - 1, d
-        else:
-            for m in range(k, min(k + 6, len(bars))):
-                up, dn = c[m] > box_hi, c[m] < box_lo
-                if (up and d >= 0) or (dn and d <= 0):
-                    if v[m] >= 1.2 * avg_v:
-                        j, dd = m, (1 if up else -1)
-                    break
-        if j is None or dd == 0 or not ("09:45" <= hm[j] <= "14:30"):
-            k += 1; continue
-        if filt and ((c[j] - vwap[j]) * dd <= 0 or (e9[j] - e21[j]) * dd <= 0):
-            k += 1; continue
-        yield j, dd
-        return  # one trade per stock per day
-
-
 def run(i5, dly, symbols, n=6, tight=1.0, vote=2, entry="break", filt=True, tgt=10.0, use_vote=True, cfg=None):
     cfg = cfg or load_config(); half = cfg["assumed_spread_pct"] / 200
     out = []
@@ -111,8 +66,8 @@ def run(i5, dly, symbols, n=6, tight=1.0, vote=2, entry="break", filt=True, tgt=
             if len(bars) < 40:
                 continue
             past = rng[(i.index.date < day) & (i.index.date >= days[max(days.index(day) - 20, 0)])]
-            bars["typ"] = float(past.median()) if len(past) else float(rng.median())
-            for j, dd in signals(bars, n, tight, vote, entry, filt, use_vote):
+            typ = float(past.median()) if len(past) else float(rng.median())
+            for j, dd, _ in day_signals(bars, typ, n, tight, vote, entry, filt, use_vote):
                 t = bars.index[j]; spot = float(bars["Close"].iloc[j]); entry_t = t + pd.Timedelta(minutes=5)
                 hv = hist_vol(d[d.index.date < day]["Close"])
                 op = suggest_contract(s, spot, "loser" if dd > 0 else "gainer", hv, None, cfg, day)

@@ -635,3 +635,14 @@ waiting 30 min before it may fire: no better. Live paper trades (82, Oct 21 - No
 entry, same pricing for both): fired on 37 (30 of the 40 losers, 7 of the 43 winners); +Rs 30.8k -> +Rs 62.2k, but by half
 -Rs 3.9k -> -Rs 6.8k and +Rs 34.7k -> +Rs 69.0k; movers worse (+3.3k -> -1.0k). Fails the both-halves rule and the larger
 backtest, so it runs in observe mode: the watcher logs the real bid when it fires (journal/chart_exit.csv) and review.py scores it.
+
+## 22 Nov 2026: Squeeze team (user's idea): quiet patch + candle vote + breakout (`backtest_squeeze.py`)
+All 218 F&O stocks, Yahoo 5-minute bars, 60 days (40 test days), ATM option at Black-Scholes, Rs 25,000 a trade, no
+stop-loss, 15:20 square-off, one trade per stock a day. Quiet patch = last n candles span <= tight x sqrt(n) x the stock's
+usual 5-min range; vote = greens - reds (and more volume on the winning colour). 48 versions at a 10% target + 6 baselines
+(breakouts with no candle count). Almost all lose heavily (e.g. 30-min box, lead 2, enter at once: 7,714 trades, -Rs 22.9 lakh);
+the stock went the voted way 47-55% of the time (baselines 50-51%), so the candle count adds a little, not much.
+Only strict versions came near even: hour-long tight box (n 12, tight 0.5), lead 4+, breakout candle on 1.2x volume, VWAP
+and 9/21-EMA filters. With a 15% target: 280 trades (7.6 a day), 19% hit, 55% right way, +Rs 55.1k (halves +6.5k / +48.6k);
+45-min box (n 9, lead 3): 562 trades, +Rs 35.3k (+28.1k / +7.2k). 5% target loses (-1.3k, -68.4k); 25% similar to 15%.
+Caveat: picked from ~60 tries, thin edge (+0.8% a trade), so the team runs on paper and is judged after 30+ live trades.

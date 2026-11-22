@@ -75,6 +75,18 @@ teams:
     from: "10:15"          # the fades
     until: "10:45"
     targets: [10.0]
+  squeeze:                 # user, 22 Nov: fifth team (agents/squeeze.py). Every F&O stock (218) on NSE's live page each minute: a
+    capital: 100000        # quiet hour on the 5-minute chart, clearly more green than red candles (or red than green) with the
+    max_open_trades: 4     # volume agreeing, then a breakout candle on 1.2x volume, the right side of VWAP and the 9/21-EMA ->
+    auto_trade: true       # buy CALL (up) / PUT (down). 15% net target, no stop-loss, 15:20 square-off. backtest_squeeze.py
+    enabled: true          # (60 days x 218 stocks): 280 trades, 19% hit, 55% went the right way, +Rs 55k (halves +6.5k / +48.6k);
+    n: 12                  # looser versions all lost. Paper only, judged after 30+ trades like the other teams.
+    tight: 0.5
+    vote: 4
+    volume_x: 1.2
+    from: "09:45"
+    until: "14:30"
+    targets: [15.0]
 max_capital_per_trade: 1.0   # share of available money one trade may use (1.0 = all of it)
 max_trades_per_day: 50     # effectively no cap: trade every setup that passes the agents
 commodity_guard: true      # movers: skip a reversal when a commodity the stock depends on is moving sharply against it (Oil India case)

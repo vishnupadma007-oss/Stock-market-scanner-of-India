@@ -32,7 +32,8 @@ from zoneinfo import ZoneInfo
 
 from agents import (activity, adr_team, analyzer, newsspurt, nse_mcp, overnight, announcements, ai_helper, candles, carry, probability, trade_news, commodities, concalls, daymode, expectations,
                     gapfollow, holidays, intel, macro, news, news_guard, newsfeed, policy, preopen,
-                    psychology, reaction, shock, spurt, valuation)
+                    psychology, reaction, shock, spurt, squeeze, valuation)
+from agents import data
 from agents.chart_reader import read_chart
 from agents.config import load_config
 from agents.costs import round_trip_charges
@@ -546,6 +547,147 @@ def spurt_track(cfg: dict) -> None:
             except Exception as e:  # NSE or Yahoo hiccup: try again next minute
                 emit("ERROR", {"error": f"spurt scan: {type(e).__name__}: {e}"})
         clock.sleep(max(5.0, c.get("poll_seconds", 60) - (clock.time() - started)))
+
+
+def squeeze_track(cfg: dict) -> None:
+    """Squeeze team scanner (user, 22 Nov; agents/squeeze.py) on its own thread: NSE's stocks-traded page once a minute
+    covers every F&O stock; the snapshots become 5-minute candles, and as each candle closes every stock is checked for
+    a quiet patch the candles voted on and then broke. Hits go to `_daily["squeeze_pending"]` and wake the cycle, which
+    confirms each on INDmoney's real candles before buying."""
+    c = {**squeeze.DEFAULTS, **team_cfg(cfg, "squeeze")}
+    state: dict = {}
+    while True:
+        started = clock.time()
+        now = datetime.now(IST)
+        if c.get("enabled", True) and market_open(now):
+            try:
+                if state.get("day") != now.date():
+                    syms = sorted(s for s in data.nse_lot_sizes() if s not in SQUEEZE_SKIP)
+                    state = {"day": now.date(), "syms": syms, "typ": None, "bars": squeeze.SnapshotBars(), "bucket": None}
+                if state["typ"] is None:  # once a day: the usual 5-minute candle range (Yahoo, 25 sessions)
+                    frames = spurt.fetch(state["syms"], 25)
+                    state["typ"] = {s: squeeze.usual_range(f, now.date(), c["usual_days"]) for s, f in frames.items()}
+                try:
+                    rows = spurt.fetch_nse(state["syms"])
+                except Exception:
+                    rows = {}
+                if len(rows) < len(state["syms"]) // 2:
+                    try:
+                        rows = {**nse_mcp.live_rows(state["syms"]), **rows}
+                    except Exception as e:
+                        emit("ERROR", {"error": f"squeeze scan: NSE MCP backup: {type(e).__name__}: {e}"})
+                for sym, r in rows.items():
+                    state["bars"].add(sym, now, r.get("price"), r.get("volume"))
+                bucket = (now.hour * 60 + now.minute) // 5
+                if bucket != state["bucket"] and _t(c["from"]) <= now.time() <= (datetime.combine(now.date(), _t(c["until"])) + timedelta(minutes=5)).time():
+                    state["bucket"] = bucket  # a 5-minute candle just closed: check every stock once
+                    with _daily_lock:
+                        pending = _daily.setdefault("squeeze_pending", {})
+                        seen = _daily.setdefault("squeeze_seen", set())
+                    found = False
+                    for sym in state["syms"]:
+                        if sym in seen:
+                            continue
+                        sig = squeeze.live_signal(state["bars"].bars(sym, now), (state["typ"] or {}).get(sym), c)
+                        if sig:
+                            with _daily_lock:
+                                seen.add(sym)
+                                pending[sym] = {**sig, "found": now, "usual_range": state["typ"].get(sym)}
+                            found = True
+                    if found:
+                        news_pending.set()
+            except Exception as e:  # NSE or Yahoo hiccup: try again next minute
+                emit("ERROR", {"error": f"squeeze scan: {type(e).__name__}: {e}"})
+        clock.sleep(max(5.0, c.get("poll_seconds", 60) - (clock.time() - started)))
+
+
+SQUEEZE_SKIP = {"NIFTY", "BANKNIFTY", "FINNIFTY", "MIDCPNIFTY", "NIFTYNXT50", "NIFTYFPI"}
+
+
+async def squeeze_entries(im: IndMoney, trades: list[dict], now: datetime, cfg: dict) -> bool:
+    """Squeeze team: confirm each pending quiet-patch breakout on INDmoney's real 5-minute candles, then buy the option
+    the candles voted for (CALL up, PUT down). 15% net target, no stop-loss, square-off 15:20. True on a trade."""
+    a = {**squeeze.DEFAULTS, **team_cfg(cfg, "squeeze")}
+    with _daily_lock:
+        pending = _daily.get("squeeze_pending") or {}
+        items = list(pending.items()); pending.clear()
+    if not a["enabled"] or not items:
+        return False
+    if daymode.load(now.date())["mode"] == "no_trade":
+        return False
+    today = now.date().isoformat()
+    if "results" not in _daily:
+        _daily["results"] = news.results_calendar()
+    busy = {t["symbol"] for t in trades if t["status"] == "OPEN"} | \
+        {t["symbol"] for t in trades if t["date"] == today and team_of(t) == "squeeze"}
+    opened = False
+    for sym, sig in items:
+        idea = {"direction": sig["direction"], "confidence": "", "source": "squeeze"}
+        entry = {"time": now.strftime("%H:%M"), "symbol": sym, "snapshot_signal": sig}
+        try:
+            if (now - sig["found"]).total_seconds() > 300:
+                entry["result"] = "stale (over 5 minutes old)"; continue
+            if sym in busy:
+                entry["result"] = "already traded / open"; continue
+            if today in {str(x) for x in (_daily.get("results") or {}).get(sym, [])}:
+                entry["result"] = "results due today"; log_skip(now, sym, idea, 0.0, "squeeze: results due today"); continue
+            if not team_can_trade(trades, cfg, "squeeze"):
+                entry["result"] = "team full or out of money"; log_skip(now, sym, idea, 0.0, "squeeze: full or out of money")
+                continue
+            if sym not in _stock_keys:
+                _stock_keys[sym] = await expectations.stock_key(im, sym)
+            intraday = await im.candles(_stock_keys[sym], "5minute", "7d")
+            done = intraday
+            if not done.empty and (now - done.index[-1].to_pydatetime()).total_seconds() < 300:
+                done = done.iloc[:-1]  # the last candle is still forming
+            todays = done[done.index.date == now.date()]
+            real = squeeze.live_signal(todays, sig.get("usual_range"), a, last_n=2)
+            entry["indmoney_signal"] = real
+            if not real or real["direction"] != sig["direction"]:
+                entry["result"] = "not confirmed on INDmoney candles"
+                log_skip(now, sym, idea, 0.0, "squeeze: not confirmed on INDmoney candles"); continue
+            free = account(trades, cfg, "squeeze")[1]
+            side = "loser" if real["direction"] == "up" else "gainer"
+            option = await im.pick_contract(_stock_keys[sym], side, cfg, now.date(), budget=float(free))
+            if option is None or option["ask"] < a["min_premium"]:
+                entry["result"] = "no usable option"; log_skip(now, sym, idea, 0.0, "squeeze: no usable option"); continue
+            c = team_cfg(cfg, "squeeze")
+            share = capital_share(option, {**cfg, "capital": free},
+                                  {**c, "max_open_trades": max_open(cfg, "squeeze"),
+                                   "max_capital_per_trade": c.get("max_capital_per_trade", 1.0)}, open_count(trades, "squeeze"))
+            n_today = sum(t["date"] == today and team_of(t) == "squeeze" for t in trades)
+            for tgt in a["targets"]:
+                risk = plan(option, n_today, now, {**cfg, "capital": free, "net_target_pct": tgt, "target_mode": "fixed",
+                                                   "max_capital_per_trade": share},
+                            sigma_per_min=intraday_sigma_per_min(intraday), spread_pct=option["spread_pct"])
+                if risk["allowed"]:
+                    break
+            if not risk["allowed"]:
+                entry["result"] = "risk: " + "; ".join(risk["blocks"])[:150]
+                log_skip(now, sym, idea, 0.0, "squeeze: risk: " + "; ".join(risk["blocks"])[:150]); continue
+            reason = f"Squeeze team: {real['why']}; target {tgt:g}% net"
+            row = {f: "" for f in FIELDS}
+            row.update(date=today, opened=now.strftime("%H:%M"), symbol=sym, side=side, contract=option["contract"],
+                       underlying_key=_stock_keys[sym], derivative_id=option["derivative_id"], qty=risk["qty"],
+                       entry_ask=option["ask"], target_bid=risk["target_premium"], spread_pct=round(option["spread_pct"], 2),
+                       hit_probability=round(risk["hit_probability"]), status="OPEN",
+                       notes="; ".join(filter(None, [rolled_note(option), reason])), strategy="squeeze",
+                       valuation=valuation_view(sym).get("label", ""))
+            trades.append(row); busy.add(sym)
+            emit("SIGNAL", {"team": "squeeze", "symbol": sym, "direction": real["direction"], "source": "squeeze",
+                            "contract": option["contract"], "qty": risk["qty"], "entry_ask": option["ask"],
+                            "target_bid": risk["target_premium"], "target_net_pct": tgt, "reason": reason,
+                            "square_off": cfg["square_off_time"]})
+            entry["result"] = "TRADED " + option["contract"]
+            opened = True
+        except (LoginRequired, RateLimited):
+            raise
+        except Exception as e:
+            entry["result"] = f"error {type(e).__name__}: {e}"
+            emit("ERROR", {"error": f"squeeze team {sym}: {type(e).__name__}: {e}"})
+        finally:
+            squeeze.save(now.date(), entry)
+    return opened
 
 
 def _trade_key(t: dict) -> tuple:
@@ -1818,8 +1960,9 @@ def has_open(trades: list[dict], team: str | None = None) -> bool:
 # Two teams trade side by side, each with its own paper capital, so their results can be compared:
 #   movers  top gainers/losers reversal, read from price, charts and options (strategy "reversal")
 #   news    NSE filings, results, concalls, news forecasts, pre-open imbalances, volume spurts, and results-gap rule
-TEAMS = ("movers", "news", "preopen", "adr")
+TEAMS = ("movers", "news", "preopen", "adr", "squeeze")
 ADR_STRATEGIES = ("adr-fade", "adr-open")
+SQUEEZE_STRATEGIES = ("squeeze",)  # user, 22 Nov: quiet patch + candle vote + breakout (agents/squeeze.py)
 # Four teams (user, 3-4 Nov): news (news forecasts, results, spurts the news agrees with), spurt (plain quiet
 # volume spurts), preopen (opening session: gap recovery, pre-open order flow, results-day gaps) and movers
 # (top gainers/losers reversal), each with its own capital and slots.
@@ -1830,7 +1973,7 @@ PREOPEN_STRATEGIES = ("preopen", "results-gap", "gap-recovery")
 
 def team_of(trade: dict) -> str:
     s = trade.get("strategy")
-    return ("adr" if s in ADR_STRATEGIES else "spurt" if s in SPURT_STRATEGIES else "preopen" if s in PREOPEN_STRATEGIES
+    return ("squeeze" if s in SQUEEZE_STRATEGIES else "adr" if s in ADR_STRATEGIES else "spurt" if s in SPURT_STRATEGIES else "preopen" if s in PREOPEN_STRATEGIES
             else "news" if s in NEWS_STRATEGIES else "movers")
 
 
@@ -1849,7 +1992,7 @@ async def cycle(cfg: dict) -> None:
             if _t(cfg["entry_start"]) <= now.time() <= _t(cfg["entry_end"]):
                 # News first: results, filings, preopen and spurts move stocks within minutes, so the news team
                 # acts before the movers' scan, and the scan stops for any idea that arrives meanwhile.
-                news_free = any(team_can_trade(trades, cfg, t) for t in ("news", "preopen", "adr"))
+                news_free = any(team_can_trade(trades, cfg, t) for t in ("news", "preopen", "adr", "squeeze"))
 
                 async def run_news():
                     news_pending.clear()
@@ -1861,6 +2004,12 @@ async def cycle(cfg: dict) -> None:
                         raise
                     except Exception as e:
                         emit("ERROR", {"error": f"adr team: {type(e).__name__}: {e}"})
+                    try:
+                        await squeeze_entries(im, trades, now, cfg)
+                    except (LoginRequired, RateLimited):
+                        raise
+                    except Exception as e:
+                        emit("ERROR", {"error": f"squeeze team: {type(e).__name__}: {e}"})
                     ok = team_can_trade(trades, cfg, "news") or team_can_trade(trades, cfg, "preopen")
                     await news_team(im, trades, now, {**cfg, "capital": account(trades, cfg, "news")[1],
                                                       "_base": cfg, "_news_ok": ok})
@@ -1936,6 +2085,7 @@ def main() -> None:
         threading.Thread(target=information_track, args=(cfg,), daemon=True).start()
         threading.Thread(target=filings_track, args=(cfg,), daemon=True).start()
         threading.Thread(target=spurt_track, args=(cfg,), daemon=True).start()
+        threading.Thread(target=squeeze_track, args=(cfg,), daemon=True).start()
     last_scan = 0.0
     while True:
         now = datetime.now(IST)

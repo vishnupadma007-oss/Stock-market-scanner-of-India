@@ -31,6 +31,8 @@ Intraday mover-reversal options strategy on NSE F&O stocks, run by a team of age
   futures + learned score + expected value on each quiet-spurt trade, journal/probability.csv; `backtest_probability.py`)
   Trade News Monitor (`agents/trade_news.py`, observe mode: news after entry -> would sell / raise the target,
   journal/trade_news.csv; `backtest_trade_news.py` replays the paper trades with the intel log)
+  Squeeze team (`agents/squeeze.py`, user 22 Nov, strategy `squeeze`): all 218 F&O stocks from NSE each minute; a quiet hour,
+  more green (red) candles, then a breakout on volume -> CALL (PUT), 15% target (`backtest_squeeze.py`).
   Candlestick Patterns (`agents/candles.py`, observe mode: 19 patterns, no edge found on 60 days of data;
   `candlestick-patterns` skill) and NSE holidays (`agents/holidays.py`).
 - Information agents write to one log (`agents/intel.py`, `journal/intel/<date>.jsonl`): NSE filings,

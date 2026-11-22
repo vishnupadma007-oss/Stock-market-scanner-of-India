@@ -234,3 +234,10 @@ While a trade is open the watcher reads the stock's 5-minute candles; when they 
 reversal candle) it logs the real option bid to journal/chart_exit.csv. No trade is sold yet (`chart_exit.mode: observe`):
 the 60-day backtest loses with it, the live paper trades gain. The review shows "held vs sold"; switch to `act` after 20+ fired
 trades only if selling clearly wins. No stop-loss rule otherwise.
+
+## 22 Nov 2026: fifth team, Squeeze (user's idea)
+`agents/squeeze.py`, `teams.squeeze` in config.yaml (Rs 1 lakh paper money, 4 slots). Every F&O stock (218) is read from NSE's
+stocks-traded page once a minute and cut into 5-minute candles; as each candle closes, a stock that sat in a tight box for an
+hour with clearly more green than red candles (volume agreeing) and then breaks out on volume, the right side of VWAP and the
+9/21-EMA, gets a CALL (PUT for the red mirror) once confirmed on INDmoney's real candles. 15% net target, no stop-loss,
+09:45-14:30 entries. Every look is logged in journal/squeeze/<date>.jsonl; the scoreboard has a squeeze row.
