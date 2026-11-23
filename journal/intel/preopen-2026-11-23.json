@@ -1,0 +1,762 @@
+{
+ "SHRIRAMFIN": {
+  "iep": 0,
+  "gap_pct": 3.91,
+  "prev_close": 972,
+  "volume": 0,
+  "buy_qty": 290803.0,
+  "sell_qty": 263566.0,
+  "buy_sell_ratio": 1.1,
+  "time": "23-Nov-2026 09:07:49"
+ },
+ "POWERGRID": {
+  "iep": 0,
+  "gap_pct": 1.86,
+  "prev_close": 269,
+  "volume": 0,
+  "buy_qty": 296453.0,
+  "sell_qty": 441459.0,
+  "buy_sell_ratio": 0.67,
+  "time": "23-Nov-2026 09:07:49"
+ },
+ "TCS": {
+  "iep": 0,
+  "gap_pct": 1.84,
+  "prev_close": 2376.2,
+  "volume": 0,
+  "buy_qty": 45367.0,
+  "sell_qty": 85583.0,
+  "buy_sell_ratio": 0.53,
+  "time": "23-Nov-2026 09:07:49"
+ },
+ "COFORGE": {
+  "iep": 0,
+  "gap_pct": 1.82,
+  "prev_close": 2086.7,
+  "volume": 0,
+  "buy_qty": 39195.0,
+  "sell_qty": 182563.0,
+  "buy_sell_ratio": 0.21,
+  "time": "23-Nov-2026 09:07:48"
+ },
+ "AUBANK": {
+  "iep": 0,
+  "gap_pct": 1.53,
+  "prev_close": 984.9,
+  "volume": 0,
+  "buy_qty": 36532.0,
+  "sell_qty": 23639.0,
+  "buy_sell_ratio": 1.55,
+  "time": "23-Nov-2026 09:07:49"
+ },
+ "ADANIENT": {
+  "iep": 0,
+  "gap_pct": 1.51,
+  "prev_close": 2709,
+  "volume": 0,
+  "buy_qty": 39627.0,
+  "sell_qty": 34071.0,
+  "buy_sell_ratio": 1.16,
+  "time": "23-Nov-2026 09:07:49"
+ },
+ "INFY": {
+  "iep": 0,
+  "gap_pct": 1.46,
+  "prev_close": 1098,
+  "volume": 0,
+  "buy_qty": 146584.0,
+  "sell_qty": 272940.0,
+  "buy_sell_ratio": 0.54,
+  "time": "23-Nov-2026 09:07:49"
+ },
+ "PAYTM": {
+  "iep": 0,
+  "gap_pct": 1.44,
+  "prev_close": 1740,
+  "volume": 0,
+  "buy_qty": 33351.0,
+  "sell_qty": 73549.0,
+  "buy_sell_ratio": 0.45,
+  "time": "23-Nov-2026 09:07:48"
+ },
+ "HCLTECH": {
+  "iep": 0,
+  "gap_pct": 1.41,
+  "prev_close": 1344.4,
+  "volume": 0,
+  "buy_qty": 31095.0,
+  "sell_qty": 65208.0,
+  "buy_sell_ratio": 0.48,
+  "time": "23-Nov-2026 09:07:49"
+ },
+ "APOLLOHOSP": {
+  "iep": 0,
+  "gap_pct": 1.36,
+  "prev_close": 9200,
+  "volume": 0,
+  "buy_qty": 9478.0,
+  "sell_qty": 6896.0,
+  "buy_sell_ratio": 1.37,
+  "time": "23-Nov-2026 09:07:50"
+ },
+ "MARUTI": {
+  "iep": 0,
+  "gap_pct": 1.35,
+  "prev_close": 14011,
+  "volume": 0,
+  "buy_qty": 8121.0,
+  "sell_qty": 12535.0,
+  "buy_sell_ratio": 0.65,
+  "time": "23-Nov-2026 09:07:49"
+ },
+ "MUTHOOTFIN": {
+  "iep": 0,
+  "gap_pct": 1.35,
+  "prev_close": 2550.5,
+  "volume": 0,
+  "buy_qty": 25541.0,
+  "sell_qty": 23572.0,
+  "buy_sell_ratio": 1.08,
+  "time": "23-Nov-2026 09:07:49"
+ },
+ "SBIN": {
+  "iep": 0,
+  "gap_pct": 1.28,
+  "prev_close": 1165.1,
+  "volume": 0,
+  "buy_qty": 253274.0,
+  "sell_qty": 318570.0,
+  "buy_sell_ratio": 0.8,
+  "time": "23-Nov-2026 09:07:49"
+ },
+ "RECLTD": {
+  "iep": 0,
+  "gap_pct": 1.26,
+  "prev_close": 298.1,
+  "volume": 0,
+  "buy_qty": 94250.0,
+  "sell_qty": 171136.0,
+  "buy_sell_ratio": 0.55,
+  "time": "23-Nov-2026 09:07:49"
+ },
+ "NATIONALUM": {
+  "iep": 0,
+  "gap_pct": 1.25,
+  "prev_close": 303.2,
+  "volume": 0,
+  "buy_qty": 210935.0,
+  "sell_qty": 148958.0,
+  "buy_sell_ratio": 1.42,
+  "time": "23-Nov-2026 09:07:49"
+ },
+ "ETERNAL": {
+  "iep": 0,
+  "gap_pct": 1.21,
+  "prev_close": 364,
+  "volume": 0,
+  "buy_qty": 183703.0,
+  "sell_qty": 424237.0,
+  "buy_sell_ratio": 0.43,
+  "time": "23-Nov-2026 09:07:48"
+ },
+ "POLICYBZR": {
+  "iep": 0,
+  "gap_pct": 1.19,
+  "prev_close": 1022.8,
+  "volume": 0,
+  "buy_qty": 28667.0,
+  "sell_qty": 61350.0,
+  "buy_sell_ratio": 0.47,
+  "time": "23-Nov-2026 09:07:49"
+ },
+ "EICHERMOT": {
+  "iep": 0,
+  "gap_pct": 1.07,
+  "prev_close": 8113,
+  "volume": 0,
+  "buy_qty": 4021.0,
+  "sell_qty": 4576.0,
+  "buy_sell_ratio": 0.88,
+  "time": "23-Nov-2026 09:07:48"
+ },
+ "HDFCBANK": {
+  "iep": 0,
+  "gap_pct": 1.06,
+  "prev_close": 846,
+  "volume": 0,
+  "buy_qty": 1741753.0,
+  "sell_qty": 1925107.0,
+  "buy_sell_ratio": 0.9,
+  "time": "23-Nov-2026 09:07:49"
+ },
+ "VEDL": {
+  "iep": 0,
+  "gap_pct": 1.03,
+  "prev_close": 238.04,
+  "volume": 0,
+  "buy_qty": 357816.0,
+  "sell_qty": 472849.0,
+  "buy_sell_ratio": 0.76,
+  "time": "23-Nov-2026 09:07:49"
+ },
+ "WIPRO": {
+  "iep": 0,
+  "gap_pct": 1.02,
+  "prev_close": 185.7,
+  "volume": 0,
+  "buy_qty": 202221.0,
+  "sell_qty": 303924.0,
+  "buy_sell_ratio": 0.67,
+  "time": "23-Nov-2026 09:07:49"
+ },
+ "ADANIPORTS": {
+  "iep": 0,
+  "gap_pct": 0.99,
+  "prev_close": 1917,
+  "volume": 0,
+  "buy_qty": 31879.0,
+  "sell_qty": 32279.0,
+  "buy_sell_ratio": 0.99,
+  "time": "23-Nov-2026 09:07:49"
+ },
+ "AXISBANK": {
+  "iep": 0,
+  "gap_pct": 0.97,
+  "prev_close": 1446,
+  "volume": 0,
+  "buy_qty": 219136.0,
+  "sell_qty": 168933.0,
+  "buy_sell_ratio": 1.3,
+  "time": "23-Nov-2026 09:07:49"
+ },
+ "BAJAJFINSV": {
+  "iep": 0,
+  "gap_pct": 0.95,
+  "prev_close": 1892,
+  "volume": 0,
+  "buy_qty": 19936.0,
+  "sell_qty": 22335.0,
+  "buy_sell_ratio": 0.89,
+  "time": "23-Nov-2026 09:07:43"
+ },
+ "DLF": {
+  "iep": 0,
+  "gap_pct": 0.89,
+  "prev_close": 785,
+  "volume": 0,
+  "buy_qty": 27737.0,
+  "sell_qty": 46017.0,
+  "buy_sell_ratio": 0.6,
+  "time": "23-Nov-2026 09:07:49"
+ },
+ "MPHASIS": {
+  "iep": 0,
+  "gap_pct": 0.83,
+  "prev_close": 2420,
+  "volume": 0,
+  "buy_qty": 4860.0,
+  "sell_qty": 14194.0,
+  "buy_sell_ratio": 0.34,
+  "time": "23-Nov-2026 09:07:48"
+ },
+ "DIVISLAB": {
+  "iep": 0,
+  "gap_pct": 0.81,
+  "prev_close": 11180.5,
+  "volume": 0,
+  "buy_qty": 5985.0,
+  "sell_qty": 7919.0,
+  "buy_sell_ratio": 0.76,
+  "time": "23-Nov-2026 09:07:50"
+ },
+ "KOTAKBANK": {
+  "iep": 0,
+  "gap_pct": 0.72,
+  "prev_close": 515.8,
+  "volume": 0,
+  "buy_qty": 139470.0,
+  "sell_qty": 121239.0,
+  "buy_sell_ratio": 1.15,
+  "time": "23-Nov-2026 09:07:49"
+ },
+ "GRASIM": {
+  "iep": 0,
+  "gap_pct": 0.69,
+  "prev_close": 3103.7,
+  "volume": 0,
+  "buy_qty": 3724.0,
+  "sell_qty": 33552.0,
+  "buy_sell_ratio": 0.11,
+  "time": "23-Nov-2026 09:07:48"
+ },
+ "TVSMOTOR": {
+  "iep": 0,
+  "gap_pct": 0.69,
+  "prev_close": 4590,
+  "volume": 0,
+  "buy_qty": 5924.0,
+  "sell_qty": 7020.0,
+  "buy_sell_ratio": 0.84,
+  "time": "23-Nov-2026 09:07:49"
+ },
+ "BANKBARODA": {
+  "iep": 0,
+  "gap_pct": 0.66,
+  "prev_close": 287,
+  "volume": 0,
+  "buy_qty": 114432.0,
+  "sell_qty": 425980.0,
+  "buy_sell_ratio": 0.27,
+  "time": "23-Nov-2026 09:07:50"
+ },
+ "TECHM": {
+  "iep": 0,
+  "gap_pct": 0.62,
+  "prev_close": 1746.2,
+  "volume": 0,
+  "buy_qty": 19556.0,
+  "sell_qty": 57951.0,
+  "buy_sell_ratio": 0.34,
+  "time": "23-Nov-2026 09:07:49"
+ },
+ "BPCL": {
+  "iep": 0,
+  "gap_pct": 0.6,
+  "prev_close": 314.1,
+  "volume": 0,
+  "buy_qty": 102715.0,
+  "sell_qty": 289748.0,
+  "buy_sell_ratio": 0.35,
+  "time": "23-Nov-2026 09:07:49"
+ },
+ "PERSISTENT": {
+  "iep": 0,
+  "gap_pct": 0.6,
+  "prev_close": 6124,
+  "volume": 0,
+  "buy_qty": 5524.0,
+  "sell_qty": 10521.0,
+  "buy_sell_ratio": 0.53,
+  "time": "23-Nov-2026 09:07:48"
+ },
+ "SAIL": {
+  "iep": 0,
+  "gap_pct": 0.55,
+  "prev_close": 164.11,
+  "volume": 0,
+  "buy_qty": 240083.0,
+  "sell_qty": 371438.0,
+  "buy_sell_ratio": 0.65,
+  "time": "23-Nov-2026 09:07:50"
+ },
+ "M&M": {
+  "iep": 0,
+  "gap_pct": 0.54,
+  "prev_close": 3545,
+  "volume": 0,
+  "buy_qty": 30512.0,
+  "sell_qty": 47844.0,
+  "buy_sell_ratio": 0.64,
+  "time": "23-Nov-2026 09:07:48"
+ },
+ "NMDC": {
+  "iep": 0,
+  "gap_pct": 0.51,
+  "prev_close": 68.9,
+  "volume": 0,
+  "buy_qty": 572282.0,
+  "sell_qty": 780625.0,
+  "buy_sell_ratio": 0.73,
+  "time": "23-Nov-2026 09:07:49"
+ },
+ "ONGC": {
+  "iep": 0,
+  "gap_pct": 0.47,
+  "prev_close": 223.46,
+  "volume": 0,
+  "buy_qty": 331169.0,
+  "sell_qty": 748362.0,
+  "buy_sell_ratio": 0.44,
+  "time": "23-Nov-2026 09:07:49"
+ },
+ "DIXON": {
+  "iep": 0,
+  "gap_pct": 0.46,
+  "prev_close": 13120,
+  "volume": 0,
+  "buy_qty": 2483.0,
+  "sell_qty": 5523.0,
+  "buy_sell_ratio": 0.45,
+  "time": "23-Nov-2026 09:07:49"
+ },
+ "CANBK": {
+  "iep": 0,
+  "gap_pct": 0.45,
+  "prev_close": 138.92,
+  "volume": 0,
+  "buy_qty": 732100.0,
+  "sell_qty": 1605875.0,
+  "buy_sell_ratio": 0.46,
+  "time": "23-Nov-2026 09:07:49"
+ },
+ "NTPC": {
+  "iep": 0,
+  "gap_pct": 0.44,
+  "prev_close": 321.5,
+  "volume": 0,
+  "buy_qty": 196367.0,
+  "sell_qty": 194888.0,
+  "buy_sell_ratio": 1.01,
+  "time": "23-Nov-2026 09:07:49"
+ },
+ "HEROMOTOCO": {
+  "iep": 0,
+  "gap_pct": 0.43,
+  "prev_close": 5536,
+  "volume": 0,
+  "buy_qty": 3503.0,
+  "sell_qty": 10388.0,
+  "buy_sell_ratio": 0.34,
+  "time": "23-Nov-2026 09:07:49"
+ },
+ "PNB": {
+  "iep": 0,
+  "gap_pct": 0.43,
+  "prev_close": 155.33,
+  "volume": 0,
+  "buy_qty": 433856.0,
+  "sell_qty": 696746.0,
+  "buy_sell_ratio": 0.62,
+  "time": "23-Nov-2026 09:07:49"
+ },
+ "ULTRACEMCO": {
+  "iep": 0,
+  "gap_pct": 0.38,
+  "prev_close": 12939,
+  "volume": 0,
+  "buy_qty": 3166.0,
+  "sell_qty": 5060.0,
+  "buy_sell_ratio": 0.63,
+  "time": "23-Nov-2026 09:07:47"
+ },
+ "BRITANNIA": {
+  "iep": 0,
+  "gap_pct": 0.37,
+  "prev_close": 4900,
+  "volume": 0,
+  "buy_qty": 2724.0,
+  "sell_qty": 4869.0,
+  "buy_sell_ratio": 0.56,
+  "time": "23-Nov-2026 09:07:49"
+ },
+ "BAJAJ-AUTO": {
+  "iep": 0,
+  "gap_pct": 0.33,
+  "prev_close": 10765,
+  "volume": 0,
+  "buy_qty": 2026.0,
+  "sell_qty": 4033.0,
+  "buy_sell_ratio": 0.5,
+  "time": "23-Nov-2026 09:07:37"
+ },
+ "FEDERALBNK": {
+  "iep": 0,
+  "gap_pct": 0.32,
+  "prev_close": 373.5,
+  "volume": 0,
+  "buy_qty": 90691.0,
+  "sell_qty": 184528.0,
+  "buy_sell_ratio": 0.49,
+  "time": "23-Nov-2026 09:07:49"
+ },
+ "CHOLAFIN": {
+  "iep": 0,
+  "gap_pct": 0.31,
+  "prev_close": 1874.6,
+  "volume": 0,
+  "buy_qty": 3162.0,
+  "sell_qty": 20801.0,
+  "buy_sell_ratio": 0.15,
+  "time": "23-Nov-2026 09:07:49"
+ },
+ "ITC": {
+  "iep": 0,
+  "gap_pct": 0.3,
+  "prev_close": 299.1,
+  "volume": 0,
+  "buy_qty": 202479.0,
+  "sell_qty": 793737.0,
+  "buy_sell_ratio": 0.26,
+  "time": "23-Nov-2026 09:07:47"
+ },
+ "BHARTIARTL": {
+  "iep": 0,
+  "gap_pct": 0.28,
+  "prev_close": 2161.7,
+  "volume": 0,
+  "buy_qty": 59611.0,
+  "sell_qty": 92668.0,
+  "buy_sell_ratio": 0.64,
+  "time": "23-Nov-2026 09:07:49"
+ },
+ "COALINDIA": {
+  "iep": 0,
+  "gap_pct": 0.27,
+  "prev_close": 390,
+  "volume": 0,
+  "buy_qty": 240622.0,
+  "sell_qty": 399193.0,
+  "buy_sell_ratio": 0.6,
+  "time": "23-Nov-2026 09:07:48"
+ },
+ "IOC": {
+  "iep": 0,
+  "gap_pct": 0.27,
+  "prev_close": 150.5,
+  "volume": 0,
+  "buy_qty": 356688.0,
+  "sell_qty": 729934.0,
+  "buy_sell_ratio": 0.49,
+  "time": "23-Nov-2026 09:07:49"
+ },
+ "SUNPHARMA": {
+  "iep": 0,
+  "gap_pct": 0.27,
+  "prev_close": 1884.9,
+  "volume": 0,
+  "buy_qty": 10844.0,
+  "sell_qty": 24738.0,
+  "buy_sell_ratio": 0.44,
+  "time": "23-Nov-2026 09:07:47"
+ },
+ "BEL": {
+  "iep": 0,
+  "gap_pct": 0.25,
+  "prev_close": 402,
+  "volume": 0,
+  "buy_qty": 173403.0,
+  "sell_qty": 632738.0,
+  "buy_sell_ratio": 0.27,
+  "time": "23-Nov-2026 09:07:48"
+ },
+ "RELIANCE": {
+  "iep": 0,
+  "gap_pct": 0.25,
+  "prev_close": 1377.5,
+  "volume": 0,
+  "buy_qty": 158449.0,
+  "sell_qty": 460985.0,
+  "buy_sell_ratio": 0.34,
+  "time": "23-Nov-2026 09:07:49"
+ },
+ "HAL": {
+  "iep": 0,
+  "gap_pct": 0.23,
+  "prev_close": 4809,
+  "volume": 0,
+  "buy_qty": 8833.0,
+  "sell_qty": 30530.0,
+  "buy_sell_ratio": 0.29,
+  "time": "23-Nov-2026 09:07:46"
+ },
+ "NESTLEIND": {
+  "iep": 0,
+  "gap_pct": 0.23,
+  "prev_close": 1325,
+  "volume": 0,
+  "buy_qty": 11190.0,
+  "sell_qty": 24793.0,
+  "buy_sell_ratio": 0.45,
+  "time": "23-Nov-2026 09:07:48"
+ },
+ "BAJFINANCE": {
+  "iep": 0,
+  "gap_pct": 0.18,
+  "prev_close": 1122,
+  "volume": 0,
+  "buy_qty": 68261.0,
+  "sell_qty": 117973.0,
+  "buy_sell_ratio": 0.58,
+  "time": "23-Nov-2026 09:07:49"
+ },
+ "BHEL": {
+  "iep": 0,
+  "gap_pct": 0.17,
+  "prev_close": 433.65,
+  "volume": 0,
+  "buy_qty": 62412.0,
+  "sell_qty": 222152.0,
+  "buy_sell_ratio": 0.28,
+  "time": "23-Nov-2026 09:07:50"
+ },
+ "TATAPOWER": {
+  "iep": 0,
+  "gap_pct": 0.09,
+  "prev_close": 339.7,
+  "volume": 0,
+  "buy_qty": 95831.0,
+  "sell_qty": 187307.0,
+  "buy_sell_ratio": 0.51,
+  "time": "23-Nov-2026 09:07:49"
+ },
+ "LT": {
+  "iep": 0,
+  "gap_pct": 0.07,
+  "prev_close": 4209.1,
+  "volume": 0,
+  "buy_qty": 16981.0,
+  "sell_qty": 63020.0,
+  "buy_sell_ratio": 0.27,
+  "time": "23-Nov-2026 09:07:49"
+ },
+ "HINDUNILVR": {
+  "iep": 0,
+  "gap_pct": 0.04,
+  "prev_close": 2052.5,
+  "volume": 0,
+  "buy_qty": 18509.0,
+  "sell_qty": 46174.0,
+  "buy_sell_ratio": 0.4,
+  "time": "23-Nov-2026 09:07:49"
+ },
+ "ASIANPAINT": {
+  "iep": 0,
+  "gap_pct": 0.03,
+  "prev_close": 2608.3,
+  "volume": 0,
+  "buy_qty": 8767.0,
+  "sell_qty": 24671.0,
+  "buy_sell_ratio": 0.36,
+  "time": "23-Nov-2026 09:07:50"
+ },
+ "DRREDDY": {
+  "iep": 0,
+  "gap_pct": 0.01,
+  "prev_close": 1390.2,
+  "volume": 0,
+  "buy_qty": 4353.0,
+  "sell_qty": 15948.0,
+  "buy_sell_ratio": 0.27,
+  "time": "23-Nov-2026 09:07:34"
+ },
+ "CIPLA": {
+  "iep": 0,
+  "gap_pct": 0.0,
+  "prev_close": 1415,
+  "volume": 0,
+  "buy_qty": 8091.0,
+  "sell_qty": 27131.0,
+  "buy_sell_ratio": 0.3,
+  "time": "23-Nov-2026 09:07:49"
+ },
+ "IDFCFIRSTB": {
+  "iep": 0,
+  "gap_pct": 0.0,
+  "prev_close": 87.26,
+  "volume": 0,
+  "buy_qty": 404321.0,
+  "sell_qty": 1440935.0,
+  "buy_sell_ratio": 0.28,
+  "time": "23-Nov-2026 09:07:49"
+ },
+ "INDUSINDBK": {
+  "iep": 0,
+  "gap_pct": 0.0,
+  "prev_close": 1003,
+  "volume": 0,
+  "buy_qty": 38042.0,
+  "sell_qty": 74389.0,
+  "buy_sell_ratio": 0.51,
+  "time": "23-Nov-2026 09:07:49"
+ },
+ "LUPIN": {
+  "iep": 0,
+  "gap_pct": 0.0,
+  "prev_close": 2014,
+  "volume": 0,
+  "buy_qty": 3795.0,
+  "sell_qty": 18510.0,
+  "buy_sell_ratio": 0.21,
+  "time": "23-Nov-2026 09:07:49"
+ },
+ "TITAN": {
+  "iep": 0,
+  "gap_pct": 0.0,
+  "prev_close": 4620,
+  "volume": 0,
+  "buy_qty": 14874.0,
+  "sell_qty": 16974.0,
+  "buy_sell_ratio": 0.88,
+  "time": "23-Nov-2026 09:07:47"
+ },
+ "TRENT": {
+  "iep": 0,
+  "gap_pct": 0.0,
+  "prev_close": 3256.1,
+  "volume": 0,
+  "buy_qty": 6177.0,
+  "sell_qty": 25283.0,
+  "buy_sell_ratio": 0.24,
+  "time": "23-Nov-2026 09:07:49"
+ },
+ "ICICIBANK": {
+  "iep": 0,
+  "gap_pct": -0.12,
+  "prev_close": 1640,
+  "volume": 0,
+  "buy_qty": 336047.0,
+  "sell_qty": 766639.0,
+  "buy_sell_ratio": 0.44,
+  "time": "23-Nov-2026 09:07:49"
+ },
+ "PFC": {
+  "iep": 0,
+  "gap_pct": -0.15,
+  "prev_close": 332.9,
+  "volume": 0,
+  "buy_qty": 137827.0,
+  "sell_qty": 355697.0,
+  "buy_sell_ratio": 0.39,
+  "time": "23-Nov-2026 09:07:48"
+ },
+ "JSWSTEEL": {
+  "iep": 0,
+  "gap_pct": -0.22,
+  "prev_close": 1337,
+  "volume": 0,
+  "buy_qty": 10109.0,
+  "sell_qty": 42558.0,
+  "buy_sell_ratio": 0.24,
+  "time": "23-Nov-2026 09:07:48"
+ },
+ "GAIL": {
+  "iep": 0,
+  "gap_pct": -0.39,
+  "prev_close": 191.44,
+  "volume": 0,
+  "buy_qty": 43945.0,
+  "sell_qty": 343856.0,
+  "buy_sell_ratio": 0.13,
+  "time": "23-Nov-2026 09:07:47"
+ },
+ "TATASTEEL": {
+  "iep": 0,
+  "gap_pct": -1.46,
+  "prev_close": 178,
+  "volume": 0,
+  "buy_qty": 789176.0,
+  "sell_qty": 2140355.0,
+  "buy_sell_ratio": 0.37,
+  "time": "23-Nov-2026 09:07:49"
+ },
+ "HINDALCO": {
+  "iep": 0,
+  "gap_pct": -3.82,
+  "prev_close": 929.5,
+  "volume": 0,
+  "buy_qty": 124719.0,
+  "sell_qty": 238314.0,
+  "buy_sell_ratio": 0.52,
+  "time": "23-Nov-2026 09:07:49"
+ }
+}

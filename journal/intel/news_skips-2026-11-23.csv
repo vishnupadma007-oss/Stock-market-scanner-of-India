@@ -1,0 +1,30 @@
+time,symbol,direction,confidence,move_pct,reason
+09:34,SHRIRAMFIN,down,,3.9,gap recovery: risk: Forecast chance of reaching the target is 47% (need 60%).
+09:34,TCS,down,,1.84,gap recovery: risk: Forecast chance of reaching the target is 55% (need 60%).
+09:34,HDFCBANK,down,,-0.65,quiet spurt: strong news up (95%) against it
+09:34,RELIANCE,down,,-0.12,"pure spurt: Material news/catalyst (news): F&O Talk: 25,500 remains crucial support for Nifty, says Sud"
+09:34,NESTLEIND,down,,-0.43,pure spurt: bid-ask gap 5.88% > 1.0%
+09:34,DRREDDY,down,,-0.53,pure spurt: bid-ask gap 1.56% > 1.0%
+09:41,ADANIPORTS,down,,-0.09,quiet spurt: live move -0.09% no longer fits
+09:41,PERSISTENT,up,,1.33,quiet spurt: live move 1.33% no longer fits
+09:41,BAJAJFINSV,down,,0.14,quiet spurt: live move 0.14% no longer fits
+09:41,APOLLOHOSP,up,75,1.3,faded: 0.5% the wrong side of VWAP
+09:41,AUBANK,down,,-0.83,quiet spurt: live move -0.83% no longer fits
+09:57,NTPC,down,,-0.36,pure spurt: Material news/catalyst (policy): Power demand / tariff policy: delayed or softened: higher de
+10:03,BRITANNIA,down,,-0.5,pure spurt: Material news/catalyst (filing): BRITANNIA management: Britannia Industries Limited has infor
+11:25,ZYDUSLIFE,up,,0.0,squeeze: not confirmed on INDmoney candles
+11:43,AMBER,up,,0.0,squeeze: not confirmed on INDmoney candles
+11:43,YESBANK,down,,0.0,squeeze: not confirmed on INDmoney candles
+11:56,PAYTM,down,,0.0,squeeze: not confirmed on INDmoney candles
+12:35,DRREDDY,down,,0.0,squeeze: not confirmed on INDmoney candles
+12:49,INOXWIND,down,,0.0,squeeze: not confirmed on INDmoney candles
+13:02,ASIANPAINT,down,,0.0,squeeze: not confirmed on INDmoney candles
+13:09,SWIGGY,down,,0.0,squeeze: not confirmed on INDmoney candles
+13:24,RELIANCE,down,,0.0,squeeze: not confirmed on INDmoney candles
+13:28,UJJIVANSFB,up,,0.0,squeeze: not confirmed on INDmoney candles
+14:00,NESTLEIND,down,,0.0,squeeze: not confirmed on INDmoney candles
+14:00,PAGEIND,down,,0.0,squeeze: not confirmed on INDmoney candles
+14:09,BLUESTARCO,down,,0.0,squeeze: not confirmed on INDmoney candles
+14:15,MOTHERSON,up,,0.0,squeeze: not confirmed on INDmoney candles
+14:29,GRASIM,up,,0.0,squeeze: not confirmed on INDmoney candles
+14:29,HAL,up,,0.0,squeeze: not confirmed on INDmoney candles

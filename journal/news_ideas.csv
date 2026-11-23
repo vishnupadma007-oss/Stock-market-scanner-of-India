@@ -358,3 +358,10 @@ date,time,symbol,direction,confidence,source,priced_in
 2026-11-23,09:15,HINDALCO,down,75,preopen,NSE pre-open order imbalance
 2026-11-23,11:32,TITAN,down,86,intel-news,some pessimism priced in
 2026-11-23,12:25,CANBK,down,76,intel-news,partly priced in
+2026-11-23,13:43,SHRIRAMFIN,up,74,intel-news,not priced in
+2026-11-23,14:33,RELIANCE,up,67,intel-news,partly priced in
+2026-11-23,14:33,AXISBANK,up,74,intel-news,not priced in
+2026-11-23,14:33,HINDALCO,up,69,intel-news,pessimism priced in
+2026-11-23,14:38,TCS,down,68,intel-news,not priced in
+2026-11-23,14:38,SBIN,up,61,intel-news,largely priced in
+2026-11-23,14:38,MARUTI,down,77,intel-news,largely priced in

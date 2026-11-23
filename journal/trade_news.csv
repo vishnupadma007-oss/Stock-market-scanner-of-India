@@ -21,3 +21,6 @@ date,time,symbol,contract,action,bid,target_bid,mode,reason
 2026-11-19,10:35,PAYTM,PAYTM-23-NOV-1760-CALL,exit,35.9,51.55,observe,"bad news for the trade: Paytm share price crash: Payment stock slides 7% on UPI MDR rollout delay; Pine Labs, One Mobikwik S"
 2026-11-19,13:09,POLICYBZR,POLICYBZR-29-DEC-980-CALL,exit,89.3,90.65,observe,bad news for the trade: PB Fintech shares slide over 6% after co-founder Alok Bansal steps down
 2026-11-20,10:16,TITAN,TITAN-29-DEC-4600-PUT,raise,143.15,181.1,observe,"good news for the trade: Titan, Muthoot Finance, Kalyan Jewellers fall up to 4% as Gold prices slide"
+2026-11-23,13:44,TCS,TCS-29-DEC-2460-PUT,raise,84.6,90.35,observe,"good news for the trade: Crash proof stocks: Sensex, Nifty bleed but these shares come out in flying green colour - HCL, TCS,"
+2026-11-23,14:48,APOLLOHOSP,APOLLOHOSP-29-DEC-9200-CALL,exit,359.35,460.8,observe,market shock (crash)
+2026-11-23,14:48,AUBANK,AUBANK-29-DEC-980-CALL,exit,41.85,52.2,observe,market shock (crash)
