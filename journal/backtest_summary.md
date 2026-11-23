@@ -651,3 +651,12 @@ Squeeze, small targets and option choice (22 Nov, same 280 trades): 1% target 80
 are in the result): ITM2 (delta 0.67, theta -2.8%/day) +49.4k; ITM1 (0.59, -4.0%) +55.1k; ATM (0.50, -5.7%) +70.0k (+9.8k/+60.1k);
 OTM1 (0.41, -8.1%) +75.4k (+17.3k/+58.1k). Next month's expiry (33 days, theta -1.4%/day): only +8.2k (the premium barely moves).
 Caveat: one fixed 0.8% spread for all strikes; real OTM spreads are wider.
+
+## 23 Nov 2026: price pressure in a flat line (user's idea, `backtest_pressure.py`)
+"Flat, but every little move is an uptick and it never really goes down, then it jumps." No tick history exists, so tested on
+1-minute candles (Yahoo, 19 days x 218 F&O stocks): flat 15/30 minutes, up-closes minus down-closes >= lead, rising lows,
+price in the top third (mirror for down); enter before the jump or on the first 1-minute breakout on 1.5x volume; ITM1, 15%
+target, no stop-loss. No edge: the stock went the expected way within 15 minutes 47-55% of the time, its best move in those 15
+minutes averaged only 0.15% (no jump), and the versions with 30+ trades all lost (-9k to -2.4 lakh); the few small winners had
+3-11 trades (noise). Baselines (flat lines, no pressure test) lost too. Real ticks (every trade, sub-second) may show what
+1-minute candles hide; that needs a broker's live tick feed, which the desk does not have.
