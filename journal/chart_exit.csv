@@ -12,3 +12,4 @@ date,time,symbol,contract,opened,entry_ask,bid,target_bid,mode,reason
 2026-11-20,11:43,RECLTD,RECLTD-29-DEC-300-PUT,09:57,12.1,10.8,13.9,observe,"over VWAP, 9-EMA crossed the 21-EMA, second candle against the trade"
 2026-11-20,11:50,BHEL,BHEL-29-DEC-440-PUT,10:43,21.8,20.75,24.6,observe,"over VWAP, 9-EMA crossed the 21-EMA, second candle against the trade"
 2026-11-20,12:05,TITAN,TITAN-29-DEC-4600-PUT,09:30,146.95,128.6,181.1,observe,"over VWAP, 9-EMA crossed the 21-EMA, second candle against the trade"
+2026-11-23,11:00,APOLLOHOSP,APOLLOHOSP-29-DEC-9200-CALL,09:49,392.2,356.8,460.8,observe,"under VWAP, 9-EMA crossed the 21-EMA, engulfing candle against the trade"

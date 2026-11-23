@@ -346,3 +346,15 @@ date,time,symbol,direction,confidence,source,priced_in
 2026-11-20,12:25,ICICIBANK,up,87,intel-news,partly priced in
 2026-11-20,13:36,AXISBANK,up,68,intel-news,not priced in
 2026-11-20,15:00,INDUSINDBK,up,71,intel-news,not priced in
+2026-11-23,08:41,HDFCBANK,up,80,intel-news,partly priced in
+2026-11-23,08:41,ICICIBANK,up,83,intel-news,partly priced in
+2026-11-23,08:41,INDUSINDBK,up,69,intel-news,largely priced in
+2026-11-23,08:41,MUTHOOTFIN,down,69,intel-news,pessimism priced in
+2026-11-23,08:41,APOLLOHOSP,up,85,intel-news,partly priced in
+2026-11-23,08:41,HEROMOTOCO,down,49,intel-news,not priced in
+2026-11-23,09:15,AUBANK,up,75,preopen,NSE pre-open order imbalance
+2026-11-23,09:15,NATIONALUM,up,75,preopen,NSE pre-open order imbalance
+2026-11-23,09:15,TATASTEEL,down,80,preopen,NSE pre-open order imbalance
+2026-11-23,09:15,HINDALCO,down,75,preopen,NSE pre-open order imbalance
+2026-11-23,11:32,TITAN,down,86,intel-news,some pessimism priced in
+2026-11-23,12:25,CANBK,down,76,intel-news,partly priced in
