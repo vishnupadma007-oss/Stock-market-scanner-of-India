@@ -1,0 +1,75 @@
+{
+ "context": {
+  "date": "2026-11-23",
+  "adr_pct": {
+   "INFY": 3.26,
+   "WIPRO": 1.49,
+   "HDFCBANK": 4.5,
+   "ICICIBANK": 1.63,
+   "DRREDDY": 0.4
+  },
+  "adr_vol_x": {
+   "INFY": 1.0,
+   "WIPRO": 0.5,
+   "HDFCBANK": 2.76,
+   "ICICIBANK": 1.44,
+   "DRREDDY": 0.65
+  },
+  "usdinr_pct": -0.18,
+  "brent_pct": -2.46,
+  "nifty_gap_pct": 0.5
+ },
+ "phase": "fade",
+ "stocks": {
+  "INFY": {
+   "regime": {
+    "regime": 0,
+    "name": "unclear",
+    "direction": null,
+    "why": "ADR +3.3% without a clear driver: no trade"
+   },
+   "first_hour_pct": 1.4540885019298067,
+   "decision": null
+  },
+  "WIPRO": {
+   "regime": {
+    "regime": 0,
+    "name": "unclear",
+    "direction": null,
+    "why": "ADR +1.5% without a clear driver: no trade"
+   },
+   "first_hour_pct": 1.3155792276964062,
+   "decision": null
+  },
+  "HDFCBANK": {
+   "regime": {
+    "regime": 2,
+    "name": "sector catalyst",
+    "direction": "up",
+    "why": "both bank ADRs moved +4.5%, +1.6%; Nifty gap +0.50%"
+   },
+   "first_hour_pct": -2.754385964912276,
+   "decision": null
+  },
+  "ICICIBANK": {
+   "regime": {
+    "regime": 2,
+    "name": "sector catalyst",
+    "direction": "up",
+    "why": "both bank ADRs moved +4.5%, +1.6%; Nifty gap +0.50%"
+   },
+   "first_hour_pct": -1.592434411226351,
+   "decision": null
+  },
+  "DRREDDY": {
+   "regime": {
+    "regime": 4,
+    "name": "normal",
+    "direction": null,
+    "why": "ADR +0.4%, Nifty gap +0.50%, first-15-min volume n/ax"
+   },
+   "first_hour_pct": -0.6185715313241635,
+   "decision": null
+  }
+ }
+}
