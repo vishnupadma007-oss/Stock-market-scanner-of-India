@@ -1,10 +1,10 @@
 {
-  "date": "2026-11-20",
-  "mode": "normal",
+  "date": "2026-11-23",
+  "mode": "careful",
   "notes": [
-    "Expected Nifty open about -0.48% (S&P 500 -2.0%, Brent -2.0%)",
-    "No results since last session; PAYTM acquisition filings, PNB rating revision, BRITANNIA director exit",
-    "News views: POLICYBZR and TITAN down; MARUTI and SBIN (PSU banks) up"
+    "Expected Nifty open about -0.9% (S&P 500 -3.7% since Friday, Brent -2.8%): weak global cue, stronger charts needed",
+    "No results; TATASTEEL board outcome + acquisition filed this morning; HEROMOTOCO litigation update",
+    "News views: banks up (INDUSINDBK, HDFCBANK, ICICIBANK; Nifty Bank at a record), MUTHOOTFIN down on gold; HDFCBANK ADR +4.5% on 2.8x volume"
   ],
   "avoid": []
 }
