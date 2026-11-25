@@ -29,7 +29,7 @@
     "trigger": "gap",
     "why": "Nifty gap +1.22%, VIX +0.0%, Brent -5.4%, USD-INR -0.41%"
    },
-   "first_hour_pct": -0.25398493606585415,
+   "first_hour_pct": -0.17516202487301014,
    "decision": null
   },
   "WIPRO": {
@@ -40,7 +40,7 @@
     "trigger": "gap",
     "why": "Nifty gap +1.22%, VIX +0.0%, Brent -5.4%, USD-INR -0.41%"
    },
-   "first_hour_pct": -0.832460732984297,
+   "first_hour_pct": -0.4136125654450207,
    "decision": null
   },
   "HDFCBANK": {
@@ -51,7 +51,7 @@
     "trigger": "gap",
     "why": "Nifty gap +1.22%, VIX +0.0%, Brent -5.4%, USD-INR -0.41%"
    },
-   "first_hour_pct": 1.2783579402232625,
+   "first_hour_pct": 1.5484335613971778,
    "decision": null
   },
   "ICICIBANK": {
@@ -62,7 +62,7 @@
     "trigger": "gap",
     "why": "Nifty gap +1.22%, VIX +0.0%, Brent -5.4%, USD-INR -0.41%"
    },
-   "first_hour_pct": 1.4718614718614687,
+   "first_hour_pct": 1.243042671614103,
    "decision": null
   },
   "DRREDDY": {
@@ -73,7 +73,7 @@
     "trigger": "gap",
     "why": "Nifty gap +1.22%, VIX +0.0%, Brent -5.4%, USD-INR -0.41%"
    },
-   "first_hour_pct": -0.2603978300180776,
+   "first_hour_pct": -0.3688969258589414,
    "decision": null
   }
  }
