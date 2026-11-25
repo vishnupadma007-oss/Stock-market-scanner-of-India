@@ -365,3 +365,15 @@ date,time,symbol,direction,confidence,source,priced_in
 2026-11-23,14:38,TCS,down,68,intel-news,not priced in
 2026-11-23,14:38,SBIN,up,61,intel-news,largely priced in
 2026-11-23,14:38,MARUTI,down,77,intel-news,largely priced in
+2026-11-25,08:41,RELIANCE,up,79,intel-news,partly priced in
+2026-11-25,08:41,HDFCBANK,up,91,intel-news,partly priced in
+2026-11-25,08:41,ICICIBANK,down,76,intel-news,partly priced in
+2026-11-25,08:41,AXISBANK,up,76,intel-news,not priced in
+2026-11-25,08:41,MARUTI,down,71,intel-news,largely priced in
+2026-11-25,08:41,HINDALCO,up,78,intel-news,some pessimism priced in
+2026-11-25,08:41,HEROMOTOCO,down,57,intel-news,not priced in
+2026-11-25,09:15,COFORGE,up,75,preopen,NSE pre-open order imbalance
+2026-11-25,10:06,TATASTEEL,down,87,intel-news,some pessimism priced in
+2026-11-25,10:19,SBIN,up,75,intel-news,largely priced in
+2026-11-25,10:28,POLICYBZR,up,80,intel-news,not priced in
+2026-11-25,10:36,ICICIBANK,up,70,intel-news,partly priced in

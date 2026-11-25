@@ -1,10 +1,10 @@
 {
-  "date": "2026-11-23",
-  "mode": "careful",
+  "date": "2026-11-25",
+  "mode": "normal",
   "notes": [
-    "Expected Nifty open about -0.9% (S&P 500 -3.7% since Friday, Brent -2.8%): weak global cue, stronger charts needed",
-    "No results; TATASTEEL board outcome + acquisition filed this morning; HEROMOTOCO litigation update",
-    "News views: banks up (INDUSINDBK, HDFCBANK, ICICIBANK; Nifty Bank at a record), MUTHOOTFIN down on gold; HDFCBANK ADR +4.5% on 2.8x volume"
+    "Expected Nifty open about +1.3% (S&P 500 +4.2% since Monday, Brent -5.5%): strong global rebound after Monday's crash; 1.2%+ gap may give the ADR team a fade at 10:15",
+    "No results; filings: TATASTEEL buys stake in APL Apollo Tubes, LUPIN US FDA approval, BHARTIARTL regulatory order, HEROMOTOCO litigation",
+    "News views: banks up (HDFCBANK, SBIN, AXISBANK), RELIANCE, HINDALCO up; TCS, MARUTI down; oil marketers (BPCL, IOC) helped by Brent"
   ],
   "avoid": []
 }

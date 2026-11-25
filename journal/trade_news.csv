@@ -24,3 +24,4 @@ date,time,symbol,contract,action,bid,target_bid,mode,reason
 2026-11-23,13:44,TCS,TCS-29-DEC-2460-PUT,raise,84.6,90.35,observe,"good news for the trade: Crash proof stocks: Sensex, Nifty bleed but these shares come out in flying green colour - HCL, TCS,"
 2026-11-23,14:48,APOLLOHOSP,APOLLOHOSP-29-DEC-9200-CALL,exit,359.35,460.8,observe,market shock (crash)
 2026-11-23,14:48,AUBANK,AUBANK-29-DEC-980-CALL,exit,41.85,52.2,observe,market shock (crash)
+2026-11-25,09:43,TCS,TCS-29-DEC-2520-PUT,exit,89.0,98.9,observe,market shock (rally)

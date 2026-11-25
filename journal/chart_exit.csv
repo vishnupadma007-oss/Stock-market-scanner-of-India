@@ -15,3 +15,4 @@ date,time,symbol,contract,opened,entry_ask,bid,target_bid,mode,reason
 2026-11-23,11:00,APOLLOHOSP,APOLLOHOSP-29-DEC-9200-CALL,09:49,392.2,356.8,460.8,observe,"under VWAP, 9-EMA crossed the 21-EMA, engulfing candle against the trade"
 2026-11-23,14:11,AUBANK,AUBANK-29-DEC-980-CALL,11:16,44.95,42.55,52.2,observe,"under VWAP, 9-EMA crossed the 21-EMA, second candle against the trade"
 2026-11-25,10:01,TCS,TCS-29-DEC-2520-PUT,09:34,89.55,89.55,98.9,observe,"over VWAP, 9-EMA crossed the 21-EMA, engulfing candle against the trade"
+2026-11-25,12:18,NATIONALUM,NATIONALUM-29-DEC-285-CALL,09:54,17.05,16.3,17.3,observe,"under VWAP, 9-EMA crossed the 21-EMA, engulfing candle against the trade"
