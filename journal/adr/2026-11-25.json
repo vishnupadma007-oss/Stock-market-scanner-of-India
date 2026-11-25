@@ -1,0 +1,80 @@
+{
+ "context": {
+  "date": "2026-11-25",
+  "adr_pct": {
+   "INFY": 3.82,
+   "WIPRO": 2.44,
+   "HDFCBANK": 0.51,
+   "ICICIBANK": 1.21,
+   "DRREDDY": 1.88
+  },
+  "adr_vol_x": {
+   "INFY": 1.03,
+   "WIPRO": 0.97,
+   "HDFCBANK": 1.03,
+   "ICICIBANK": 0.95,
+   "DRREDDY": 0.6
+  },
+  "usdinr_pct": -0.41,
+  "brent_pct": -5.43,
+  "nifty_gap_pct": 1.22
+ },
+ "phase": "open",
+ "stocks": {
+  "INFY": {
+   "regime": {
+    "regime": 1,
+    "name": "macro shock",
+    "direction": "up",
+    "trigger": "gap",
+    "why": "Nifty gap +1.22%, VIX +0.0%, Brent -5.4%, USD-INR -0.41%"
+   },
+   "first_hour_pct": -0.25398493606585415,
+   "decision": null
+  },
+  "WIPRO": {
+   "regime": {
+    "regime": 1,
+    "name": "macro shock",
+    "direction": "up",
+    "trigger": "gap",
+    "why": "Nifty gap +1.22%, VIX +0.0%, Brent -5.4%, USD-INR -0.41%"
+   },
+   "first_hour_pct": -0.832460732984297,
+   "decision": null
+  },
+  "HDFCBANK": {
+   "regime": {
+    "regime": 1,
+    "name": "macro shock",
+    "direction": "up",
+    "trigger": "gap",
+    "why": "Nifty gap +1.22%, VIX +0.0%, Brent -5.4%, USD-INR -0.41%"
+   },
+   "first_hour_pct": 1.2783579402232625,
+   "decision": null
+  },
+  "ICICIBANK": {
+   "regime": {
+    "regime": 1,
+    "name": "macro shock",
+    "direction": "up",
+    "trigger": "gap",
+    "why": "Nifty gap +1.22%, VIX +0.0%, Brent -5.4%, USD-INR -0.41%"
+   },
+   "first_hour_pct": 1.4718614718614687,
+   "decision": null
+  },
+  "DRREDDY": {
+   "regime": {
+    "regime": 1,
+    "name": "macro shock",
+    "direction": "up",
+    "trigger": "gap",
+    "why": "Nifty gap +1.22%, VIX +0.0%, Brent -5.4%, USD-INR -0.41%"
+   },
+   "first_hour_pct": -0.2603978300180776,
+   "decision": null
+  }
+ }
+}
