@@ -377,3 +377,7 @@ date,time,symbol,direction,confidence,source,priced_in
 2026-11-25,10:19,SBIN,up,75,intel-news,largely priced in
 2026-11-25,10:28,POLICYBZR,up,80,intel-news,not priced in
 2026-11-25,10:36,ICICIBANK,up,70,intel-news,partly priced in
+2026-11-25,13:04,ITC,up,85,intel-news,not priced in
+2026-11-25,13:04,HINDUNILVR,up,85,intel-news,not priced in
+2026-11-25,13:23,LT,up,81,intel-news,not priced in
+2026-11-25,15:18,NATIONALUM,down,44,intel-news,pessimism priced in

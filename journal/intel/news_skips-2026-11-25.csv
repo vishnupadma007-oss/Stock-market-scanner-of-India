@@ -1,0 +1,23 @@
+time,symbol,direction,confidence,move_pct,reason
+09:34,POLICYBZR,down,,5.87,gap recovery: risk: Forecast chance of reaching the target is 60% (need 60%).
+09:34,TVSMOTOR,down,,0.37,quiet spurt: live move 0.37% no longer fits
+09:34,COALINDIA,up,,0.59,pure spurt: bid-ask gap 2.40% > 1.0%
+09:34,NTPC,up,,0.43,pure spurt: Material news/catalyst (policy): Power demand / tariff policy: delayed or softened: higher de
+09:43,HCLTECH,down,,1.88,gap recovery: risk: Forecast chance of reaching the target is 59% (need 60%).
+09:43,WIPRO,down,,1.98,gap recovery: risk: Forecast chance of reaching the target is 19% (need 60%).
+09:43,DRREDDY,down,,-0.1,"pure spurt: against the market: spurt down, Nifty +1.53%"
+09:43,MUTHOOTFIN,down,,0.42,quiet spurt: live move 0.42% no longer fits
+09:43,SUNPHARMA,down,,0.25,quiet spurt: live move 0.25% no longer fits
+09:43,EICHERMOT,up,,0.79,"pure spurt: Material news/catalyst (policy): RBI repo rate hike: talk, not yet action: costlier vehicle l"
+09:43,FEDERALBNK,up,,-0.42,quiet spurt: live move -0.42% no longer fits
+09:43,DIXON,down,,-0.39,"pure spurt: against the market: spurt down, Nifty +1.50%"
+09:43,JSWSTEEL,down,,-0.3,"pure spurt: against the market: spurt down, Nifty +1.50%"
+09:43,PERSISTENT,down,,-0.53,"pure spurt: against the market: spurt down, Nifty +1.68%"
+09:59,TATASTEEL,up,,0.46,pure spurt: Material news/catalyst (filing): TATASTEEL guidance: Tata Steel Limited has informed the Exch
+10:15,INFY,down,,-0.17,adr team: risk: Forecast chance of reaching the target is 55% (need 60%).
+10:15,WIPRO,down,,-0.97,adr team: risk: Forecast chance of reaching the target is 16% (need 60%).
+10:15,POWERGRID,up,,0.26,pure spurt: Material news/catalyst (policy): Power demand / tariff policy: delayed or softened: higher de
+12:10,UPL,down,,0.0,squeeze: not confirmed on INDmoney candles
+12:25,ANGELONE,up,,0.0,squeeze: not confirmed on INDmoney candles
+12:51,ADANIENT,down,,-0.22,pure spurt: Material news/catalyst (filing): ADANIENT guidance: Adani Enterprises Limited has informed th
+13:15,CUMMINSIND,down,,0.0,squeeze: not confirmed on INDmoney candles
