@@ -1,0 +1,79 @@
+time,symbol,direction,confidence,move_pct,reason
+09:30,ETERNAL,down,,-0.44,pure spurt: bid-ask gap 1.41% > 1.0%
+09:30,LUPIN,up,,0.3,pure spurt: bid-ask gap 2.01% > 1.0%
+09:30,IOC,down,75,-1.45,Trend Checker 30 < 60
+09:30,BAJFINANCE,down,75,-1.71,Trend Checker 30 < 60
+09:30,ITC,up,,-0.13,quiet spurt: live move -0.13% no longer fits
+09:30,HAL,up,,0.41,quiet spurt: risk: Forecast chance of reaching the target is 54% (need 60%).
+09:30,JSWSTEEL,up,,0.12,pure spurt: bid-ask gap 1.19% > 1.0%
+09:41,RELIANCE,down,,-0.49,"pure spurt: Material news/catalyst (news): HDFC Bank, Reliance Industries among 10 stocks with highest "
+09:41,BPCL,down,75,-1.18,Trend Checker 45 < 60
+09:41,IOC,down,75,-1.84,premium Rs 4.37 under Rs 5.0
+09:41,BAJFINANCE,down,75,-1.76,Trend Checker 50 < 60
+09:46,DIVISLAB,up,,0.37,"pure spurt: Material news/catalyst (policy): US tariffs on pharma / USFDA: talk, not yet action: US gener"
+09:46,IOC,down,75,-1.77,premium Rs 4.35 under Rs 5.0
+09:51,IOC,down,75,-1.62,Trend Checker 55 < 60
+09:51,BAJFINANCE,down,75,-1.73,Trend Checker 45 < 60
+09:57,IOC,down,75,-1.52,Trend Checker 55 < 60
+09:57,BAJFINANCE,down,75,-1.53,Trend Checker 30 < 60
+09:57,HINDUNILVR,down,,-0.37,quiet spurt: strong news up (93%) against it
+10:05,IOC,down,75,-1.4,Trend Checker 30 < 60
+10:05,BAJFINANCE,down,75,-1.68,Trend Checker 40 < 60
+10:11,IOC,down,75,-1.48,Trend Checker 30 < 60
+10:11,BAJFINANCE,down,75,-1.8,Trend Checker 55 < 60
+10:18,IOC,down,75,-1.69,premium Rs 4.31 under Rs 5.0
+10:18,BAJFINANCE,down,75,-1.71,Trend Checker 55 < 60
+10:21,IOC,down,75,-1.61,premium Rs 4.3 under Rs 5.0
+10:22,IOC,down,75,-1.67,premium Rs 4.29 under Rs 5.0
+10:22,HEROMOTOCO,up,,0.32,"news+spurt: filing against the spurt: HEROMOTOCO regulatory: Pursuant to Regulation 30 of the SEBI Listing Regulations, please r"
+10:22,IOC,down,75,-1.65,premium Rs 4.27 under Rs 5.0
+10:26,IOC,down,75,-1.62,Trend Checker 55 < 60
+10:26,BAJFINANCE,down,75,-1.75,Trend Checker 55 < 60
+10:31,IOC,down,75,-1.45,Trend Checker 40 < 60
+10:31,BAJFINANCE,down,75,-1.57,Trend Checker 0 < 60
+10:37,IOC,down,75,-1.35,Trend Checker 0 < 60
+10:37,BAJFINANCE,down,75,-1.77,Trend Checker 30 < 60
+10:37,BRITANNIA,up,,0.22,pure spurt: Exhaustion risk: Stock already surged +8.0% (5d) / +6.0% (10d) into 20d high
+10:48,IOC,down,75,-1.56,Trend Checker 40 < 60
+10:48,BAJFINANCE,down,75,-1.22,faded: 0.5% the wrong side of VWAP
+10:54,IOC,down,75,-1.52,Trend Checker 55 < 60
+10:56,BAJFINANCE,down,75,-1.14,faded: already gave back 1.5% from the day's low
+11:00,IOC,down,75,-1.58,premium Rs 4.21 under Rs 5.0
+11:02,IOC,down,75,-1.63,Trend Checker 55 < 60
+11:02,BAJFINANCE,down,75,-1.07,faded: already gave back 1.6% from the day's low
+11:08,IOC,down,75,-1.58,Trend Checker 55 < 60
+11:08,WAAREEENER,up,,0.0,squeeze: not confirmed on INDmoney candles
+11:08,BAJFINANCE,down,75,-1.12,faded: already gave back 1.7% from the day's low
+11:14,IOC,down,75,-1.57,Trend Checker 30 < 60
+11:14,BAJFINANCE,down,75,-1.04,faded: already gave back 1.7% from the day's low
+11:20,IOC,down,75,-1.56,Trend Checker 40 < 60
+11:20,BAJFINANCE,down,75,-1.03,faded: already gave back 1.7% from the day's low
+11:25,IDEA,up,,0.0,squeeze: not confirmed on INDmoney candles
+11:27,IOC,down,75,-1.62,Trend Checker 30 < 60
+11:27,BAJFINANCE,down,75,-1.16,Trend Checker 15 < 60
+11:33,IOC,down,75,-1.6,premium Rs 4.24 under Rs 5.0
+11:33,BAJFINANCE,down,75,-1.18,faded: already gave back 1.5% from the day's low
+11:38,IOC,down,75,-1.6,premium Rs 4.24 under Rs 5.0
+11:38,BAJFINANCE,down,75,-1.12,Trend Checker 25 < 60
+11:40,IOC,down,75,-1.58,Trend Checker 55 < 60
+12:23,NHPC,down,,0.0,squeeze: not confirmed on INDmoney candles
+12:35,LAURUSLABS,up,,0.0,squeeze: not confirmed on INDmoney candles
+12:59,PAGEIND,up,,0.0,squeeze: not confirmed on INDmoney candles
+12:59,TMPV,up,,0.0,squeeze: not confirmed on INDmoney candles
+13:06,IOC,down,,0.0,squeeze: not confirmed on INDmoney candles
+13:06,IRFC,down,,0.0,squeeze: not confirmed on INDmoney candles
+13:12,INDIGO,down,,0.0,squeeze: not confirmed on INDmoney candles
+13:12,MOTILALOFS,down,,0.0,squeeze: not confirmed on INDmoney candles
+13:24,COALINDIA,down,,0.0,squeeze: not confirmed on INDmoney candles
+13:24,MANKIND,up,,0.0,squeeze: not confirmed on INDmoney candles
+13:24,PAYTM,up,,0.0,squeeze: not confirmed on INDmoney candles
+13:35,BDL,down,,0.0,squeeze: not confirmed on INDmoney candles
+13:35,KOTAKBANK,down,,0.0,squeeze: not confirmed on INDmoney candles
+13:35,LUPIN,down,,0.0,squeeze: not confirmed on INDmoney candles
+13:35,PATANJALI,down,,0.0,squeeze: not confirmed on INDmoney candles
+13:37,MANAPPURAM,down,,0.0,squeeze: risk: Forecast chance of reaching the target is 0% (need 60%).
+13:45,MAZDOCK,down,,0.0,squeeze: not confirmed on INDmoney candles
+13:55,PIIND,down,,0.0,squeeze: not confirmed on INDmoney candles
+13:55,RVNL,down,,0.0,squeeze: risk: Forecast chance of reaching the target is 5% (need 60%).
+14:06,CHOLAFIN,down,,0.0,squeeze: not confirmed on INDmoney candles
+14:21,TATASTEEL,up,,0.0,squeeze: not confirmed on INDmoney candles

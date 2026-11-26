@@ -396,3 +396,4 @@ date,time,symbol,direction,confidence,source,priced_in
 2026-11-26,09:15,BAJFINANCE,down,75,preopen,NSE pre-open order imbalance
 2026-11-26,10:03,TCS,up,83,intel-news,not priced in
 2026-11-26,11:55,WIPRO,up,84,intel-news,not priced in
+2026-11-26,15:22,SBIN,down,87,intel-news,largely priced in
