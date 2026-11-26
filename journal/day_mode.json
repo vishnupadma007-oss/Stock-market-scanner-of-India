@@ -1,10 +1,10 @@
 {
-  "date": "2026-11-25",
+  "date": "2026-11-26",
   "mode": "normal",
   "notes": [
-    "Expected Nifty open about +1.3% (S&P 500 +4.2% since Monday, Brent -5.5%): strong global rebound after Monday's crash; 1.2%+ gap may give the ADR team a fade at 10:15",
-    "No results; filings: TATASTEEL buys stake in APL Apollo Tubes, LUPIN US FDA approval, BHARTIARTL regulatory order, HEROMOTOCO litigation",
-    "News views: banks up (HDFCBANK, SBIN, AXISBANK), RELIANCE, HINDALCO up; TCS, MARUTI down; oil marketers (BPCL, IOC) helped by Brent"
+    "Expected Nifty open flat (S&P -0.25%, Brent -0.8%); no results",
+    "Filings: WIPRO bp strategic partnership, LUPIN US FDA approvals",
+    "News views: HDFCBANK, ICICIBANK, ITC, HINDUNILVR (FMCG at 3-month high), LT (order) up; NATIONALUM, TATASTEEL (APL Apollo stake, APL crashed 15%) down; IT ADRs strong (INFY +4.2%, WIPRO +3.3%)"
   ],
   "avoid": []
 }

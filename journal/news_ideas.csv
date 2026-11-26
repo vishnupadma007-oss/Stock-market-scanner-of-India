@@ -381,3 +381,18 @@ date,time,symbol,direction,confidence,source,priced_in
 2026-11-25,13:04,HINDUNILVR,up,85,intel-news,not priced in
 2026-11-25,13:23,LT,up,81,intel-news,not priced in
 2026-11-25,15:18,NATIONALUM,down,44,intel-news,pessimism priced in
+2026-11-26,08:40,HDFCBANK,up,63,intel-news,largely priced in
+2026-11-26,08:40,ICICIBANK,up,93,intel-news,partly priced in
+2026-11-26,08:40,LT,up,89,intel-news,not priced in
+2026-11-26,08:40,ITC,up,82,intel-news,partly priced in
+2026-11-26,08:40,HINDUNILVR,up,94,intel-news,partly priced in
+2026-11-26,08:40,TATASTEEL,down,98,intel-news,some pessimism priced in
+2026-11-26,08:40,NATIONALUM,down,44,intel-news,pessimism priced in
+2026-11-26,08:40,POLICYBZR,up,91,intel-news,partly priced in
+2026-11-26,08:40,LUPIN,up,92,intel-news,some pessimism priced in
+2026-11-26,09:15,INDUSINDBK,down,75,preopen,NSE pre-open order imbalance
+2026-11-26,09:15,BPCL,down,75,preopen,NSE pre-open order imbalance
+2026-11-26,09:15,IOC,down,75,preopen,NSE pre-open order imbalance
+2026-11-26,09:15,BAJFINANCE,down,75,preopen,NSE pre-open order imbalance
+2026-11-26,10:03,TCS,up,83,intel-news,not priced in
+2026-11-26,11:55,WIPRO,up,84,intel-news,not priced in
