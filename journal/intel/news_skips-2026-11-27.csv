@@ -1,0 +1,35 @@
+time,symbol,direction,confidence,move_pct,reason
+09:33,M&M,down,,-0.5,"pure spurt: Material news/catalyst (policy): RBI repo rate hike: talk, not yet action: costlier vehicle l"
+09:33,IOC,down,,-0.08,quiet spurt: live move -0.08% no longer fits
+09:33,MUTHOOTFIN,up,75,2.68,Trend Checker 35 < 60
+09:37,NESTLEIND,down,,-0.4,pure spurt: bid-ask gap 1.41% > 1.0%
+09:40,MUTHOOTFIN,up,75,2.56,Trend Checker 40 < 60
+09:46,MUTHOOTFIN,up,75,2.85,Trend Checker 30 < 60
+09:52,MUTHOOTFIN,up,75,2.78,Trend Checker 55 < 60
+09:54,ADANIPORTS,down,,0.01,quiet spurt: live move 0.01% no longer fits
+09:59,MUTHOOTFIN,up,75,2.55,Trend Checker 55 < 60
+09:59,ULTRACEMCO,up,,0.49,"pure spurt: against the market: spurt up, Nifty -0.18%"
+10:05,MUTHOOTFIN,up,75,2.43,Trend Checker 55 < 60
+10:11,MUTHOOTFIN,up,75,2.39,Trend Checker 40 < 60
+10:19,MUTHOOTFIN,up,75,2.39,Trend Checker 30 < 60
+10:44,PATANJALI,down,,0.0,squeeze: not confirmed on INDmoney candles
+11:50,ADANIENT,down,,-0.23,quiet spurt: risk: Forecast chance of reaching the target is 40% (need 60%).
+12:08,MANAPPURAM,up,,0.0,squeeze: not confirmed on INDmoney candles
+12:42,ACUTAAS,down,,0.0,squeeze: not confirmed on INDmoney candles
+12:45,EICHERMOT,up,,0.0,squeeze: risk: Forecast chance of reaching the target is 13% (need 60%).
+12:50,ICICIGI,down,,0.0,squeeze: not confirmed on INDmoney candles
+13:10,MANKIND,down,,0.0,squeeze: not confirmed on INDmoney candles
+13:14,BANDHANBNK,down,,0.0,squeeze: not confirmed on INDmoney candles
+13:14,UNITDSPR,down,,0.0,squeeze: not confirmed on INDmoney candles
+13:16,ADANIENT,down,,0.0,squeeze: not confirmed on INDmoney candles
+13:16,GODFRYPHLP,down,,0.0,squeeze: not confirmed on INDmoney candles
+13:16,IDEA,down,,0.0,squeeze: not confirmed on INDmoney candles
+13:24,APARINDS,down,,0.0,squeeze: risk: Forecast chance of reaching the target is 0% (need 60%).
+13:30,BRITANNIA,down,,0.0,squeeze: not confirmed on INDmoney candles
+13:30,VEDL,up,,0.0,squeeze: not confirmed on INDmoney candles
+13:34,COCHINSHIP,down,,0.0,squeeze: not confirmed on INDmoney candles
+13:34,HINDPETRO,down,,0.0,squeeze: not confirmed on INDmoney candles
+13:34,INFY,up,,0.0,squeeze: not confirmed on INDmoney candles
+13:50,NAVINFLUOR,up,,0.0,squeeze: not confirmed on INDmoney candles
+13:50,OFSS,up,,0.0,squeeze: not confirmed on INDmoney candles
+14:15,WIPRO,up,,0.0,squeeze: risk: Forecast chance of reaching the target is 3% (need 60%).
