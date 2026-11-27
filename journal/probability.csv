@@ -9,3 +9,4 @@ date,time,symbol,contract,historical_win_rate,monte_carlo_target_prob,ml_confide
 2026-11-04,10:52,BRITANNIA,BRITANNIA-23-NOV-4950-PUT,0.673,0.47,0.71,0.618,2.39,-53.6,False,blended chance 62% is in the weakest group (< 62%)
 2026-11-06,09:30,SUNPHARMA,SUNPHARMA-23-NOV-1820-CALL,0.717,0.611,0.623,0.65,1.65,-53.6,True,
 2026-11-06,09:42,LT,LT-23-NOV-4100-PUT,0.717,0.367,0.687,0.59,-1.77,-48.8,False,blended chance 59% is in the weakest group (< 62%)
+2026-11-27,09:41,TECHM,TECHM-29-DEC-1840-CALL,0.717,0.588,0.726,0.677,2.12,-36.0,True,
