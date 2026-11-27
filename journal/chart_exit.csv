@@ -19,3 +19,4 @@ date,time,symbol,contract,opened,entry_ask,bid,target_bid,mode,reason
 2026-11-26,10:56,INDUSINDBK,INDUSINDBK-29-DEC-980-PUT,09:41,40.3,35.9,46.6,observe,"over VWAP, 9-EMA crossed the 21-EMA, engulfing candle against the trade"
 2026-11-26,14:30,COFORGE,COFORGE-29-DEC-1960-CALL,14:18,101.85,99.0,103.2,observe,"under VWAP, 9-EMA crossed the 21-EMA, engulfing candle against the trade"
 2026-11-27,11:05,TECHM,TECHM-29-DEC-1840-CALL,09:41,78.2,68.15,86.3,observe,"under VWAP, 9-EMA crossed the 21-EMA, second candle against the trade"
+2026-11-27,13:48,SHRIRAMFIN,SHRIRAMFIN-29-DEC-920-CALL,12:56,52.85,43.9,53.55,observe,"under VWAP, 9-EMA crossed the 21-EMA, second candle against the trade"
