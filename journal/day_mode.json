@@ -1,10 +1,1 @@
-{
-  "date": "2026-11-26",
-  "mode": "normal",
-  "notes": [
-    "Expected Nifty open flat (S&P -0.25%, Brent -0.8%); no results",
-    "Filings: WIPRO bp strategic partnership, LUPIN US FDA approvals",
-    "News views: HDFCBANK, ICICIBANK, ITC, HINDUNILVR (FMCG at 3-month high), LT (order) up; NATIONALUM, TATASTEEL (APL Apollo stake, APL crashed 15%) down; IT ADRs strong (INFY +4.2%, WIPRO +3.3%)"
-  ],
-  "avoid": []
-}
+{"date": "2026-11-27", "mode": "normal", "notes": ["Expected Nifty open flat (+0.1%; US closed for Thanksgiving, Brent -2.5%); no results", "News views: WIPRO up (IT rally), LUPIN up (guidance), SBIN down (regulatory action)", "Filings: SUNPHARMA, ASIANPAINT investor presentations; BAJAJ-AUTO press release"], "avoid": []}
